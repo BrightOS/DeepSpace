@@ -1,38 +1,47 @@
 package ru.myitschool.nasa_bootcamp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
-import ru.myitschool.nasa_bootcamp.viewmodels.FirebaseViewModel
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupWithNavController
+import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private var isUserRegistered: Boolean = false
+    private lateinit var navController: NavController
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        findViewById<Button>(R.id.send_feedback).setOnClickListener {
-            val email = findViewById<EditText>(R.id.email_input).text.toString()
-            val password =
-                findViewById<EditText>(R.id.pass_input).text.toString()  //TODO: пароль должен быть более 6 символов, нужно сделать проверку
-
-            val firebaseViewModel = FirebaseViewModel()
-            firebaseViewModel.viewModelScope.launch {
-                // firebaseViewModel.SignOutUser()
-                firebaseViewModel.AuthenticateUser(email, password)
-                isUserRegistered = firebaseViewModel.isSuccess
-                if (isUserRegistered) {
-                    Toast.makeText(applicationContext, "Success!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(applicationContext, firebaseViewModel.error, Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
+        binding.navView.setupWithNavController(navController)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    // enable close drawer on back pressed
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        else
+            super.onBackPressed()
+    }
+
+    // open drawer from fragment
+    fun openDrawer() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+    }
+
 }
