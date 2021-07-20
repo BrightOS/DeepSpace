@@ -73,5 +73,16 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
+    //Retrofit2
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
+
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+
+
 }
