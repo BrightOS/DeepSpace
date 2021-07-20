@@ -23,12 +23,12 @@ interface Api {
     @GET("mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=2&api_key=uej4DeQlgTn9GRLfb98qSj38c2mecIuWspj3JyTN")
     suspend fun getRoverPhotos(): Response<Rovers> //Фотографии роверов с Марса
 
-    @GET("neo/rest/v1/feed?start_date=2021-07-10&end_date=2021-07-11&api_key=uej4DeQlgTn9GRLfb98qSj38c2mecIuWspj3JyTN")
+    @GET("neo/rest/v1/feed?")
     suspend fun getAsteroidInfo(
-        @Query("api_key") apiKey: String,
         @Query("start_date") startDate: String,
-        @Query("end_date") endDate: String
-    ): Response<String> //https://api.nasa.gov/
+        @Query("end_date") endDate: String,
+        @Query("api_key") apiKey: String = "uej4DeQlgTn9GRLfb98qSj38c2mecIuWspj3JyTN"
+    ): String //https://api.nasa.gov/
 
     @GET("launches")
     suspend fun getLaunches(): Response<ArrayList<Launch>>//https://api.spacexdata.com/v4/
