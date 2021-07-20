@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nasaFragment">
+
+    <fragment
+        android:id="@+id/nasaFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.nasa.NasaFragment"
+        android:label="NasaFragment" />
+    <fragment
+        android:id="@+id/asteroidRadarFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidRadarFragment"
+        android:label="AsteroidRadarFragment" />
+    <fragment
+        android:id="@+id/marsRoversFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.MarsRoversFragment"
+        android:label="MarsRoversFragment" />
+    <fragment
+        android:id="@+id/spaceXFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXFragment"
+        android:label="SpaceXFragment" />
+    <fragment
+        android:id="@+id/upcomingEventsFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.upcoming_events.UpcomingEventsFragment"
+        android:label="UpcomingEventsFragment" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.about.AboutFragment"
+        android:label="AboutFragment" />
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.contact.ContactFragment"
+        android:label="ContactFragment" />
+</navigation>
