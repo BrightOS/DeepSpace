@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NASA_Bootcamp</string>
+    <string name="nasa">NASA</string>
+    <string name="asteroid_radar">Asteroid Radar</string>
+    <string name="mars_rovers">Mars Rovers</string>
+    <string name="spacex">SpaceX</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="about">About</string>
+    <string name="contact">Contact</string>
 </resources>

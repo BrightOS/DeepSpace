@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/menu_top">
+        <item
+            android:id="@+id/nasaFragment"
+            android:title="@string/nasa" />
+        <item
+            android:id="@+id/asteroidRadarFragment"
+            android:title="@string/asteroid_radar" />
+        <item
+            android:id="@+id/marsRoversFragment"
+            android:title="@string/mars_rovers" />
+        <item
+            android:id="@+id/spaceXFragment"
+            android:title="@string/spacex" />
+        <item
+            android:id="@+id/upcomingEventsFragment"
+            android:title="@string/upcoming_events" />
+    </group>
+    <group android:id="@+id/menu_bottom">
+        <item
+            android:id="@+id/aboutFragment"
+            android:title="@string/about" />
+        <item
+            android:id="@+id/contactFragment"
+            android:title="@string/contact" />
+    </group>
+
+</menu>
