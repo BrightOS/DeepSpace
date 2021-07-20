@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import ru.myitschool.nasa_bootcamp.databinding.FragmentMarsRoversBinding
 
 class MarsRoversFragment : Fragment() {
     private var _binding: FragmentMarsRoversBinding? = null
+    private val viewModel: MarsRoversViewModel by viewModels<MarsRoversViewModelImpl>()
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!

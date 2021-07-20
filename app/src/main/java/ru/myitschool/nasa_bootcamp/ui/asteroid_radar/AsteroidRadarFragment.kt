@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidRadarBinding
 
 class AsteroidRadarFragment : Fragment() {
     private var _binding: FragmentAsteroidRadarBinding? = null
+    private val viewModel: AsteroidRadarViewModel by viewModels<AsteroidRadarViewModelImpl>()
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!

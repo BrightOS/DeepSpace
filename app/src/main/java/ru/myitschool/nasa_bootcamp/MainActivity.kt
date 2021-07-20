@@ -38,5 +38,10 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
     }
 
+    // open drawer from fragment
+    fun openDrawer() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+    }
 
 }
