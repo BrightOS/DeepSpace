@@ -30,8 +30,8 @@ class RegistrationFragment : Fragment() {
     val firebaseViewModel = FirebaseViewModel()
     firebaseViewModel.viewModelScope.launch
     {
-        firebaseViewModel.AuthenticateUser(email, password)
-        // firebaseViewModel.CreateUser(email, password) // для регистрации
+        firebaseViewModel.authenticateUser(email, password)
+        // firebaseViewModel.createUser(email, password) // для регистрации
         if (firebaseViewModel.isSuccess) {
             Toast.makeText(applicationContext, "Success!", Toast.LENGTH_SHORT).show()
         } else {

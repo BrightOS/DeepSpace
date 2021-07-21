@@ -20,7 +20,7 @@ class RegistrationViewModelImpl: ViewModel(), RegistrationViewModel {
         error = ""
     }
 
-    override suspend fun CreateUser(email: String, password: String) {
+    override suspend fun createUser(email: String, password: String) {
         try {
             authenticator?.createUserWithEmailAndPassword(email, password)?.await()
             isSuccess = true
@@ -31,7 +31,7 @@ class RegistrationViewModelImpl: ViewModel(), RegistrationViewModel {
         }
     }
 
-    override suspend fun AuthenticateUser(email: String, password: String) {
+    override suspend fun authenticateUser(email: String, password: String) {
         try {
             authenticator?.signInWithEmailAndPassword(email, password)?.await()
             isSuccess = true
@@ -42,7 +42,7 @@ class RegistrationViewModelImpl: ViewModel(), RegistrationViewModel {
         }
     }
 
-    override suspend fun SignOutUser() {
+    override suspend fun signOutUser() {
         try {
             authenticator?.signOut()
             isSuccess = true
