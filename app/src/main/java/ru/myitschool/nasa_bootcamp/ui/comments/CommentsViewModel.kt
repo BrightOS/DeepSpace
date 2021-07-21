@@ -5,6 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface CommentsViewModel {
     suspend fun pushComment(postId: Int, comment: String)
-    suspend fun getComments(postId: Int)
+    suspend fun deleteComment(postId: Int, commentId: Long)
+    suspend fun pushLike(postId: Int)
+    suspend fun deleteLike(postId: Int)
     fun listenForComments(postId: Int)
+    fun listenForLikes(postId: Int)
 }
