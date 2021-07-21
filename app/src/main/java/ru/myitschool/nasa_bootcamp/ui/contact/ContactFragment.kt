@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import ru.myitschool.nasa_bootcamp.databinding.FragmentContactBinding
 
+@AndroidEntryPoint
 class ContactFragment : Fragment() {
     private var _binding: FragmentContactBinding? = null
     private val viewModel: ContactViewModel by viewModels<ContactViewModelImpl>()
