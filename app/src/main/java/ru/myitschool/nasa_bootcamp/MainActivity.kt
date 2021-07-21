@@ -3,13 +3,19 @@ package ru.myitschool.nasa_bootcamp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import ru.myitschool.nasa_bootcamp.data.model.models.Comment
 import ru.myitschool.nasa_bootcamp.data.model.nasa.asteroids.AsteroidRepository
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 import ru.myitschool.nasa_bootcamp.ui.comments.CommentsViewModelImpl
@@ -20,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,9 +42,24 @@ class MainActivity : AppCompatActivity() {
         auth.viewModelScope.launch {
             auth.authenticateUser("abubakirov04@mail.ru", "123456")
         }
+        test.listenForComments(2)
+        test.comments.observe(this, {
+            it?.let {
+                for (comment in it) {
+                    println(comment)
+                }
+            }
+        })
+        /*
         test.viewModelScope.launch {
-            test.listenForComments(2)
+            test.comments.observe(this@MainActivity, Observer {
+                for (comment in it) {
+                    println(comment)
+                }
+            })
         }
+
+         */
 
 
     }
