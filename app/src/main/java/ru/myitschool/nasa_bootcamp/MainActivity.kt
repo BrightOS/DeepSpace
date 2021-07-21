@@ -8,9 +8,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import ru.myitschool.nasa_bootcamp.data.model.nasa.asteroids.AsteroidRepository
+import dagger.hilt.android.AndroidEntryPoint
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding

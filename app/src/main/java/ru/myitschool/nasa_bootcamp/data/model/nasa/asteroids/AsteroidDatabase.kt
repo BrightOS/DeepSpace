@@ -10,19 +10,3 @@ abstract class AsteroidDatabase : RoomDatabase() {
     abstract val asteroidDao: AsteroidDao
 }
 
-private var INSTANCE: AsteroidDatabase? = null
-
-
-fun getInstance(context: Context): AsteroidDatabase? {
-    synchronized(AsteroidDatabase::class) {
-        if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(
-                context.applicationContext,
-                AsteroidDatabase::class.java,
-                "asteroids3"
-            ).build()
-        }
-    }
-    return INSTANCE
-}
-

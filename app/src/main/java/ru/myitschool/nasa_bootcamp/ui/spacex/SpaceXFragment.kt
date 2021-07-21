@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 
+@AndroidEntryPoint
 class SpaceXFragment : Fragment() {
     private var _binding: FragmentSpacexBinding? = null
     private val viewModel: SpaceXViewModel by viewModels<SpaceXViewModelImpl>()

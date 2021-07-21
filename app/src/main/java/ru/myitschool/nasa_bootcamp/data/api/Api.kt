@@ -14,21 +14,7 @@ import ru.myitschool.nasa_bootcamp.data.model.spaceX.landingPads.LandingPad
 import ru.myitschool.nasa_bootcamp.data.model.spaceX.roadster.Roadster
 
 interface Api {
-    @GET("planetary/apod?api_key=uej4DeQlgTn9GRLfb98qSj38c2mecIuWspj3JyTN")
-    suspend fun getAstronomyImageOfTheDay2(): Response<Apod> // Изображение дня от НАСА
 
-//    @GET("planetary/apod?api_key=uej4DeQlgTn9GRLfb98qSj38c2mecIuWspj3JyTN")
-//    fun getAstronomyImageOfTheDay(): Call<Apod?>?
-
-    @GET("mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=2&api_key=uej4DeQlgTn9GRLfb98qSj38c2mecIuWspj3JyTN")
-    suspend fun getRoverPhotos(): Response<Rovers> //Фотографии роверов с Марса
-
-    @GET("neo/rest/v1/feed?")
-    suspend fun getAsteroidInfo(
-        @Query("start_date") startDate: String,
-        @Query("end_date") endDate: String,
-        @Query("api_key") apiKey: String = "uej4DeQlgTn9GRLfb98qSj38c2mecIuWspj3JyTN"
-    ): String //https://api.nasa.gov/
 
     @GET("launches")
     suspend fun getLaunches(): Response<ArrayList<Launch>>//https://api.spacexdata.com/v4/

@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAboutBinding
 
+@AndroidEntryPoint
 class AboutFragment : Fragment() {
     private var _binding: FragmentAboutBinding? = null
     private val viewModel: AboutFragmentViewModel by viewModels<AboutFragmentViewModelImpl>()
