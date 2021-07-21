@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import ru.myitschool.nasa_bootcamp.databinding.FragmentNasaBinding
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ImageOfDayFragment : Fragment() {
     private val viewModel : ImageOfDayViewModelImpl by viewModels()
 
