@@ -8,10 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-<<<<<<< HEAD
-=======
 import dagger.hilt.android.AndroidEntryPoint
->>>>>>> master
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 
 @AndroidEntryPoint

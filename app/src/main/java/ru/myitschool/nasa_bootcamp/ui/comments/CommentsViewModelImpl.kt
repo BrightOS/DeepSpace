@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.model.models.Comment
-import ru.myitschool.nasa_bootcamp.data.model.models.SubComment
+import ru.myitschool.nasa_bootcamp.data.model.SubComment
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList

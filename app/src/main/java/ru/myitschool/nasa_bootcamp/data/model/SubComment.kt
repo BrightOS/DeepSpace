@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.data.model.models
+package ru.myitschool.nasa_bootcamp.data.model
 
 class SubComment(val id: Long, val fatherId: Long, val comment: String, val likes: List<String>, val userId: String, val date: Long) {
     constructor() : this(-1, -1,"", listOf(), "", -1)
