@@ -26,17 +26,18 @@ class CommentsFragment : Fragment() {
 }
 
 /*
-    Some listener examples:
-    test.listenForComments(2)
-    test.comments.observe(this, {
+    val test = CommentsViewModelImpl()
+    test.listenForComments(1)
+    test.comments.observe(viewLifecycleOwner, {
         it?.let {
             for (comment in it) {
                 println(comment)
             }
+            println("end")
         }
     })
-    test.listenForLikes(2)
-    test.likes.observe(this, {
+    test.listenForLikes(1)
+    test.likes.observe(viewLifecycleOwner, {
         it?.let {
             println("Likes: $it")
         }
