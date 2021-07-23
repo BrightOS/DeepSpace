@@ -13,7 +13,7 @@ import ru.myitschool.nasa_bootcamp.data.dto.spaceX.roadster.Roadster
 interface SpaceXApi {
 
     @GET("launches")
-    suspend fun getLaunches(): Response<ArrayList<Launch>>
+    suspend fun getLaunches(): Response<List<Launch>>
 
     @GET("history")
     suspend fun getHistory(): Response<ArrayList<History>>
