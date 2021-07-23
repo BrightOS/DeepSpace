@@ -22,16 +22,21 @@ class SpaceXViewModelImpl @Inject constructor(private val repository : SpaceXLau
     suspend fun getSpaceXLaunches(){
 
         val response = repository.getSpaceXLaunches()
-        Log.d("TAG_SPACEX", response.body()!!.get(0).mission_name)
+
 
         if (response.isSuccessful) {
             if (response.body() != null) {
+
                 for (launch in response.body()!!) {
+                    Log.d("TAG_SPACEX", launch.createLaunchModel().mission_name)
                     list.add(launch.createLaunchModel())
                 }
             }
+        }else{
+
         }
 
+        launchesModelsList.value = list
     }
 
 

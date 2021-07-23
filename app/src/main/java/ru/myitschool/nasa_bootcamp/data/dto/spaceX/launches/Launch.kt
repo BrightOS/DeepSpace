@@ -19,11 +19,16 @@ class Launch( //MAIN
 ) {
     public fun createLaunchModel(): SxLaunchModel {
         return SxLaunchModel(
-            launch_site,
-            rocket,
+            flight_number,
+            mission_name,
+            launch_year,
+            launch_date_utc,
             links,
-            flight_number, mission_name,
-            launch_year, launch_date_utc, upcoming, launch_success, details
+            rocket,
+            upcoming,
+            launch_success,
+            details,
+            launch_site
         )
     }
 }

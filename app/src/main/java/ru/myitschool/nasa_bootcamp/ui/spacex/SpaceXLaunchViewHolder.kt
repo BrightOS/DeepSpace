@@ -2,8 +2,7 @@ package ru.myitschool.nasa_bootcamp.ui.spacex
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.view.View
-import android.widget.ImageView
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -11,10 +10,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 
-class SpaceXLaunchViewHolder (private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val imageView: ImageView
+class SpaceXLaunchViewHolder (val binding: LaunchItemBinding,
+                              private val context: Context) : RecyclerView.ViewHolder(binding.root) {
+
 
     private val requestListener: RequestListener<Drawable> = object : RequestListener<Drawable> {
         override fun onLoadFailed(
@@ -41,12 +41,8 @@ class SpaceXLaunchViewHolder (private val context: Context, itemView: View) : Re
         Glide.with(context)
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .listener(requestListener)
           //  .placeholder(R.drawable.waiting_background)
-            .into(imageView)
+            .into(binding.recycleItemImg)
     }
 
-    init {
-        imageView = itemView.findViewById(R.id.recycle_item_img)
-    }
 }

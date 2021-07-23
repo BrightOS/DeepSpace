@@ -1,6 +1,7 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -86,7 +87,9 @@ class SpaceXFragment : Fragment() {
             launchesViewModel.getSpaceXLaunches()
         }
 
+
         launchesViewModel.launchesModelsList.observe(viewLifecycleOwner, Observer {
+            Log.d("SpaceX_Fragment_TAG", "Something changed in view model!")
             spaceXLaunchAdapter = SpaceXLaunchAdapter(requireContext(), launchesViewModel.launchesModelsList.value!!)
             binding.launchesRecycle.adapter = spaceXLaunchAdapter
         })

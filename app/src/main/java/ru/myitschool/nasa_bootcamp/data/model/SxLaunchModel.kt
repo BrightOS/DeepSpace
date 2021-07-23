@@ -14,6 +14,6 @@ data class SxLaunchModel(
     val rocket: Rocket,
     val upcoming: Boolean,
     val launch_success: Boolean,
-    val details: String,
+    val details: String?,
     val launch_site: LaunchSite
 )
