@@ -11,7 +11,7 @@ interface NasaApi {
 
     // Изображение дня от НАСА
     @GET("planetary/apod")
-    suspend fun getAstronomyImageOfTheDay2(
+    suspend fun getAstronomyImageOfTheDay(
         @Query("api_key") apiKey: String = API_KEY
     ): Response<Apod>
 
