@@ -3,6 +3,7 @@ package ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches
 import com.google.gson.annotations.SerializedName
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 
+
 class Launch( //MAIN
     @field:SerializedName("flight_number") val flight_number: Int,
     @field:SerializedName("mission_name") val mission_name: String,

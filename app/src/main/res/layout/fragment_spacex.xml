@@ -25,7 +25,11 @@
             "<!--
              Сюда racyclerView с запусками, как удастся разобраться с ошибкой
              -->
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/launches_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
 
         </LinearLayout>
 
