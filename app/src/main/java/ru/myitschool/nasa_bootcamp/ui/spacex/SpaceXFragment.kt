@@ -50,7 +50,7 @@ class SpaceXFragment : Fragment() {
 
         val animation = animateIt {
             animate(binding.spaceXLogo) animateInto {
-                topOfItsParent(marginDp = 1f)
+                topOfItsParent(marginDp = 15f)
                 leftOfItsParent(marginDp = 10f)
                 scale(0.8f, 0.8f)
             }
