@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 
 class SpaceXLaunchViewHolder (val binding: LaunchItemBinding,
@@ -41,7 +42,6 @@ class SpaceXLaunchViewHolder (val binding: LaunchItemBinding,
         Glide.with(context)
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-          //  .placeholder(R.drawable.waiting_background)
             .into(binding.recycleItemImg)
     }
 

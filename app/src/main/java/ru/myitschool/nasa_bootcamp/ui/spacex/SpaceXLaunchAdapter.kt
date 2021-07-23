@@ -36,6 +36,10 @@ class SpaceXLaunchAdapter(context: Context, launchModels: ArrayList<SxLaunchMode
         holder.loadImage(launchModel.links.mission_patch_small)
         holder.binding.missionName.setText(launchModel.mission_name)
         holder.binding.missionYear.setText("${launchModel.launch_year}")
+
+        if (launchModel.launch_success) holder.binding.status.setText("Status: success") else holder.binding.status.setText(
+            "Status: failed"
+        )
     }
 
     override fun getItemCount(): Int {
