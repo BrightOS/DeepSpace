@@ -40,4 +40,27 @@ class RegistrationFragment : Fragment() {
         }
     }
 
+    private val PICK_IMAGE_REQUEST = 71
+    val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            try {
+                val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, data?.data)
+                binding.viewImage.setImageBitmap(bitmap)
+                val test = RegistrationViewModelImpl()
+                test.viewModelScope.launch {
+                    test.createUser("abubakirov04@mail.ru", "123456", "vladimir", data?.data)
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
  */
