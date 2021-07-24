@@ -46,4 +46,33 @@
         android:id="@+id/exploreFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragment"
         android:label="ExploreFragment" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.auth.login.AuthFragment"
+        android:label="AuthFragment" >
+        <action
+            android:id="@+id/reg"
+            app:destination="@id/regFragment2"
+
+            app:enterAnim="@anim/slide_enter_anim"
+            app:exitAnim="@anim/slide_exit_anim"
+            app:popEnterAnim="@anim/slide_pop_enter_anim"
+            app:popExitAnim="@anim/slide_pop_exit_anim" />
+        <action
+            android:id="@+id/success_login"
+            app:destination="@id/nasaFragment"
+            app:popUpTo="@id/authFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/regFragment2"
+        android:name="ru.myitschool.nasa_bootcamp.ui.auth.reg.RegFragment"
+        android:label="RegFragment" >
+        <action
+            android:id="@+id/success_reg"
+            app:destination="@id/nasaFragment"
+            app:popUpTo="@id/authFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action android:id="@+id/login" app:destination="@id/authFragment" />
 </navigation>
