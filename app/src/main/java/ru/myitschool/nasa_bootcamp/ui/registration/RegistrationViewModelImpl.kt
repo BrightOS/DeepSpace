@@ -29,7 +29,7 @@ class RegistrationViewModelImpl: ViewModel(), RegistrationViewModel {
 
     override suspend fun createUser(email: String, password: String,  username: String, imagePath: Uri?) {
         try {
-            ContactsContract.Contacts.Data<FirebaseUser>
+            //ContactsContract.Contacts.Data<FirebaseUser>
             val user = authenticator?.createUserWithEmailAndPassword(email, password)?.await()
             if (user != null) {
                 reference.child(user.user!!.uid).child("username").setValue(username).await()
@@ -59,7 +59,7 @@ class RegistrationViewModelImpl: ViewModel(), RegistrationViewModel {
         }
     }
 
-    override fun signOutUser() {
+    override suspend fun signOutUser() {
         try {
             authenticator?.signOut()
             isSuccess = true
