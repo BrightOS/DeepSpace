@@ -9,7 +9,8 @@
     android:background="#0D131F"
     tools:context=".MainActivity">
 
-    <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
+    <!-- Layout to contain contents of main body
+    of screen (drawer will slide over this) -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -25,6 +26,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

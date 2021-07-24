@@ -82,7 +82,8 @@ class SpaceXFragment : Fragment() {
 
 
         binding.explore.setOnClickListener(View.OnClickListener {
-            navController.navigate(R.id.exploreFragment)
+            val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
+            navController.navigate(action)
         })
 
         binding.launchesRecycle.setHasFixedSize(true)

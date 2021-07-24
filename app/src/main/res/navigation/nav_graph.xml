@@ -22,7 +22,11 @@
         android:label="SpaceXFragment" >
         <action
             android:id="@+id/action_spaceXFragment_to_exploreFragment"
-            app:destination="@id/exploreFragment" />
+            app:destination="@id/exploreFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
