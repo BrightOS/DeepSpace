@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NASA_Bootcamp</string>
+    <string name="app_name">DeepSpace</string>
     <string name="nasa">NASA</string>
     <string name="asteroid_radar">Asteroid Radar</string>
     <string name="mars_rovers">Mars Rovers</string>

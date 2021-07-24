@@ -18,6 +18,7 @@
             android:id="@+id/upcomingEventsFragment"
             android:title="@string/upcoming_events" />
     </group>
+
     <group android:id="@+id/menu_bottom">
         <item
             android:id="@+id/aboutFragment"
