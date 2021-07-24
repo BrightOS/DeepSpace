@@ -27,12 +27,15 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
+
+
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 
     // enable close drawer on back pressed
     override fun onBackPressed() {
