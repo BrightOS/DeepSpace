@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.databinding.FragmentExploreBinding
+import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 
 
 class ExploreFragment : Fragment() {
+
+    private var _binding: FragmentExploreBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,8 +23,10 @@ class ExploreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentExploreBinding.inflate(inflater, container, false)
 
-        return inflater.inflate(R.layout.fragment_explore, container, false)
+
+        return binding.root
     }
 }
