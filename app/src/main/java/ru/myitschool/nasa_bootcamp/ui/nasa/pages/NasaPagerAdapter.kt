@@ -17,7 +17,7 @@ class NasaPagerAdapter(private val context: Context, manager: FragmentManager?) 
     override fun getItem(position: Int): Fragment {
         var type = "APOD"
         when(position){
-            0 -> return ImageOfDayFragment.getInstance()
+            0 -> type = "APOD"
             1 -> type = "News"
             2 -> type = "Blogs"
             3 -> type = "Popular"

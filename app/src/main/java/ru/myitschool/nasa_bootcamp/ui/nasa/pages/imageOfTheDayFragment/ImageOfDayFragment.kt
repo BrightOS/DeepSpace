@@ -20,11 +20,6 @@ class ImageOfDayFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel.viewModelScope.launch {
-            viewModel.loadImageOfDay()
-
-        }
     }
 
     override fun onCreateView(

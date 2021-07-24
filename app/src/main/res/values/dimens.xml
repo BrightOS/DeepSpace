@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height">80dp</dimen>
+    <dimen name="default_rectangle_size">64dp</dimen>
+    <dimen name="eight_margin">8dp</dimen>
+</resources>
