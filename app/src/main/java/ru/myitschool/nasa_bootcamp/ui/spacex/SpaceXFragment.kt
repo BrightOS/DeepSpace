@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -20,11 +21,11 @@ import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 
 @AndroidEntryPoint
 class SpaceXFragment : Fragment() {
-    private var _binding: FragmentSpacexBinding? = null
+
     private val launchesViewModel: SpaceXViewModelImpl by viewModels()
     private lateinit var spaceXLaunchAdapter: SpaceXLaunchAdapter
 
-    // This property is only valid between onCreateView and onDestroyView.
+    private var _binding: FragmentSpacexBinding? = null
     private val binding get() = _binding!!
 
 
@@ -46,6 +47,7 @@ class SpaceXFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
+
         h = resources.getDimensionPixelOffset(R.dimen.height)
 
         val animation = animateIt {
@@ -76,8 +78,11 @@ class SpaceXFragment : Fragment() {
             animation.setPercent(percent)
         })
 
+        val navController = findNavController()
+
+
         binding.explore.setOnClickListener(View.OnClickListener {
-            
+            navController.navigate(R.id.exploreFragment)
         })
 
         binding.launchesRecycle.setHasFixedSize(true)

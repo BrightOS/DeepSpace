@@ -19,7 +19,12 @@
     <fragment
         android:id="@+id/spaceXFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXFragment"
-        android:label="SpaceXFragment" />
+        android:label="SpaceXFragment" >
+        <action
+            android:id="@+id/action_spaceXFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/upcomingEventsFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.upcoming_events.UpcomingEventsFragment"
@@ -32,4 +37,9 @@
         android:id="@+id/contactFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.contact.ContactFragment"
         android:label="ContactFragment" />
+
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragment"
+        android:label="ExploreFragment" />
 </navigation>
