@@ -1,12 +1,11 @@
-package ru.myitschool.nasa_bootcamp.ui.animation.core
+package ru.myitschool.nasa_bootcamp.ui.animation
 
 import android.animation.Animator
 import android.view.View
-import ru.myitschool.nasa_bootcamp.ui.animation.ViewRefresh
 
-abstract class Anim(
+abstract class AnimManager(
     protected val animInstances: List<AnimInstance>,
-    protected val viewToMove: View,
+    protected val viewToAnimate: View,
     protected val viewRefresh: ViewRefresh) {
 
     abstract fun getAnimators(): List<Animator>
