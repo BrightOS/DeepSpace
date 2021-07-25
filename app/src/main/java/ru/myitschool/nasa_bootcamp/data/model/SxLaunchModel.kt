@@ -6,6 +6,7 @@ import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Links
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Rocket
 
 data class SxLaunchModel(
+    val launch_date_unix: Int,
     val flight_number: Int,
     val mission_name: String,
     val launch_year: Int,

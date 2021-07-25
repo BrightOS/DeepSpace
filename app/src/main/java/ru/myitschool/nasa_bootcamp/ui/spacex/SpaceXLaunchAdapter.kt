@@ -10,6 +10,7 @@ import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.loadImage
+import java.text.SimpleDateFormat
 import java.util.*
 
 class SpaceXLaunchAdapter internal constructor(
@@ -51,13 +52,18 @@ class SpaceXLaunchAdapter internal constructor(
         holder.binding.missionName2.visibility = View.VISIBLE
         holder.binding.missionYear2.visibility = View.VISIBLE
         holder.binding.recycleItemImg2.visibility = View.VISIBLE
-
         loadImage(context, launchModel.links.mission_patch_small, holder.binding.recycleItemImg)
+
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        val date = Date(launchModel.launch_date_unix * 1000L)
+
         holder.binding.missionName.setText(launchModel.mission_name)
-        holder.binding.missionYear.setText("${launchModel.launch_year}")
+        holder.binding.missionYear.setText("${sdf.format(date)}")
 
         holder.binding.missionName2.setText(launchModel.mission_name)
-        holder.binding.missionYear2.setText("${launchModel.launch_year}")
+        holder.binding.missionYear2.setText("${sdf.format(date)}")
+
         loadImage(context, launchModel.links.mission_patch_small, holder.binding.recycleItemImg2)
 
         val onLaunchClickListener = object : SpaceXLaunchAdapter.OnLaunchClickListener {

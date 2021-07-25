@@ -39,7 +39,7 @@
                     android:layout_height="100dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@tools:sample/avatars" />
@@ -98,8 +98,8 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="24dp"
-                    android:scaleType="centerCrop"
+                    android:layout_marginEnd="70dp"
+                    android:scaleType="fitCenter"
                     app:layout_constraintEnd_toStartOf="@+id/mission_year"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -109,29 +109,25 @@
                     android:id="@+id/mission_name"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="22dp"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.144"
                     tools:text="Falcon 9 Test Flight" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/mission_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="188dp"
                     android:textColor="#E1E1E1"
                     android:textSize="18sp"
+                    android:layout_marginEnd="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
                     app:layout_constraintTop_toBottomOf="@+id/mission_name"
-                    tools:text="2020" />
+                    tools:text="12/12/2020 20:20" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/status"
@@ -139,9 +135,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white_subtitle_color"
                     android:textSize="18sp"
+                    android:layout_marginEnd="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.151"
-                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
                     app:layout_constraintTop_toBottomOf="@+id/mission_year"
                     tools:text="Status : fail" />
 

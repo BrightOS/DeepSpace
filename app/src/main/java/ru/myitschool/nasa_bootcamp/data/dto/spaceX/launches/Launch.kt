@@ -13,12 +13,14 @@ class Launch( //MAIN
     @field:SerializedName("rocket") val rocket: Rocket,
     @field:SerializedName("upcoming") val upcoming: Boolean,
     @field:SerializedName("launch_success") val launch_success: Boolean,
+    @field:SerializedName("launch_date_unix")val launch_date_unix : Int,
     @field:SerializedName("details") val details: String,
     @field:SerializedName("launch_site") val launch_site: LaunchSite
 
 ) {
     public fun createLaunchModel(): SxLaunchModel {
         return SxLaunchModel(
+            launch_date_unix,
             flight_number,
             mission_name,
             launch_year,
