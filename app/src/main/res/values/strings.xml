@@ -11,6 +11,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="launches">Launches</string>
     <string name="explore">Explore</string>
+
     <string name="history">History</string>
     <string name="tesla_roadster">Tesla Roadster</string>
     <string name="where_is_starman">Where is Starman?</string>
@@ -23,4 +24,21 @@
     <string name="capsules_list">Capsules list</string>
     <string name="dragons">Dragons</string>
     <string name="how_it_all_started">How it all started</string>
+
+    <string name="email_or_username">email</string>
+    <string name="password">password</string>
+    <string name="login">sign in</string>
+    <string name="wrong_credits">wrong credentials</string>
+    <string name="notHaveAcc">not have account yet?</string>
+    <string name="register"><u>sign up</u></string>
+    <string name="auth">Authentication</string>
+    <string name="emptyField">this field must be filled</string>
+    <string name="userAlreadyRegistered">User already registered</string>
+    <string name="reg_title">Sign up</string>
+    <string name="send">send</string>
+    <string name="lastName">last name</string>
+    <string name="email">email</string>
+    <string name="passwordRepeatDontMatch">passwords isn\'t same</string>
+    <string name="invalidEmail">invalid email</string>
+    <string name="username">username</string>
 </resources>
