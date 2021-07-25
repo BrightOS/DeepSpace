@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0D131F"
 
     >
 
@@ -32,9 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nasa_view_pager"
         app:layout_constraintVertical_bias="0.988"
-        app:tabSelectedTextColor="@android:color/holo_blue_light"
-        app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
-        app:tabTextColor="@android:color/white">
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Small">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
