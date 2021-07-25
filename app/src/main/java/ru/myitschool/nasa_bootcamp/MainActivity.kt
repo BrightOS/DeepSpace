@@ -1,8 +1,11 @@
 package ru.myitschool.nasa_bootcamp
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -10,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 import ru.myitschool.nasa_bootcamp.databinding.NavHeaderMainBinding
 
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
+
 
         val navHeaderMainBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
         navHeaderMainBinding.signIn.setOnClickListener {

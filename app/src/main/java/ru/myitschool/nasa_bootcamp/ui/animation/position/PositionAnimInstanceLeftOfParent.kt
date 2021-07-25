@@ -1,8 +1,8 @@
-package ru.myitschool.nasa_bootcamp.ui.animation.core.position
+package ru.myitschool.nasa_bootcamp.ui.animation.position
 
 import android.view.View
 
-class PositionAnimInsnanceLeftOfParent : PositionAnimInsnance() {
+class PositionAnimInstanceLeftOfParent : PositionAnimInstance() {
     init {
         isForPositionX = true
     }
@@ -15,7 +15,8 @@ class PositionAnimInsnanceLeftOfParent : PositionAnimInsnance() {
         return null
     }
 }
-class PositionAnimInsnanceRightOfParent : PositionAnimInsnance() {
+
+class PositionAnimInstanceRightOfParent : PositionAnimInstance() {
 
     init {
         isForPositionX = true
@@ -25,7 +26,9 @@ class PositionAnimInsnanceRightOfParent : PositionAnimInsnance() {
         val viewParent = viewToMove.parent
         if (viewParent is View) {
             val parentView = viewParent as View
-            return parentView.width.toFloat() - getMargin(viewToMove) - viewRefresh!!.finalWidthOfView(viewToMove)
+            return parentView.width.toFloat() - getMargin(viewToMove) - viewRefresh!!.finalWidthOfView(
+                viewToMove
+            )
         }
         return null
     }

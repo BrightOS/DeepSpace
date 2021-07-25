@@ -1,11 +1,11 @@
-package ru.myitschool.nasa_bootcamp.ui.animation.core.position
+package ru.myitschool.nasa_bootcamp.ui.animation.position
 
 import android.view.View
 
-class PositionAnimInsnanceSameCenterAs(var otherView: View, private val horizontal: Boolean, private val vertical: Boolean)  : PositionAnimInsnance(){
+class PositionAnimInstanceSameCenterAs(val otherView: View, private val horizontal: Boolean, private val vertical: Boolean)
+    : PositionAnimInstance() {
 
     init {
-        viewsDependencies.add(otherView)
         isForPositionX = true
         isForPositionY = true
     }
@@ -16,8 +16,11 @@ class PositionAnimInsnanceSameCenterAs(var otherView: View, private val horizont
             val myWidth = viewToMove.width / 2f
             val hisWidth = viewRefresh!!.finalWidthOfView(otherView) / 2f
 
-            return if (myWidth > hisWidth) x - myWidth + hisWidth else x - hisWidth + myWidth
-
+            return if (myWidth > hisWidth) {
+                x - myWidth + hisWidth
+            } else {
+                x - hisWidth + myWidth
+            }
         } else
             return null
     }
@@ -28,8 +31,11 @@ class PositionAnimInsnanceSameCenterAs(var otherView: View, private val horizont
             val myHeight = viewToMove.height / 2f
             val hisHeight = viewRefresh!!.finalHeightOfView(otherView) / 2f
 
-            return if (myHeight > hisHeight) y + myHeight - hisHeight else y + hisHeight - myHeight
-
+            return if (myHeight > hisHeight) {
+                y + myHeight - hisHeight
+            } else {
+                y + hisHeight - myHeight
+            }
         } else
             return null
     }
