@@ -4,25 +4,31 @@ import android.view.View
 
 
 class ViewRefresh {
-    private val viewsForAnimating: MutableMap<View, ViewInstance> = mutableMapOf()
+    private val viewToChange: MutableMap<View, ViewInstance> = mutableMapOf()
 
-    fun setAnimatingForView(view: View, viewInstance: ViewInstance) {
-        viewsForAnimating.put(view, viewInstance)
+    fun setInstanceForView(view: View, viewInstance: ViewInstance) {
+        viewToChange.put(view, viewInstance)
     }
 
-
+    @JvmOverloads
     fun finalPositionLeftOfView(view: View, itsMe: Boolean = false): Float {
         var finalX: Float? = null
 
-        val viewExpectation = viewsForAnimating[view]
-        if (viewExpectation != null) {
-            val futurPositionX = viewExpectation.getFuturePositionX()
+        val anim = viewToChange[view]
+        if (anim != null) {
+            val futurPositionX = anim.getFuturPositionX()
             if (futurPositionX != null) {
                 finalX = futurPositionX
             }
         }
-        if (finalX == null) finalX = view.x
-        if (itsMe) finalX -= (view.width - this.finalWidthOfView(view)) / 2f
+
+        if (finalX == null) {
+            finalX = view.x
+        }
+
+        if (itsMe) {
+            finalX -= (view.width - this.finalWidthOfView(view)) / 2f
+        }
 
         return finalX
     }
@@ -31,46 +37,72 @@ class ViewRefresh {
         return finalPositionLeftOfView(view) + finalWidthOfView(view)
     }
 
-
+    @JvmOverloads
     fun finalPositionTopOfView(view: View, itsMe: Boolean = false): Float {
         var finalTop: Float? = null
 
-        val viewExpectation = viewsForAnimating[view]
-        if (viewExpectation != null) {
-            val futurPositionY = viewExpectation.getFuturePositionY()
+        val anim = viewToChange[view]
+        if (anim != null) {
+            val futurPositionY = anim.getFuturPositionY()
             if (futurPositionY != null) {
                 finalTop = futurPositionY
             }
         }
-        if (finalTop == null) finalTop = 1f * view.top
-        if (itsMe) finalTop -= (view.height - this.finalHeightOfView(view)) / 2f
+
+        if (finalTop == null) {
+            finalTop = 1f * view.top
+        }
+
+        if (itsMe) {
+            finalTop -= (view.height - this.finalHeightOfView(view)) / 2f
+        }
 
         return finalTop
     }
 
-    fun finalWidthOfView(view: View): Float {
-        var width = view.width.toFloat()
-        if (viewsForAnimating.containsKey(view)) {
-            val viewToAnimate = viewsForAnimating[view]
-            width = widthScaled(viewToAnimate!!, width)
-
-        }
-        return width
+    fun finalPositionBottomOfView(view: View): Float {
+        return finalPositionTopOfView(view) + finalHeightOfView(view)
     }
 
-    private fun widthScaled(viewInstance: ViewInstance, width: Float): Float {
+    fun finalCenterXOfView(view: View): Float {
+        return if (viewToChange.containsKey(view)) {
+            viewToChange[view]!!.getFuturPositionX()!! + finalWidthOfView(view) / 2f
+        } else {
+            view.left + view.width / 2f
+        }
+    }
+
+    fun finalCenterYOfView(view: View): Float {
+        return if (viewToChange.containsKey(view)) {
+            viewToChange[view]!!.getFuturPositionY()!! + finalHeightOfView(view) / 2f
+        } else {
+            view.top + view.height / 2f
+        }
+    }
+
+    fun finalWidthOfView(view: View): Float {
+        var with = view.width.toFloat()
+        if (viewToChange.containsKey(view)) {
+            val anim = viewToChange[view]
+            with = widthScaled(anim!!, view, with)
+        }
+        return with
+    }
+
+    private fun widthScaled(viewInstance: ViewInstance, view: View, width: Float): Float {
         var w = width
         val scaleX = viewInstance.getWillHasScaleX()
-        if (scaleX != 1f) w = scaleX * width
+        if (scaleX != 1f) {
+            w = scaleX * width
+        }
         return w
     }
 
     fun finalHeightOfView(view: View): Float {
         var height = view.height.toFloat()
-        if (viewsForAnimating.containsKey(view)) {
-            val viewExpectation = viewsForAnimating[view]
-
-            height = heightScaled(viewExpectation!!, view, height)
+        if (viewToChange.containsKey(view)) {
+            val anim = viewToChange[view]
+            height = heightScaled(anim!!, view, height)
         }
         return height
     }
