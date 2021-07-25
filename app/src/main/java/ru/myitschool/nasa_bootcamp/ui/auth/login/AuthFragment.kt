@@ -9,12 +9,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.coroutines.launch
+import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAuthBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.wrongCredits
@@ -98,6 +102,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun onSuccessLogin() {
+        (activity as MainActivity).changeHeader()
         findNavController().navigate(R.id.success_login)
     }
 
