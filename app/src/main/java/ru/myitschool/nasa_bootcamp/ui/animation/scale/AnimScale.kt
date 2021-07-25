@@ -1,15 +1,15 @@
-package ru.myitschool.nasa_bootcamp.ui.animation.core.scale
+package ru.myitschool.nasa_bootcamp.ui.animation.scale
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.view.Gravity
 import android.view.View
+import ru.myitschool.nasa_bootcamp.ui.animation.AnimInstance
 import ru.myitschool.nasa_bootcamp.ui.animation.ViewRefresh
-import ru.myitschool.nasa_bootcamp.ui.animation.core.AnimInstance
 
 class AnimScale(
     private val animInstances: List<AnimInstance>,
-    private val viewToMove: View,
+    private val viewToMove: View?,
     private val viewRefresh: ViewRefresh
 ) {
 
@@ -25,7 +25,7 @@ class AnimScale(
         get() {
             val animations = mutableListOf<Animator>()
 
-            viewToMove.let { viewToMove ->
+            viewToMove?.let { viewToMove ->
                 moveX?.let {
                     viewToMove.pivotX = it
                 }
@@ -46,21 +46,21 @@ class AnimScale(
         }
 
     fun update() {
-        viewToMove.let { viewToMove ->
+        viewToMove?.let { viewToMove ->
 
-            animInstances.forEach { animExpectation ->
-                if (animExpectation is ScaleAnimInstance) {
+            animInstances.forEach { anim ->
+                if (anim is ScaleInstance) {
 
-                    animExpectation.viewRefresh = viewRefresh
+                    anim.viewRefresh = viewRefresh
 
-                    animExpectation.getChangedValueScaleX(viewToMove)?.let {
+                    anim.getChangedValueScaleX(viewToMove)?.let {
                         this.scaleX = it
                     }
-                    animExpectation.getChangedValueScaleY(viewToMove)?.let {
+                    anim.getChangedValueScaleY(viewToMove)?.let {
                         this.scaleY = it
                     }
 
-                    animExpectation.gravityHorizontal?.let { gravityHorizontal ->
+                    anim.gravityHorizontal?.let { gravityHorizontal ->
                         when (gravityHorizontal) {
                             Gravity.LEFT, Gravity.START -> moveX = viewToMove.left.toFloat()
                             Gravity.RIGHT, Gravity.END -> moveX = viewToMove.right.toFloat()
@@ -68,7 +68,7 @@ class AnimScale(
                         }
                     }
 
-                    animExpectation.gravityVertical?.let { gravityVertical ->
+                    anim.gravityVertical?.let { gravityVertical ->
                         when (gravityVertical) {
                             Gravity.TOP -> moveY = viewToMove.top.toFloat()
                             Gravity.BOTTOM -> moveY = viewToMove.bottom.toFloat()

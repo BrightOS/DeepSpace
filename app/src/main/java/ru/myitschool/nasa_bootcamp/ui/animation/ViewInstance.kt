@@ -2,27 +2,24 @@ package ru.myitschool.nasa_bootcamp.ui.animation
 
 import android.animation.Animator
 import android.view.View
-import ru.myitschool.nasa_bootcamp.ui.animation.core.AnimInstance
-import ru.myitschool.nasa_bootcamp.ui.animation.core.Instance
-import ru.myitschool.nasa_bootcamp.ui.animation.core.position.AnimPosition
-import ru.myitschool.nasa_bootcamp.ui.animation.core.scale.AnimScale
+import ru.myitschool.nasa_bootcamp.ui.animation.alpha.AnimAlpha
+import ru.myitschool.nasa_bootcamp.ui.animation.attributes.AnimAttributes
+import ru.myitschool.nasa_bootcamp.ui.animation.position.AnimPosition
+import ru.myitschool.nasa_bootcamp.ui.animation.scale.AnimScale
 
-class ViewInstance internal constructor(
-    private val animation: SpaceAnimation,//анимация
-    internal val viewToAnimate: View //view для анимации
-) {
-    private val dependencies: MutableList<View> = mutableListOf()
+
+class ViewInstance internal constructor(private val updateAnim: SpaceAnimation, internal val viewToMove: View) {
     private val animations: MutableList<Animator> = mutableListOf()
     internal val animInstances: MutableList<AnimInstance> = mutableListOf()
 
     private var willHasScaleX: Float? = null
     private var willHasScaleY: Float? = null
-
     private var willHasPositionX: Float? = null
     private var willHasPositionY: Float? = null
+    
 
     private fun changePosition(viewRefresh: ViewRefresh) {
-        val manager = AnimPosition(animInstances, viewToAnimate, viewRefresh)
+        val manager = AnimPosition(animInstances, viewToMove, viewRefresh)
         manager.change()
         willHasPositionX = manager.getPositionX();
         willHasPositionY = manager.getPositionY();
@@ -30,62 +27,64 @@ class ViewInstance internal constructor(
     }
 
     private fun changeScale(viewRefresh: ViewRefresh) {
-        val manager = AnimScale(animInstances, viewToAnimate, viewRefresh)
+        val manager = AnimScale(animInstances, viewToMove, viewRefresh)
         manager.update()
         willHasScaleX = manager.scaleX
         willHasScaleY = manager.scaleY
         animations.addAll(manager.animators)
     }
 
+    private fun updateAlpha(viewRefresh: ViewRefresh) {
+        val manager = AnimAlpha(animInstances, viewToMove, viewRefresh)
+        manager.change()
+        animations.addAll(manager.getAnimators())
+    }
 
-    internal fun change(viewRefresh: ViewRefresh) {
+    private fun updatePaddings(viewRefresh: ViewRefresh) {
+        val manager = AnimAttributes(animInstances, viewToMove, viewRefresh)
+        manager.change()
+        animations.addAll(manager.getAnimators())
+    }
+
+    internal fun start(): SpaceAnimation {
+        return updateAnim.start()
+    }
+
+    internal fun setPercent(percent: Float) {
+        updateAnim.setPercent(percent)
+    }
+
+    internal fun update(viewRefresh: ViewRefresh) {
         changeScale(viewRefresh)
         changePosition(viewRefresh)
+        updateAlpha(viewRefresh)
+        updatePaddings(viewRefresh)
     }
 
     internal fun getAnimations(): List<Animator> {
         return animations
     }
 
-    internal fun changeDependencies(): List<View> {
-        dependencies.clear()
-        for (animExpectation in animInstances) {
-            dependencies.addAll(animExpectation.viewsDependencies)
-        }
-        return dependencies
-    }
-
-    internal fun getDependencies(): List<View> {
-        return dependencies
-    }
-
     internal fun getWillHasScaleX(): Float {
-        return if (willHasScaleX != null) {
-            willHasScaleX!!
-        } else
-            1f
+        return if (willHasScaleX != null) willHasScaleX!! else 1f
     }
 
     internal fun getWillHasScaleY(): Float {
-        return if (willHasScaleY != null) {
-            willHasScaleY!!
-        } else {
-            1f
-        }
+        return if (willHasScaleY != null) willHasScaleY!! else 1f
     }
 
-    internal fun getFuturePositionX(): Float? {
+    internal fun getFuturPositionX(): Float? {
         return willHasPositionX
     }
 
-    internal fun getFuturePositionY(): Float? {
+    internal fun getFuturPositionY(): Float? {
         return willHasPositionY
     }
 
-    infix fun animateInto(block: Instance.() -> Unit): ViewInstance {
-        val instances = Instance(this.animation)
-        block.invoke(instances)
-        this.animInstances.addAll(instances.instances)
+    infix fun animateTo(block: Instance.() -> Unit): ViewInstance {
+        val anims = Instance()
+        block.invoke(anims)
+        this.animInstances.addAll(anims.instances)
         return this
     }
 }

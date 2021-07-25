@@ -38,11 +38,5 @@ class SpaceXLaunchViewHolder (val binding: LaunchItemBinding,
         }
     }
 
-    fun loadImage(url: String?) {
-        Glide.with(context)
-            .load(url)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(binding.recycleItemImg)
-    }
 
 }

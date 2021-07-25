@@ -22,67 +22,132 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
+             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/transparent_gray">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/info_layout_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/recycle_item_img"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="24dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toStartOf="@+id/mission_year"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/recycle_item_img2"
+                    android:layout_width="100dp"
+                    android:visibility="invisible"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/mission_name"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:textColor="@color/white"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.144"
-                tools:text="Falcon 9 Test Flight" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mission_name2"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.329"
+                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Falcon 9 Test Flight" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/mission_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="188dp"
-                android:textColor="#E1E1E1"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
-                app:layout_constraintTop_toBottomOf="@+id/mission_name"
-                tools:text="2020" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mission_year2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:textColor="#E1E1E1"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.104"
+                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img2"
+                    app:layout_constraintTop_toBottomOf="@+id/mission_name2"
+                    tools:text="2020" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#E1E1E1"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.148"
-                app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
-                app:layout_constraintTop_toBottomOf="@+id/mission_year"
-                tools:text="Status : fail" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/status2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:visibility="invisible"
+                    android:textColor="@color/white_subtitle_color"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img2"
+                    app:layout_constraintTop_toBottomOf="@+id/mission_year2"
+                    tools:text="Status : fail" />
 
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/default_layout_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/recycle_item_img"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="24dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toStartOf="@+id/mission_year"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mission_name"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.144"
+                    tools:text="Falcon 9 Test Flight" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/mission_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="188dp"
+                    android:textColor="#E1E1E1"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
+                    app:layout_constraintTop_toBottomOf="@+id/mission_name"
+                    tools:text="2020" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white_subtitle_color"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.151"
+                    app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
+                    app:layout_constraintTop_toBottomOf="@+id/mission_year"
+                    tools:text="Status : fail" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.cardview.widget.CardView>
 

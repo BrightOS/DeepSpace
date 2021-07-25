@@ -1,8 +1,8 @@
-package ru.myitschool.nasa_bootcamp.ui.animation.core.position
+package ru.myitschool.nasa_bootcamp.ui.animation.position
 
 import android.view.View
 
-class PositionAnimInsnanceTopOfParent : PositionAnimInsnance() {
+class PositionAnimInstanceTopOfParent : PositionAnimInstance() {
 
     init {
         isForPositionY = true

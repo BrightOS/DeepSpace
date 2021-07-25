@@ -1,15 +1,19 @@
-package ru.myitschool.nasa_bootcamp.ui.animation.core.position
+package ru.myitschool.nasa_bootcamp.ui.animation.position
 
 import android.view.View
-import ru.myitschool.nasa_bootcamp.ui.animation.core.AnimInstance
-import ru.myitschool.nasa_bootcamp.ui.animation.core.pixelConverters
+import ru.myitschool.nasa_bootcamp.ui.animation.AnimInstance
+import ru.myitschool.nasa_bootcamp.ui.animation.PixelConverters
 
-abstract class PositionAnimInsnance : AnimInstance() {
+abstract class PositionAnimInstance : AnimInstance() {
 
     var isForPositionY: Boolean = false
+        protected set
     var isForPositionX: Boolean = false
+        protected set
     var isForTranslationX: Boolean = false
+        protected set
     var isForTranslationY: Boolean = false
+        protected set
 
     var margin: Float? = null
     var marginDp: Float? = null
@@ -20,7 +24,7 @@ abstract class PositionAnimInsnance : AnimInstance() {
     fun getMargin(view: View): Float {
         return when {
             this.margin != null -> this.margin!!
-            this.marginDp != null -> pixelConverters.dpToPx(view.context, marginDp!!)
+            this.marginDp != null -> PixelConverters.dpToPx(view.context, marginDp!!)
             else -> 0f
         }
     }

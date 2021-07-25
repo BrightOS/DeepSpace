@@ -3,13 +3,15 @@ package ru.myitschool.nasa_bootcamp.ui.animation
 import android.animation.*
 import android.view.View
 import android.view.animation.Interpolator
+import android.view.animation.LinearInterpolator
 import java.util.concurrent.atomic.AtomicBoolean
 
-//Анимайия
 class SpaceAnimation {
 
-    private val instanceList: MutableList<ViewInstance> = mutableListOf() //Список view для анимации
+    private val instanceList: MutableList<ViewInstance> = mutableListOf()
     private var anyView: View? = null
+
+    private var startDelay: Long = 5
 
     private val viewToMove: MutableList<View> = mutableListOf()
     private val viewRefresh: ViewRefresh = ViewRefresh()
@@ -21,51 +23,60 @@ class SpaceAnimation {
     private val isPlaying = AtomicBoolean(false)
 
     private var interpolator: Interpolator? = null
-    private var duration: Long = 300L
+    private var duration: Long = DEFAULT_DURATION
 
-    fun animate(view: View): ViewInstance {
+    private var firstAnim: SpaceAnimation? = null
+    private var nextAnim: SpaceAnimation? = null
+
+    fun animate(
+        view: View,
+        block: (Instance.() -> Unit)? = null
+    ): ViewInstance {
         this.anyView = view
 
         val viewInstance = ViewInstance(this, view)
         instanceList.add(viewInstance)
 
-
-        return viewInstance
-
+        if (block != null) {
+            return viewInstance.animateTo(block)
+        } else {
+            return viewInstance
+        }
     }
 
     private fun update(): SpaceAnimation {
         if (animatorSet == null) {
             animatorSet = AnimatorSet()
-            animatorSet!!.interpolator = interpolator
+
+            if (interpolator != null) {
+                animatorSet!!.interpolator = interpolator
+            }
+
             animatorSet!!.duration = duration
 
             val animatorList = mutableListOf<Animator>()
 
-            val expectationsToCalculate = mutableListOf<ViewInstance>()
+            val upcomingAnimations = mutableListOf<ViewInstance>()
 
-            instanceList.forEach { viewInstance ->
-                viewInstance.changeDependencies()
-                viewToMove.add(viewInstance.viewToAnimate)
-                expectationsToCalculate.add(viewInstance)
+            instanceList.forEach { anim ->
+                viewToMove.add(anim.viewToMove)
+                upcomingAnimations.add(anim)
 
-                viewRefresh.setAnimatingForView(viewInstance.viewToAnimate, viewInstance)
+                viewRefresh.setInstanceForView(anim.viewToMove, anim)
             }
 
-            while (!expectationsToCalculate.isEmpty()) {
-                val iterator = expectationsToCalculate.iterator()
+            while (!upcomingAnimations.isEmpty()) {
+                val iterator = upcomingAnimations.iterator()
                 while (iterator.hasNext()) {
-                    val viewInstance = iterator.next()
+                    val viewExpectation = iterator.next()
 
-                    if (!hasDependency(viewInstance)) {
-                        viewInstance.change(viewRefresh)
-                        animatorList.addAll(viewInstance.getAnimations())
+                    viewExpectation.update(viewRefresh)
+                    animatorList.addAll(viewExpectation.getAnimations())
 
-                        val view = viewInstance.viewToAnimate
-                        viewToMove.remove(view)
+                    val view = viewExpectation.viewToMove
+                    viewToMove.remove(view)
 
-                        iterator.remove()
-                    }
+                    iterator.remove()
                 }
             }
 
@@ -102,17 +113,11 @@ class SpaceAnimation {
         }
     }
 
-    private fun hasDependency(viewInstance: ViewInstance): Boolean {
-        val dependencies = viewInstance.getDependencies()
-        if (!dependencies.isEmpty()) {
-            for (view in viewToMove) {
-                if (dependencies.contains(view)) {
-                    return true
-                }
-            }
-        }
-        return false
+    fun setStartDelay(startDelay: Long): SpaceAnimation {
+        this.startDelay = startDelay
+        return this
     }
+
 
     fun setPercent(percent: Float) {
         update()
@@ -125,6 +130,26 @@ class SpaceAnimation {
         }
     }
 
+    fun isPlaying(): Boolean {
+        return isPlaying.get()
+    }
+
+    fun now() {
+        executeAfterDraw(anyView, Runnable { setPercent(1f) })
+    }
+
+    fun executeAfterDraw(view: View?, runnable: Runnable) {
+        view?.postDelayed(runnable, Math.max(5, startDelay))
+    }
+
+    fun reset() {
+        val objectAnimator = ObjectAnimator.ofFloat(this, "percent", 1f, 0f)
+        objectAnimator.duration = duration
+        if (interpolator != null) {
+            objectAnimator.interpolator = interpolator
+        }
+        objectAnimator.start()
+    }
 
     fun setInterpolator(interpolator: Interpolator): SpaceAnimation {
         this.interpolator = interpolator
@@ -136,4 +161,56 @@ class SpaceAnimation {
         return this
     }
 
+    fun withEndAction(listener: (SpaceAnimation) -> Unit): SpaceAnimation {
+        this.endListeners.add(listener)
+        return this
+    }
+
+    fun withStartAction(listener: (SpaceAnimation) -> Unit): SpaceAnimation {
+        this.startListeners.add(listener)
+        return this
+    }
+
+    fun thenCouldYou(
+        duration: Long = 300L,
+        interpolator: Interpolator = LinearInterpolator(),
+        block: (SpaceAnimation.() -> Unit)
+    ): SpaceAnimation {
+        val pleaseAnim = SpaceAnimation()
+        pleaseAnim.setDuration(duration)
+        pleaseAnim.setInterpolator(interpolator)
+        if (this.firstAnim == null) {
+            this.firstAnim = this
+        }
+        pleaseAnim.firstAnim = this.firstAnim
+        block.invoke(pleaseAnim)
+
+        this.nextAnim = pleaseAnim
+
+        withEndAction { PleaseAnim@ this.nextAnim?.startThen() }
+
+        return pleaseAnim
+    }
+
+    private fun startThen() {
+        executeAfterDraw(anyView, Runnable {
+            update()
+            animatorSet!!.start()
+        })
+    }
+
+    fun start(): SpaceAnimation {
+        if (this.firstAnim != null) {
+            this.firstAnim?.startThen()
+        } else {
+            this.startThen()
+        }
+        return this
+    }
+
+    companion object {
+
+        private val DEFAULT_DURATION = 300L
+
+    }
 }

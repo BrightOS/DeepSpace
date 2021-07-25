@@ -1,12 +1,8 @@
-package ru.myitschool.nasa_bootcamp.ui.animation.core.scale
+package ru.myitschool.nasa_bootcamp.ui.animation.scale
 
 import android.view.View
 
-class ScaleAnimInstanceHeight(
-    private var height: Int,
-    gravityHorizontal: Int?,
-    gravityVertical: Int?
-) : ScaleAnimInstance(gravityHorizontal, gravityVertical) {
+class ScaleInstanceHeight(private var height: Int, gravityHorizontal: Int?, gravityVertical: Int?) : ScaleInstance(gravityHorizontal, gravityVertical) {
 
     override fun getChangedValueScaleX(viewToMove: View): Float? {
         return if (keepRatio) {
@@ -17,7 +13,7 @@ class ScaleAnimInstanceHeight(
     override fun getChangedValueScaleY(viewToMove: View): Float {
 
         if (toDp) {
-            this.height = dpToPixels(this.height.toFloat(), viewToMove)
+            this.height = dpToPx(this.height.toFloat(), viewToMove)
         }
 
         val viewToMoveHeight = viewToMove.height
