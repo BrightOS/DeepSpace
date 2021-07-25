@@ -11,4 +11,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="launches">Launches</string>
     <string name="explore">Explore</string>
+    <string name="history">History</string>
+    <string name="tesla_roadster">Tesla Roadster</string>
+    <string name="where_is_starman">Where is Starman?</string>
+    <string name="dragon_space_capsules">Dragon space capsules</string>
+    <string name="all_spacex_capsules_list">All SpaceX capsules list</string>
+    <string name="cores_used_in_spacex_aircrafts">Cores used in SpaceX aircrafts</string>
+    <string name="where_does_spacex_aircrafts_land_on">Where does SpaceX aircrafts land on?</string>
+    <string name="launching_and_landing_pads">Launching and Landing pads</string>
+    <string name="cores">Cores</string>
+    <string name="capsules_list">Capsules list</string>
+    <string name="dragons">Dragons</string>
+    <string name="how_it_all_started">How it all started</string>
 </resources>

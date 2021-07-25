@@ -28,6 +28,8 @@ class SpaceXFragment : Fragment() {
     private var _binding: FragmentSpacexBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var onLaunchClick: SpaceXLaunchAdapter.OnLaunchClickListener
+
 
     internal var h: Int = 0
 
@@ -37,70 +39,80 @@ class SpaceXFragment : Fragment() {
         launchesViewModel.viewModelScope.launch {
             launchesViewModel.getSpaceXLaunches()
         }
+
+//        onLaunchClick = object : SpaceXLaunchAdapter.OnLaunchClickListener {
+//            override fun onLaunchClick(launch: SxLaunchModel?, position: Int) {
+//                Log.d("LAUNCH_CLICK_TAG", "Clicked at $position")
+//            }
+//        }
     }
 
 
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View {
+            _binding = FragmentSpacexBinding.inflate(inflater, container, false)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSpacexBinding.inflate(inflater, container, false)
+            h = resources.getDimensionPixelOffset(R.dimen.height)
 
-        h = resources.getDimensionPixelOffset(R.dimen.height)
+            val animation = animateIt {
+                animate(binding.spaceXLogo) animateTo {
+                    topOfItsParent(marginDp = 15f)
+                    leftOfItsParent(marginDp = 10f)
+                    scale(0.8f, 0.8f)
+                }
 
-        val animation = animateIt {
-            animate(binding.spaceXLogo) animateInto {
-                topOfItsParent(marginDp = 15f)
-                leftOfItsParent(marginDp = 10f)
-                scale(0.8f, 0.8f)
+                animate(binding.launches) animateTo {
+                    rightOf(binding.spaceXLogo, marginDp = 1f)
+                    sameCenterVerticalAs(binding.spaceXLogo)
+                }
+
+                animate(binding.explore) animateTo {
+                    rightOfItsParent(marginDp = 20f)
+                    sameCenterVerticalAs(binding.spaceXLogo)
+                }
+
+                animate(binding.background) animateTo {
+                    height(h, horizontalGravity = Gravity.LEFT, verticalGravity = Gravity.TOP)
+                }
             }
 
-            animate(binding.launches) animateInto {
-                rightOf(binding.spaceXLogo, marginDp = 1f)
-                sameCenterVerticalAs(binding.spaceXLogo)
+
+            binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+                val percent = scrollY * 1f / v.maxScrollAmount
+                animation.setPercent(percent)
+            })
+
+            val navController = findNavController()
+
+
+            binding.explore.setOnClickListener(View.OnClickListener {
+                val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
+                navController.navigate(action)
+            })
+
+            binding.launchesRecycle.setHasFixedSize(true)
+            binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)
+
+            launchesViewModel.viewModelScope.launch {
+                launchesViewModel.getSpaceXLaunches()
             }
 
-            animate(binding.explore) animateInto {
-                rightOfItsParent(marginDp = 20f)
-                sameCenterVerticalAs(binding.spaceXLogo)
-            }
 
-            animate(binding.background) animateInto {
-                height(h, horizontalGravity = Gravity.LEFT, verticalGravity = Gravity.TOP)
-            }
+
+            launchesViewModel.launchesModelsList.observe(viewLifecycleOwner, Observer {
+                Log.d("SpaceX_Fragment_TAG", "Something changed in view model!")
+                spaceXLaunchAdapter =
+                    SpaceXLaunchAdapter(
+                        requireContext(),
+                        launchesViewModel.launchesModelsList.value!!
+                    )
+                binding.launchesRecycle.adapter = spaceXLaunchAdapter
+            })
+
+
+            return binding.root
         }
-
-
-        binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
-            val percent = scrollY * 1f / v.maxScrollAmount
-            animation.setPercent(percent)
-        })
-
-        val navController = findNavController()
-
-
-        binding.explore.setOnClickListener(View.OnClickListener {
-            val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
-            navController.navigate(action)
-        })
-
-        binding.launchesRecycle.setHasFixedSize(true)
-        binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)
-
-        launchesViewModel.viewModelScope.launch {
-            launchesViewModel.getSpaceXLaunches()
-        }
-
-
-        launchesViewModel.launchesModelsList.observe(viewLifecycleOwner, Observer {
-            Log.d("SpaceX_Fragment_TAG", "Something changed in view model!")
-            spaceXLaunchAdapter = SpaceXLaunchAdapter(requireContext(), launchesViewModel.launchesModelsList.value!!)
-            binding.launchesRecycle.adapter = spaceXLaunchAdapter
-        })
-
-
-        return binding.root
     }
-}
