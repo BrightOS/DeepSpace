@@ -11,6 +11,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userAvatar"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:background="@drawable/circle"
@@ -21,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="log in"
+        android:text="@string/log_in"
         android:textAllCaps="true"
         android:layout_marginLeft="2dp"
         android:textColor="#D1D1D1"

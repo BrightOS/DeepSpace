@@ -1,25 +1,35 @@
 package ru.myitschool.nasa_bootcamp.ui.auth.reg
 
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.edit
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.launch
+import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentRegBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Extensions.checkForErrors
 import ru.myitschool.nasa_bootcamp.utils.invalidEmail
 import ru.myitschool.nasa_bootcamp.utils.userAlreadyRegistered
+import java.io.IOException
 
 class RegFragment : Fragment() {
-    private lateinit var viewModel: RegViewModel
+    private val PICK_IMAGE_REQUEST = 71
+    private var imagePath: Uri? = null
+
+    private lateinit var viewModel: RegViewModelImpl
+    private lateinit var interactionResult: ActivityResultLauncher<Intent>
 
     private var _binding: FragmentRegBinding? = null
     private val binding get() = _binding!!
@@ -30,8 +40,15 @@ class RegFragment : Fragment() {
     ): View {
         _binding = FragmentRegBinding.inflate(inflater, container, false)
 
-        //TODO: create view model
-        viewModel = ViewModelProvider(this).get(RegViewModelImpl::class.java)
+        viewModel = RegViewModelImpl()
+        // viewModel = ViewModelProvider(this).get(RegViewModelImpl::class.java)
+        interactionResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                println("In")
+                if (it.resultCode == Activity.RESULT_OK) {
+                    setImage(it.data)
+                }
+            }
 
         return binding.root
     }
@@ -50,51 +67,67 @@ class RegFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        binding.imageView.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            intent.putExtra("requestCode", PICK_IMAGE_REQUEST)
+            interactionResult.launch(Intent.createChooser(intent, "Select avatar"))
+        }
+
         binding.buttonSend.setOnClickListener {
-            if(!loading){
+            if (!loading) {
                 binding.progressBar.visibility = View.VISIBLE
                 binding.textError.visibility = View.GONE
                 loading = true
 
                 var fieldsValidation = true
 
-                if(binding.textName.text.isNullOrBlank()){
+                if (binding.textName.text.isNullOrBlank()) {
                     fieldsValidation = false
                     binding.textLayoutName.error = getString(R.string.emptyField)
                 }
 
-                if(binding.textEmail.text.isNullOrBlank()){
+                if (binding.textEmail.text.isNullOrBlank()) {
                     fieldsValidation = false
                     binding.textInputLayoutEmail.error = getString(R.string.emptyField)
                 }
-                if(binding.textPassword.text.isNullOrBlank()){
+                if (binding.textPassword.text.isNullOrBlank()) {
                     fieldsValidation = false
                     binding.textLayoutPassword.error = getString(R.string.emptyField)
                 }
 
-                if(binding.textPasswordRepeat.text.toString() != binding.textPassword.text.toString()){
+                if (binding.textPasswordRepeat.text.toString() != binding.textPassword.text.toString()) {
                     fieldsValidation = false
-                    binding.textLayoutPasswordRepeat.error = getString(R.string.passwordRepeatDontMatch)
+                    binding.textLayoutPasswordRepeat.error =
+                        getString(R.string.passwordRepeatDontMatch)
                 }
 
-                if(fieldsValidation){
+                if (fieldsValidation) {
                     val userName = binding.textName.text.toString()
                     val password = binding.textPassword.text.toString()
 
-                    viewModel.register(userName, binding.textEmail.text.toString(), password).observe(viewLifecycleOwner){
-                        binding.progressBar.visibility = View.GONE
-                        loading = false
+                    viewModel.viewModelScope.launch {
+                        viewModel.createUser(
+                            userName,
+                            binding.textEmail.text.toString(),
+                            password,
+                            imagePath
+                        ).observe(viewLifecycleOwner) {
+                            binding.progressBar.visibility = View.GONE
+                            loading = false
 
-                        when(it){
-                            is Data.Ok ->{
-                                successRegister()
-                            }
-                            is Data.Error -> {
-                                showError(it.message)
+                            when (it) {
+                                is Data.Ok -> {
+                                    successRegister()
+                                }
+                                is Data.Error -> {
+                                    showError(it.message)
+                                }
                             }
                         }
                     }
-                }else{
+                } else {
                     loading = false
                     binding.progressBar.visibility = View.GONE
                 }
@@ -102,12 +135,28 @@ class RegFragment : Fragment() {
         }
     }
 
-    private fun successRegister(){
+    private fun successRegister() {
         binding.textError.visibility = View.GONE
+        (activity as MainActivity).changeHeader()
         findNavController().navigate(R.id.success_reg)
 
     }
-    private fun showError(error: String){
+
+    private fun setImage(data: Intent?) {
+        try {
+            val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, data?.data)
+            binding.imageView.setImageBitmap(bitmap)
+            imagePath = data?.data
+        } catch (e: IOException) {
+            Toast.makeText(
+                requireContext(),
+                "Please, try another photo! (${e.message})",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun showError(error: String) {
         when (error) {
             userAlreadyRegistered -> {
                 binding.textError.visibility = View.VISIBLE
