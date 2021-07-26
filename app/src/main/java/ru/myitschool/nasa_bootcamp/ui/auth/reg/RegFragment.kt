@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
+import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentRegBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
@@ -136,6 +137,7 @@ class RegFragment : Fragment() {
 
     private fun successRegister() {
         binding.textError.visibility = View.GONE
+        (activity as MainActivity).changeHeader()
         findNavController().navigate(R.id.success_reg)
 
     }
