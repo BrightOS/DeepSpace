@@ -6,7 +6,8 @@ import ru.myitschool.nasa_bootcamp.ui.animation.AnimInstance
 import ru.myitschool.nasa_bootcamp.ui.animation.AnimManager
 import ru.myitschool.nasa_bootcamp.ui.animation.ViewRefresh
 
-class AnimAttributes(animInstances: List<AnimInstance>, viewToMove: View, viewRefresh: ViewRefresh) : AnimManager(animInstances, viewToMove, viewRefresh) {
+class AnimAttributes(animInstances: List<AnimInstance>, viewToMove: View, viewRefresh: ViewRefresh)
+    : AnimManager(animInstances, viewToMove, viewRefresh) {
 
     val animations: MutableList<Animator> = mutableListOf()
 

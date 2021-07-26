@@ -1,29 +1,53 @@
-package ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids
+package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
-import org.json.JSONObject
+import android.util.Log
+import com.google.gson.JsonObject
+import ru.myitschool.nasa_bootcamp.data.model.AsteroidModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-fun parseAsteroidsFromJson(jsonResult: JSONObject): ArrayList<Asteroid> {
-    val near_earth_objects = jsonResult.getJSONObject("near_earth_objects")
-    val asteroidList = ArrayList<Asteroid>()
+fun parseAsteroidsJsonResult(jsonResult: JsonObject): ArrayList<AsteroidModel> {
 
-    for (formattedDate in formatWeek()) {
-        val dateAsteroidJsonArray = near_earth_objects.getJSONArray(formattedDate)
+    val asteroidList = ArrayList<AsteroidModel>()
+    val nextSevenDaysFormattedDates = getNextSevenDays()
 
-        for (i in 0 until dateAsteroidJsonArray.length()) {
-            val asteroidJson = dateAsteroidJsonArray.getJSONObject(i)
-            val close_approach = asteroidJson.getJSONArray("close_approach_data").getJSONObject(0)
+    for (formattedDate in nextSevenDaysFormattedDates) {
+        Log.d("Tag_parse", formattedDate)
 
-            val asteroid = Asteroid(asteroidJson.getLong("id"),
-                asteroidJson.getString("name"),
-                formattedDate,
-                asteroidJson.getDouble("absolute_magnitude_h"),
-                asteroidJson.getJSONObject("estimated_diameter").getJSONObject("kilometers").getDouble("estimated_diameter_max"),
-                close_approach.getJSONObject("relative_velocity").getDouble("kilometers_per_second"),
-                close_approach.getJSONObject("miss_distance").getDouble("astronomical"),
-                asteroidJson.getBoolean("is_potentially_hazardous_asteroid"))
+        val dateAsteroidJsonArray = jsonResult.get(formattedDate).asJsonArray
+
+        for (i in 0 until dateAsteroidJsonArray.size()) {
+            val asteroidJson: JsonObject = dateAsteroidJsonArray.get(i).asJsonObject
+
+
+            val id = asteroidJson.get("id").asLong
+            val name = asteroidJson.get("name").asString
+            val absoluteMagnitude = asteroidJson.get("absolute_magnitude_h").asDouble
+
+            val estimatedDiameter = asteroidJson.get("estimated_diameter").asJsonObject
+                .get("kilometers").asJsonObject.get("estimated_diameter_max").asDouble
+
+            val closeApproachData = asteroidJson
+                .get("close_approach_data").asJsonArray[0].asJsonObject
+
+            val relativeVelocity = closeApproachData.get("relative_velocity").asJsonObject
+                .get("kilometers_per_second").asDouble
+
+            val distanceFromEarth = closeApproachData.get("miss_distance").asJsonObject
+                .get("astronomical").asDouble
+
+            val danger = asteroidJson.get("is_potentially_hazardous_asteroid").asBoolean
+
+            val asteroid = AsteroidModel(
+                id,
+                name,
+                absoluteMagnitude,
+                estimatedDiameter,
+                relativeVelocity,
+                distanceFromEarth,
+                danger
+            )
             asteroidList.add(asteroid)
         }
     }
@@ -31,28 +55,29 @@ fun parseAsteroidsFromJson(jsonResult: JSONObject): ArrayList<Asteroid> {
     return asteroidList
 }
 
-private fun formatWeek(): ArrayList<String> {
-    val formattedDateList = ArrayList<String>()
+private fun getNextSevenDays(): ArrayList<String> {
+    val dateList = ArrayList<String>()
 
     val calendar = Calendar.getInstance()
     for (i in 0..7) {
         val currentTime = calendar.time
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        formattedDateList.add(dateFormat.format(currentTime))
+        dateList.add(dateFormat.format(currentTime))
         calendar.add(Calendar.DAY_OF_YEAR, 1)
     }
 
-    return formattedDateList
+    return dateList
 }
 
-fun formatToday(): String {
-    val currentTime = Calendar.getInstance().time
+fun getTodayDateFormatted(): String {
+    val calendar = Calendar.getInstance()
+    val currentTime = calendar.time
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     return dateFormat.format(currentTime)
 }
 
-fun upcomingWeekFormatted(): String {
-    val calendar =  Calendar.getInstance()
+fun getPlusSevenDaysDateFormatted(): String {
+    val calendar = Calendar.getInstance()
     calendar.add(Calendar.DAY_OF_YEAR, 7)
     val currentTime = calendar.time
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

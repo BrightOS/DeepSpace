@@ -5,6 +5,7 @@ import com.example.firstkotlinapp.model.rovers.Rovers
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids.Asteroid
 import ru.myitschool.nasa_bootcamp.utils.API_KEY
 
 interface NasaApi {
@@ -27,5 +28,5 @@ interface NasaApi {
         @Query("start_date") startDate: String,
         @Query("end_date") endDate: String,
         @Query("api_key") apiKey: String = API_KEY
-    ): String
+    ): Response<Asteroid>
 }
