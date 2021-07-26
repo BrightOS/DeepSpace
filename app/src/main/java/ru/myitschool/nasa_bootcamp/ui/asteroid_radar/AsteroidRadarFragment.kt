@@ -22,7 +22,8 @@ class AsteroidRadarFragment : Fragment() {
 
     private var _binding: FragmentAsteroidRadarBinding? = null
 
-    //private val viewModel: AsteroidRadarViewModel by viewModels<AsteroidRadarViewModelImpl>()
+    // private val asteroidViewModel: AsteroidRadarViewModel by viewModels<AsteroidRadarViewModelImpl>()
+
     private lateinit var asteroidAdapter: AsteroidAdapter
     private val binding get() = _binding!!
 

@@ -7,7 +7,5 @@ import com.google.firebase.auth.FirebaseUser
 import ru.myitschool.nasa_bootcamp.utils.Data
 
 interface RegViewModel {
-
-
     suspend fun createUser(userName: String, email: String, password: String, imagePath: Uri?): LiveData<Data<out FirebaseUser>>
 }
