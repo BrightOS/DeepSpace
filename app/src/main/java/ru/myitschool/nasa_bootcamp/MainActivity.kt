@@ -1,10 +1,8 @@
 package ru.myitschool.nasa_bootcamp
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -13,33 +11,34 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.coroutines.launch
+import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 import ru.myitschool.nasa_bootcamp.databinding.NavHeaderMainBinding
+import ru.myitschool.nasa_bootcamp.utils.Data
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navHeaderMainBinding: NavHeaderMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         navController = navHostFragment.navController
 
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         binding.navView.setupWithNavController(navController)
 
-
-        val navHeaderMainBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
-        navHeaderMainBinding.signIn.setOnClickListener {
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-            findNavController(R.id.nav_host_fragment).navigate(R.id.login)
-        }
+        navHeaderMainBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
+        changeHeader()
     }
 
 
@@ -62,4 +61,33 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.openDrawer(GravityCompat.START)
     }
 
+    fun changeHeader() {
+        val mFirebaseUser = MFirebaseUser()
+        if (mFirebaseUser.isUserAuthenticated()) {
+            mFirebaseUser.viewModelScope.launch {
+                mFirebaseUser.getUserAvatar().observe(this@MainActivity) {
+                    when (it) {
+                        is Data.Ok -> {
+                            navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
+                        }
+                        is Data.Error -> {
+                            navHeaderMainBinding.userAvatar.setImageBitmap(null)
+                        }
+                    }
+                }
+            }
+            navHeaderMainBinding.signIn.text = getString(R.string.sign_out)
+            navHeaderMainBinding.signIn.setOnClickListener {
+                mFirebaseUser.signOutUser()
+                changeHeader()
+            }
+        } else {
+            navHeaderMainBinding.userAvatar.setImageBitmap(null)
+            navHeaderMainBinding.signIn.text = getString(R.string.log_in)
+            navHeaderMainBinding.signIn.setOnClickListener {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                findNavController(R.id.nav_host_fragment).navigate(R.id.login)
+            }
+        }
+    }
 }
