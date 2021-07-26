@@ -23,7 +23,6 @@ class AsteroidAdapter internal constructor(
     RecyclerView.Adapter<AsteroidViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidViewHolder {
-        Log.d("Tag_2021", "CREATING")
 
         return AsteroidViewHolder(
             AsteroidItemBinding.inflate(
@@ -39,8 +38,7 @@ class AsteroidAdapter internal constructor(
     override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) {
         val asteroid: AsteroidModel = asteroids[position]
         holder.binding.asteroidName.text = asteroid.name
-
-        Log.d("Tag_2021", "HERE")
+        holder.binding.diametr.text = "Estimated diametr: ${asteroid.estimated_diameter.kilometers.estimated_diameter_max}"
     }
 
     override fun getItemCount(): Int {

@@ -6,9 +6,11 @@ import ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids.Diametr
 import ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids.Today
 
 data class AsteroidModel(
-    val id: Int,
+    val id: Long,
     val name: String,
-    val estimated_diameter: Diametr,
-    val dangerous: Boolean,
-    val close_approach_data: ArrayList<CloaseApproachData>
+    val absolute_magnitude : Double,
+    val estimatedDiameter : Double,
+    val relativeVelocity : Double,
+    val distanceFromEarth: Double,
+    val potncialDanger : Boolean
 )

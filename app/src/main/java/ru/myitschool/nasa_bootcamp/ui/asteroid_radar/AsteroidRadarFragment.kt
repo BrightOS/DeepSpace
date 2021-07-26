@@ -18,7 +18,7 @@ import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModelImpl
 
 @AndroidEntryPoint
 class AsteroidRadarFragment : Fragment() {
-    private val asteroidViewModel: AsteroidRadarViewModelImpl by viewModels()
+   private val asteroidViewModel: AsteroidRadarViewModelImpl by viewModels()
 
     private var _binding: FragmentAsteroidRadarBinding? = null
    //private val viewModel: AsteroidRadarViewModel by viewModels<AsteroidRadarViewModelImpl>()

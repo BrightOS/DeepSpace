@@ -78,7 +78,7 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun getAsteroidRepository(nasaApi: NasaApi, beginDate: String, endDate: String): AsteroidRepository2 {
-        return AsteroidRepository2Impl(nasaApi, beginDate, endDate)
+    fun getAsteroidRepository(nasaApi: NasaApi): AsteroidRepository2 {
+        return AsteroidRepository2Impl(nasaApi)
     }
 }
