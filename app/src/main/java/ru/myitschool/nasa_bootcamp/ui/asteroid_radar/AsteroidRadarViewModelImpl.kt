@@ -25,5 +25,8 @@ class AsteroidRadarViewModelImpl @Inject constructor(
         listOfAsteroids.value = list
     }
 
+    override fun getAsteroidListViewModel(): MutableLiveData<ArrayList<AsteroidModel>> {
+        return listOfAsteroids
+    }
 
 }
