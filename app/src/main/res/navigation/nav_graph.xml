@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/nasaFragment">
 
@@ -45,7 +46,50 @@
     <fragment
         android:id="@+id/exploreFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragment"
-        android:label="ExploreFragment" />
+        android:label="ExploreFragment" >
+        <action
+            android:id="@+id/action_exploreFragment_to_historyFragment"
+            app:destination="@id/historyFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_exploreFragment_to_capsulesFragment"
+            app:destination="@id/capsulesFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_exploreFragment_to_roadsterFragment"
+            app:destination="@id/roadsterFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_exploreFragment_to_coresFragment"
+            app:destination="@id/coresFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_exploreFragment_to_dragonsFragment"
+            app:destination="@id/dragonsFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_exploreFragment_to_launchLandFragment"
+            app:destination="@id/launchLandFragment"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/authFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.auth.login.AuthFragment"
@@ -75,4 +119,32 @@
             app:popUpToInclusive="true" />
     </fragment>
     <action android:id="@+id/login" app:destination="@id/authFragment" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.HistoryFragment"
+        android:label="HistoryFragment" />
+    <fragment
+        android:id="@+id/capsulesFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.capsules.CapsulesFragment"
+        android:label="fragment_capsules"
+        tools:layout="@layout/fragment_capsules" />
+    <fragment
+        android:id="@+id/roadsterFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.roadster.RoadsterFragment"
+        android:label="RoadsterFragment" />
+    <fragment
+        android:id="@+id/coresFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores.CoresFragment"
+        android:label="fragment_cores"
+        tools:layout="@layout/fragment_cores" />
+    <fragment
+        android:id="@+id/dragonsFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons.DragonsFragment"
+        android:label="fragment_dragons"
+        tools:layout="@layout/fragment_dragons" />
+    <fragment
+        android:id="@+id/launchLandFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.LaunchLandFragment"
+        android:label="fragment_launch_land"
+        tools:layout="@layout/fragment_launch_land" />
 </navigation>
