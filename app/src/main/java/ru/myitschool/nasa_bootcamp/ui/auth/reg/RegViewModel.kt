@@ -6,7 +6,5 @@ import com.google.firebase.auth.FirebaseUser
 import ru.myitschool.nasa_bootcamp.utils.Data
 
 interface RegViewModel {
-
-
     fun register(userName: String, email: String, password: String): LiveData<Data<out FirebaseUser>>
 }

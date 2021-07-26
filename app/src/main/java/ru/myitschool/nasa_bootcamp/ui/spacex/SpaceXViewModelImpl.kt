@@ -19,7 +19,7 @@ class SpaceXViewModelImpl @Inject constructor(private val repository : SpaceXLau
 
     var list: ArrayList<SxLaunchModel> = arrayListOf()
 
-    suspend fun getSpaceXLaunches(){
+    override suspend fun getSpaceXLaunches(){
 
         val response = repository.getSpaceXLaunches()
 
