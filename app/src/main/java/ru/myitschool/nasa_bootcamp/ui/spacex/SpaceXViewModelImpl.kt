@@ -40,5 +40,9 @@ class SpaceXViewModelImpl @Inject constructor(private val repository : SpaceXLau
         launchesModelsList.value = list
     }
 
+    override fun getLaunchesList(): MutableLiveData<ArrayList<SxLaunchModel>> {
+        return  launchesModelsList
+    }
+
 
 }
