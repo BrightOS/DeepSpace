@@ -1,41 +1,43 @@
 package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
-import org.json.JSONObject
+import android.util.Log
+import com.google.gson.JsonObject
 import ru.myitschool.nasa_bootcamp.data.model.AsteroidModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<AsteroidModel> {
-    val nearEarthObjectsJson = jsonResult.getJSONObject("near_earth_objects")
+fun parseAsteroidsJsonResult(jsonResult: JsonObject): ArrayList<AsteroidModel> {
 
     val asteroidList = ArrayList<AsteroidModel>()
-
     val nextSevenDaysFormattedDates = getNextSevenDays()
+
     for (formattedDate in nextSevenDaysFormattedDates) {
-        val dateAsteroidJsonArray = nearEarthObjectsJson.getJSONArray(formattedDate)
+        Log.d("Tag_parse", formattedDate)
 
-        for (i in 0 until dateAsteroidJsonArray.length()) {
-            val asteroidJson = dateAsteroidJsonArray.getJSONObject(i)
+        val dateAsteroidJsonArray = jsonResult.get(formattedDate).asJsonArray
+
+        for (i in 0 until dateAsteroidJsonArray.size()) {
+            val asteroidJson: JsonObject = dateAsteroidJsonArray.get(i).asJsonObject
 
 
-            val id = asteroidJson.getLong("id")
-            val name = asteroidJson.getString("name")
-            val absoluteMagnitude = asteroidJson.getDouble("absolute_magnitude_h")
+            val id = asteroidJson.get("id").asLong
+            val name = asteroidJson.get("name").asString
+            val absoluteMagnitude = asteroidJson.get("absolute_magnitude_h").asDouble
 
-            val estimatedDiameter = asteroidJson.getJSONObject("estimated_diameter")
-                .getJSONObject("kilometers").getDouble("estimated_diameter_max")
+            val estimatedDiameter = asteroidJson.get("estimated_diameter").asJsonObject
+                .get("kilometers").asJsonObject.get("estimated_diameter_max").asDouble
 
             val closeApproachData = asteroidJson
-                .getJSONArray("close_approach_data").getJSONObject(0)
+                .get("close_approach_data").asJsonArray[0].asJsonObject
 
-            val relativeVelocity = closeApproachData.getJSONObject("relative_velocity")
-                .getDouble("kilometers_per_second")
+            val relativeVelocity = closeApproachData.get("relative_velocity").asJsonObject
+                .get("kilometers_per_second").asDouble
 
-            val distanceFromEarth = closeApproachData.getJSONObject("miss_distance")
-                .getDouble("astronomical")
+            val distanceFromEarth = closeApproachData.get("miss_distance").asJsonObject
+                .get("astronomical").asDouble
 
-            val danger = asteroidJson.getBoolean("is_potentially_hazardous_asteroid")
+            val danger = asteroidJson.get("is_potentially_hazardous_asteroid").asBoolean
 
             val asteroid = AsteroidModel(
                 id,
@@ -54,17 +56,17 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<AsteroidModel> {
 }
 
 private fun getNextSevenDays(): ArrayList<String> {
-    val formattedDateList = ArrayList<String>()
+    val dateList = ArrayList<String>()
 
     val calendar = Calendar.getInstance()
     for (i in 0..7) {
         val currentTime = calendar.time
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        formattedDateList.add(dateFormat.format(currentTime))
+        dateList.add(dateFormat.format(currentTime))
         calendar.add(Calendar.DAY_OF_YEAR, 1)
     }
 
-    return formattedDateList
+    return dateList
 }
 
 fun getTodayDateFormatted(): String {

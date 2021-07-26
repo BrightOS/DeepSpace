@@ -3,6 +3,7 @@ package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 import android.util.Log
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.json.JSONObject
 import ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids.Asteroid
 import ru.myitschool.nasa_bootcamp.data.model.AsteroidModel
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
@@ -25,19 +26,8 @@ class AsteroidRadarViewModelImpl @Inject constructor(
 
 
     suspend fun getAsteroidList() {
-        Log.d("Tag_AAA", "Today : ${getPlusSevenDaysDateFormatted()}")
-
-
-        val response = repository.getAsteroids("2015-09-07","2015-09-08")
-
-        Log.d("Tag_AAA", "OBJ : ${response.body()!!.near_earth_objects}")
-
-
-//        for (asteroid in response.body()!!.near_earth_objects.date) {
-//            list.add(asteroid.createAsteroidModel())
-//            Log.d("Tag_AAA", asteroid.createAsteroidModel().name)
-//
-//        }
+        val response = repository.getAsteroids(getTodayDateFormatted(), getPlusSevenDaysDateFormatted())
+        list = parseAsteroidsJsonResult(response.body()!!.near_earth_objects)
 
         listOfAsteroids.value = list
     }

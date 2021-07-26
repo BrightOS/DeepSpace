@@ -18,11 +18,12 @@ import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModelImpl
 
 @AndroidEntryPoint
 class AsteroidRadarFragment : Fragment() {
-   private val asteroidViewModel: AsteroidRadarViewModelImpl by viewModels()
+    private val asteroidViewModel: AsteroidRadarViewModelImpl by viewModels()
 
     private var _binding: FragmentAsteroidRadarBinding? = null
-   //private val viewModel: AsteroidRadarViewModel by viewModels<AsteroidRadarViewModelImpl>()
-   private lateinit var asteroidAdapter: AsteroidAdapter
+
+    //private val viewModel: AsteroidRadarViewModel by viewModels<AsteroidRadarViewModelImpl>()
+    private lateinit var asteroidAdapter: AsteroidAdapter
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -40,8 +41,8 @@ class AsteroidRadarFragment : Fragment() {
         binding.asteroidList.layoutManager = GridLayoutManager(context, 1)
 
         asteroidViewModel.listOfAsteroids.observe(viewLifecycleOwner, Observer {
-            Log.d("Asteroid_Fragment_TAG", "Something changed in asteroid view model! ${asteroidViewModel.listOfAsteroids.value!![0].name}")
-            asteroidAdapter = AsteroidAdapter(requireContext(), asteroidViewModel.listOfAsteroids.value!!)
+            asteroidAdapter =
+                AsteroidAdapter(requireContext(), asteroidViewModel.listOfAsteroids.value!!)
             binding.asteroidList.adapter = asteroidAdapter
         })
 

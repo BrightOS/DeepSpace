@@ -38,7 +38,7 @@ class AsteroidAdapter internal constructor(
     override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) {
         val asteroid: AsteroidModel = asteroids[position]
         holder.binding.asteroidName.text = asteroid.name
-        holder.binding.diametr.text = "Estimated diametr: ${asteroid.estimated_diameter.kilometers.estimated_diameter_max}"
+        holder.binding.diametr.text = "Estimated diametr: ${asteroid.estimatedDiameter}"
     }
 
     override fun getItemCount(): Int {
