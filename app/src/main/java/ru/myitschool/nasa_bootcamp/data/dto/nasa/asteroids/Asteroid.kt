@@ -1,11 +1,13 @@
 package ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import com.google.gson.annotations.SerializedName
+import ru.myitschool.nasa_bootcamp.data.model.AsteroidModel
+
+class Asteroid(
+    @field:SerializedName("element_count") val element_count: Int,
+    @field:SerializedName("near_earth_objects") val near_earth_objects: Today
+){
 
 
-@Parcelize
-data class Asteroid(val id: Long, val codename: String, val close_approach_date: String,
-                    val absolute_magnitude: Double, val estimated_diameter: Double,
-                    val relative_velocity: Double, val distance_from_earth: Double,
-                    val is_dangerous: Boolean) : Parcelable
+}

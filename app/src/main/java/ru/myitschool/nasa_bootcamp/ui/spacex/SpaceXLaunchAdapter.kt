@@ -26,8 +26,6 @@ class SpaceXLaunchAdapter internal constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpaceXLaunchViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.launch_item, parent, false)
-
 
         return SpaceXLaunchViewHolder(
             LaunchItemBinding.inflate(
