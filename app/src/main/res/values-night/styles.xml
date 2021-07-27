@@ -24,15 +24,16 @@
 
     <style name="ExpandedAppBar" parent="@android:style/TextAppearance">
         <item name="android:textSize">50sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">#00000000</item>
     </style>
 
-    <style name="CollapsedRoverAppBar" parent="@android:style/TextAppearance">
+    <style name="CollapsedSpaceAppBar" parent="@android:style/TextAppearance">
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">@android:color/background_light</item>
     </style>
 
-    <style name="ExpandedRoverAppBar" parent="@android:style/TextAppearance">
+    <style name="ExpandedSpaceAppBar" parent="@android:style/TextAppearance">
         <item name="android:textSize">40sp</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>

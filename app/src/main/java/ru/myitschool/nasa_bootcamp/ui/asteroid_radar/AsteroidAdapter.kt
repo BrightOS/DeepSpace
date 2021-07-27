@@ -39,6 +39,10 @@ class AsteroidAdapter internal constructor(
         val asteroid: AsteroidModel = asteroids[position]
         holder.binding.asteroidName.text = asteroid.name
         holder.binding.diametr.text = "Estimated diametr: ${asteroid.estimatedDiameter}"
+        when(asteroid.potncialDanger){
+            true-> holder.binding.danger.text = "Dangerous :("
+            false->holder.binding.danger.text = "Friendly :)"
+        }
     }
 
     override fun getItemCount(): Int {
