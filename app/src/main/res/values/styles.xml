@@ -37,7 +37,14 @@
         <item name="android:textSize">40sp</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
+    </style>
 
+    <style name="SpaceButton" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardBackgroundColor">?cardBackgroundColor</item>
+        <item name="backgroundTint">?cardBackgroundColor</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
     </style>
 
 </resources>

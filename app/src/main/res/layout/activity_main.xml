@@ -6,12 +6,15 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="false"
+    android:background="?mainBackground"
+    tools:context=".MainActivity"
+    tools:openDrawer="start">
 
     <!-- Layout to contain contents of main body
     of screen (drawer will slide over this) -->
     <androidx.fragment.app.FragmentContainerView
+        android:fitsSystemWindows="true"
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
@@ -25,7 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/drawer_menu" />
 
