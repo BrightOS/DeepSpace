@@ -66,8 +66,8 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun getImageOfDayRepository(nasaApi: NasaApi): ImageOfDayRepository {
-        return ImageOfDayRepositoryImpl(nasaApi)
+    fun getNasaRepository(nasaApi: NasaApi): NasaRepository {
+        return NasaRepositoryImpl(nasaApi)
     }
 
     @Provides
@@ -76,9 +76,4 @@ object MainModule {
         return SpaceXLaunchRepositoryImpl(spaceXApi)
     }
 
-    @Provides
-    @Singleton
-    fun getAsteroidRepository(nasaApi: NasaApi): AsteroidRepository2 {
-        return AsteroidRepository2Impl(nasaApi)
-    }
 }
