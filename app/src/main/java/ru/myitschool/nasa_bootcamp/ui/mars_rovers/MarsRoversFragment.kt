@@ -23,6 +23,9 @@ class MarsRoversFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMarsRoversBinding.inflate(inflater, container, false)
+
+
+
         return binding.root
     }
 }

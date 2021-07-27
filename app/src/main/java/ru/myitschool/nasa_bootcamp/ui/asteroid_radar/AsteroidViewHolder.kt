@@ -12,7 +12,4 @@ import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 
 class AsteroidViewHolder (val binding: AsteroidItemBinding,
                               private val context: Context
-) : RecyclerView.ViewHolder(binding.root) {
-
-
-}
+) : RecyclerView.ViewHolder(binding.root)
