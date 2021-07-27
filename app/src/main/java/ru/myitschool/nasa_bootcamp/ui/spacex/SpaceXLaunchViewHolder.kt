@@ -15,7 +15,7 @@ import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 
 class SpaceXLaunchViewHolder (val binding: LaunchItemBinding,
                               private val context: Context) : RecyclerView.ViewHolder(binding.root) {
-
+    var expanded = false
 
     private val requestListener: RequestListener<Drawable> = object : RequestListener<Drawable> {
         override fun onLoadFailed(

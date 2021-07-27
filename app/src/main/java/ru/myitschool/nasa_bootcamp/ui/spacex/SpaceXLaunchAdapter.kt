@@ -1,6 +1,7 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.exp
 
 class SpaceXLaunchAdapter internal constructor(
     context: Context,
@@ -41,17 +43,6 @@ class SpaceXLaunchAdapter internal constructor(
     override fun onBindViewHolder(holder: SpaceXLaunchViewHolder, position: Int) {
         val launchModel: SxLaunchModel = launchs[position]
 
-        animateIt {
-            animate(holder.binding.infoLayoutItem) animateTo {
-                    invisible()
-            }
-        }.start()
-
-        holder.binding.missionName2.visibility = View.VISIBLE
-        holder.binding.missionYear2.visibility = View.VISIBLE
-        holder.binding.recycleItemImg2.visibility = View.VISIBLE
-        loadImage(context, launchModel.links.mission_patch_small, holder.binding.recycleItemImg)
-
 
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
         val date = Date(launchModel.launch_date_unix * 1000L)
@@ -59,54 +50,35 @@ class SpaceXLaunchAdapter internal constructor(
         holder.binding.missionName.setText(launchModel.mission_name)
         holder.binding.missionYear.setText("${sdf.format(date)}")
 
-        holder.binding.missionName2.setText(launchModel.mission_name)
-        holder.binding.missionYear2.setText("${sdf.format(date)}")
+        Log.d(
+            "MISSION",
+            "Mission patch is... ${launchModel.mission_name}  ${launchModel.links.mission_patch == null}"
+        )
 
-        loadImage(context, launchModel.links.mission_patch_small, holder.binding.recycleItemImg2)
+        if (launchModel.links.mission_patch != null)
+            loadImage(context, launchModel.links.mission_patch, holder.binding.recycleItemImg)
+        else loadImage(
+            context,
+            "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
+            holder.binding.recycleItemImg
+        )
+
 
         val onLaunchClickListener = object : SpaceXLaunchAdapter.OnLaunchClickListener {
             override fun onLaunchClick(launch: SxLaunchModel?, position: Int) {
-///
+
                 animateIt {
-                    animate(holder.binding.recycleItemImg) animateTo {
-                        if(holder.binding.recycleItemImg.paddingBottom < 50)
-                        paddingBottom(55f)
-                        else {
+                    animate(holder.binding.missionYear) animateTo {
+                        if (!holder.expanded) {
+                            paddingBottom(100f)
+                            holder.expanded = true
+                        } else {
                             paddingBottom(0f)
-                            marginLeft(55f)
+                            holder.expanded = false
                         }
                     }
-                    animate(holder.binding.missionName) animateTo {
-                        paddingBottom(32f)
-                    }
-
-                    animate( holder.binding.missionYear) animateTo {
-                        paddingLeft(24f)
-                        paddingRight(24f)
-                    }
                 }.start()
-
-                ///
-
-                animateIt(duration = 1000L) {
-                    animate(holder.binding.defaultLayoutItem) animateTo {
-                        if (holder.binding.defaultLayoutItem.visibility == View.VISIBLE)
-                            invisible()
-                        else visible()
-                    }
-                }.start()
-
-                animateIt {
-                    animate(holder.binding.infoLayoutItem) animateTo {
-                        if (holder.binding.infoLayoutItem.visibility == View.VISIBLE)
-                            invisible()
-                        else visible()
-                    }
-                }.start()
-
             }
-
-
         }
 
         holder.itemView.setOnClickListener(View.OnClickListener {
