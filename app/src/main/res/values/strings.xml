@@ -43,4 +43,5 @@
     <string name="invalidEmail">invalid email</string>
     <string name="username">username</string>
     <string name="log_in">log in</string>
+    <string name="home">Home</string>
 </resources>

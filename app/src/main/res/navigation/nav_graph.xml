@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nasaFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/nasaFragment"
@@ -147,4 +147,8 @@
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.LaunchLandFragment"
         android:label="fragment_launch_land"
         tools:layout="@layout/fragment_launch_land" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.home.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>
