@@ -76,6 +76,7 @@
                 android:layout_gravity="end"
                 android:background="@null"
                 android:scaleType="fitCenter"
+                android:layout_marginTop="12dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -137,6 +138,7 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
+                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -196,6 +198,7 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
+                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -247,6 +250,7 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
             <ImageButton
                 android:id="@+id/capsulesButton"
                 android:layout_width="54dp"
@@ -255,10 +259,12 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
+                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/arrow_right_circle" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -313,6 +319,7 @@
                 android:layout_gravity="end"
                 android:background="@null"
                 android:scaleType="fitCenter"
+                android:layout_marginTop="12dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -373,6 +380,7 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
+                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

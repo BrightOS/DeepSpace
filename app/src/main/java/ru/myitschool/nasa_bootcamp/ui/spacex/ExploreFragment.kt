@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.view.ViewCompat.animate
+import androidx.navigation.fragment.findNavController
 import ru.myitschool.nasa_bootcamp.databinding.FragmentExploreBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.STARMAN_GIF_LINK
@@ -35,13 +37,13 @@ class ExploreFragment : Fragment() {
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
 
 
-
         var anim1 = HOR_ANIMS.NONE
         var anim2 = HOR_ANIMS.NONE
         var anim3 = HOR_ANIMS.NONE
         var anim4 = HOR_ANIMS.NONE
         var anim5 = HOR_ANIMS.NONE
         var anim6 = HOR_ANIMS.NONE
+
 
         anim1 = animateCardToRightMargin(anim1, binding.historyCard, binding.historyButton)
         anim1 = animateCardToRightMargin(anim1, binding.historyCard, binding.historyButton)
@@ -82,8 +84,42 @@ class ExploreFragment : Fragment() {
 
         loadImage(requireContext(), STARMAN_GIF_LINK, binding.starmanGif)
 
+
+        val navController = findNavController()
+
+        binding.historyButton.setOnClickListener(View.OnClickListener {
+            val action = ExploreFragmentDirections.actionExploreFragmentToHistoryFragment()
+            navController.navigate(action)
+        })
+
+        binding.roadsterButton.setOnClickListener(View.OnClickListener {
+            val action = ExploreFragmentDirections.actionExploreFragmentToRoadsterFragment()
+            navController.navigate(action)
+        })
+
+        binding.dragonsButton.setOnClickListener(View.OnClickListener {
+            val action = ExploreFragmentDirections.actionExploreFragmentToDragonsFragment()
+            navController.navigate(action)
+        })
+
+        binding.coresButton.setOnClickListener(View.OnClickListener {
+            val action = ExploreFragmentDirections.actionExploreFragmentToCoresFragment()
+            navController.navigate(action)
+        })
+
+        binding.capsulesButton.setOnClickListener(View.OnClickListener {
+            val action = ExploreFragmentDirections.actionExploreFragmentToCapsulesFragment()
+            navController.navigate(action)
+        })
+
+        binding.launchesButton.setOnClickListener(View.OnClickListener {
+            val action = ExploreFragmentDirections.actionExploreFragmentToLaunchLandFragment()
+            navController.navigate(action)
+        })
+
         return binding.root
     }
+
 
     fun animateCardToRightMargin(anim: HOR_ANIMS, view: View, btn: ImageButton): HOR_ANIMS {
 
