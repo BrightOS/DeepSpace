@@ -35,4 +35,5 @@ class NasaPagerAdapter(private val context: Context, manager: FragmentManager?) 
         Log.e("PagerAdapter getItem", "Error at position$position")
         return "Home"
     }
+
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.PagerAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentNasaBinding
 import ru.myitschool.nasa_bootcamp.ui.nasa.pages.NasaPagerAdapter
 import ru.myitschool.nasa_bootcamp.utils.TAG
@@ -29,9 +30,14 @@ class NasaFragment : Fragment() {
 
         val tab = binding.tabs
         val pager = binding.nasaViewPager
-        val pageAdapter : PagerAdapter = NasaPagerAdapter(binding.root.context,fragmentManager)
+        val pageAdapter: PagerAdapter = NasaPagerAdapter(binding.root.context,fragmentManager)
         pager.setAdapter(pageAdapter)
         tab.setupWithViewPager(pager)
+
+        tab.getTabAt(0)?.setIcon(R.drawable.ic_home)
+        tab.getTabAt(1)?.setIcon(R.drawable.ic_news)
+        tab.getTabAt(2)?.setIcon(R.drawable.ic_blog)
+        tab.getTabAt(3)?.setIcon(R.drawable.ic_fire)
 
         return binding.root
     }

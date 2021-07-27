@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_login"
+        android:width="48dp"
+        android:height="48dp"
+        android:gravity="center"
+        android:bottom="6dp"
+        android:top="6dp"
+        android:end="6dp"
+        />
+</layer-list>
