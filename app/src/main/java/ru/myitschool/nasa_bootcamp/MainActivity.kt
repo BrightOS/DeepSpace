@@ -91,7 +91,8 @@ class MainActivity : AppCompatActivity() {
                             navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
                         }
                         is Data.Error -> {
-                            navHeaderMainBinding.userAvatar.setImageBitmap(null)
+                            navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_photo_mini)
+                            //navHeaderMainBinding.userAvatar.setImageBitmap(null)
                         }
                     }
                 }
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 changeHeader()
             }
         } else {
-            navHeaderMainBinding.userAvatar.setImageBitmap(null)
+            navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_photo_mini)
             navHeaderMainBinding.signIn.text = getString(R.string.log_in)
             navHeaderMainBinding.signIn.setOnClickListener {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
