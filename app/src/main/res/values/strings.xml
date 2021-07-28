@@ -49,5 +49,8 @@
     <string name="first_stage">First stage:</string>
     <string name="second_stage">Second stage:</string>
     <string name="fairings">Fairings:</string>
+    <string name="nasa_news">NASA news</string>
+    <string name="events">Events</string>
+    <string name="show_more">Show more</string>
 
 </resources>
