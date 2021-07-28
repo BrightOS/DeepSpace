@@ -8,9 +8,11 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.myitschool.nasa_bootcamp.data.api.NasaApi
+import ru.myitschool.nasa_bootcamp.data.api.NewsApi
 import ru.myitschool.nasa_bootcamp.data.api.SpaceXApi
 import ru.myitschool.nasa_bootcamp.data.repository.*
 import ru.myitschool.nasa_bootcamp.utils.NASA_BASE_URL
+import ru.myitschool.nasa_bootcamp.utils.NEWS_BASE_URL
 import ru.myitschool.nasa_bootcamp.utils.SPACEX_BASE_URL
 import javax.inject.Named
 import javax.inject.Singleton
@@ -48,6 +50,20 @@ object MainModule {
 
     @Provides
     @Singleton
+    @Named("NEWS")
+    fun getNews(): Retrofit {
+        val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+
+        return Retrofit.Builder()
+            .baseUrl(NEWS_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpBuilder.build())
+            .build()
+    }
+
+
+    @Provides
+    @Singleton
     fun getNasaApi(@Named("NASA") retrofit: Retrofit): NasaApi {
         return retrofit.create(NasaApi::class.java)
     }
@@ -58,11 +74,12 @@ object MainModule {
         return retrofit.create(SpaceXApi::class.java)
     }
 
-//    @Provides
-//    @Singleton
-//    fun getAsteroidRepository(asteroidDao: AsteroidDao, nasaApi: NasaApi): AsteroidRepository{
-//        return AsteroidRepository(asteroidDao, nasaApi)
-//    }
+
+    @Provides
+    @Singleton
+    fun getNewsApi(@Named("NEWS") retrofit: Retrofit): NewsApi {
+        return retrofit.create(NewsApi::class.java)
+    }
 
     @Provides
     @Singleton
@@ -74,6 +91,12 @@ object MainModule {
     @Singleton
     fun getSpaceXLaunchRepository(spaceXApi: SpaceXApi): SpaceXRepository {
         return SpaceXRepositoryImpl(spaceXApi)
+    }
+
+    @Provides
+    @Singleton
+    fun getNewsRepository(newsApi: NewsApi): NewsRepository {
+        return NewsRepositoryImpl(newsApi)
     }
 
 }
