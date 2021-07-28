@@ -19,7 +19,7 @@ import ru.myitschool.nasa_bootcamp.ui.home.components.NewsCarousel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 class HomeFragment : Fragment() {
-    private val viewModel: HomeViewModel by viewModels<HomeViewModelImpl>()
+    private val viewModel: HomeViewModel by viewModels<HomeViewModelTestImpl>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
