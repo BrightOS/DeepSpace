@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
-import com.google.gson.annotations.SerializedName
 
 data class ArticleModel(
     val id: Int,
@@ -12,3 +11,4 @@ data class ArticleModel(
     val publishedAt: String,
     val updatedAt: String
 )
+ 

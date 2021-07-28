@@ -41,6 +41,7 @@ android {
     android {
         kotlinOptions {
             freeCompilerArgs = ["-Xallow-result-return-type"]
+            freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
         }
     }
     buildFeatures {
