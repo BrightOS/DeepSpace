@@ -7,8 +7,8 @@ import ru.myitschool.nasa_bootcamp.data.dto.spaceX.cores.Core
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.dragons.Dragon
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.history.History
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.info.Info
-import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landingPads.LandingPad
-import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launchPads.LaunchPad
+import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landPads.LandPad
+import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landingPads.LaunchPad
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Launch
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.roadster.Roadster
 
@@ -27,7 +27,7 @@ interface SpaceXApi {
     suspend fun getInfo(): Response<Info>
 
     @GET("landpads")
-    suspend fun getLandingPads(): Response<ArrayList<LandingPad>>
+    suspend fun getLandPads(): Response<ArrayList<LandPad>>
 
     @GET("launchpads")
     suspend fun getLaunchPads(): Response<ArrayList<LaunchPad>>

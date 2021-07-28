@@ -10,7 +10,6 @@ import ru.myitschool.nasa_bootcamp.R
 
 class RoadsterFragment : Fragment() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
