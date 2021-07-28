@@ -92,8 +92,8 @@ class MainActivity : AppCompatActivity() {
                             navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
                         }
                         is Data.Error -> {
+                            // navHeaderMainBinding.userAvatar.setImageBitmap(null)
                             navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_photo_mini)
-                            //navHeaderMainBinding.userAvatar.setImageBitmap(null)
                         }
                     }
                 }
