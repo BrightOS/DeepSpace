@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,12 +36,14 @@ class AsteroidRadarFragment : Fragment() {
         binding.asteroidList.setHasFixedSize(true)
         binding.asteroidList.layoutManager = GridLayoutManager(context, 1)
 
+        val navController = findNavController()
 
         asteroidViewModel.getAsteroidListViewModel().observe(viewLifecycleOwner, Observer {
             asteroidAdapter =
                 AsteroidAdapter(
                     requireContext(),
-                    asteroidViewModel.getAsteroidListViewModel().value!!
+                    asteroidViewModel.getAsteroidListViewModel().value!!,
+                    navController
                 )
             binding.asteroidList.adapter = asteroidAdapter
         })

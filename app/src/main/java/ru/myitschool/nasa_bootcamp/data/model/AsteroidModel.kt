@@ -8,5 +8,5 @@ data class AsteroidModel(
     val estimatedDiameter : Double,
     val relativeVelocity : Double,
     val distanceFromEarth: Double,
-    val potncialDanger : Boolean
+    val potencialDanger : Boolean
 )
