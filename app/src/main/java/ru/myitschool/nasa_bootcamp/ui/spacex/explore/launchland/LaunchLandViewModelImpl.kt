@@ -24,7 +24,7 @@ class LaunchLandViewModelImpl @Inject constructor(
     var listLaunch: ArrayList<LaunchPadModel> = arrayListOf()
 
 
-    override suspend fun getLaunchLaunchPads() {
+    override suspend fun getLaunchPads() {
         val response = repository.getLaunchPads()
 
         for (launch in response.body()!!) {

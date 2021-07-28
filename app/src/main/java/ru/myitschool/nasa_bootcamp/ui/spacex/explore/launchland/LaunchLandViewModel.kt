@@ -7,7 +7,7 @@ import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 
 interface LaunchLandViewModel {
-    suspend fun getLaunchLaunchPads()
+    suspend fun getLaunchPads()
     suspend fun getLandPads()
     fun getViewModelScope(): CoroutineScope
     fun getLandList(): MutableLiveData<ArrayList<LandPadModel>>
