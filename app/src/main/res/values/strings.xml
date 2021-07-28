@@ -39,7 +39,7 @@
     <string name="send">send</string>
     <string name="lastName">last name</string>
     <string name="email">email</string>
-    <string name="passwordRepeatDontMatch">passwords isn\'t same</string>
+    <string name="passwordRepeatDontMatch">passwords aren\'t same</string>
     <string name="invalidEmail">invalid email</string>
     <string name="username">username</string>
     <string name="log_in">log in</string>
