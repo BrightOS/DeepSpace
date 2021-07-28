@@ -72,8 +72,8 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun getSpaceXLaunchRepository(spaceXApi: SpaceXApi): SpaceXLaunchRepository {
-        return SpaceXLaunchRepositoryImpl(spaceXApi)
+    fun getSpaceXLaunchRepository(spaceXApi: SpaceXApi): SpaceXRepository {
+        return SpaceXRepositoryImpl(spaceXApi)
     }
 
 }

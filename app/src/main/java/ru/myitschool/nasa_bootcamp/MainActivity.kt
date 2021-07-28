@@ -86,12 +86,14 @@ class MainActivity : AppCompatActivity() {
         if (mFirebaseUser.isUserAuthenticated()) {
             mFirebaseUser.viewModelScope.launch {
                 mFirebaseUser.getUserAvatar().observe(this@MainActivity) {
+                    navHeaderMainBinding.userAvatar.setOnClickListener {  }
                     when (it) {
                         is Data.Ok -> {
                             navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
                         }
                         is Data.Error -> {
-                            navHeaderMainBinding.userAvatar.setImageBitmap(null)
+                            navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_photo_mini)
+                            //navHeaderMainBinding.userAvatar.setImageBitmap(null)
                         }
                     }
                 }
@@ -102,7 +104,11 @@ class MainActivity : AppCompatActivity() {
                 changeHeader()
             }
         } else {
-            navHeaderMainBinding.userAvatar.setImageBitmap(null)
+            navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_login_mini)
+            navHeaderMainBinding.userAvatar.setOnClickListener {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                findNavController(R.id.nav_host_fragment).navigate(R.id.login)
+            }
             navHeaderMainBinding.signIn.text = getString(R.string.log_in)
             navHeaderMainBinding.signIn.setOnClickListener {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)

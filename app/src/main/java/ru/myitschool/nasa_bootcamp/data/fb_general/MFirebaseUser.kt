@@ -21,6 +21,7 @@ class MFirebaseUser() : ViewModel() {
     fun isUserAuthenticated(): Boolean {
         return authenticator.currentUser != null
     }
+ 
 
     suspend fun getUserAvatar(): LiveData<Data<out Bitmap>> {
         val returnData: MutableLiveData<Data<out Bitmap>> = MutableLiveData()
