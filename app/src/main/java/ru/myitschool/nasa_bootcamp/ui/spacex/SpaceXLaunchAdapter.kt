@@ -51,6 +51,7 @@ class SpaceXLaunchAdapter internal constructor(
         holder.binding.missionName.setText(launchModel.mission_name)
         holder.binding.missionYear.setText("${sdf.format(date)}")
         holder.binding.details.setText(launchModel.details)
+        holder.binding.launchSite.setText(launchModel.launch_site.site_name_long)
 
         holder.binding.characteristicsLaunch.rocketName.text =
             "Rocket name: ${launchModel.rocket.rocket_name}"
@@ -110,6 +111,7 @@ class SpaceXLaunchAdapter internal constructor(
 
         holder.binding.characteristicsLaunch.recovered.text = recovered
 
+
         if (launchModel.links.mission_patch != null)
             loadImage(context, launchModel.links.mission_patch, holder.binding.recycleItemImg)
         else loadImage(
@@ -119,7 +121,7 @@ class SpaceXLaunchAdapter internal constructor(
         )
 
 
-        val onLaunchClickListener = object : SpaceXLaunchAdapter.OnLaunchClickListener {
+        val onLaunchClickListener = object : OnLaunchClickListener {
             override fun onLaunchClick(launch: SxLaunchModel?, position: Int) {
 
                 animateIt {
@@ -140,7 +142,7 @@ class SpaceXLaunchAdapter internal constructor(
             }
         }
 
-        holder.itemView.setOnClickListener(View.OnClickListener {
+        holder.itemView.setOnClickListener({
             onLaunchClickListener.onLaunchClick(
                 launchs.get(position),
                 position
