@@ -24,7 +24,11 @@
     <fragment
         android:id="@+id/marsRoversFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.MarsRoversFragment"
-        android:label="MarsRoversFragment" />
+        android:label="MarsRoversFragment" >
+        <action
+            android:id="@+id/action_marsRoversFragment_to_roverDetails"
+            app:destination="@id/roverDetails" />
+    </fragment>
     <fragment
         android:id="@+id/spaceXFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXFragment"
@@ -161,7 +165,12 @@
         android:label="HomeFragment" />
     <fragment
         android:id="@+id/asteroidDetails"
-        android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidDetails"
+        android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidDetailsFragment"
         android:label="fragment_asteroid_details"
         tools:layout="@layout/fragment_asteroid_details" />
+    <fragment
+        android:id="@+id/roverDetails"
+        android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.RoverDetails"
+        android:label="fragment_rover_details"
+        tools:layout="@layout/fragment_rover_details" />
 </navigation>

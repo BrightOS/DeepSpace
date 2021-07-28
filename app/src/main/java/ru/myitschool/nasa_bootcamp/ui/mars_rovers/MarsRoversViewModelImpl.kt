@@ -31,8 +31,8 @@ class MarsRoversViewModelImpl @Inject constructor(
                 }
             }
         }
-
-        roverModels.value = list
+      //  list.reverse()
+        roverModels.value =  list
 
         for (r in roverModels.value!!)
             Log.d("CHTO", "" + r.id + " " + r.img_src)

@@ -120,7 +120,6 @@ class SpaceXLaunchAdapter internal constructor(
             holder.binding.recycleItemImg
         )
 
-
         val onLaunchClickListener = object : OnLaunchClickListener {
             override fun onLaunchClick(launch: SxLaunchModel?, position: Int) {
 

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -41,11 +42,13 @@ class MarsRoversFragment : Fragment() {
 
         binding.roversRecycle.setHasFixedSize(true)
         binding.roversRecycle.layoutManager = GridLayoutManager(context, 1)
-
+        val navController = findNavController()
 
         viewModel.getRoverModelsLiveData().observe(viewLifecycleOwner, {
+            Log.d("GOT IT", "Doing... ${viewModel.getRoverModelsLiveData().value!![0].rover.name}")
+
             roverRecyclerAdapter =
-                RoverRecyclerAdapter(requireContext(), viewModel.getRoverModelsLiveData().value!!)
+                RoverRecyclerAdapter(requireContext(), viewModel.getRoverModelsLiveData().value!!, navController)
 
             binding.roversRecycle.adapter = roverRecyclerAdapter
         })
