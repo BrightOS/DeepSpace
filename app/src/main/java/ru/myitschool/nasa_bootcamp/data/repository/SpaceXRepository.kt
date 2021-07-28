@@ -5,7 +5,8 @@ import ru.myitschool.nasa_bootcamp.data.dto.spaceX.capsules.Capsule
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.cores.Core
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.dragons.Dragon
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.history.History
-import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landingPads.LandingPad
+import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landPads.LandPad
+import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landingPads.LaunchPad
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Launch
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.roadster.Roadster
 
@@ -16,6 +17,7 @@ interface SpaceXRepository {
     suspend fun getCapsules(): Response<ArrayList<Capsule>>
     suspend fun getHistory(): Response<ArrayList<History>>
     suspend fun getRoadster(): Response<Roadster>
-    suspend fun getLaunchPads(): Response<ArrayList<LandingPad>>
+    suspend fun getLaunchPads(): Response<ArrayList<LaunchPad>>
+    suspend fun getLandPads(): Response<ArrayList<LandPad>>
 
 }

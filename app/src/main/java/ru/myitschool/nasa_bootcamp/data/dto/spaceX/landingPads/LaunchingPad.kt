@@ -1,13 +1,18 @@
 package ru.myitschool.nasa_bootcamp.data.dto.spaceX.landingPads
 
 import com.google.gson.annotations.SerializedName
+import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 
-data class LandingPad (
+data class LaunchPad (
     @field:SerializedName("id") val id: Int,
     @field:SerializedName("status") val status: String,
     @field:SerializedName("name") val name: String,
     @field:SerializedName("location") val location: LocationPadLaunch
-    )
+    ){
+    fun createLaunchPadModel() : LaunchPadModel{
+        return LaunchPadModel(id, status, name, location)
+    }
+}
 
 data class LocationPadLaunch(
     @field:SerializedName("name") val name: String,
