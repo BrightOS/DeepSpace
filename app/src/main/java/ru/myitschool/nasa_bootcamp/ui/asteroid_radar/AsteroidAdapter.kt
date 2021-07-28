@@ -2,7 +2,6 @@ package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
@@ -50,7 +49,7 @@ class AsteroidAdapter internal constructor(
                 val bundle =  Bundle();
                 asteroid?.let { bundle.putDouble("absolute_magnitude", it.absolute_magnitude) };
                 asteroid?.let { bundle.putDouble("estimatedDiameter", it.estimatedDiameter) };
-                asteroid?.let { bundle.putDouble("relativeVelocity", it.relativeVelocity) };
+                asteroid?.let { bundle.putDouble("kmPerHour", it.kmPerHour) };
                 asteroid?.let { bundle.putDouble("distanceFromEarth", it.distanceFromEarth) };
                 asteroid?.let { bundle.putBoolean("potencialDanger", it.potencialDanger) };
 
