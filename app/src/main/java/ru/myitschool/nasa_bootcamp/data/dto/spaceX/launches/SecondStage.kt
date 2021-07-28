@@ -13,7 +13,7 @@ data class Payloads(
     @field:SerializedName("manufacturer") val manufacturer: String,
     @field:SerializedName("payload_mass_kg") val payload_mass_kg: Int,
     @field:SerializedName("payload_type") val payload_type: String,
-    @field:SerializedName("reference_system") val geocentric: String
+    @field:SerializedName("reference_system") val reference_system: String
     )
 
 //"second_stage": {
@@ -29,7 +29,7 @@ data class Payloads(
 //        "nationality": "United States",
 //        "manufacturer": "SSTL",
 //        "payload_type": "Satellite",
-//        "": 20,
+//
 //        "payload_mass_lbs": 43,
 //        "orbit": "LEO",
 //        "orbit_params": {

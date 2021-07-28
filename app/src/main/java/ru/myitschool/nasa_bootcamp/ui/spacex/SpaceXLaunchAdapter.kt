@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.rocket_item.view.*
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
@@ -51,10 +52,8 @@ class SpaceXLaunchAdapter internal constructor(
         holder.binding.missionYear.setText("${sdf.format(date)}")
         holder.binding.details.setText(launchModel.details)
 
-        Log.d(
-            "MISSION",
-            "Mission patch is... ${launchModel.mission_name}  ${launchModel.links.mission_patch == null}"
-        )
+        holder.binding.characteristicsLaunch.rocketName.text = launchModel.rocket.rocket_name
+
 
         if (launchModel.links.mission_patch != null)
             loadImage(context, launchModel.links.mission_patch, holder.binding.recycleItemImg)
@@ -71,12 +70,14 @@ class SpaceXLaunchAdapter internal constructor(
                 animateIt {
                     animate(holder.binding.status) animateTo {
                         if (!holder.expanded) {
-                            paddingBottom(holder.binding.details.length().toFloat()/2)
+                            paddingBottom(holder.binding.details.length().toFloat()/4)
                             holder.binding.details.visibility = View.VISIBLE
+                            holder.binding.characteristicsLaunch.root.visibility = View.VISIBLE
                             holder.expanded = true
                         } else {
                             paddingBottom(0f)
                             holder.binding.details.visibility = View.GONE
+                            holder.binding.characteristicsLaunch.root.visibility = View.GONE
                             holder.expanded = false
                         }
                     }
