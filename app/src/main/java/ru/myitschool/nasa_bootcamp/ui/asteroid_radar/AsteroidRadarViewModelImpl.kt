@@ -2,6 +2,7 @@ package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.model.AsteroidModel
 import ru.myitschool.nasa_bootcamp.data.repository.NasaRepository
 import javax.inject.Inject
@@ -28,5 +29,7 @@ class AsteroidRadarViewModelImpl @Inject constructor(
     override fun getAsteroidListViewModel(): MutableLiveData<ArrayList<AsteroidModel>> {
         return listOfAsteroids
     }
+
+    override fun getViewModelScope() = viewModelScope
 
 }

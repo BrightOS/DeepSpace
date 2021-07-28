@@ -39,7 +39,7 @@ class SpaceXFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (launchesViewModel as ViewModel).viewModelScope.launch {
+        launchesViewModel.getViewModelScope().launch {
             launchesViewModel.getSpaceXLaunches()
         }
 
@@ -100,7 +100,7 @@ class SpaceXFragment : Fragment() {
             binding.launchesRecycle.setHasFixedSize(true)
             binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)
 
-            (launchesViewModel as ViewModel).viewModelScope.launch {
+            launchesViewModel.getViewModelScope().launch {
                 launchesViewModel.getSpaceXLaunches()
             }
 

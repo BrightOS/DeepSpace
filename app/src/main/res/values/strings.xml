@@ -43,8 +43,10 @@
     <string name="invalidEmail">invalid email</string>
     <string name="username">username</string>
     <string name="log_in">log in</string>
+    <string name="home">Home</string>
     <string name="rocket">Rocket:</string>
     <string name="first_stage">First stage:</string>
     <string name="second_stage">Second stage:</string>
     <string name="fairings">Fairings:</string>
+ 
 </resources>

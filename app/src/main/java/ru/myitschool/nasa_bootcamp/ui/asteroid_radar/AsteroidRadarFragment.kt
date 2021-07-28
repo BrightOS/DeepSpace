@@ -1,21 +1,16 @@
 package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidRadarBinding
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchAdapter
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModelImpl
 
 @AndroidEntryPoint
 class AsteroidRadarFragment : Fragment() {
@@ -32,7 +27,7 @@ class AsteroidRadarFragment : Fragment() {
     ): View {
         _binding = FragmentAsteroidRadarBinding.inflate(inflater, container, false)
 
-        (asteroidViewModel as ViewModel).viewModelScope.launch {
+        asteroidViewModel.getViewModelScope().launch {
             asteroidViewModel.getAsteroidList()
         }
 
@@ -42,7 +37,10 @@ class AsteroidRadarFragment : Fragment() {
 
         asteroidViewModel.getAsteroidListViewModel().observe(viewLifecycleOwner, Observer {
             asteroidAdapter =
-                AsteroidAdapter(requireContext(), asteroidViewModel.getAsteroidListViewModel().value!!)
+                AsteroidAdapter(
+                    requireContext(),
+                    asteroidViewModel.getAsteroidListViewModel().value!!
+                )
             binding.asteroidList.adapter = asteroidAdapter
         })
 
