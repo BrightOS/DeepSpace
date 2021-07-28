@@ -91,7 +91,7 @@ class SpaceXFragment : Fragment() {
             val navController = findNavController()
 
 
-            binding.explore.setOnClickListener(View.OnClickListener {
+            binding.explore.setOnClickListener({
                 val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
 
                 navController.navigate(action)

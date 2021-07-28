@@ -12,10 +12,12 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 import ru.myitschool.nasa_bootcamp.databinding.RoverItemBinding
 
 class RoverViewHolder(
     val binding: RoverItemBinding,
-    private val context: Context) :
-    RecyclerView.ViewHolder(binding.root)
+    private val context: Context
+) : RecyclerView.ViewHolder(binding.root) {
 
+}
