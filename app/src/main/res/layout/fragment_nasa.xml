@@ -30,27 +30,31 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nasa_view_pager"
-        app:layout_constraintVertical_bias="0.988"
-        app:tabTextAppearance="@style/TextAppearance.AppCompat.Small">
+        app:layout_constraintVertical_bias="0.0"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Tiny">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_home"
             android:text="Home" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_news"
             android:text="News" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_blog"
             android:text="Blogs" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_fire"
             android:text="Popular" />
 
 

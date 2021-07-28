@@ -10,6 +10,7 @@ import ru.myitschool.nasa_bootcamp.R
 
 class ActionFragment : Fragment() {
     private var text: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         text = requireArguments().getString("type")
@@ -19,7 +20,6 @@ class ActionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         val result = inflater.inflate(R.layout.fragment_action, container, false)
         val pageHeader = result.findViewById<View>(R.id.displayText) as TextView
         pageHeader.text = text
