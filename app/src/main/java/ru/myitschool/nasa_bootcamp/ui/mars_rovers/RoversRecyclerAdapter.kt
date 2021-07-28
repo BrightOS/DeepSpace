@@ -8,16 +8,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
+import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.AsteroidItemBinding
 import ru.myitschool.nasa_bootcamp.databinding.RoverItemBinding
 import ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidViewHolder
+import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchViewHolder
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 import java.util.ArrayList
 
-class RoverRecyclerAdapter(context: Context, roverModels: ArrayList<RoverModel>) :
+class RoverRecyclerAdapter internal constructor(
+    context: Context,
+    roverModels: ArrayList<RoverModel>
+) :
     RecyclerView.Adapter<RoverViewHolder>() {
     var context: Context
-    var roverModels: List<RoverModel>
+    var roverModels: ArrayList<RoverModel>
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoverViewHolder {
         return RoverViewHolder(
