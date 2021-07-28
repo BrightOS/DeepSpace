@@ -91,11 +91,11 @@ class SpaceXFragment : Fragment() {
             val navController = findNavController()
 
 
-            binding.explore.setOnClickListener({
+            binding.explore.setOnClickListener {
                 val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
 
                 navController.navigate(action)
-            })
+            }
 
             binding.launchesRecycle.setHasFixedSize(true)
             binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)

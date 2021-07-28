@@ -86,7 +86,9 @@ class MainActivity : AppCompatActivity() {
         if (mFirebaseUser.isUserAuthenticated()) {
             mFirebaseUser.viewModelScope.launch {
                 mFirebaseUser.getUserAvatar().observe(this@MainActivity) {
-                    navHeaderMainBinding.userAvatar.setOnClickListener {  }
+                    navHeaderMainBinding.userAvatar.setOnClickListener {
+                        
+                    }
                     when (it) {
                         is Data.Ok -> {
                             navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
