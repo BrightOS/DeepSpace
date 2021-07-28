@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.dto.news.Article
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
@@ -14,6 +15,7 @@ import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModel
 import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModelImpl
 import javax.inject.Inject
 
+@HiltViewModel
 class NewsViewModelIml @Inject constructor(
     private val newsRepos: NewsRepository
 ) : ViewModel(), NewsViewModel {
