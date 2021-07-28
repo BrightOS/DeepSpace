@@ -17,6 +17,10 @@
         <item
             android:id="@+id/upcomingEventsFragment"
             android:title="@string/upcoming_events" />
+
+        <item
+            android:id="@+id/createPostFragment"
+            android:title="@string/create_your_own_post"/>
     </group>
 
     <group android:id="@+id/menu_bottom">

@@ -3,16 +3,17 @@ package ru.myitschool.nasa_bootcamp.ui.user_create_post
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Post
+import ru.myitschool.nasa_bootcamp.data.model.PostItem
 
-class CreatePostRecyclerAdapter(private val context: Context, var data: ArrayList<Post>) :
+class CreatePostRecyclerAdapter(private val context: Context, var data: ArrayList<PostItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -47,12 +48,19 @@ class CreatePostRecyclerAdapter(private val context: Context, var data: ArrayLis
     private inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.postImage)
         fun bind(position: Int) {
-            imageView.setImageBitmap(data[position].data)
+            imageView.setImageBitmap(data[position].bitmap)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+        if (viewType == IMAGE) {
+            return ImageViewHolder(
+                LayoutInflater.from(context).inflate(R.layout.image_for_recycler, parent, false)
+            )
+        }
+        return TextViewHolder(
+            LayoutInflater.from(context).inflate(R.layout.input_text_for_recycler, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -64,4 +72,12 @@ class CreatePostRecyclerAdapter(private val context: Context, var data: ArrayLis
     }
 
     override fun getItemCount(): Int = data.size
+
+    override fun getItemViewType(position: Int): Int {
+        return data[position].type
+    }
+
+    fun getRecyclerListToPost(title: String): Post {
+
+    }
 }

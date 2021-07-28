@@ -44,6 +44,11 @@
         android:label="ContactFragment" />
 
     <fragment
+        android:id="@+id/createPostFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostFragment"
+        android:label="CreatePostFragment" />
+
+    <fragment
         android:id="@+id/exploreFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragment"
         android:label="ExploreFragment" >

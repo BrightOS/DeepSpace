@@ -46,4 +46,6 @@
     <string name="invalidEmail">invalid email</string>
     <string name="username">username</string>
     <string name="log_in">log in</string>
+    <string name="create_your_own_post">Create your own post</string>
+    <string name="edit_text_hint">Start typing here</string>
 </resources>
