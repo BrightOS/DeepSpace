@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="12dp"
     tools:context=".ui.asteroid_radar.AsteroidDetails">
 
 
@@ -13,6 +14,7 @@
         android:id="@+id/absolute_magnitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:text="ASTEROID INFO"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
@@ -21,6 +23,7 @@
         android:id="@+id/estimatedDiameter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:text="ASTEROID INFO"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
@@ -29,6 +32,7 @@
         android:id="@+id/kmPerHour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:text="ASTEROID INFO"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
@@ -37,6 +41,7 @@
         android:id="@+id/distanceFromEarth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:text="ASTEROID INFO"
         android:textAlignment="center"
         android:textColor="@android:color/white" />
