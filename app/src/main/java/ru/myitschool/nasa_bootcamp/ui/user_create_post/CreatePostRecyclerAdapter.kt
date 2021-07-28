@@ -8,13 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.data.model.ImagePost
 import ru.myitschool.nasa_bootcamp.data.model.Post
 import ru.myitschool.nasa_bootcamp.data.model.PostItem
+import ru.myitschool.nasa_bootcamp.data.model.TextPost
 
 class CreatePostRecyclerAdapter(private val context: Context, var data: ArrayList<PostItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val viewModel: CreatePostViewModelImpl = CreatePostViewModelImpl()
 
     companion object {
         const val IMAGE = 1
@@ -77,7 +82,7 @@ class CreatePostRecyclerAdapter(private val context: Context, var data: ArrayLis
         return data[position].type
     }
 
-    fun getRecyclerListToPost(title: String): Post {
-
+    fun getList(): ArrayList<PostItem> {
+        return data
     }
 }
