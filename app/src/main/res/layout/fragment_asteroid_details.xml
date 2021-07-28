@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="12dp"
-    tools:context=".ui.asteroid_radar.AsteroidDetails">
+    tools:context=".ui.asteroid_radar.AsteroidDetailsFragment">
 
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -38,5 +38,4 @@ class SpaceXLaunchViewHolder (val binding: LaunchItemBinding,
         }
     }
 
-
 }

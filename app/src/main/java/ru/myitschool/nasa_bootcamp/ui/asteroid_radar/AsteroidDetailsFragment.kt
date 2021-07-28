@@ -11,7 +11,7 @@ import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidDetailsBinding
 import ru.myitschool.nasa_bootcamp.databinding.FragmentExploreBinding
 
 
-class AsteroidDetails : Fragment() {
+class AsteroidDetailsFragment : Fragment() {
 
     private var _binding: FragmentAsteroidDetailsBinding? = null
     private val binding get() = _binding!!
