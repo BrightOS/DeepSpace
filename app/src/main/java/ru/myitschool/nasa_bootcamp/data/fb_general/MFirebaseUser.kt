@@ -22,6 +22,24 @@ class MFirebaseUser() : ViewModel() {
         return authenticator.currentUser != null
     }
 
+    fun isVerified(): Boolean {
+        return authenticator.currentUser!!.isEmailVerified
+    }
+
+    fun getUser(): FirebaseUser {
+        return authenticator.currentUser!!
+    }
+
+    suspend fun sendConfirmationEmail() {
+        try {
+            authenticator.currentUser!!.sendEmailVerification().await()
+            println("Sent" + authenticator.currentUser!!.email)
+        }
+        catch(e: Exception) {
+            println(e.message.toString())
+        }
+    }
+
     suspend fun getUserAvatar(): LiveData<Data<out Bitmap>> {
         val returnData: MutableLiveData<Data<out Bitmap>> = MutableLiveData()
         val storageRef = storage.getReference("user_data/${authenticator.currentUser?.uid}")

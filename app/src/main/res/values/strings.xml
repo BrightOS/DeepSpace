@@ -26,6 +26,9 @@
     <string name="how_it_all_started">How it all started</string>
 
     <string name="email_or_username">email</string>
+    <string name="cancel">Cancel</string>
+    <string name="send_mail">Send</string>
+    <string name="relogin">Please follow the link and login one more time</string>
     <string name="password">password</string>
     <string name="login">sign in</string>
     <string name="wrong_credits">wrong credentials</string>
