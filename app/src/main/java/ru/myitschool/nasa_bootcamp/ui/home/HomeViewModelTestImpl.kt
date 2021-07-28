@@ -17,9 +17,12 @@ class HomeViewModelTestImpl : ViewModel(), HomeViewModel {
         return MutableLiveData(
             Resource.success(
                 data = listOf(
-                    ArticleModel(title = "Something happened"),
-                    ArticleModel(title = "Wow"),
-                    ArticleModel(title = "Very very very very very very very very very very very very very very very very very very very very very very long title")
+                    ArticleModel(title = "Something happened", id = 11),
+                    ArticleModel(title = "Wow", id = 12),
+                    ArticleModel(
+                        title = "Very very very very very very very very very very very very very very very very very very very very very very long title",
+                        id = 13
+                    )
                 )
             )
         )
