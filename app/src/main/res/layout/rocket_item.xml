@@ -97,7 +97,7 @@
                 tools:text="Core serial : Merlin1A" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/reused"
+                android:id="@+id/reused_core"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
