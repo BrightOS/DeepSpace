@@ -9,6 +9,6 @@ import javax.inject.Inject
 class NewsRepositoryImpl  @Inject constructor(
     private val newsApi: NewsApi
 ) : NewsRepository {
-    override suspend fun getNews(): Response<Article> = newsApi.getLaunches()
+    override suspend fun getNews(): Response<ArrayList<Article>> = newsApi.getLaunches()
 
 }
