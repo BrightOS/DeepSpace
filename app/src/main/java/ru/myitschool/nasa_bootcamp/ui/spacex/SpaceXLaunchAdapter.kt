@@ -49,6 +49,7 @@ class SpaceXLaunchAdapter internal constructor(
 
         holder.binding.missionName.setText(launchModel.mission_name)
         holder.binding.missionYear.setText("${sdf.format(date)}")
+        holder.binding.details.setText(launchModel.details)
 
         Log.d(
             "MISSION",
@@ -68,12 +69,14 @@ class SpaceXLaunchAdapter internal constructor(
             override fun onLaunchClick(launch: SxLaunchModel?, position: Int) {
 
                 animateIt {
-                    animate(holder.binding.missionYear) animateTo {
+                    animate(holder.binding.status) animateTo {
                         if (!holder.expanded) {
-                            paddingBottom(100f)
+                            paddingBottom(holder.binding.details.length().toFloat()/2)
+                            holder.binding.details.visibility = View.VISIBLE
                             holder.expanded = true
                         } else {
                             paddingBottom(0f)
+                            holder.binding.details.visibility = View.GONE
                             holder.expanded = false
                         }
                     }

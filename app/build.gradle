@@ -67,6 +67,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
+    implementation fileTree(dir: 'C:\\Users\\glad\\Downloads\\YouTubeAndroidPlayerApi-1.2.2\\libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation files('C:\\Users\\glad\\Downloads\\YouTubeAndroidPlayerApi-1.2.2\\libs\\YouTubeAndroidPlayerApi.jar')
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     implementation 'com.airbnb.android:epoxy:4.6.2'
