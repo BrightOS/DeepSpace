@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.spacex.explore.dragons.DragonsFragment">
+    android:orientation="vertical"
+    tools:background="@android:color/black"
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/name_dragon"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="DRAGONS" />
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="Name " />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/type_dragon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Type " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/active_dragon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Is active? Yes" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/orbit_duration_dragon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Orbit duration : 3 years " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mass_kg_dragon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Mass (kg) : " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/description_dragon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Description : " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/thrusters_dragon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:text="Thrusters : " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/launch_payload_mass_dragon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:text="Launch Payload Mass : " />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/land_payload_mass_dragon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:text="Land Payload Mass : " />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

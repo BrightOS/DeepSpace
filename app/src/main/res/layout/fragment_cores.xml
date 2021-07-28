@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.spacex.explore.cores.CoresFragment">
+    android:orientation="vertical"
+    tools:background="@android:color/black"
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/serial_core"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="CORES" />
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="Core serial: " />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/block_core"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Block: " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/status_core"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Is active? " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/original_launch_core"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="original_launch " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/reuse_core"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="How much has been resued?  " />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/water_landing_core"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Landed to the water? " />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/details_core"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Details : " />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/missions_core"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:text="MISSIONS:  " />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
