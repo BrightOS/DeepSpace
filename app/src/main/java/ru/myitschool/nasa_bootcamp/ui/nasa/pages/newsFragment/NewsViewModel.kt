@@ -11,5 +11,4 @@ interface NewsViewModel {
     suspend fun getNews()
     fun getViewModelScope(): CoroutineScope
     fun getArticlesList(): MutableLiveData<ArrayList<ArticleModel>>
-
 }

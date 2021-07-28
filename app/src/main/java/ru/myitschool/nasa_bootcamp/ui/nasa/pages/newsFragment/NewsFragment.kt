@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchAdapter
@@ -14,6 +15,7 @@ import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModel
 import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModelImpl
 import java.util.Observer
 
+@AndroidEntryPoint
 class NewsFragment : Fragment() {
     private val newsViewModel: NewsViewModel by viewModels<NewsViewModelIml>()
 
