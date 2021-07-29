@@ -58,8 +58,6 @@ class SpaceXFragment : Fragment() {
         ): View {
             _binding = FragmentSpacexBinding.inflate(inflater, container, false)
 
-            h = resources.getDimensionPixelOffset(R.dimen.height)
-
             val animation = animateIt {
                 animate(binding.spaceXLogo) animateTo {
                     topOfItsParent(marginDp = 15f)
@@ -78,7 +76,8 @@ class SpaceXFragment : Fragment() {
                 }
 
                 animate(binding.background) animateTo {
-                    height(h, horizontalGravity = Gravity.LEFT, verticalGravity = Gravity.TOP)
+                    height(resources.getDimensionPixelOffset(R.dimen.height),
+                        horizontalGravity = Gravity.LEFT, verticalGravity = Gravity.TOP)
                 }
             }
 

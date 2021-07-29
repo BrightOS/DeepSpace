@@ -6,6 +6,7 @@ import ru.myitschool.nasa_bootcamp.data.dto.spaceX.capsules.Capsule
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.cores.Core
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.dragons.Dragon
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.history.History
+import ru.myitschool.nasa_bootcamp.data.dto.spaceX.info.Info
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landPads.LandPad
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landingPads.LaunchPad
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.roadster.Roadster
@@ -22,4 +23,5 @@ class SpaceXRepositoryImpl @Inject constructor(
     override suspend fun getRoadster(): Response<Roadster> = spaceXApi.getRoadster()
     override suspend fun getLaunchPads(): Response<ArrayList<LaunchPad>> = spaceXApi.getLaunchPads()
     override suspend fun getLandPads(): Response<ArrayList<LandPad>> = spaceXApi.getLandPads()
+    override suspend fun getInfo(): Response<Info> = spaceXApi.getInfo()
 }

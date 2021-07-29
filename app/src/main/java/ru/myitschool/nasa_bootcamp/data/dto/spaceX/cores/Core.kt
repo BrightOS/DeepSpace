@@ -7,13 +7,13 @@ import ru.myitschool.nasa_bootcamp.data.dto.spaceX.Mission
 class Core(
     @field:SerializedName("core_serial") val core_serial: String,
     @field:SerializedName("block") val block: Int?,
-    @field:SerializedName("status") val status: String,
+    @field:SerializedName("status") val status: String?,
     @field:SerializedName("original_launch") val original_launch: String,
     @field:SerializedName("original_launch_unix") val original_launch_unix: Int,
     @field:SerializedName("missions") val missions: List<Mission>,
     @field:SerializedName("reuse_count") val reuse_count: Int,
     @field:SerializedName("water_landing") val water_landing: Boolean,
-    @field:SerializedName("details") val details: String
+    @field:SerializedName("details") val details: String?
 ) {
 
     fun createCoreModel(): CoreModel {
