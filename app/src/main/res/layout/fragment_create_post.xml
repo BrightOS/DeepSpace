@@ -10,20 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Title"
+        android:maxLines="1"
         app:layout_constraintTop_toTopOf="parent"
-        android:maxLines="1"/>
+        android:layout_marginTop="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/createPostRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/add_img"
         app:layout_constraintTop_toBottomOf="@id/postTitle" />
 
     <Button
         android:id="@+id/add_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="30dp"
         android:text="add text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
@@ -32,7 +34,7 @@
         android:id="@+id/add_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="30dp"
         android:text="add image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -42,6 +44,8 @@
         android:id="@+id/postButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="30dp"
         android:text="POST!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -7,6 +7,6 @@ class TextPost(private val _id: Int, private val _type: Int, val text: String) :
 
 class ImagePost(private val _id: Int, private val _type: Int, val imagePath: String) : PostView(_id, _type)
 
-data class Post(var title: String, var data: ArrayList<PostView>) {
-    constructor() : this("", arrayListOf())
+data class Post(var title: String, var dateCreated: Long, var author: String, var data: ArrayList<PostView>) {
+    constructor() : this("", -1, "", arrayListOf())
 }

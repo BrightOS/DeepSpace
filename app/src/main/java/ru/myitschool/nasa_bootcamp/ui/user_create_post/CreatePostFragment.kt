@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.model.ImagePost
 import ru.myitschool.nasa_bootcamp.data.model.Post
 import ru.myitschool.nasa_bootcamp.data.model.PostItem
@@ -69,6 +70,11 @@ class CreatePostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (!MFirebaseUser().isUserAuthenticated()) {
+            Toast.makeText(requireContext(), "You are not authenticated, you want be able to post!", Toast.LENGTH_LONG).show()
+            // TODO: navigate from here to login activity
+        }
+
         binding.addText.setOnClickListener {
             recyclerList.add(PostItem(CreatePostRecyclerAdapter.TEXT, null, null, null))
             adapter.notifyItemInserted(adapter.itemCount)
@@ -89,41 +95,63 @@ class CreatePostFragment : Fragment() {
 
     private fun pushPost() {
         val post = Post()
-        post.title = binding.postTitle.text.toString()
-        val postId: String = viewModel.getLastPostId()
-        var picCount: Int = 1
-        var allCount: Int = 1
-        for (postItem in adapter.getList()) {
-            if (postItem.type == CreatePostRecyclerAdapter.IMAGE) {
-                viewModel.loadImage(postId, picCount, postItem.imagePath!!)
-                    .observe(viewLifecycleOwner) {
-                        when (it) {
-                            is Data.Ok -> {}
-                            is Data.Error -> {
-                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG)
-                                    .show()
+        post.title = binding.postTitle.text.toString()  // TODO: check if not null
+        viewModel.getLastPostId().observe(viewLifecycleOwner) { id ->
+            when (id) {
+                is Data.Ok -> {
+                    val postId = id.data
+                    var picCount: Int = 1
+                    var allCount: Int = 1  // count of text and picture views
+
+                    for (postItem in adapter.getList()) {
+                        if (postItem.type == CreatePostRecyclerAdapter.IMAGE) {
+                            viewModel.loadImage(postId, picCount, postItem.imagePath!!)
+                                .observe(viewLifecycleOwner) {
+                                    when (it) {
+                                        is Data.Ok -> {
+                                        }   // if picture uploaded successfully
+                                        is Data.Error -> {
+                                            Toast.makeText(
+                                                requireContext(),
+                                                it.message,
+                                                Toast.LENGTH_LONG
+                                            )
+                                                .show()
+                                        }
+                                    }
+                                }
+                            post.data.add(ImagePost(allCount, postItem.type, picCount.toString()))
+                            picCount++
+                            allCount++
+                        } else {
+                            if (postItem.text != null) {
+                                post.data.add(TextPost(allCount, postItem.type, postItem.text!!))
+                                allCount++
                             }
                         }
                     }
-                post.data.add(ImagePost(allCount, postItem.type, picCount.toString()))
-                picCount++
-                allCount++
-            } else {
-                if (postItem.text != null) {
-                    post.data.add(TextPost(allCount, postItem.type, postItem.text!!))
-                    allCount++
+
+                    viewModel.viewModelScope.launch {
+                        viewModel.createPost(post, postId).observe(viewLifecycleOwner) {
+                            when (it) {
+                                is Data.Ok -> {
+                                    Toast.makeText(requireContext(), "Success!", Toast.LENGTH_LONG)
+                                        .show()
+                                    // TODO: add progress bar and move to another activity
+                                }
+                                is Data.Error -> {
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG)
+                                        .show()
+                                }
+                            }
+                        }
+                    }
                 }
-            }
-        }
-        viewModel.viewModelScope.launch {
-            viewModel.createPost(post).observe(viewLifecycleOwner) {
-                when (it) {
-                    is Data.Ok -> {
-                        Toast.makeText(requireContext(), "Success!", Toast.LENGTH_LONG).show()
-                    }
-                    is Data.Error -> {
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-                    }
+
+                is Data.Error -> {
+                    // if failed to get last id (due to internet connection or other reasons)
+                    Toast.makeText(requireContext(), id.message, Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }
