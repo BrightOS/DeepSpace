@@ -21,6 +21,7 @@ class MFirebaseUser() : ViewModel() {
     fun isUserAuthenticated(): Boolean {
         return authenticator.currentUser != null
     }
+ 
 
     fun isVerified(): Boolean {
         return authenticator.currentUser!!.isEmailVerified

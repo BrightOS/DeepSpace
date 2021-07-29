@@ -3,13 +3,14 @@ package ru.myitschool.nasa_bootcamp.ui.spacex
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
-import ru.myitschool.nasa_bootcamp.data.repository.SpaceXLaunchRepository
+import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class SpaceXViewModelImpl @Inject constructor(private val repository : SpaceXLaunchRepository
+class SpaceXViewModelImpl @Inject constructor(private val repository : SpaceXRepository
 ): ViewModel(), SpaceXViewModel {
 
     var launchesModelsList: MutableLiveData<ArrayList<SxLaunchModel>> = MutableLiveData<ArrayList<SxLaunchModel>>()
@@ -42,5 +43,6 @@ class SpaceXViewModelImpl @Inject constructor(private val repository : SpaceXLau
         return  launchesModelsList
     }
 
+    override fun getViewModelScope() = viewModelScope
 
 }

@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.data.dto.spaceX.upcoming
+package ru.myitschool.nasa_bootcamp.data.dto.upcoming
 
 import com.google.gson.annotations.SerializedName
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Links

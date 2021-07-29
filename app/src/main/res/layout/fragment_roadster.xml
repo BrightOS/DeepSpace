@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-     >
+    android:orientation="vertical"
+    tools:background="@android:color/black"
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/name_roadster"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="ROADSTER" />
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="Name" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/launch_date_roadster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Lauched: 20/12/2021 9:35" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/launch_mass_kg_roadster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Launch mass (Kg) : " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/orbit_type_roadster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Orbit type : " />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/longitude_roadster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Longtitude : " />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/earth_distance_roadster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Distance from the Earth : " />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/mars_distance_roadster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Distance from the Mars : " />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/details_roadster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Details : " />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

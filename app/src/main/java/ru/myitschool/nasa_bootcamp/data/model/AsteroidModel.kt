@@ -6,7 +6,7 @@ data class AsteroidModel(
     val name: String,
     val absolute_magnitude : Double,
     val estimatedDiameter : Double,
-    val relativeVelocity : Double,
+    val kmPerHour : Double,
     val distanceFromEarth: Double,
-    val potncialDanger : Boolean
+    val potencialDanger : Boolean
 )

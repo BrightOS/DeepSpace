@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nasaFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/nasaFragment"
@@ -12,11 +12,23 @@
     <fragment
         android:id="@+id/asteroidRadarFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidRadarFragment"
-        android:label="AsteroidRadarFragment" />
+        android:label="AsteroidRadarFragment" >
+        <action
+            android:id="@+id/action_asteroidRadarFragment_to_asteroidDetails"
+            app:destination="@id/asteroidDetails"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/marsRoversFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.MarsRoversFragment"
-        android:label="MarsRoversFragment" />
+        android:label="MarsRoversFragment" >
+        <action
+            android:id="@+id/action_marsRoversFragment_to_roverDetails"
+            app:destination="@id/roverDetails" />
+    </fragment>
     <fragment
         android:id="@+id/spaceXFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXFragment"
@@ -152,4 +164,18 @@
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.LaunchLandFragment"
         android:label="fragment_launch_land"
         tools:layout="@layout/fragment_launch_land" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.home.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/asteroidDetails"
+        android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidDetailsFragment"
+        android:label="fragment_asteroid_details"
+        tools:layout="@layout/fragment_asteroid_details" />
+    <fragment
+        android:id="@+id/roverDetails"
+        android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.RoverDetails"
+        android:label="fragment_rover_details"
+        tools:layout="@layout/fragment_rover_details" />
 </navigation>

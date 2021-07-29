@@ -39,7 +39,7 @@ class SpaceXFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (launchesViewModel as ViewModel).viewModelScope.launch {
+        launchesViewModel.getViewModelScope().launch {
             launchesViewModel.getSpaceXLaunches()
         }
 
@@ -91,7 +91,7 @@ class SpaceXFragment : Fragment() {
             val navController = findNavController()
 
 
-            binding.explore.setOnClickListener(View.OnClickListener {
+            binding.explore.setOnClickListener({
                 val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
 
                 navController.navigate(action)
@@ -100,7 +100,7 @@ class SpaceXFragment : Fragment() {
             binding.launchesRecycle.setHasFixedSize(true)
             binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)
 
-            (launchesViewModel as ViewModel).viewModelScope.launch {
+            launchesViewModel.getViewModelScope().launch {
                 launchesViewModel.getSpaceXLaunches()
             }
 

@@ -13,6 +13,6 @@ class ImageOfDayViewModelImpl @Inject constructor(
 
     suspend fun loadImageOfDay(){
         val response = nasaRepo.getImageOfTheDay()
-        Log.d("TAGTAG_A", response.body()!!.url)
+
     }
 }
