@@ -141,16 +141,20 @@ class SpaceXLaunchAdapter internal constructor(
             }
         }
 
-        holder.itemView.setOnClickListener({
+        holder.itemView.setOnClickListener {
             onLaunchClickListener.onLaunchClick(
                 launchs.get(position),
                 position
             )
-        })
+        }
 
-        if (launchModel.launch_success) holder.binding.status.setText("Status: success") else holder.binding.status.setText(
-            "Status: failed"
-        )
+        if (launchModel.launch_success) {
+            holder.binding.status.setText("Status: success")
+            holder.binding.status.setTextColor(context.getColor(R.color.green))
+        } else {
+            holder.binding.status.setTextColor(context.getColor(R.color.red))
+            holder.binding.status.setText("Status: failed")
+        }
     }
 
     override fun getItemCount(): Int {
