@@ -9,12 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentDragonsBinding
-import ru.myitschool.nasa_bootcamp.databinding.FragmentInfoBinding
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchAdapter
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores.CoresViewModel
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores.CoresViewModelImp
 
 @AndroidEntryPoint
 class DragonsFragment : Fragment() {
