@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     // open drawer from fragment
     fun openDrawer() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+        if (!binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.openDrawer(GravityCompat.START)
     }
 

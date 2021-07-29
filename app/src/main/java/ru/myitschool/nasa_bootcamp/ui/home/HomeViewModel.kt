@@ -10,4 +10,5 @@ interface HomeViewModel {
     fun getImageOfTheDayModel(): LiveData<Resource<ImageOfTheDayModel>>
     fun getArticles(): LiveData<Resource<List<ArticleModel>>>
     fun getEvents(): LiveData<Resource<List<EventModel>>>
+    fun reloadImageOfTheDay()
 }

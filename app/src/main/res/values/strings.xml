@@ -52,5 +52,9 @@
     <string name="nasa_news">NASA news</string>
     <string name="events">Events</string>
     <string name="show_more">Show more</string>
+    <string name="spacex_card_title">All about SpaceX</string>
+    <string name="spacex_card_description">Information about launches, space capsules, how it all started and even more.</string>
+    <string name="image_of_the_day_error_message">An error occurred while loading the image, please check the network connection</string>
+    <string name="retry">Retry</string>
 
 </resources>

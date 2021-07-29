@@ -13,6 +13,7 @@
         <item name="mainBackground">@color/very_dark_blue</item>
         <item name="buttonBackgroundColor">#2A255B</item>
         <item name="buttonTextColor">@android:color/white</item>
+        <item name="materialButtonStyle">@style/buttonStyle</item>
 
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:windowLightStatusBar">false</item>
@@ -35,5 +36,9 @@
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+    </style>
+    
+    <style name="buttonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">16dp</item>
     </style>
 </resources>
