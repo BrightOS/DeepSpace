@@ -6,17 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_info.*
 import kotlinx.coroutines.launch
-import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.dto.spaceX.cores.Core
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.capsules.CapsulesViewModel
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.capsules.CapsulesViewModelImpl
+import ru.myitschool.nasa_bootcamp.databinding.FragmentCoresBinding
+import ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons.DragonsAdapter
 
 @AndroidEntryPoint
 class CoresFragment : Fragment() {
 
-    private val coresViewModel: CoresViewModel by viewModels<CoresViewModelImp>()
+    private val coresViewModel: CoresViewModel by viewModels<CoresViewModelImpl>()
+    private var _binding: FragmentCoresBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var coresAdapter: CoresAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +29,28 @@ class CoresFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentCoresBinding.inflate(inflater, container, false)
+
+
+        binding.coresRecycle.setHasFixedSize(true)
+        binding.coresRecycle.layoutManager = GridLayoutManager(context, 1)
+
 
         coresViewModel.getViewModelScope().launch {
             coresViewModel.getCores()
         }
 
         coresViewModel.getCoresList().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-
+            coresAdapter =
+                CoresAdapter(
+                    requireContext(),
+                    coresViewModel.getCoresList().value!!
+                )
+            binding.coresRecycle.adapter = coresAdapter
         })
 
-        return inflater.inflate(R.layout.fragment_cores, container, false)
+        return binding.root
     }
 
 }

@@ -42,7 +42,7 @@ class CoresAdapter internal constructor(
 
         holder.binding.coreItemBlocks.text = "Blocks : ${coreModel.block}"
         holder.binding.coreItemSerial.text = "Core : ${coreModel.core_serial}"
-        holder.binding.coreItemMissions.text = "Mission : ${coreModel.missions}"
+        holder.binding.coreItemMissions.text = "Mission : ${coreModel.missions[0].name}"
         holder.binding.coreItemReuseCount.text = "Reused : ${coreModel.reuse_count} times}"
 
         if(coreModel.status!=null)

@@ -12,7 +12,7 @@ import ru.myitschool.nasa_bootcamp.ui.spacex.explore.capsules.CapsulesViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CoresViewModelImp  @Inject constructor(
+class CoresViewModelImpl  @Inject constructor(
     private val repository: SpaceXRepository
 ) : ViewModel(), CoresViewModel {
 

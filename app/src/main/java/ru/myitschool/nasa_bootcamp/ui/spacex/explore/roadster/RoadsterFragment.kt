@@ -32,9 +32,27 @@ class RoadsterFragment : Fragment() {
     ): View {
         _binding = FragmentRoadsterBinding.inflate(inflater, container, false)
 
-        context?.let { loadImage(it, "https://media1.tenor.com/images/3e4be755dbd97b74ceab4721d6f935c3/tenor.gif?itemid=11008638", binding.roadsterGif) }
-        context?.let { loadImage(it, "https://media1.tenor.com/images/56beadf4c8c6646591c0dfb33989c2d9/tenor.gif?itemid=12084001", binding.roadsterGif2) }
-        context?.let { loadImage(it, "https://avatars.mds.yandex.net/get-zen_doc/26916/pub_5c66833030a74d00ae3c1147_5c668334d867ce00ae722ce7/orig", binding.roadsterGif3) }
+        context?.let {
+            loadImage(
+                it,
+                "https://media1.tenor.com/images/3e4be755dbd97b74ceab4721d6f935c3/tenor.gif?itemid=11008638",
+                binding.roadsterGif
+            )
+        }
+        context?.let {
+            loadImage(
+                it,
+                "https://media1.tenor.com/images/56beadf4c8c6646591c0dfb33989c2d9/tenor.gif?itemid=12084001",
+                binding.roadsterGif2
+            )
+        }
+        context?.let {
+            loadImage(
+                it,
+                "https://avatars.mds.yandex.net/get-zen_doc/26916/pub_5c66833030a74d00ae3c1147_5c668334d867ce00ae722ce7/orig",
+                binding.roadsterGif3
+            )
+        }
 
         roadsterViewModel.getViewModelScope().launch {
             roadsterViewModel.getRoadsterInfo()

@@ -20,6 +20,10 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
         classpath 'com.google.gms:google-services:4.3.8'
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.35'
+        classpath 'com.google.gms:google-services:4.3.4'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.6.0'
+        classpath 'com.google.firebase:perf-plugin:1.4.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -31,6 +35,7 @@ allprojects {
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
         maven { url "https://jitpack.io" }
+        maven { url 'https://plugins.gradle.org/m2/'}
     }
 }
 
