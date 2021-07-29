@@ -56,7 +56,7 @@ class CoresAdapter internal constructor(
         holder.binding.originalLaunchDate.text =
             "Date : ${convertDateFromUnix(coreModel.original_launch_unix)}"
 
-        val onDragonClickListener = object : onCoreClickListener {
+        val onCoreClickListener = object : onCoreClickListener {
             override fun onCoreClick(coreModel: CoreModel, position: Int) {
 
             }

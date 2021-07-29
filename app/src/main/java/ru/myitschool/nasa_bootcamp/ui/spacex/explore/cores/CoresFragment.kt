@@ -32,10 +32,8 @@ class CoresFragment : Fragment() {
     ): View {
         _binding = FragmentCoresBinding.inflate(inflater, container, false)
 
-
         binding.coresRecycle.setHasFixedSize(true)
         binding.coresRecycle.layoutManager = GridLayoutManager(context, 1)
-
 
         coresViewModel.getViewModelScope().launch {
             coresViewModel.getCores()

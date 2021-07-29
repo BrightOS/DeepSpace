@@ -13,8 +13,6 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.Extensions
 
-
-
 class SpaceButton constructor(
     cont: Context,
     attrs: AttributeSet?,
