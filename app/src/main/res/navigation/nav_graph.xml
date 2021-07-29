@@ -133,7 +133,7 @@
     <action android:id="@+id/login" app:destination="@id/authFragment" />
     <fragment
         android:id="@+id/historyFragment"
-        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.HistoryFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.InfoFragment"
         android:label="HistoryFragment" />
     <fragment
         android:id="@+id/capsulesFragment"

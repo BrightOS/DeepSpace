@@ -38,7 +38,7 @@
     </style>
 
     <style name="ExpandedSpaceAppBar" parent="@android:style/TextAppearance">
-        <item name="android:textSize">40sp</item>
+        <item name="android:textSize">35sp</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
     </style>

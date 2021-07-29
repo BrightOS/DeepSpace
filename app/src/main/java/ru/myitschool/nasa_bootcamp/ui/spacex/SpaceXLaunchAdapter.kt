@@ -11,6 +11,7 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
+import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,11 +46,10 @@ class SpaceXLaunchAdapter internal constructor(
         val launchModel: SxLaunchModel = launchs[position]
 
 
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
-        val date = Date(launchModel.launch_date_unix * 1000L)
+
 
         holder.binding.missionName.setText(launchModel.mission_name)
-        holder.binding.missionYear.setText("${sdf.format(date)}")
+        holder.binding.missionYear.setText("${convertDateFromUnix(launchModel.launch_date_unix)}")
         holder.binding.details.setText(launchModel.details)
         holder.binding.launchSite.setText(launchModel.launch_site.site_name_long)
 

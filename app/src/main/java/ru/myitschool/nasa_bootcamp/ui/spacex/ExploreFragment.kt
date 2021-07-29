@@ -36,7 +36,6 @@ class ExploreFragment : Fragment() {
     ): View {
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
 
-
         var anim1 = HOR_ANIMS.NONE
         var anim2 = HOR_ANIMS.NONE
         var anim3 = HOR_ANIMS.NONE

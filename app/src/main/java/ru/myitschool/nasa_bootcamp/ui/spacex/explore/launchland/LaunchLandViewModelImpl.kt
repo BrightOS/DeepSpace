@@ -5,11 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import ru.myitschool.nasa_bootcamp.data.model.HistoryModel
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.HistoryViewModel
 import javax.inject.Inject
 
 @HiltViewModel

@@ -18,6 +18,4 @@ import ru.myitschool.nasa_bootcamp.databinding.RoverItemBinding
 class RoverViewHolder(
     val binding: RoverItemBinding,
     private val context: Context
-) : RecyclerView.ViewHolder(binding.root) {
-
-}
+) : RecyclerView.ViewHolder(binding.root)
