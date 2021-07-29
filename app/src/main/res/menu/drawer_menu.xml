@@ -23,6 +23,10 @@
         <item
             android:id="@+id/createPostFragment"
             android:title="@string/create_your_own_post"/>
+
+        <item
+            android:id="@+id/allUserPostFragment"
+            android:title="User posts"/>
     </group>
 
     <group android:id="@+id/menu_bottom">

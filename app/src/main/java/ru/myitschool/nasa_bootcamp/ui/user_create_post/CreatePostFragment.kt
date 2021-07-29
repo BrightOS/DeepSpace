@@ -120,12 +120,12 @@ class CreatePostFragment : Fragment() {
                                         }
                                     }
                                 }
-                            post.data.add(ImagePost(allCount, postItem.type, picCount.toString()))
+                            post.data?.add(ImagePost(allCount, postItem.type, picCount.toString()))
                             picCount++
                             allCount++
                         } else {
                             if (postItem.text != null) {
-                                post.data.add(TextPost(allCount, postItem.type, postItem.text!!))
+                                post.data?.add(TextPost(allCount, postItem.type, postItem.text!!))
                                 allCount++
                             }
                         }
