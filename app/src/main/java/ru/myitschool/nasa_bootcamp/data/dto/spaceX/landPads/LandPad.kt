@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 
 data class LandPad(
-    @field:SerializedName("id") val id: Int,
+    @field:SerializedName("id") val id: String,
     @field:SerializedName("full_name") val full_name: String,
     @field:SerializedName("status") val status: String,
     @field:SerializedName("location") val location: LocationPad

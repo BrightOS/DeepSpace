@@ -158,7 +158,11 @@
         android:id="@+id/launchLandFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.LaunchLandFragment"
         android:label="fragment_launch_land"
-        tools:layout="@layout/fragment_launch_land" />
+        tools:layout="@layout/fragment_launch_land" >
+        <action
+            android:id="@+id/action_launchLandFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.home.HomeFragment"
@@ -173,4 +177,9 @@
         android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.RoverDetails"
         android:label="fragment_rover_details"
         tools:layout="@layout/fragment_rover_details" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>

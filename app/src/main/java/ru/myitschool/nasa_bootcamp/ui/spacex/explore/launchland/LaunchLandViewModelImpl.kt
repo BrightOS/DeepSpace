@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,6 +28,7 @@ class LaunchLandViewModelImpl @Inject constructor(
 
         for (launch in response.body()!!) {
             listLaunch.add(launch.createLaunchPadModel())
+            Log.d("LAUNCH_TAG", launch.createLaunchPadModel().name)
         }
         launchModels.value = listLaunch
     }
@@ -36,6 +38,7 @@ class LaunchLandViewModelImpl @Inject constructor(
 
         for (land in response.body()!!) {
             listLand.add(land.createLandPadModel())
+            Log.d("LAND_TAG", "Name: ${land.createLandPadModel().full_name} Lat: ${land.createLandPadModel().location.latitude} Lan : ${land.createLandPadModel().location.longitude}")
         }
         landModels.value = listLand
     }
