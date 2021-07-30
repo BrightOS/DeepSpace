@@ -154,7 +154,6 @@ class SpaceXLaunchAdapter() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        Log.d("SpaceX_Fragment_TAG", "bbbbbbb")
         return ViewHolder(
             LaunchItemBinding.inflate(
                 LayoutInflater.from(parent.context),
