@@ -34,6 +34,7 @@ class RegViewModelImpl : ViewModel(), RegViewModel {
                 if (imagePath != null) {
                     storageRef.putFile(imagePath).await()
                 }
+                user.user!!.sendEmailVerification().await()
                 returnData.postValue(Data.Ok(user.user!!))
             } else {
                 returnData.postValue(Data.Error("Unknown error happened."))

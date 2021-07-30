@@ -11,6 +11,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.utils.Data
+import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
 import java.io.File
 import java.lang.Exception
 
@@ -23,23 +24,27 @@ class MFirebaseUser() : ViewModel() {
     }
  
 
-    suspend fun getUserAvatar(): LiveData<Data<out Bitmap>> {
-        val returnData: MutableLiveData<Data<out Bitmap>> = MutableLiveData()
-        val storageRef = storage.getReference("user_data/${authenticator.currentUser?.uid}")
+    fun isVerified(): Boolean {
+        return authenticator.currentUser!!.isEmailVerified
+    }
+
+    fun getUser(): FirebaseUser {
+        return authenticator.currentUser!!
+    }
+
+    suspend fun sendConfirmationEmail() {
         try {
-            var tempLocalFile: File? = null
-            kotlin.runCatching {
-                tempLocalFile = File.createTempFile("Images", "bmp")
-            }
-            storageRef.getFile(tempLocalFile!!).addOnSuccessListener {
-                returnData.postValue(Data.Ok(BitmapFactory.decodeFile(tempLocalFile!!.absolutePath)))
-            }.addOnFailureListener {
-                returnData.postValue(Data.Error(it.message.toString()))
-            }.await()
-        } catch (e: Exception) {
-            returnData.postValue(Data.Error(e.message.toString()))
+            authenticator.currentUser!!.sendEmailVerification().await()
+            println("Sent" + authenticator.currentUser!!.email)
         }
-        return returnData
+        catch(e: Exception) {
+            println(e.message.toString())
+        }
+    }
+
+    suspend fun getUserAvatar(): LiveData<Data<out Bitmap>> {
+        val storageRef = storage.getReference("user_data/${authenticator.currentUser?.uid}")
+        return downloadFirebaseImage(storageRef)
     }
 
     fun signOutUser(): LiveData<Data<out FirebaseUser>> {

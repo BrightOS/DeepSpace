@@ -28,6 +28,9 @@
 
 
     <string name="email_or_username">email</string>
+    <string name="cancel">Cancel</string>
+    <string name="send_mail">Send</string>
+    <string name="relogin">Please follow the link and login one more time</string>
     <string name="password">password</string>
     <string name="login">sign in</string>
     <string name="wrong_credits">wrong credentials</string>
@@ -45,6 +48,8 @@
     <string name="invalidEmail">invalid email</string>
     <string name="username">username</string>
     <string name="log_in">log in</string>
+    <string name="create_your_own_post">Create your own post</string>
+    <string name="edit_text_hint">Start typing here</string>
     <string name="home">Home</string>
     <string name="title_is_null_message">Empty title, interesting</string>
     <string name="rocket">Rocket:</string>
@@ -60,5 +65,4 @@
     <string name="retry">Retry</string>
     <string name="blogs">Blogs</string>
     <string name="click_on_the_image_hint">Click on the image to view description</string>
-
 </resources>

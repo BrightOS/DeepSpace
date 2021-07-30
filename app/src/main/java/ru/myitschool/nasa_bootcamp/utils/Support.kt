@@ -1,10 +1,17 @@
 package ru.myitschool.nasa_bootcamp.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.widget.ImageView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import ru.myitschool.nasa_bootcamp.R
+import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.tasks.await
+import java.io.File
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,6 +20,24 @@ public fun loadImage(context: Context, url: String?, view : ImageView) {
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(view)
+}
+
+suspend fun downloadFirebaseImage(storageRef: StorageReference): LiveData<Data<out Bitmap>> {
+    val returnData = MutableLiveData<Data<out Bitmap>>()
+    try {
+        var tempLocalFile: File? = null
+        kotlin.runCatching {
+            tempLocalFile = File.createTempFile("Images", "bmp")
+        }
+        storageRef.getFile(tempLocalFile!!).addOnSuccessListener {
+            returnData.postValue(Data.Ok(BitmapFactory.decodeFile(tempLocalFile!!.absolutePath)))
+        }.addOnFailureListener {
+            returnData.postValue(Data.Error(it.message.toString()))
+        }.await()
+    } catch (e: Exception) {
+        returnData.postValue(Data.Error(e.message.toString()))
+    }
+    return returnData
 }
 
 fun convertDateFromUnix(date : Int) : String{
