@@ -19,6 +19,7 @@ class LaunchLandFragment : Fragment() {
     private var _binding: FragmentLaunchLandBinding? = null
     private val binding get() = _binding!!
     private lateinit var landAdapter: LandAdapter
+    private lateinit var launchAdapter: LaunchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,31 +46,43 @@ class LaunchLandFragment : Fragment() {
                     requireContext(),
                     launchLandViewModel.getLandList().value!!
                 )
+        })
+
+        launchLandViewModel.getLaunchList()
+            .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                launchAdapter =
+                    LaunchAdapter(
+                        requireContext(),
+                        launchLandViewModel.getLaunchList().value!!
+                    )
+             })
+
+        binding.mapLandButton.setOnClickListener(View.OnClickListener {
             binding.launchLandRecycler.adapter = landAdapter
         })
 
-        launchLandViewModel.getLaunchList().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-
-        })
-
-     //   val navController = findNavController()
-
-
         binding.mapLandButton.setOnClickListener(View.OnClickListener {
-//            val bundle = Bundle();
-//            Log.d("NAME_TAG", "Name is ${roverModel.rover.name}")
-//            bundle.putString("name", roverModel.rover.name)
-//            bundle.putString("landing_date", roverModel.rover.landing_date)
-//            bundle.putString("launch_date", roverModel.rover.launch_date)
-//            bundle.putString("status", roverModel.rover.status)
-//            bundle.putString("camera", roverModel.camera.fullname)
-//
-//            navController.navigate(R.id.map_fragment, bundle)
-//
-
-           // val action = LaunchLandFragmentDirections.actionLaunchLandFragmentToMapsFragment()
-           // navController.navigate(action)
+            binding.launchLandRecycler.adapter = launchAdapter
         })
+
+        //   val navController = findNavController()
+
+//
+//        binding.mapLandButton.setOnClickListener(View.OnClickListener {
+////            val bundle = Bundle();
+////            Log.d("NAME_TAG", "Name is ${roverModel.rover.name}")
+////            bundle.putString("name", roverModel.rover.name)
+////            bundle.putString("landing_date", roverModel.rover.landing_date)
+////            bundle.putString("launch_date", roverModel.rover.launch_date)
+////            bundle.putString("status", roverModel.rover.status)
+////            bundle.putString("camera", roverModel.camera.fullname)
+////
+////            navController.navigate(R.id.map_fragment, bundle)
+////
+//
+//           // val action = LaunchLandFragmentDirections.actionLaunchLandFragmentToMapsFragment()
+//           // navController.navigate(action)
+//        })
 
         return binding.root
     }

@@ -34,6 +34,14 @@ class LandAdapter  internal constructor(
     override fun onBindViewHolder(holder: LandHolder, position: Int) {
         val landPadModel : LandPadModel = landModels[position]
 
+
+        holder.binding.nameLand.text = landPadModel.full_name
+        holder.binding.attemptedLandings.text = "Attempted landings : ${landPadModel.location.attempted_landings}"
+        holder.binding.statusLand.text = "Status : ${landPadModel.status}"
+        holder.binding.landingTypeLand.text = "Landing type : ${landPadModel.location.landing_type}"
+        holder.binding.successfulLandings.text = "Successful landings : ${landPadModel.location.successful_landings}"
+        holder.binding.descriptionLand.text = "${landPadModel.location.details}"
+
     }
 
     override fun getItemCount(): Int {

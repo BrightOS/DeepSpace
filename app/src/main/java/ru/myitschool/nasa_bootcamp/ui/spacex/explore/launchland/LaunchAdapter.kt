@@ -4,9 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
-import ru.myitschool.nasa_bootcamp.databinding.LandPadItemBinding
 import ru.myitschool.nasa_bootcamp.databinding.LaunchPadTemBinding
 import java.util.ArrayList
 
@@ -34,6 +32,13 @@ class LaunchAdapter internal constructor(
 
     override fun onBindViewHolder(holder: LaunchHolder, position: Int) {
         val launchModel : LaunchPadModel = launchModels[position]
+
+        holder.binding.nameLaunchPad.text = launchModel.name
+        holder.binding.attemptedLaunches.text = "Attempted launches : ${launchModel.location.attempted_launches}"
+        holder.binding.vehiclesLaunched.text = "Vehicles launched: ${launchModel.location.vehicles_launched}"
+        holder.binding.locationLaunchPad.text = "Located : ${launchModel.location.site_name_long}"
+        holder.binding.successfulLaunches.text = "Successful launches : ${launchModel.location.successful_launches}"
+        holder.binding.descriptionLand.text = "${launchModel.location.details}"
 
     }
 
