@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,10 +36,6 @@ class SpaceXFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        launchesViewModel.getViewModelScope().launch(Dispatchers.IO) {
-            launchesViewModel.loadSpaceXLaunches()
-        }
-
 //        onLaunchClick = object : SpaceXLaunchAdapter.OnLaunchClickListener {
 //            override fun onLaunchClick(launch: SxLaunchModel?, position: Int) {
 //                Log.d("LAUNCH_CLICK_TAG", "Clicked at $position")
@@ -52,13 +49,16 @@ class SpaceXFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        launchesViewModel.getViewModelScope().launch(Dispatchers.IO) {
+            launchesViewModel.loadSpaceXLaunches()
+        }
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
         spaceXLaunchAdapter = SpaceXLaunchAdapter()
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
         launchesViewModel.getLaunchesList().observe(viewLifecycleOwner) {
             Log.d("SpaceX_Fragment_TAG", "Something changed in view model! $it")
-            it.let { list -> spaceXLaunchAdapter.submitList(list)
-                Log.d("SpaceX_Fragment_TAG", "aaaaaa")}
+            spaceXLaunchAdapter.submitList(it)
+            Log.d("SpaceX_Fragment_TAG", "${spaceXLaunchAdapter.currentList}")
         }
 
         val animation = animateIt {
@@ -99,7 +99,7 @@ class SpaceXFragment : Fragment() {
             navController.navigate(action)
         }
 
-        binding.launchesRecycle.setHasFixedSize(true)
+//        binding.launchesRecycle.setHasFixedSize(true)
         binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)
 
 

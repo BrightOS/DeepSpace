@@ -9,9 +9,9 @@
     android:layout_marginStart="@dimen/eight_margin"
     android:layout_marginEnd="@dimen/eight_margin"
     android:layout_marginBottom="16dp"
-    app:cardBackgroundColor="#00717171"
     app:cardCornerRadius="15dp"
     app:cardElevation="10dp"
+    android:background="@color/transparent_gray"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +25,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
-            android:background="@color/transparent_gray">
+            android:padding="8dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/recycle_item_img"
