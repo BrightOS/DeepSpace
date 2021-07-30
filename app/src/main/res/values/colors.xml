@@ -11,5 +11,6 @@
     <color name="transparent_gray">#60717171</color>
     <color name="white_subtitle_color">#E1E1E1</color>
     <color name="red">#CC0E00</color>
+    <color name="green">#00B61E</color>
     <color name="very_dark_blue">#0D131F</color>
 </resources>

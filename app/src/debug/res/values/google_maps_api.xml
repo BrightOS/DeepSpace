@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=B6:2E:38:DB:C9:81:61:EC:EE:01:71:56:58:3C:13:77:B1:64:5B:80%3Bru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland
+
+    SHA-1 certificate fingerprint:
+    B6:2E:38:DB:C9:81:61:EC:EE:01:71:56:58:3C:13:77:B1:64:5B:80
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">YOUR_KEY_HERE</string>
+</resources>

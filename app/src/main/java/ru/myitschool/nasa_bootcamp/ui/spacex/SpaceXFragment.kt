@@ -86,7 +86,6 @@ class SpaceXFragment : Fragment() {
             }
         }
 
-
         binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
             val percent = scrollY * 1f / v.maxScrollAmount
             animation.setPercent(percent)

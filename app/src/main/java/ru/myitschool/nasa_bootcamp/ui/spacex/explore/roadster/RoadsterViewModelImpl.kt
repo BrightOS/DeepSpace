@@ -17,8 +17,7 @@ class RoadsterViewModelImpl @Inject constructor(
 ) : ViewModel(), RoadsterViewModel {
 
     var roadsterModell: MutableLiveData<RoadsterModel> = MutableLiveData<RoadsterModel>()
-
-
+    
     override suspend fun getRoadsterInfo() {
         val response = repository.getRoadster()
 

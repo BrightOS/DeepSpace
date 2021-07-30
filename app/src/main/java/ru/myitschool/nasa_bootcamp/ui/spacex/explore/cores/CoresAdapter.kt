@@ -42,7 +42,7 @@ class CoresAdapter internal constructor(
 
         holder.binding.coreItemBlocks.text = "Blocks : ${coreModel.block}"
         holder.binding.coreItemSerial.text = "Core : ${coreModel.core_serial}"
-        holder.binding.coreItemMissions.text = "Mission : ${coreModel.missions}"
+        holder.binding.coreItemMissions.text = "Mission : ${coreModel.missions[0].name}"
         holder.binding.coreItemReuseCount.text = "Reused : ${coreModel.reuse_count} times}"
 
         if(coreModel.status!=null)
@@ -56,7 +56,7 @@ class CoresAdapter internal constructor(
         holder.binding.originalLaunchDate.text =
             "Date : ${convertDateFromUnix(coreModel.original_launch_unix)}"
 
-        val onDragonClickListener = object : onCoreClickListener {
+        val onCoreClickListener = object : onCoreClickListener {
             override fun onCoreClick(coreModel: CoreModel, position: Int) {
 
             }

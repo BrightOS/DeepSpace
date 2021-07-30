@@ -142,7 +142,6 @@ class SpaceXLaunchAdapter() :
         override fun areContentsTheSame(oldItem: SxLaunchModel, newItem: SxLaunchModel): Boolean {
             return oldItem == newItem
         }
-
     }
 
     interface OnLaunchClickListener {
