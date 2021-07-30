@@ -31,16 +31,16 @@ class Vector3D (var x: Float, var y: Float, var z: Float) {
     //Норма вектора
     fun normalize() {
         val norm = length()
-        x = x / norm
-        y = y / norm
-        z = z / norm
+        x /= norm
+        y /=  norm
+        z /=  norm
     }
 
     //масштабирование вектора
     fun scale(scale: Float) {
-        x = x * scale
-        y = y * scale
-        z = z * scale
+        x *=  scale
+        y *=  scale
+        z *=  scale
     }
 
     open fun toFloatArray(): FloatArray? {
