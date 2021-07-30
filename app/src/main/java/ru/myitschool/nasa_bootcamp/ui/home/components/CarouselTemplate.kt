@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.Resource
@@ -22,7 +21,7 @@ import ru.myitschool.nasa_bootcamp.utils.Status
 fun <T> CarouselTemplate(
     modelsResource: Resource<List<T>>,
     title: String,
-    onItemClick: () -> Unit,
+    onItemClick: (item: T) -> Unit,
     onShowMoreClick: () -> Unit,
     cardContent: @Composable BoxScope.(item: T) -> Unit
 ) {
@@ -43,8 +42,8 @@ fun <T> CarouselTemplate(
             )
             Text(
                 style =
-                MaterialTheme.typography.h6
-                    .plus(TextStyle(textDecoration = TextDecoration.Underline)),
+                MaterialTheme.typography.h6,
+//                    .plus(TextStyle(textDecoration = TextDecoration.Underline)),
                 text = stringResource(R.string.show_more),
                 modifier = Modifier
                     .clickable { onShowMoreClick() }
@@ -58,8 +57,9 @@ fun <T> CarouselTemplate(
                 if (modelsResource.status == Status.SUCCESS)
                     items(modelsResource.data!!) { item ->
                         Card(
-                            elevation = 4.dp, onClick = onItemClick, modifier = Modifier
-                                .padding(4.dp)
+                            shape = RoundedCornerShape(8.dp),
+                            elevation = 4.dp, onClick = { onItemClick(item) }, modifier = Modifier
+                                .padding(8.dp, 4.dp, 0.dp, 4.dp)
                         ) {
                             Box(
                                 modifier = Modifier

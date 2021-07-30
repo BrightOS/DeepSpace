@@ -12,7 +12,7 @@
     <fragment
         android:id="@+id/asteroidRadarFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidRadarFragment"
-        android:label="AsteroidRadarFragment" >
+        android:label="AsteroidRadarFragment">
         <action
             android:id="@+id/action_asteroidRadarFragment_to_asteroidDetails"
             app:destination="@id/asteroidDetails"
@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/marsRoversFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.MarsRoversFragment"
-        android:label="MarsRoversFragment" >
+        android:label="MarsRoversFragment">
         <action
             android:id="@+id/action_marsRoversFragment_to_roverDetails"
             app:destination="@id/roverDetails" />
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/spaceXFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXFragment"
-        android:label="SpaceXFragment" >
+        android:label="SpaceXFragment">
         <action
             android:id="@+id/action_spaceXFragment_to_exploreFragment"
             app:destination="@id/exploreFragment"
@@ -56,9 +56,19 @@
         android:label="ContactFragment" />
 
     <fragment
+        android:id="@+id/createPostFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostFragment"
+        android:label="CreatePostFragment" />
+
+    <fragment
+        android:id="@+id/allUserPostFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.view_user_posts.ViewAllPostFragment"
+        android:label="user_posts"/>
+
+    <fragment
         android:id="@+id/exploreFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragment"
-        android:label="ExploreFragment" >
+        android:label="ExploreFragment">
         <action
             android:id="@+id/action_exploreFragment_to_historyFragment"
             app:destination="@id/historyFragment"
@@ -105,7 +115,7 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.auth.login.AuthFragment"
-        android:label="AuthFragment" >
+        android:label="AuthFragment">
         <action
             android:id="@+id/reg"
             app:destination="@id/regFragment2"
@@ -123,14 +133,16 @@
     <fragment
         android:id="@+id/regFragment2"
         android:name="ru.myitschool.nasa_bootcamp.ui.auth.reg.RegFragment"
-        android:label="RegFragment" >
+        android:label="RegFragment">
         <action
             android:id="@+id/success_reg"
             app:destination="@id/nasaFragment"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <action android:id="@+id/login" app:destination="@id/authFragment" />
+    <action
+        android:id="@+id/login"
+        app:destination="@id/authFragment" />
     <fragment
         android:id="@+id/historyFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.InfoFragment"
@@ -168,7 +180,20 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_spaceXFragment"
+            app:destination="@id/spaceXFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_asteroidRadarFragment"
+            app:destination="@id/asteroidRadarFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_marsRoversFragment"
+            app:destination="@id/marsRoversFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_nasaFragment"
+            app:destination="@id/nasaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/asteroidDetails"
         android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidDetailsFragment"
@@ -179,7 +204,8 @@
         android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.RoverDetails"
         android:label="fragment_rover_details"
         tools:layout="@layout/fragment_rover_details" />
-    <fragment
+
+      <fragment
         android:id="@+id/mapsFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.MapsFragment"
         android:label="fragment_maps"
@@ -197,4 +223,11 @@
             app:argType="string"
             android:defaultValue="details" />
     </fragment>
+
+    <fragment
+        android:id="@+id/userPost"
+        android:name="ru.myitschool.nasa_bootcamp.ui.view_user_posts.ViewPostFragment"
+        android:label="fragment_user_post"
+        tools:layout="@layout/fragment_view_post" />
+
 </navigation>

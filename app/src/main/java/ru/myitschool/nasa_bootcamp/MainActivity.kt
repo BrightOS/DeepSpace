@@ -1,9 +1,13 @@
 package ru.myitschool.nasa_bootcamp
 
+import android.content.DialogInterface
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.viewModelScope
@@ -13,6 +17,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.coroutines.launch
@@ -21,6 +27,7 @@ import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 import ru.myitschool.nasa_bootcamp.databinding.NavHeaderMainBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
+import ru.myitschool.nasa_bootcamp.utils.errorEmailIsNotVerified
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
