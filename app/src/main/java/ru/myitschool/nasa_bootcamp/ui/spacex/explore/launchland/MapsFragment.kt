@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -18,18 +17,13 @@ import ru.myitschool.nasa_bootcamp.R
 class MapsFragment : Fragment() {
 
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(28.485833,  -80.544444)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Landing Zone 1"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        val landingZone = LatLng(28.485833, -80.544444)
+        googleMap.addMarker(MarkerOptions().position(landingZone).title("Landing Zone 1"))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(landingZone, 15f),2500,null)//.apply {
+            // =
+       // }
+        // googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f), 500, null)
     }
 
     override fun onCreateView(
