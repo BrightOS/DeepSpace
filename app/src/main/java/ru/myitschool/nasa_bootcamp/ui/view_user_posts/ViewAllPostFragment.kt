@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.model.Post
@@ -30,7 +31,7 @@ class ViewAllPostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAllUserPostBinding.inflate(inflater, container, false)
-        adapter = ViewAllPostAdapter(requireContext(), recyclerList)
+        adapter = ViewAllPostAdapter(requireContext(), findNavController(), recyclerList)
         return binding.root
     }
 

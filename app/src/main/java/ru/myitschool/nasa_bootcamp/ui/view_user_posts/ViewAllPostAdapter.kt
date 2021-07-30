@@ -1,18 +1,22 @@
 package ru.myitschool.nasa_bootcamp.ui.view_user_posts
 
 import android.content.Context
+import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Post
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.reflect.typeOf
 
-class ViewAllPostAdapter(private val context: Context, var data: ArrayList<Post>) :
+class ViewAllPostAdapter(private val context: Context, private val navController: NavController, var data: ArrayList<Post>) :
     RecyclerView.Adapter<ViewAllPostAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -38,6 +42,14 @@ class ViewAllPostAdapter(private val context: Context, var data: ArrayList<Post>
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.postButton?.text = data[position].title
+        holder.postButton?.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("id", data[position].id)
+            bundle.putString("title", data[position].title)
+            bundle.putString("author", data[position].author)
+            bundle.putString("dateCreated", Date(data[position].dateCreated).toString())
+            navController.navigate(R.id.userPost, bundle)
+        }
         holder.usernameTextView?.text = data[position].author
         holder.dateTextView?.text = Date(data[position].dateCreated).toString()
     }

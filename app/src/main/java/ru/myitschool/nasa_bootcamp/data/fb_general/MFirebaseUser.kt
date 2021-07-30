@@ -11,6 +11,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.utils.Data
+import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
 import java.io.File
 import java.lang.Exception
 
@@ -42,22 +43,8 @@ class MFirebaseUser() : ViewModel() {
     }
 
     suspend fun getUserAvatar(): LiveData<Data<out Bitmap>> {
-        val returnData: MutableLiveData<Data<out Bitmap>> = MutableLiveData()
         val storageRef = storage.getReference("user_data/${authenticator.currentUser?.uid}")
-        try {
-            var tempLocalFile: File? = null
-            kotlin.runCatching {
-                tempLocalFile = File.createTempFile("Images", "bmp")
-            }
-            storageRef.getFile(tempLocalFile!!).addOnSuccessListener {
-                returnData.postValue(Data.Ok(BitmapFactory.decodeFile(tempLocalFile!!.absolutePath)))
-            }.addOnFailureListener {
-                returnData.postValue(Data.Error(it.message.toString()))
-            }.await()
-        } catch (e: Exception) {
-            returnData.postValue(Data.Error(e.message.toString()))
-        }
-        return returnData
+        return downloadFirebaseImage(storageRef)
     }
 
     fun signOutUser(): LiveData<Data<out FirebaseUser>> {

@@ -19,7 +19,6 @@ import ru.myitschool.nasa_bootcamp.data.model.TextPost
 
 class CreatePostRecyclerAdapter(private val context: Context, var data: ArrayList<PostItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val viewModel: CreatePostViewModelImpl = CreatePostViewModelImpl()
 
     companion object {
         const val IMAGE = 1
