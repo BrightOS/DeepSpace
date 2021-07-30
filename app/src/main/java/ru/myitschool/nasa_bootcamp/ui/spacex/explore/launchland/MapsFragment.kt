@@ -15,15 +15,24 @@ import com.google.android.gms.maps.model.MarkerOptions
 import ru.myitschool.nasa_bootcamp.R
 
 class MapsFragment : Fragment() {
+    var latitude: Double? = null
+    var longitude: Double? = null
+    var name: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            name = it.getString("name")
+            longitude = it.getFloat("longitude").toDouble()
+            latitude = it.getFloat("latitude").toDouble()
+        }
+    }
 
     private val callback = OnMapReadyCallback { googleMap ->
 
-        val landingZone = LatLng(28.485833, -80.544444)
-        googleMap.addMarker(MarkerOptions().position(landingZone).title("Landing Zone 1"))
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(landingZone, 15f),2500,null)//.apply {
-            // =
-       // }
-        // googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f), 500, null)
+        val landingZone = LatLng(latitude!!, longitude!!)
+        googleMap.addMarker(MarkerOptions().position(landingZone).title(name))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(landingZone, 15f),2500,null)
     }
 
     override fun onCreateView(

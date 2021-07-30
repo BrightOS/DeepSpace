@@ -3,14 +3,32 @@ package ru.myitschool.nasa_bootcamp.data.dto.spaceX.landingPads
 import com.google.gson.annotations.SerializedName
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 
-data class LaunchPad (
+data class LaunchPad(
     @field:SerializedName("id") val id: Int,
     @field:SerializedName("status") val status: String,
     @field:SerializedName("name") val name: String,
-    @field:SerializedName("location") val location: LocationPadLaunch
-    ){
-    fun createLaunchPadModel() : LaunchPadModel{
-        return LaunchPadModel(id, status, name, location)
+    @field:SerializedName("location") val location: LocationPadLaunch,
+    @field:SerializedName("vehicles_launched") val vehicles_launched: ArrayList<String>,
+    @field:SerializedName("attempted_launches") val attempted_launches: Int,
+    @field:SerializedName("successful_launches") val successful_launches: Int,
+    @field:SerializedName("wikipedia") val wikipedia: String,
+    @field:SerializedName("details") val details: String,
+    @field:SerializedName("site_name_long") val site_name_long: String
+
+) {
+    fun createLaunchPadModel(): LaunchPadModel {
+        return LaunchPadModel(
+            id,
+            status,
+            name,
+            location,
+            vehicles_launched,
+            attempted_launches,
+            successful_launches,
+            wikipedia,
+            details,
+            site_name_long
+        )
     }
 }
 
@@ -19,12 +37,7 @@ data class LocationPadLaunch(
     @field:SerializedName("region") val region: String,
     @field:SerializedName("latitude") val latitude: Double,
     @field:SerializedName("longitude") val longitude: Double,
-    @field:SerializedName("vehicles_launched") val vehicles_launched: ArrayList<String>,
-    @field:SerializedName("attempted_launches") val attempted_launches: Int,
-    @field:SerializedName("successful_launches") val successful_launches: Int,
-    @field:SerializedName("wikipedia") val wikipedia: String,
-    @field:SerializedName("details") val details: String,
-    @field:SerializedName("site_name_long") val site_name_long: String,
+
     )
 
 //{

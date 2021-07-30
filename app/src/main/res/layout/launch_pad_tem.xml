@@ -112,6 +112,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text=" Merlin is used because..." />
 
+
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
 
