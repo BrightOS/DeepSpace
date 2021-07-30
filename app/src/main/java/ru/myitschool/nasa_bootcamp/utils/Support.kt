@@ -10,9 +10,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
-import ru.myitschool.nasa_bootcamp.R
 import java.io.File
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 public fun loadImage(context: Context, url: String?, view : ImageView) {
     Glide.with(context)
@@ -39,3 +40,9 @@ suspend fun downloadFirebaseImage(storageRef: StorageReference): LiveData<Data<o
     return returnData
 }
 
+fun convertDateFromUnix(date : Int) : String{
+    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+    val date = Date(date * 1000L)
+
+    return sdf.format(date)
+}

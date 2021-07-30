@@ -9,5 +9,5 @@ data class RoadsterModel(
     val longitude: Double,
     val earth_distance_km: Double,
     val mars_distance_km: Double,
-    val details: Double,
+    val details: String,
 )

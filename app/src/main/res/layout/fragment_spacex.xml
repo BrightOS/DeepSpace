@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/space_x_background3"
+    android:background="#0D131F"
 
 >
     <androidx.core.widget.NestedScrollView
@@ -27,6 +27,7 @@
                 android:id="@+id/launches_recycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                tools:listitem="@layout/launch_item"
                 />
 
         </LinearLayout>
@@ -41,7 +42,7 @@
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#0D131F"
+            android:background="@drawable/space_x_background4"
             android:elevation="4dp" />
 
         <LinearLayout

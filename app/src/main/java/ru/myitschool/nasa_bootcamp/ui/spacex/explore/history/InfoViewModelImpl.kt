@@ -3,19 +3,21 @@ package ru.myitschool.nasa_bootcamp.ui.spacex.explore.history
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import ru.myitschool.nasa_bootcamp.data.model.DragonModel
 import ru.myitschool.nasa_bootcamp.data.model.HistoryModel
+import ru.myitschool.nasa_bootcamp.data.model.InfoModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons.DragonsViewModel
 import javax.inject.Inject
 
-class HistoryViewModelImpl  @Inject constructor(
+@HiltViewModel
+class InfoViewModelImpl  @Inject constructor(
     private val repository: SpaceXRepository
-) : ViewModel(), HistoryViewModel {
+) : ViewModel(), InfoViewModel {
 
     var historyModels: MutableLiveData<ArrayList<HistoryModel>> = MutableLiveData<ArrayList<HistoryModel>>()
     var list: ArrayList<HistoryModel> = arrayListOf()
+    var info : MutableLiveData<InfoModel> = MutableLiveData<InfoModel>()
 
     override suspend fun getHistory() {
         val response = repository.getHistory()
@@ -26,9 +28,18 @@ class HistoryViewModelImpl  @Inject constructor(
         historyModels.value = list
     }
 
+    override suspend fun getInfo() {
+        val response = repository.getInfo()
+        info.value = response.body()!!.createInfoModel()
+    }
+
     override fun getViewModelScope(): CoroutineScope = viewModelScope
 
     override fun getHistoryList(): MutableLiveData<ArrayList<HistoryModel>> {
         return historyModels
+    }
+
+    override fun getInfoLiveData(): MutableLiveData<InfoModel> {
+        return info
     }
 }

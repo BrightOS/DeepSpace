@@ -12,7 +12,7 @@ class Roadster(
     @field:SerializedName("longitude") val longitude: Double,
     @field:SerializedName("earth_distance_km") val earth_distance_km: Double,
     @field:SerializedName("mars_distance_km") val mars_distance_km: Double,
-    @field:SerializedName("details") val details: Double,
+    @field:SerializedName("details") val details: String,
 ) {
 
     public fun createRoadsterModel(): RoadsterModel {

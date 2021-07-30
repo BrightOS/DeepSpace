@@ -145,7 +145,7 @@
         app:destination="@id/authFragment" />
     <fragment
         android:id="@+id/historyFragment"
-        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.HistoryFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.InfoFragment"
         android:label="HistoryFragment" />
     <fragment
         android:id="@+id/capsulesFragment"
@@ -174,7 +174,20 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_spaceXFragment"
+            app:destination="@id/spaceXFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_asteroidRadarFragment"
+            app:destination="@id/asteroidRadarFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_marsRoversFragment"
+            app:destination="@id/marsRoversFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_nasaFragment"
+            app:destination="@id/nasaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/asteroidDetails"
         android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidDetailsFragment"

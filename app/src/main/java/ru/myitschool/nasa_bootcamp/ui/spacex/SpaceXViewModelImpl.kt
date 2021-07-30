@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,37 +9,32 @@ import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class SpaceXViewModelImpl @Inject constructor(private val repository : SpaceXRepository
-): ViewModel(), SpaceXViewModel {
+class SpaceXViewModelImpl @Inject constructor(
+    private val repository: SpaceXRepository
+) : ViewModel(), SpaceXViewModel {
 
-    var launchesModelsList: MutableLiveData<ArrayList<SxLaunchModel>> = MutableLiveData<ArrayList<SxLaunchModel>>()
+    private var launchesModelsList: MutableLiveData<List<SxLaunchModel>> =
+        MutableLiveData<List<SxLaunchModel>>()
 
 
-    var list: ArrayList<SxLaunchModel> = arrayListOf()
+    var list: List<SxLaunchModel> = listOf()
 
-    override suspend fun getSpaceXLaunches(){
-
+    override suspend fun loadSpaceXLaunches() {
         val response = repository.getSpaceXLaunches()
 
         if (response.isSuccessful) {
             if (response.body() != null) {
-
-                var i : Int = 0
-                for (launch in response.body()!!) {
-                    Log.d("TAG_SPACEX", launch.createLaunchModel().mission_name)
-                    list.add(launch.createLaunchModel())
-                    i++
-                }
+                launchesModelsList.postValue(
+                    response.body()!!.map { launch -> launch.createLaunchModel() }.asReversed()
+                )
             }
-        }else{
+        } else {
 
         }
-        list.reverse()
-        launchesModelsList.value = list
     }
 
-    override fun getLaunchesList(): MutableLiveData<ArrayList<SxLaunchModel>> {
-        return  launchesModelsList
+    override fun getLaunchesList(): MutableLiveData<List<SxLaunchModel>> {
+        return launchesModelsList
     }
 
     override fun getViewModelScope() = viewModelScope

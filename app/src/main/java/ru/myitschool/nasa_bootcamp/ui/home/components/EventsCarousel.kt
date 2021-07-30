@@ -1,15 +1,14 @@
 package ru.myitschool.nasa_bootcamp.ui.home.components
 
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ru.myitschool.nasa_bootcamp.data.model.EventModel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
@@ -17,16 +16,21 @@ import ru.myitschool.nasa_bootcamp.utils.Resource
 fun EventsCarousel(
     title: String,
     eventsResource: Resource<List<EventModel>>,
-    onItemClick: () -> Unit
+    onShowMoreClick: () -> Unit,
+    onItemClick: (event: EventModel) -> Unit
 ) {
+    val titleTextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
     CarouselTemplate(
         modelsResource = eventsResource,
         title = title,
+        onShowMoreClick = onShowMoreClick,
         onItemClick = onItemClick, cardContent = { eventModel ->
             Text(
-                modifier = Modifier.padding(8.dp),
-                style = MaterialTheme.typography.h6,
-                maxLines = 4,
+                modifier = Modifier
+                    .padding(8.dp),
+                style = titleTextStyle,
+                textAlign = TextAlign.Center,
+                maxLines = 6,
                 text = eventModel.title
             )
         })
