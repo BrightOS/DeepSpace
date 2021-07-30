@@ -22,7 +22,7 @@ import ru.myitschool.nasa_bootcamp.utils.Status
 fun <T> CarouselTemplate(
     modelsResource: Resource<List<T>>,
     title: String,
-    onItemClick: () -> Unit,
+    onItemClick: (item: T) -> Unit,
     onShowMoreClick: () -> Unit,
     cardContent: @Composable BoxScope.(item: T) -> Unit
 ) {
@@ -43,8 +43,8 @@ fun <T> CarouselTemplate(
             )
             Text(
                 style =
-                MaterialTheme.typography.h6
-                    .plus(TextStyle(textDecoration = TextDecoration.Underline)),
+                MaterialTheme.typography.h6,
+//                    .plus(TextStyle(textDecoration = TextDecoration.Underline)),
                 text = stringResource(R.string.show_more),
                 modifier = Modifier
                     .clickable { onShowMoreClick() }
@@ -58,8 +58,8 @@ fun <T> CarouselTemplate(
                 if (modelsResource.status == Status.SUCCESS)
                     items(modelsResource.data!!) { item ->
                         Card(
-                            elevation = 4.dp, onClick = onItemClick, modifier = Modifier
-                                .padding(4.dp)
+                            elevation = 4.dp, onClick = { onItemClick(item) }, modifier = Modifier
+                                .padding(8.dp, 4.dp, 0.dp, 4.dp)
                         ) {
                             Box(
                                 modifier = Modifier

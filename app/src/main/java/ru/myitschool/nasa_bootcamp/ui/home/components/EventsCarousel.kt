@@ -3,7 +3,6 @@ package ru.myitschool.nasa_bootcamp.ui.home.components
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -18,7 +17,7 @@ fun EventsCarousel(
     title: String,
     eventsResource: Resource<List<EventModel>>,
     onShowMoreClick: () -> Unit,
-    onItemClick: () -> Unit
+    onItemClick: (event: EventModel) -> Unit
 ) {
     val titleTextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
     CarouselTemplate(
