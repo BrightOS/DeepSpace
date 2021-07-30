@@ -4,13 +4,28 @@ import com.google.gson.annotations.SerializedName
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 
 data class LandPad(
-    @field:SerializedName("id") val id: Int,
+    @field:SerializedName("id") val id: String,
     @field:SerializedName("full_name") val full_name: String,
     @field:SerializedName("status") val status: String,
-    @field:SerializedName("location") val location: LocationPad
+    @field:SerializedName("location") val location: LocationPad,
+    @field:SerializedName("landing_type") val landing_type: String,
+    @field:SerializedName("attempted_landings") val attempted_landings: Int,
+    @field:SerializedName("successful_landings") val successful_landings: Int,
+    @field:SerializedName("wikipedia") val wikipedia: String,
+    @field:SerializedName("details") val details: String
 ) {
     fun createLandPadModel(): LandPadModel {
-        return LandPadModel(id, full_name, status, location)
+        return LandPadModel(
+            id,
+            full_name,
+            status,
+            location,
+            landing_type,
+            attempted_landings,
+            successful_landings,
+            wikipedia,
+            details
+        )
     }
 }
 
@@ -19,12 +34,8 @@ data class LocationPad(
     @field:SerializedName("region") val region: String,
     @field:SerializedName("latitude") val latitude: Double,
     @field:SerializedName("longitude") val longitude: Double,
-    @field:SerializedName("landing_type") val landing_type: String,
-    @field:SerializedName("attempted_landings") val attempted_landings: Int,
-    @field:SerializedName("successful_landings") val successful_landings: Int,
-    @field:SerializedName("wikipedia") val wikipedia: String,
-    @field:SerializedName("details") val details: String
-)
+
+    )
 
 //{
 //    "id": "LZ-1",
