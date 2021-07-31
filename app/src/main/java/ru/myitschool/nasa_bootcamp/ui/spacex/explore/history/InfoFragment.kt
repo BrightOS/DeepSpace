@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentInfoBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
+import ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragmentDirections
 
 @AndroidEntryPoint
 class InfoFragment : Fragment() {
@@ -33,13 +35,8 @@ class InfoFragment : Fragment() {
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
 
         infoViewModel.getViewModelScope().launch {
-            infoViewModel.getHistory()
             infoViewModel.getInfo()
         }
-
-        infoViewModel.getHistoryList().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-
-        })
 
         infoViewModel.getInfoLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             binding.addressInfo.text =
@@ -78,6 +75,12 @@ class InfoFragment : Fragment() {
         binding.scrollInfo.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
             val percent = scrollY * 1f / v.maxScrollAmount
             animation.setPercent(percent)
+        })
+
+        val navController = findNavController()
+        binding.layHistory.historyGo.setOnClickListener(View.OnClickListener {
+            val action = InfoFragmentDirections.actionHistoryFragmentToHistoryFragment2()
+            navController.navigate(action)
         })
 
         return binding.root
