@@ -71,7 +71,7 @@
         android:label="ExploreFragment">
         <action
             android:id="@+id/action_exploreFragment_to_historyFragment"
-            app:destination="@id/historyFragment"
+            app:destination="@id/infoFragment"
             app:enterAnim="@animator/slide_in_right"
             app:exitAnim="@animator/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
@@ -144,9 +144,13 @@
         android:id="@+id/login"
         app:destination="@id/authFragment" />
     <fragment
-        android:id="@+id/historyFragment"
+        android:id="@+id/infoFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.InfoFragment"
-        android:label="HistoryFragment" />
+        android:label="HistoryFragment" >
+        <action
+            android:id="@+id/action_historyFragment_to_historyFragment2"
+            app:destination="@id/historyFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/capsulesFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.capsules.CapsulesFragment"
@@ -229,5 +233,10 @@
         android:name="ru.myitschool.nasa_bootcamp.ui.view_user_posts.ViewPostFragment"
         android:label="fragment_user_post"
         tools:layout="@layout/fragment_view_post" />
+    <fragment
+        android:id="@+id/historyFragment2"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 
 </navigation>

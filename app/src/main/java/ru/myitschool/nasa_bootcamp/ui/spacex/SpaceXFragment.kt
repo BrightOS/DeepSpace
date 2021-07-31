@@ -28,9 +28,6 @@ class SpaceXFragment : Fragment() {
     private var _binding: FragmentSpacexBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var onLaunchClick: SpaceXLaunchAdapter.OnLaunchClickListener
-
-
     internal var h: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {

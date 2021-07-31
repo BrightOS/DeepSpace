@@ -15,18 +15,7 @@ class InfoViewModelImpl  @Inject constructor(
     private val repository: SpaceXRepository
 ) : ViewModel(), InfoViewModel {
 
-    var historyModels: MutableLiveData<ArrayList<HistoryModel>> = MutableLiveData<ArrayList<HistoryModel>>()
-    var list: ArrayList<HistoryModel> = arrayListOf()
     var info : MutableLiveData<InfoModel> = MutableLiveData<InfoModel>()
-
-    override suspend fun getHistory() {
-        val response = repository.getHistory()
-
-        for (story in response.body()!!) {
-            list.add(story.createHistoryModel())
-        }
-        historyModels.value = list
-    }
 
     override suspend fun getInfo() {
         val response = repository.getInfo()
@@ -34,10 +23,6 @@ class InfoViewModelImpl  @Inject constructor(
     }
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope
-
-    override fun getHistoryList(): MutableLiveData<ArrayList<HistoryModel>> {
-        return historyModels
-    }
 
     override fun getInfoLiveData(): MutableLiveData<InfoModel> {
         return info

@@ -1,8 +1,8 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.math
 
 class RaDec(
-    var ra: Double,
-    var dec: Double
+    var ra: Float,
+    var dec: Float
 )
 //    Orbital elements of the Moon:
 //    N = longitude of the ascending node
@@ -23,7 +23,7 @@ class RaDec(
     constructor(
         _ra: Double, _dec: Double, _longtitude: Double, _inclination: Double,
         _perihelion: Double, _axis: Double, _eccentricity: Double, _meanAnomaly: Double
-    ) : this(_ra, _dec) {
+    ) : this(_ra.toFloat(), _dec.toFloat()) {
         longtitude = _longtitude
         inclination = _inclination
         perihelion = _perihelion
