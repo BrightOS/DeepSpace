@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.HistoryModel
 import ru.myitschool.nasa_bootcamp.databinding.HistoryItemBinding
+import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
 import java.util.ArrayList
 
 class HistoryAdapter internal constructor(
@@ -32,7 +33,9 @@ class HistoryAdapter internal constructor(
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val historyModel: HistoryModel = historyModels[position]
 
-
+        holder.binding.detailsHistory.text = historyModel.details
+        holder.binding.eventDateHistory.text = "Date : ${convertDateFromUnix(historyModel.event_date_utc)}"
+        holder.binding.historyArticleItem.text= historyModel.title
 
     }
 
