@@ -18,7 +18,9 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_launch_spacex"
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -102,6 +104,21 @@
                 app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
                 app:layout_constraintTop_toBottomOf="@+id/launch_site"
                 tools:text="Status : fail" />
+
+            <ProgressBar
+                android:id="@+id/load_progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:indeterminate="true"
+                android:paddingBottom="?actionBarSize"
+                android:theme="@style/Theme.AppCompat.Light"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
