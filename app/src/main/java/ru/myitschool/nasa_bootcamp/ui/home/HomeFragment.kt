@@ -92,6 +92,7 @@ fun HomeScreen(
 ) {
     val imageOfTheDayModel by viewModel.getImageOfTheDayModel()
         .observeAsState(Resource.loading(null))
+
     val articles by viewModel.getArticles().observeAsState(Resource.loading(null))
     val scrollState = rememberScrollState()
 

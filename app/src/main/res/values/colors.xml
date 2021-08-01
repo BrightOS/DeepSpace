@@ -13,4 +13,6 @@
     <color name="red">#CC0E00</color>
     <color name="green">#00B61E</color>
     <color name="very_dark_blue">#0D131F</color>
+    <color name="disabled_button">#6C6C6C</color>
+    <color name="enabled_button">#2368A5</color>
 </resources>
