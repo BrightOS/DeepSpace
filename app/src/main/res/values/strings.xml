@@ -63,7 +63,7 @@
     <string name="show_more">Show more</string>
     <string name="spacex_card_title">All about SpaceX</string>
     <string name="spacex_card_description">Information about launches, space capsules, how it all started and even more.</string>
-    <string name="image_of_the_day_error_message">An error occurred while loading the image, please check the network connection</string>
+    <string name="loading_error_message">An error occurred while loading the content, please check the network connection</string>
     <string name="retry">Retry</string>
     <string name="blogs">Blogs</string>
     <string name="click_on_the_image_hint">Click on the image to view description</string>

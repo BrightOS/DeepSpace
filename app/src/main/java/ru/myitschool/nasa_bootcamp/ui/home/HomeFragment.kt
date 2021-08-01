@@ -48,7 +48,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.getViewModelScope().launch(Dispatchers.IO) { viewModel.loadImageOfTheDay() }
+        viewModel.getViewModelScope().launch(Dispatchers.IO) {
+            viewModel.loadImageOfTheDay()
+            viewModel.loadArticles()
+        }
         return ComposeView(requireContext()).apply {
             setContent {
                 MdcTheme {
@@ -95,7 +98,10 @@ fun HomeScreen(
     Column(modifier = Modifier.verticalScroll(scrollState)) {
         Box(modifier = Modifier.fillMaxWidth()) {
             ImageOfTheDay(
-                onRetryButtonClick = { viewModel.getViewModelScope().launch(Dispatchers.IO) { viewModel.loadImageOfTheDay() } },
+                onRetryButtonClick = {
+                    viewModel.getViewModelScope()
+                        .launch(Dispatchers.IO) { viewModel.loadImageOfTheDay() }
+                },
                 model = imageOfTheDayModel,
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -121,7 +127,11 @@ fun HomeScreen(
             articlesResource = articles,
             onItemClick = onNewsItemClick,
             onShowMoreClick = onShowMoreNewsClick,
-            title = stringResource(R.string.nasa_news)
+            title = stringResource(R.string.nasa_news),
+            onRetryButtonClick = {
+                viewModel.getViewModelScope()
+                    .launch(Dispatchers.IO) { viewModel.loadArticles() }
+            }
         )
         Spacer(
             modifier = Modifier
