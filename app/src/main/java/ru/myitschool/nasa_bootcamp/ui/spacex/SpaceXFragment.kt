@@ -65,11 +65,11 @@ class SpaceXFragment : Fragment() {
         }
 
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
-            if (error == ru.myitschool.nasa_bootcamp.utils.ErrorHandler.ERROR) {
+            if (error == ru.myitschool.nasa_bootcamp.utils.Status.ERROR) {
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 binding.errorIcon.visibility = View.VISIBLE
-            } else if (!(error == ru.myitschool.nasa_bootcamp.utils.ErrorHandler.LOADING)) {
+            } else if (!(error == ru.myitschool.nasa_bootcamp.utils.Status.LOADING)) {
                 binding.loadProgressbar.visibility = View.GONE
                 binding.launchesRecycle.visibility = View.VISIBLE
                 binding.errorIcon.visibility = View.GONE
