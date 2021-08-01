@@ -17,4 +17,6 @@ data class SxLaunchModel(
     val launch_success: Boolean,
     val details: String?,
     val launch_site: LaunchSite
-)
+){
+
+}

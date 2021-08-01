@@ -1,28 +1,101 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
+import ru.myitschool.nasa_bootcamp.utils.ErrorHandler
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
-class SpaceXLaunchAdapter() :
+class SpaceXLaunchAdapter(val context: Context ) :
     ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
+
 
     class ViewHolder(private val binding: LaunchItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var expanded = false
         fun bind(
             launchModel: SxLaunchModel,
-            position: Int
+            position: Int,
+            context : Context
         ) {
+
+            lateinit var viewModel: LaunchItemViewModel
+
+            var expanded = false
+
+
+            fun setupRecycleErrorParams() {
+                binding.loadProgressbar.visibility = View.GONE
+                binding.missionName.text = "ERROR"
+            }
+
+            fun setViewModel(_viewModel: LaunchItemViewModel) {
+                viewModel = _viewModel
+                viewModel.isViewModelLoaded().observe(context as LifecycleOwner) { isLoaded ->
+                    if (isLoaded) binding.loadProgressbar.visibility =
+                        View.GONE else binding.loadProgressbar.visibility =
+                        View.VISIBLE
+                }
+                viewModel.error.observe(context as LifecycleOwner) { error ->
+                    if (error == ErrorHandler.SUCCESS
+                    ) if (error == ErrorHandler.ERROR
+                    ) setupRecycleErrorParams() else binding.layoutLaunchSpacex.visibility =
+                        View.VISIBLE
+                }
+            }
+
+
+            var requestListener = object : RequestListener<Drawable> {
+
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    viewModel.error.value = ErrorHandler.ERROR
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: Target<Drawable>,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                   // viewModel.error.value = ErrorHandler.SUCCESS
+                    binding.loadProgressbar.visibility = View.GONE
+                    binding.layoutLaunchSpacex.visibility = View.VISIBLE
+                    return false
+                }
+            }
+
+
+//            val viewModelLaunch: LaunchItemViewModel =
+//                ViewModelProvider((context as ViewModelStoreOwner)).get<LaunchItemViewModel>(
+//                    LaunchItemViewModel::class.java
+//                )
+//            setViewModel(viewModelLaunch) ??
+
             binding.missionName.text = launchModel.mission_name
             binding.missionYear.text = "${convertDateFromUnix(launchModel.launch_date_unix)}"
             binding.details.text = launchModel.details
@@ -88,16 +161,19 @@ class SpaceXLaunchAdapter() :
             binding.characteristicsLaunch.recovered.text = recovered
 
 
+            Log.d("LAUNCH_ADAPTER_TAG", "Mission patch is null? ${(launchModel.links.mission_patch == null) }")
             if (launchModel.links.mission_patch != null)
                 loadImage(
                     binding.recycleItemImg.context,
                     launchModel.links.mission_patch,
-                    binding.recycleItemImg
+                    binding.recycleItemImg,
+                    requestListener
                 )
             else loadImage(
                 binding.recycleItemImg.context,
                 "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
-                binding.recycleItemImg
+                binding.recycleItemImg,
+                requestListener
             )
 
             val onLaunchClickListener = object : OnLaunchClickListener {
@@ -150,7 +226,8 @@ class SpaceXLaunchAdapter() :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = getItem(position)
-        holder.bind(model, position)
+        holder.bind(model, position, context)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -13,9 +13,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_asteroid_radar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.xml.sax.ErrorHandler
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 
@@ -27,9 +30,6 @@ class SpaceXFragment : Fragment() {
 
     private var _binding: FragmentSpacexBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var onLaunchClick: SpaceXLaunchAdapter.OnLaunchClickListener
-
 
     internal var h: Int = 0
 
@@ -53,56 +53,74 @@ class SpaceXFragment : Fragment() {
             launchesViewModel.loadSpaceXLaunches()
         }
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
-        spaceXLaunchAdapter = SpaceXLaunchAdapter()
+        spaceXLaunchAdapter = SpaceXLaunchAdapter(requireContext())
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
+
+
+
         launchesViewModel.getLaunchesList().observe(viewLifecycleOwner) {
             Log.d("SpaceX_Fragment_TAG", "Something changed in view model! $it")
             spaceXLaunchAdapter.submitList(it)
             Log.d("SpaceX_Fragment_TAG", "${spaceXLaunchAdapter.currentList}")
         }
 
-        val animation = animateIt {
-            animate(binding.spaceXLogo) animateTo {
-                topOfItsParent(marginDp = 15f)
-                leftOfItsParent(marginDp = 10f)
-                scale(0.8f, 0.8f)
+        launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
+            if (error == ru.myitschool.nasa_bootcamp.utils.ErrorHandler.ERROR) {
+                Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
+                binding.launchesRecycle.visibility = View.GONE
+                binding.errorIcon.visibility = View.VISIBLE
+            } else if (!(error == ru.myitschool.nasa_bootcamp.utils.ErrorHandler.LOADING)) {
+                binding.loadProgressbar.visibility = View.GONE
+                binding.launchesRecycle.visibility = View.VISIBLE
+                binding.errorIcon.visibility = View.GONE
+            } else {
+                binding.loadProgressbar.visibility = View.VISIBLE
             }
 
-            animate(binding.launches) animateTo {
-                rightOf(binding.spaceXLogo, marginDp = 1f)
-                sameCenterVerticalAs(binding.spaceXLogo)
+            val animation = animateIt {
+                animate(binding.spaceXLogo) animateTo {
+                    topOfItsParent(marginDp = 15f)
+                    leftOfItsParent(marginDp = 10f)
+                    scale(0.8f, 0.8f)
+                }
+
+                animate(binding.launches) animateTo {
+                    rightOf(binding.spaceXLogo, marginDp = 1f)
+                    sameCenterVerticalAs(binding.spaceXLogo)
+                }
+
+                animate(binding.explore) animateTo {
+                    rightOfItsParent(marginDp = 20f)
+                    sameCenterVerticalAs(binding.spaceXLogo)
+                }
+
+                animate(binding.background) animateTo {
+                    height(
+                        resources.getDimensionPixelOffset(R.dimen.height),
+                        horizontalGravity = Gravity.LEFT, verticalGravity = Gravity.TOP
+                    )
+                }
             }
 
-            animate(binding.explore) animateTo {
-                rightOfItsParent(marginDp = 20f)
-                sameCenterVerticalAs(binding.spaceXLogo)
+            binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+                val percent = scrollY * 1f / v.maxScrollAmount
+                animation.setPercent(percent)
+            })
+
+            val navController = findNavController()
+
+
+            binding.explore.setOnClickListener {
+                val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
+                navController.navigate(action)
             }
-
-            animate(binding.background) animateTo {
-                height(
-                    resources.getDimensionPixelOffset(R.dimen.height),
-                    horizontalGravity = Gravity.LEFT, verticalGravity = Gravity.TOP
-                )
-            }
-        }
-
-        binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
-            val percent = scrollY * 1f / v.maxScrollAmount
-            animation.setPercent(percent)
-        })
-
-        val navController = findNavController()
-
-
-        binding.explore.setOnClickListener {
-            val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
-            navController.navigate(action)
-        }
 
 //        binding.launchesRecycle.setHasFixedSize(true)
-        binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)
+            binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)
 
+        }
 
         return binding.root
+
     }
 }
