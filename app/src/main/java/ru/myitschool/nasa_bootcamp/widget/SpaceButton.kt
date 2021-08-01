@@ -19,41 +19,11 @@ class SpaceButton constructor(
 ) :
     MaterialCardView(cont, attrs) {
 
-    private var onClickListener: OnClickListener? = null
-
     var text: String?
         set(value) {
             button_text?.text = value
         }
         get() = button_text?.text?.toString()
-
-    override fun setOnClickListener(l: OnClickListener?) {
-        onClickListener = l
-    }
-
-    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        when (event.action) {
-            KeyEvent.ACTION_UP -> {
-                when (event.keyCode) {
-                    KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER ->
-                        onClickListener?.onClick(this)
-                }
-            }
-        }
-        return super.dispatchKeyEvent(event)
-    }
-
-    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        isPressed = when (event.action) {
-            MotionEvent.ACTION_DOWN -> true
-            MotionEvent.ACTION_UP -> {
-                onClickListener?.onClick(this)
-                true
-            }
-            else -> false
-        }
-        return super.dispatchTouchEvent(event)
-    }
 
     init {
         View.inflate(context, R.layout.layout_space_button, this)

@@ -20,7 +20,7 @@ import com.bumptech.glide.request.target.Target
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
-import ru.myitschool.nasa_bootcamp.utils.ErrorHandler
+import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
@@ -55,8 +55,8 @@ class SpaceXLaunchAdapter(val context: Context) :
                         View.VISIBLE
                 }
                 viewModel.error.observe(context as LifecycleOwner) { error ->
-                    if (error == ErrorHandler.SUCCESS
-                    ) if (error == ErrorHandler.ERROR
+                    if (error == Status.SUCCESS
+                    ) if (error == Status.ERROR
                     ) setupRecycleErrorParams() else binding.layoutLaunchSpacex.visibility =
                         View.VISIBLE
                 }
@@ -71,7 +71,7 @@ class SpaceXLaunchAdapter(val context: Context) :
                     target: Target<Drawable>,
                     isFirstResource: Boolean
                 ): Boolean {
-                    viewModel.error.value = ErrorHandler.ERROR
+                    viewModel.error.value = Status.ERROR
                     return false
                 }
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
-import ru.myitschool.nasa_bootcamp.utils.ErrorHandler
+import ru.myitschool.nasa_bootcamp.utils.Status
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,15 +18,15 @@ class SpaceXViewModelImpl @Inject constructor(
     private var launchesModelsList: MutableLiveData<List<SxLaunchModel>> =
         MutableLiveData<List<SxLaunchModel>>()
 
-    private var errorHandler: MutableLiveData<ErrorHandler> = MutableLiveData<ErrorHandler>(
-        ErrorHandler.SUCCESS
+    private var errorHandler: MutableLiveData<Status> = MutableLiveData<Status>(
+        Status.SUCCESS
     )
 
 
     var list: List<SxLaunchModel> = listOf()
 
     override suspend fun loadSpaceXLaunches() {
-        errorHandler.postValue(ErrorHandler.LOADING)
+        errorHandler.postValue(Status.LOADING)
         val response = repository.getSpaceXLaunches()
 
         if (response.isSuccessful) {
@@ -34,14 +34,14 @@ class SpaceXViewModelImpl @Inject constructor(
                 launchesModelsList.postValue(
                     response.body()!!.map { launch -> launch.createLaunchModel() }.asReversed()
                 )
-                errorHandler.postValue(ErrorHandler.SUCCESS)
+                errorHandler.postValue(Status.SUCCESS)
             }
         } else {
             Log.e(
                 "SPACEX_LAUNCH_VIEWMODEL_TAG",
                 "Error occured while trying to upload files from launches api"
             )
-            errorHandler.postValue(ErrorHandler.ERROR)
+            errorHandler.postValue(Status.ERROR)
         }
     }
 
@@ -50,7 +50,7 @@ class SpaceXViewModelImpl @Inject constructor(
     }
 
     override fun getViewModelScope() = viewModelScope
-    override fun getErrorHandler(): MutableLiveData<ErrorHandler> {
+    override fun getErrorHandler(): MutableLiveData<Status> {
         return errorHandler
     }
 

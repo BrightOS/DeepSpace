@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -23,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.ImageOfTheDayModel
+import ru.myitschool.nasa_bootcamp.ui.home.components.ErrorMessage
 import ru.myitschool.nasa_bootcamp.ui.home.components.Gradient
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
@@ -80,12 +80,11 @@ fun ImageOfTheDay(
                         Alignment.Center
                     )
                 )
-                Status.ERROR -> Column(modifier = Modifier.align(Alignment.Center)) {
-                    Text(stringResource(R.string.image_of_the_day_error_message))
-                    Button(onClick = onRetryButtonClick) {
-                        Text(stringResource(R.string.retry))
-                    }
-                }
+                Status.ERROR -> ErrorMessage(
+                    onClick = onRetryButtonClick, modifier = Modifier.align(
+                        Alignment.Center
+                    )
+                )
             }
         }
         if (model.status == Status.SUCCESS && isExpanded) {
