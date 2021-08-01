@@ -57,7 +57,7 @@ fun getLocationViaOrbitalElements(
     val ra = Math.atan2(ye, xe)
     val dec = Math.atan2(ze, Math.sqrt(xe * xe + ye * ye))
 
-    return RaDec(ra.toFloat(), dec.toFloat())
+    return RaDec(ra , dec )
 }
 
 //N = 125.1228 - 0.0529538083 * d

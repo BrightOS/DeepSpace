@@ -1,12 +1,12 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.math
 
-class Vector3D (var x: Float, var y: Float, var z: Float) {
+open class Vector3D(var x: Double, var y: Double, var z: Double) {
 
     open fun copy(): Vector3D? {
         return Vector3D(x, y, z)
     }
 
-    fun setupVector(x: Float, y: Float, z: Float) {
+    fun setupVector(x: Double, y: Double, z: Double) {
         this.x = x
         this.y = y
         this.z = z
@@ -19,32 +19,32 @@ class Vector3D (var x: Float, var y: Float, var z: Float) {
     }
 
     //Длина вектора
-    fun length(): Float {
-        return Math.sqrt(length2().toDouble()).toFloat()
+    fun length(): Double {
+        return Math.sqrt(length2())
     }
 
     // Квадрат длины вектора
-    fun length2(): Float {
+    fun length2(): Double {
         return x * x + y * y + z * z
     }
 
     //Норма вектора
     fun normalize() {
         val norm = length()
-        x /= norm
-        y /=  norm
-        z /=  norm
+        x = x / norm
+        y = y / norm
+        z = z / norm
     }
 
     //масштабирование вектора
-    fun scale(scale: Float) {
-        x *=  scale
-        y *=  scale
-        z *=  scale
+    fun scale(scale: Double) {
+        x = x * scale
+        y = y * scale
+        z = z * scale
     }
 
-    open fun toFloatArray(): FloatArray? {
-        return floatArrayOf(x, y, z)
+    open fun toDoubleArray(): DoubleArray? {
+        return doubleArrayOf(x, y, z)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -53,4 +53,6 @@ class Vector3D (var x: Float, var y: Float, var z: Float) {
 
         return other.x == x && other.y == y && other.z == z
     }
+
+
 }

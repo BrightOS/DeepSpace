@@ -24,7 +24,7 @@ import ru.myitschool.nasa_bootcamp.utils.ErrorHandler
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
-class SpaceXLaunchAdapter(val context: Context ) :
+class SpaceXLaunchAdapter(val context: Context) :
     ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
 
 
@@ -34,7 +34,7 @@ class SpaceXLaunchAdapter(val context: Context ) :
         fun bind(
             launchModel: SxLaunchModel,
             position: Int,
-            context : Context
+            context: Context
         ) {
 
             lateinit var viewModel: LaunchItemViewModel
@@ -82,7 +82,7 @@ class SpaceXLaunchAdapter(val context: Context ) :
                     dataSource: DataSource,
                     isFirstResource: Boolean
                 ): Boolean {
-                   // viewModel.error.value = ErrorHandler.SUCCESS
+                    // viewModel.error.value = ErrorHandler.SUCCESS
                     binding.loadProgressbar.visibility = View.GONE
                     binding.layoutLaunchSpacex.visibility = View.VISIBLE
                     return false
@@ -161,7 +161,10 @@ class SpaceXLaunchAdapter(val context: Context ) :
             binding.characteristicsLaunch.recovered.text = recovered
 
 
-            Log.d("LAUNCH_ADAPTER_TAG", "Mission patch is null? ${(launchModel.links.mission_patch == null) }")
+            Log.d(
+                "LAUNCH_ADAPTER_TAG",
+                "Mission patch is null? ${(launchModel.links.mission_patch == null)}"
+            )
             if (launchModel.links.mission_patch != null)
                 loadImage(
                     binding.recycleItemImg.context,
@@ -182,7 +185,10 @@ class SpaceXLaunchAdapter(val context: Context ) :
                     animateIt {
                         animate(binding.status) animateTo {
                             if (!expanded) {
-                                paddingBottom(binding.details.length().toFloat() / 4)
+                                paddingBottom(
+                                    (binding.details.length()
+                                        .toFloat() / 4) - binding.details.length().toFloat() * 0.18f
+                                )
                                 binding.details.visibility = View.VISIBLE
                                 binding.characteristicsLaunch.root.visibility = View.VISIBLE
                                 expanded = true

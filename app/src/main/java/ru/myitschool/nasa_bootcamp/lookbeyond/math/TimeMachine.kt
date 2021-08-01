@@ -30,7 +30,7 @@ object TimeMachine {
 
 
     // Срднее звездное время в градусах
-    fun meanSiderealTime(date: Date?, longitude: Float): Float {
+    fun meanSiderealTime(date: Date?, longitude: Double): Double {
         // Число юлианский дней с 2000 года
         val jd = calculateJulianDay(date)
         val delta = jd - 2451545.0f
@@ -38,7 +38,7 @@ object TimeMachine {
         // Вычислить глобальное и локальное звездное время ( часовой угол весеннего равноденствия )
         val gst = 280.461f + 360.98564737f * delta
         val lst = normalizeAngle(gst + longitude)
-        return lst.toFloat()
+        return lst
     }
 
     // Чтобы было в пределах 360
@@ -47,6 +47,4 @@ object TimeMachine {
         if (angle < 0) angle += 360.0
         return angle
     }
-
-
 }
