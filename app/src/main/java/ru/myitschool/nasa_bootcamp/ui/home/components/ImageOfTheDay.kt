@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
@@ -80,9 +81,20 @@ fun ImageOfTheDay(
                         Alignment.Center
                     )
                 )
-                Status.ERROR -> Column(modifier = Modifier.align(Alignment.Center)) {
-                    Text(stringResource(R.string.image_of_the_day_error_message))
-                    Button(onClick = onRetryButtonClick) {
+                Status.ERROR -> Column(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                ) {
+                    Text(
+                        stringResource(R.string.image_of_the_day_error_message),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(8.dp)
+                    )
+                    Button(
+                        onClick = onRetryButtonClick,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) {
                         Text(stringResource(R.string.retry))
                     }
                 }

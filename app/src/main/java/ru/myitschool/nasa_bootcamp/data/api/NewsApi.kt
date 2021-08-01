@@ -7,5 +7,5 @@ import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Launch
 
 interface NewsApi {
     @GET("articles")
-    suspend fun getLaunches(): Response<ArrayList<Article>>
+    suspend fun getArticles(): Response<ArrayList<Article>>
 }

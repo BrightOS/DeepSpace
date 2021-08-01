@@ -4,7 +4,6 @@ import ru.myitschool.nasa_bootcamp.data.model.ImageOfTheDayModel
 import com.google.gson.annotations.SerializedName
 
 data class Apod(
-    @field:SerializedName("copyright") val copyright: String,
     @field:SerializedName("date") val date: String,
     @field:SerializedName("explanation") val explanation: String,
     @field:SerializedName("hdurl") val hdurl: String,
@@ -17,7 +16,6 @@ data class Apod(
     fun createApodModel(): ImageOfTheDayModel {
 
         return ImageOfTheDayModel(
-            copyright,
             date,
             explanation,
             hdurl,

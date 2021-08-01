@@ -1,7 +1,6 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
 data class ImageOfTheDayModel(
-    val copyright: String,
     val date: String, //Дата
     val explanation: String, //Описание
     val hdurl: String,

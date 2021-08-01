@@ -29,6 +29,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.android.material.composethemeadapter.MdcTheme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
@@ -36,14 +39,16 @@ import ru.myitschool.nasa_bootcamp.ui.home.components.NavigationCard
 import ru.myitschool.nasa_bootcamp.ui.home.components.NewsCarousel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-    private val viewModel: HomeViewModel by viewModels<HomeViewModelTestImpl>()
+    private val viewModel: HomeViewModel by viewModels<HomeViewModelImpl>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.getViewModelScope().launch(Dispatchers.IO) { viewModel.loadImageOfTheDay() }
         return ComposeView(requireContext()).apply {
             setContent {
                 MdcTheme {
@@ -90,7 +95,7 @@ fun HomeScreen(
     Column(modifier = Modifier.verticalScroll(scrollState)) {
         Box(modifier = Modifier.fillMaxWidth()) {
             ImageOfTheDay(
-                onRetryButtonClick = { viewModel.reloadImageOfTheDay() },
+                onRetryButtonClick = { viewModel.getViewModelScope().launch(Dispatchers.IO) { viewModel.loadImageOfTheDay() } },
                 model = imageOfTheDayModel,
                 modifier = Modifier
                     .align(Alignment.Center)
