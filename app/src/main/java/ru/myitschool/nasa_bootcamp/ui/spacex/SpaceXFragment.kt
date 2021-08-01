@@ -1,11 +1,13 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.graphics.Color
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,19 +32,6 @@ class SpaceXFragment : Fragment() {
 
     private var _binding: FragmentSpacexBinding? = null
     private val binding get() = _binding!!
-
-    internal var h: Int = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-//        onLaunchClick = object : SpaceXLaunchAdapter.OnLaunchClickListener {
-//            override fun onLaunchClick(launch: SxLaunchModel?, position: Int) {
-//                Log.d("LAUNCH_CLICK_TAG", "Clicked at $position")
-//            }
-//        }
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,12 +58,17 @@ class SpaceXFragment : Fragment() {
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 binding.errorIcon.visibility = View.VISIBLE
-            } else if (!(error == ru.myitschool.nasa_bootcamp.utils.ErrorHandler.LOADING)) {
-                binding.loadProgressbar.visibility = View.GONE
-                binding.launchesRecycle.visibility = View.VISIBLE
-                binding.errorIcon.visibility = View.GONE
-            } else {
+                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.disabled_button), PorterDuff.Mode.SRC_ATOP);
+
+            } else if ((error == ru.myitschool.nasa_bootcamp.utils.ErrorHandler.LOADING)) {
                 binding.loadProgressbar.visibility = View.VISIBLE
+                binding.launchesRecycle.visibility = View.GONE
+                binding.errorIcon.visibility = View.GONE
+                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.disabled_button), PorterDuff.Mode.SRC_ATOP);
+            } else {
+                binding.launchesRecycle.visibility = View.VISIBLE
+                binding.loadProgressbar.visibility = View.GONE
+                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button), PorterDuff.Mode.SRC_ATOP);
             }
 
             val animation = animateIt {

@@ -10,10 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.myitschool.nasa_bootcamp.data.api.NasaApi
 import ru.myitschool.nasa_bootcamp.data.api.NewsApi
 import ru.myitschool.nasa_bootcamp.data.api.SpaceXApi
+import ru.myitschool.nasa_bootcamp.data.api.UpcomingEventsApi
 import ru.myitschool.nasa_bootcamp.data.repository.*
 import ru.myitschool.nasa_bootcamp.utils.NASA_BASE_URL
 import ru.myitschool.nasa_bootcamp.utils.NEWS_BASE_URL
 import ru.myitschool.nasa_bootcamp.utils.SPACEX_BASE_URL
+import ru.myitschool.nasa_bootcamp.utils.SPACEX_BASE_V5_URL
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -51,11 +53,24 @@ object MainModule {
     @Provides
     @Singleton
     @Named("NEWS")
-    fun getNews(): Retrofit {
+    fun getNewsRetrofit(): Retrofit {
         val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
 
         return Retrofit.Builder()
             .baseUrl(NEWS_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpBuilder.build())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("UPCOMING")
+    fun getUpcomingRetrofit(): Retrofit {
+        val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+
+        return Retrofit.Builder()
+            .baseUrl(SPACEX_BASE_V5_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpBuilder.build())
             .build()
@@ -72,6 +87,12 @@ object MainModule {
     @Singleton
     fun getSpaceXApi(@Named("SPACEX") retrofit: Retrofit): SpaceXApi {
         return retrofit.create(SpaceXApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun getUpcomingEventsApi(@Named("UPCOMING") retrofit: Retrofit): UpcomingEventsApi {
+        return retrofit.create(UpcomingEventsApi::class.java)
     }
 
 
@@ -97,6 +118,12 @@ object MainModule {
     @Singleton
     fun getNewsRepository(newsApi: NewsApi): NewsRepository {
         return NewsRepositoryImpl(newsApi)
+    }
+
+    @Provides
+    @Singleton
+    fun getUpcomingRepository(upcomingEventsApi : UpcomingEventsApi): UpcomingRepository {
+        return UpcomingRepositoryImpl(upcomingEventsApi)
     }
 
 }

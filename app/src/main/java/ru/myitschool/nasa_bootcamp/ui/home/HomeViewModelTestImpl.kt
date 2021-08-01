@@ -9,6 +9,7 @@ import ru.myitschool.nasa_bootcamp.data.model.ImageOfTheDayModel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 class HomeViewModelTestImpl : ViewModel(), HomeViewModel {
+
     override fun getImageOfTheDayModel(): LiveData<Resource<ImageOfTheDayModel>> {
         return MutableLiveData(
             Resource.success(
