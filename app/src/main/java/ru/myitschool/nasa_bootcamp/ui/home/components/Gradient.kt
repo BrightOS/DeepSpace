@@ -15,7 +15,7 @@ fun Gradient(modifier: Modifier) {
                 Brush.verticalGradient(
                     colors = listOf(
                         Color.Transparent,
-                        Color(0x88000000)
+                        Color(0xAA000000)
                     )
                 )
             )

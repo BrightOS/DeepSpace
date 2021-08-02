@@ -19,8 +19,15 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import androidx.transition.TransitionManager
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_loading.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
@@ -37,8 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navHeaderMainBinding: NavHeaderMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Эта штука делает прозрачную строку состояния и бар системной
-        // навигации по-настоящему прозрачными.
+        // Makes the StatusBar and NavigationBar truly transparent
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             window.decorView.systemUiVisibility =
                 window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -76,6 +82,8 @@ class MainActivity : AppCompatActivity() {
 
     // enable close drawer on back pressed
     override fun onBackPressed() {
+        main_loading.stopLoadingAnimation(false)
+
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         else
@@ -93,16 +101,15 @@ class MainActivity : AppCompatActivity() {
         if (mFirebaseUser.isUserAuthenticated()) {
             mFirebaseUser.viewModelScope.launch {
                 mFirebaseUser.getUserAvatar().observe(this@MainActivity) {
-                    navHeaderMainBinding.userAvatar.setOnClickListener {
-                        
-                    }
+                    navHeaderMainBinding.userAvatar.setOnClickListener { }
                     when (it) {
                         is Data.Ok -> {
                             navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
                         }
                         is Data.Error -> {
                             // navHeaderMainBinding.userAvatar.setImageBitmap(null)
-                            navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_photo_mini)
+                            navHeaderMainBinding.userAvatar.foreground =
+                                getDrawable(R.drawable.ic_photo_mini)
                         }
                     }
                 }
