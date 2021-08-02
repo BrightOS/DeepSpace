@@ -23,6 +23,7 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
+import ru.myitschool.nasa_bootcamp.utils.Status
 
 @AndroidEntryPoint
 class SpaceXFragment : Fragment() {
@@ -54,13 +55,13 @@ class SpaceXFragment : Fragment() {
         }
 
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
-            if (error == ru.myitschool.nasa_bootcamp.utils.ErrorHandler.ERROR) {
+            if (error == Status.ERROR) {
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 binding.errorIcon.visibility = View.VISIBLE
                 binding.explore.getBackground().setColorFilter(resources.getColor(R.color.disabled_button), PorterDuff.Mode.SRC_ATOP);
 
-            } else if ((error == ru.myitschool.nasa_bootcamp.utils.ErrorHandler.LOADING)) {
+            } else if ((error == Status.LOADING)) {
                 binding.loadProgressbar.visibility = View.VISIBLE
                 binding.launchesRecycle.visibility = View.GONE
                 binding.errorIcon.visibility = View.GONE
