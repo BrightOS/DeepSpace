@@ -6,3 +6,8 @@ import androidx.compose.runtime.Composable
 fun BlogsScreen() {
 
 }
+
+@Composable
+fun BlogItemContent() {
+
+}

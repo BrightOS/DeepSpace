@@ -1,22 +1,21 @@
 package ru.myitschool.nasa_bootcamp.ui.comments
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import ru.myitschool.nasa_bootcamp.data.model.models.Comment
-import ru.myitschool.nasa_bootcamp.data.model.SubComment
 import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
 import ru.myitschool.nasa_bootcamp.utils.Data
 import java.lang.Exception
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.CommentDto
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.SubCommentDto
+import ru.myitschool.nasa_bootcamp.data.model.Comment
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class CommentsViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository
@@ -39,8 +38,6 @@ class CommentsViewModelImpl @Inject constructor(
     }
 
     override suspend fun pushLike(source: String, postId: Int): LiveData<Data<out String>> {
-
-    }
 
     override suspend fun pushLikeForComment(source: String, postId: Int, commentId: Long): LiveData<Data<out String>> {
         errors = if (userInstance.uid != null && !checkIfHasCommentLike(postId, commentId)) {

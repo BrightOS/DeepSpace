@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
@@ -17,8 +19,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.rememberPagerState
 import com.google.android.material.composethemeadapter.MdcTheme
+import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 
 class SocialMediaFragment : Fragment() {
@@ -31,7 +40,7 @@ class SocialMediaFragment : Fragment() {
             setContent {
                 MdcTheme {
                     ProvideWindowInsets {
-                        SocialMediaScreen()
+                        SocialMediaScreen(onBackArrowClick = { findNavController().navigateUp() })
                     }
                 }
             }
@@ -39,35 +48,59 @@ class SocialMediaFragment : Fragment() {
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun SocialMediaScreen() {
-    var tabIndex by remember { mutableStateOf(0) }
-    val tabNames = mapOf(
-        0 to stringResource(R.string.news),
-        1 to stringResource(R.string.blogs),
-        2 to stringResource(R.string.profile)
+fun SocialMediaScreen(onBackArrowClick: () -> Unit) {
+    val tabs = listOf(
+        TabItem.News,
+        TabItem.Blogs,
+        TabItem.Profile
     )
+    val pagerState = rememberPagerState(tabs.size)
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
-            tabNames[tabIndex]?.let { Text(style = MaterialTheme.typography.h5, text = it) }
+            Spacer(modifier = Modifier.statusBarsPadding())
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBackArrowClick, modifier = Modifier.padding(8.dp)) {
+                    Icon(Icons.Filled.ArrowBack, "")
+                }
+                Text(
+                    style = MaterialTheme.typography.h5,
+                    text = stringResource(tabs[pagerState.currentPage].titleId)
+                )
+            }
+            HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
+                tabs[page].content()
+            }
         }
+        Tabs(
+            tabs = tabs,
+            pagerState = pagerState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+        )
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun Tabs(tabIndex: Int, onTabClick: (Int) -> Unit) {
-    Card(shape = RoundedCornerShape(32.dp)) {
-        val tabData = listOf(
-            ImageVector.vectorResource(R.drawable.ic_paper),
-            ImageVector.vectorResource(R.drawable.ic_chat),
-            ImageVector.vectorResource(R.drawable.ic_profile),
-        )
-        TabRow(selectedTabIndex = tabIndex) {
-            tabData.forEachIndexed { index, icon ->
+fun Tabs(tabs: List<TabItem>, pagerState: PagerState, modifier: Modifier = Modifier) {
+    val scope = rememberCoroutineScope()
+    Card(shape = RoundedCornerShape(32.dp), modifier = modifier) {
+        TabRow(selectedTabIndex = pagerState.currentPage) {
+            tabs.forEachIndexed { index, tab ->
                 Tab(
-                    selected = index == tabIndex,
-                    onClick = { onTabClick(index) },
-                    icon = { Icon(imageVector = icon, contentDescription = null) })
+                    selected = index == pagerState.currentPage,
+                    onClick = {
+                        scope.launch { pagerState.animateScrollToPage(index) }
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(tab.iconId),
+                            contentDescription = null
+                        )
+                    })
             }
         }
     }
