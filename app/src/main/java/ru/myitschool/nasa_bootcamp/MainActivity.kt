@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     // enable close drawer on back pressed
     override fun onBackPressed() {
-        stopLoadingAnimation(false)
+        main_loading.stopLoadingAnimation(false)
 
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -139,104 +139,5 @@ class MainActivity : AppCompatActivity() {
             0,
             0
         )
-    }
-
-    fun startLoadingAnimation() {
-        MainScope().launch {
-            prepareLoadingView()
-            loading_progress_bar.visibility = View.VISIBLE
-
-            val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, false)
-            drawer_layout?.let {
-                TransitionManager.beginDelayedTransition(it, sharedAxis)
-            }
-
-            loading_root.visibility = View.VISIBLE
-        }
-    }
-
-    fun stopLoadingAnimation(showCheckIcon: Boolean = false) {
-        MainScope().launch {
-            if (showCheckIcon) {
-                var sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
-                loading_root?.let {
-                    TransitionManager.beginDelayedTransition(it, sharedAxis)
-                }
-
-                loading_progress_bar.visibility = View.GONE
-                done_pic.visibility = View.VISIBLE
-
-                GlobalScope.launch {
-                    delay(1000)
-                    MainScope().launch {
-                        sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-                        drawer_layout?.let {
-                            TransitionManager.beginDelayedTransition(it, sharedAxis)
-                        }
-
-                        loading_root.visibility = View.GONE
-                    }
-                }
-            } else {
-                val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-                drawer_layout?.let {
-                    TransitionManager.beginDelayedTransition(it, sharedAxis)
-                }
-
-                loading_root.visibility = View.GONE
-            }
-        }
-    }
-
-    fun showError(errorText: String = "Произошла непредвиденная ошибка.") {
-        MainScope().launch {
-            var sharedAxis: MaterialSharedAxis
-
-            error_text.text = errorText
-
-            if (loading_root.visibility == View.GONE) {
-                prepareLoadingView()
-
-                error_pic.visibility = View.VISIBLE
-                error_text.visibility = View.VISIBLE
-
-                sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-
-                drawer_layout?.let {
-                    TransitionManager.beginDelayedTransition(it, sharedAxis)
-                }
-
-                loading_root.visibility = View.VISIBLE
-            } else {
-
-                sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
-                loading_root?.let {
-                    TransitionManager.beginDelayedTransition(it, sharedAxis)
-                }
-
-                loading_progress_bar.visibility = View.GONE
-                error_pic.visibility = View.VISIBLE
-                error_text.visibility = View.VISIBLE
-            }
-
-            GlobalScope.launch {
-                delay(1000)
-                MainScope().launch {
-                    sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-                    drawer_layout?.let {
-                        TransitionManager.beginDelayedTransition(it, sharedAxis)
-                    }
-
-                    loading_root.visibility = View.GONE
-                }
-            }
-        }
-    }
-
-    private fun prepareLoadingView() {
-        loading_progress_bar.visibility = View.GONE
-        error_pic.visibility = View.GONE
-        error_text.visibility = View.GONE
-        done_pic.visibility = View.GONE
     }
 }
