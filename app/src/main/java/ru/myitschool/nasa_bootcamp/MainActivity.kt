@@ -19,8 +19,15 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import androidx.transition.TransitionManager
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_loading.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
@@ -37,8 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navHeaderMainBinding: NavHeaderMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Эта штука делает прозрачную строку состояния и бар системной
-        // навигации по-настоящему прозрачными.
+        // Makes the StatusBar and NavigationBar truly transparent
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             window.decorView.systemUiVisibility =
                 window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -76,6 +82,8 @@ class MainActivity : AppCompatActivity() {
 
     // enable close drawer on back pressed
     override fun onBackPressed() {
+        stopLoadingAnimation(false)
+
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         else
@@ -93,9 +101,7 @@ class MainActivity : AppCompatActivity() {
         if (mFirebaseUser.isUserAuthenticated()) {
             mFirebaseUser.viewModelScope.launch {
                 mFirebaseUser.getUserAvatar().observe(this@MainActivity) {
-                    navHeaderMainBinding.userAvatar.setOnClickListener {
-                        
-                    }
+                    navHeaderMainBinding.userAvatar.setOnClickListener {  }
                     when (it) {
                         is Data.Ok -> {
                             navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
@@ -132,5 +138,105 @@ class MainActivity : AppCompatActivity() {
             0,
             0
         )
+    }
+
+    fun startLoadingAnimation() {
+        MainScope().launch {
+            prepareLoadingView()
+            loading_progress_bar.visibility = View.VISIBLE
+
+            val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+            drawer_layout?.let {
+                TransitionManager.beginDelayedTransition(it, sharedAxis)
+            }
+
+            loading_root.visibility = View.VISIBLE
+        }
+    }
+
+    fun stopLoadingAnimation(showCheckIcon: Boolean) {
+        MainScope().launch {
+            if (showCheckIcon) {
+                var sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
+                loading_root?.let {
+                    TransitionManager.beginDelayedTransition(it, sharedAxis)
+                }
+
+                loading_progress_bar.visibility = View.GONE
+                done_pic.visibility = View.VISIBLE
+
+                GlobalScope.launch {
+                    delay(1000)
+                    MainScope().launch {
+                        sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+                        drawer_layout?.let {
+                            TransitionManager.beginDelayedTransition(it, sharedAxis)
+                        }
+
+                        loading_root.visibility = View.GONE
+                    }
+                }
+            } else {
+                val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+                drawer_layout?.let {
+                    TransitionManager.beginDelayedTransition(it, sharedAxis)
+                }
+
+                loading_root.visibility = View.GONE
+            }
+        }
+    }
+
+    fun onError(errorText: String) {
+        MainScope().launch {
+            var sharedAxis: MaterialSharedAxis
+
+            if (errorText != "")
+                error_text.text = errorText
+
+            if (loading_root.visibility == View.GONE) {
+                prepareLoadingView()
+
+                error_pic.visibility = View.VISIBLE
+                error_text.visibility = View.VISIBLE
+
+                sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+
+                drawer_layout?.let {
+                    TransitionManager.beginDelayedTransition(it, sharedAxis)
+                }
+
+                loading_root.visibility = View.VISIBLE
+            } else {
+
+                sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
+                loading_root?.let {
+                    TransitionManager.beginDelayedTransition(it, sharedAxis)
+                }
+
+                loading_progress_bar.visibility = View.GONE
+                error_pic.visibility = View.VISIBLE
+                error_text.visibility = View.VISIBLE
+            }
+
+            GlobalScope.launch {
+                delay(1000)
+                MainScope().launch {
+                    sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+                    drawer_layout?.let {
+                        TransitionManager.beginDelayedTransition(it, sharedAxis)
+                    }
+
+                    loading_root.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun prepareLoadingView() {
+        loading_progress_bar.visibility = View.GONE
+        error_pic.visibility = View.GONE
+        error_text.visibility = View.GONE
+        done_pic.visibility = View.GONE
     }
 }
