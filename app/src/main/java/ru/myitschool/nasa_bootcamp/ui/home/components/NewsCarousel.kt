@@ -3,7 +3,6 @@ package ru.myitschool.nasa_bootcamp.ui.home.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,17 +33,16 @@ fun NewsCarousel(
         onShowMoreClick = onShowMoreClick,
         onRetryButtonClick = onRetryButtonClick,
         onItemClick = onItemClick, cardContent = { articleModel ->
-            Image(
-                painter = rememberImagePainter(articleModel.imageUrl),
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize()
-            )
             Box(
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
+                    .fillMaxSize()
             ) {
+                Image(
+                    painter = rememberImagePainter(articleModel.imageUrl),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = null,
+                    modifier = Modifier.matchParentSize()
+                )
                 Gradient(modifier = Modifier.matchParentSize())
                 Text(
                     style = titleTextStyle,
@@ -53,6 +51,7 @@ fun NewsCarousel(
                     text = articleModel.title,
                     modifier = Modifier
                         .padding(4.dp)
+                        .align(Alignment.BottomCenter)
                 )
             }
         })

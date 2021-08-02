@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
@@ -39,7 +41,17 @@ class SocialMediaFragment : Fragment() {
 
 @Composable
 fun SocialMediaScreen() {
-
+    var tabIndex by remember { mutableStateOf(0) }
+    val tabNames = mapOf(
+        0 to stringResource(R.string.news),
+        1 to stringResource(R.string.blogs),
+        2 to stringResource(R.string.profile)
+    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column {
+            tabNames[tabIndex]?.let { Text(style = MaterialTheme.typography.h5, text = it) }
+        }
+    }
 }
 
 @Composable
@@ -59,4 +71,10 @@ fun Tabs(tabIndex: Int, onTabClick: (Int) -> Unit) {
             }
         }
     }
+}
+
+sealed class TabItem(val iconId: Int, val titleId: Int, val content: @Composable () -> Unit) {
+    object News : TabItem(R.drawable.ic_paper, R.string.news, { NewsScreen() })
+    object Blogs : TabItem(R.drawable.ic_chat, R.string.blogs, { BlogsScreen() })
+    object Profile : TabItem(R.drawable.ic_profile, R.string.profile, { ProfileScreen() })
 }

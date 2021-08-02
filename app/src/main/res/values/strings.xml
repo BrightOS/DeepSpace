@@ -67,5 +67,7 @@
     <string name="retry">Retry</string>
     <string name="blogs">Blogs</string>
     <string name="click_on_the_image_hint">Click on the image to view description</string>
+    <string name="news">News</string>
+    <string name="profile">Profile</string>
     <string name="description_upcoming">Set notifications for the dates of upcoming SpaceX launches, so as not to miss the event\'s live broadcasts, discussions and so on</string>
 </resources>
