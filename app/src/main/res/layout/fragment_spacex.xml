@@ -14,20 +14,20 @@
 
         <ProgressBar
             android:id="@+id/load_progressbar"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:indeterminate="true"
             android:layout_marginTop="100dp"
+            android:indeterminate="true"
             android:paddingBottom="?actionBarSize"
             android:theme="@style/Theme.AppCompat.Light"
             android:visibility="visible"
-            app:tint="@color/cardview_light_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/cardview_light_background" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -104,16 +104,7 @@
                 android:gravity="center"
                 android:src="@drawable/space_x_logo_edited_small" />
 
-            <TextView
-                android:id="@+id/launches"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="#FFFFFF"
-                android:text="@string/launches" />
-
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/explore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

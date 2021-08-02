@@ -74,15 +74,11 @@ class SpaceXFragment : Fragment() {
 
             val animation = animateIt {
                 animate(binding.spaceXLogo) animateTo {
-                    topOfItsParent(marginDp = 15f)
+                    topOfItsParent(marginDp = 35f)
                     leftOfItsParent(marginDp = 10f)
                     scale(0.8f, 0.8f)
                 }
 
-                animate(binding.launches) animateTo {
-                    rightOf(binding.spaceXLogo, marginDp = 1f)
-                    sameCenterVerticalAs(binding.spaceXLogo)
-                }
 
                 animate(binding.explore) animateTo {
                     rightOfItsParent(marginDp = 20f)

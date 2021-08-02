@@ -17,6 +17,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
@@ -28,6 +29,35 @@ class SpaceXLaunchAdapter(val context: Context) :
     ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
 
 
+    class DiffCallback : DiffUtil.ItemCallback<SxLaunchModel>() {
+        override fun areItemsTheSame(oldItem: SxLaunchModel, newItem: SxLaunchModel): Boolean {
+            return oldItem.mission_name == newItem.mission_name
+        }
+
+        override fun areContentsTheSame(oldItem: SxLaunchModel, newItem: SxLaunchModel): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    interface OnLaunchClickListener {
+        fun onLaunchClick(launch: SxLaunchModel?, position: Int)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val model = getItem(position)
+        holder.bind(model, position, context)
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            LaunchItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+    }
     class ViewHolder(private val binding: LaunchItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var expanded = false
@@ -181,25 +211,13 @@ class SpaceXLaunchAdapter(val context: Context) :
 
             val onLaunchClickListener = object : OnLaunchClickListener {
                 override fun onLaunchClick(launch: SxLaunchModel?, position: Int) {
-
-                    animateIt {
-                        animate(binding.status) animateTo {
-                            if (!expanded) {
-                                paddingBottom(
-                                    (binding.details.length()
-                                        .toFloat() / 4) - binding.details.length().toFloat() * 0.18f
-                                )
-                                binding.details.visibility = View.VISIBLE
-                                binding.characteristicsLaunch.root.visibility = View.VISIBLE
-                                expanded = true
-                            } else {
-                                paddingBottom(0f)
-                                binding.details.visibility = View.GONE
-                                binding.characteristicsLaunch.root.visibility = View.GONE
-                                expanded = false
-                            }
-                        }
-                    }.start()
+                    expanded = if (expanded){
+                        binding.layoutLaunchSpacex.transitionToStart()
+                        false
+                    }else{
+                        binding.layoutLaunchSpacex.transitionToEnd()
+                        true
+                    }
                 }
             }
 
@@ -210,40 +228,14 @@ class SpaceXLaunchAdapter(val context: Context) :
                 )
             }
 
-            if (launchModel.launch_success) binding.status.setText("Status: success") else binding.status.setText(
-                "Status: failed"
-            )
+            if (launchModel.launch_success) {
+                binding.status.setText("Status: success")
+                binding.status.setTextColor(context.getColor(R.color.green))
+            } else {
+                binding.status.setText("Status: failed")
+                binding.status.setTextColor(context.getColor(R.color.red))
+            }
         }
-    }
-
-    class DiffCallback : DiffUtil.ItemCallback<SxLaunchModel>() {
-        override fun areItemsTheSame(oldItem: SxLaunchModel, newItem: SxLaunchModel): Boolean {
-            return oldItem.mission_name == newItem.mission_name
-        }
-
-        override fun areContentsTheSame(oldItem: SxLaunchModel, newItem: SxLaunchModel): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    interface OnLaunchClickListener {
-        fun onLaunchClick(launch: SxLaunchModel?, position: Int)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val model = getItem(position)
-        holder.bind(model, position, context)
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LaunchItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
     }
 
 }
