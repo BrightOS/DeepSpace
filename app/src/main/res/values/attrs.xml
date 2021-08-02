@@ -8,4 +8,9 @@
         <attr name="text" format="string" />
         <attr name="textAllCaps" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="SpaceLoadingView">
+        <attr name="errorText" format="string" />
+        <attr name="checkEnabled" format="boolean" />
+    </declare-styleable>
 </resources>
