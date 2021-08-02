@@ -7,12 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
-import ru.myitschool.nasa_bootcamp.data.model.PostItem
-import ru.myitschool.nasa_bootcamp.data.model.PostView
 import ru.myitschool.nasa_bootcamp.databinding.FragmentViewPostBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 

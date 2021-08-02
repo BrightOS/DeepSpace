@@ -8,13 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.model.ImagePost
-import ru.myitschool.nasa_bootcamp.data.model.PostView
-import ru.myitschool.nasa_bootcamp.data.model.TextPost
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.ImagePost
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostView
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.TextPost
 import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 
