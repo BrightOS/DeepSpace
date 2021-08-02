@@ -3,6 +3,7 @@ package ru.myitschool.nasa_bootcamp.lookbeyond.math.astronomy
 import ru.myitschool.nasa_bootcamp.lookbeyond.math.DEGREES_TO_RADIANS
 import ru.myitschool.nasa_bootcamp.lookbeyond.math.RADIANS_TO_DEGREES
 import ru.myitschool.nasa_bootcamp.lookbeyond.math.RaDec
+import ru.myitschool.nasa_bootcamp.lookbeyond.math.Vector3D
 
 // Местоположение тела в евклидовом простр
 class GeocentricCoord(x: Double, y: Double, z: Double) :
