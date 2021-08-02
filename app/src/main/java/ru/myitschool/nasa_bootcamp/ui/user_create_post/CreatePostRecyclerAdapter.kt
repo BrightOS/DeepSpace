@@ -8,14 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.model.ImagePost
-import ru.myitschool.nasa_bootcamp.data.model.Post
-import ru.myitschool.nasa_bootcamp.data.model.PostItem
-import ru.myitschool.nasa_bootcamp.data.model.TextPost
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostItem
 
 class CreatePostRecyclerAdapter(private val context: Context, var data: ArrayList<PostItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
