@@ -16,6 +16,6 @@ interface CommentsViewModel {
     suspend fun deleteLike(source: String, postId: Int): LiveData<Data<out String>>
     suspend fun deleteCommentLike(source: String, postId: Int, commentId: Long): LiveData<Data<out String>>
     suspend fun deleteSubCommentLike(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): LiveData<Data<out String>>
-    fun listenForComments(source: String, postId: Int)
-    fun listenForLikes(source: String, postId: Int):
+    //fun listenForComments(source: String, postId: Int)
+    //fun listenForLikes(source: String, postId: Int):
 }

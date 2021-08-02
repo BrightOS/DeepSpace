@@ -21,33 +21,50 @@ class CommentsViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository
 ) : ViewModel(), CommentsViewModel {
 
-    override suspend fun pushComment(source: String, postId: Int, comment: String): LiveData<Data<out String>> {
+    override suspend fun pushComment(
+        source: String,
+        postId: Int,
+        comment: String
+    ): LiveData<Data<out String>> {
         return repository.pushComment(source, postId, comment)
     }
 
-    override suspend fun pushSubComment(source: String, postId: Int, fatherCommentId: Long, comment: String): LiveData<Data<out String>> {
+    override suspend fun pushSubComment(
+        source: String,
+        postId: Int,
+        fatherCommentId: Long,
+        comment: String
+    ): LiveData<Data<out String>> {
         return repository.pushSubComment(source, postId, fatherCommentId, comment)
     }
 
-    override suspend fun deleteComment(source: String, postId: Int, commentId: Long): LiveData<Data<out String>> {
+    override suspend fun deleteComment(
+        source: String,
+        postId: Int,
+        commentId: Long
+    ): LiveData<Data<out String>> {
         return repository.deleteComment(source, postId, commentId)
     }
 
-    override suspend fun deleteSubComment(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): LiveData<Data<out String>> {
+    override suspend fun deleteSubComment(
+        source: String,
+        postId: Int,
+        fatherCommentId: Long,
+        subCommentId: Long
+    ): LiveData<Data<out String>> {
         return repository.deleteSubComment(source, postId, fatherCommentId, subCommentId)
     }
 
     override suspend fun pushLike(source: String, postId: Int): LiveData<Data<out String>> {
+        return repository.pushLike(source, postId)
+    }
 
-    override suspend fun pushLikeForComment(source: String, postId: Int, commentId: Long): LiveData<Data<out String>> {
-        errors = if (userInstance.uid != null && !checkIfHasCommentLike(postId, commentId)) {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(commentId.toString()).child("likes").child(userInstance.uid!!)
-                .setValue(userInstance.uid).await()
-            ""
-        } else {
-            "User is not authenticated or already has a like"
-        }
+    override suspend fun pushLikeForComment(
+        source: String,
+        postId: Int,
+        commentId: Long
+    ): LiveData<Data<out String>> {
+        return repository.pushLikeForComment(source, postId, commentId)
     }
 
     override suspend fun pushLikeForSubComment(
@@ -56,41 +73,19 @@ class CommentsViewModelImpl @Inject constructor(
         fatherCommentId: Long,
         subCommentId: Long
     ): LiveData<Data<out String>> {
-        errors = if (userInstance.uid != null && !checkIfHasSubCommentLike(
-                postId,
-                fatherCommentId,
-                subCommentId
-            )
-        ) {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(fatherCommentId.toString()).child("subComments")
-                .child(subCommentId.toString()).child("likes").child(userInstance.uid!!)
-                .setValue(userInstance.uid).await()
-            ""
-        } else {
-            "User is not authenticated or already has a like"
-        }
+        return repository.pushLikeForSubComment(source, postId, fatherCommentId, subCommentId)
     }
 
     override suspend fun deleteLike(source: String, postId: Int): LiveData<Data<out String>> {
-        errors = if (userInstance.uid != null && checkIfHasLike(postId)) {
-            fDb.getReference("posts").child(postId.toString()).child("likes")
-                .child(userInstance.uid!!).removeValue().await()
-            ""
-        } else {
-            "User is not authenticated or he didn't`t like this post"
-        }
+        return repository.deleteLike(source, postId)
     }
 
-    override suspend fun deleteCommentLike(source: String, postId: Int, commentId: Long): LiveData<Data<out String>> {
-        errors = if (userInstance.uid != null && checkIfHasCommentLike(postId, commentId)) {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(commentId.toString()).child("likes").child(userInstance.uid!!).removeValue()
-                .await()
-            ""
-        } else {
-            "User is not authenticated or he didn't`t like this comment"
-        }
+    override suspend fun deleteCommentLike(
+        source: String,
+        postId: Int,
+        commentId: Long
+    ): LiveData<Data<out String>> {
+        return repository.deleteCommentLike(source, postId, commentId)
     }
 
     override suspend fun deleteSubCommentLike(
@@ -99,23 +94,10 @@ class CommentsViewModelImpl @Inject constructor(
         fatherCommentId: Long,
         subCommentId: Long
     ): LiveData<Data<out String>> {
-        errors = if (userInstance.uid != null && checkIfHasSubCommentLike(
-                postId,
-                fatherCommentId,
-                subCommentId
-            )
-        ) {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(fatherCommentId.toString()).child("subComments")
-                .child(subCommentId.toString()).child("likes").child(userInstance.uid!!)
-                .removeValue()
-                .await()
-            ""
-        } else {
-            "User is not authenticated or he didn't`t like this subComment"
-        }
+        return repository.deleteSubCommentLike(source, postId, fatherCommentId, subCommentId)
     }
 
+    /*
     override fun listenForComments(postId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             fDb.getReference("posts").child(postId.toString()).child("comments")
@@ -181,4 +163,6 @@ class CommentsViewModelImpl @Inject constructor(
                 })
         }
     }
+
+     */
 }

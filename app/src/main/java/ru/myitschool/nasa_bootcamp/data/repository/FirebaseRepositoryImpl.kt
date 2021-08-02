@@ -11,13 +11,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
-import ru.myitschool.nasa_bootcamp.data.dto.firebase.ImagePost
-import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
-import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostView
-import ru.myitschool.nasa_bootcamp.data.dto.firebase.TextPost
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.model.SubComment
-import ru.myitschool.nasa_bootcamp.data.model.models.Comment
 import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
@@ -155,7 +151,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
             try {
                 val commentId = getLastCommentId(source, postId) + 1
                 val commentObject =
-                    Comment(
+                    CommentDto(
                         commentId,
                         comment,
                         listOf(),
@@ -186,7 +182,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         if (authenticator.uid != null) {
             try {
                 val subCommentId = getLastSubCommentId(source, postId, fatherCommentId) + 1
-                val subCommentObject = SubComment(
+                val subCommentObject = SubCommentDto(
                     subCommentId, fatherCommentId, comment, listOf(),
                     authenticator.uid!!, Date().time
                 )
@@ -282,7 +278,20 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         postId: Int,
         commentId: Long
     ): LiveData<Data<out String>> {
-        TODO("Not yet implemented")
+        val returnData = MutableLiveData<Data<out String>>()
+        if (authenticator.uid != null && !checkIfHasCommentLike(source, postId, commentId)) {
+            try {
+                dbInstance.getReference("posts").child(postId.toString()).child("comments")
+                    .child(commentId.toString()).child("likes").child(authenticator.uid!!)
+                    .setValue(authenticator.uid).await()
+                returnData.postValue(Data.Ok("Ok"))
+            } catch (e: Exception) {
+                returnData.postValue(Data.Error(e.message.toString()))
+            }
+        } else {
+            returnData.postValue(Data.Error("User is not authenticated or already has a like"))
+        }
+        return returnData
     }
 
     override suspend fun pushLikeForSubComment(
@@ -291,11 +300,43 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         fatherCommentId: Long,
         subCommentId: Long
     ): LiveData<Data<out String>> {
-        TODO("Not yet implemented")
+        val returnData = MutableLiveData<Data<out String>>()
+        if (authenticator.uid != null && !checkIfHasSubCommentLike(
+                source,
+                postId,
+                fatherCommentId,
+                subCommentId
+            )
+        ) {
+            try {
+                dbInstance.getReference("posts").child(postId.toString()).child("comments")
+                    .child(fatherCommentId.toString()).child("subComments")
+                    .child(subCommentId.toString()).child("likes").child(authenticator.uid!!)
+                    .setValue(authenticator.uid).await()
+                returnData.postValue(Data.Ok("Ok"))
+            } catch (e: Exception) {
+                returnData.postValue(Data.Error(e.message.toString()))
+            }
+        } else {
+            returnData.postValue(Data.Error("User is not authenticated or already has a like"))
+        }
+        return returnData
     }
 
     override suspend fun deleteLike(source: String, postId: Int): LiveData<Data<out String>> {
-        TODO("Not yet implemented")
+        val returnData = MutableLiveData<Data<out String>>()
+        if (authenticator.uid != null && checkIfHasLike(source, postId)) {
+            try {
+                dbInstance.getReference("posts").child(postId.toString()).child("likes")
+                    .child(authenticator.uid!!).removeValue().await()
+                returnData.postValue(Data.Ok("Ok"))
+            } catch (e: Exception) {
+                returnData.postValue(Data.Error(e.message.toString()))
+            }
+        } else {
+            returnData.postValue(Data.Error("User is not authenticated or he didn't`t like this post"))
+        }
+        return returnData
     }
 
     override suspend fun deleteCommentLike(
@@ -303,7 +344,21 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         postId: Int,
         commentId: Long
     ): LiveData<Data<out String>> {
-        TODO("Not yet implemented")
+        val returnData = MutableLiveData<Data<out String>>()
+        if (authenticator.uid != null && checkIfHasCommentLike(source, postId, commentId)) {
+            try {
+                dbInstance.getReference("posts").child(postId.toString()).child("comments")
+                    .child(commentId.toString()).child("likes").child(authenticator.uid!!)
+                    .removeValue()
+                    .await()
+                returnData.postValue(Data.Ok("Ok"))
+            } catch (e: Exception) {
+                returnData.postValue(Data.Error(e.message.toString()))
+            }
+        } else {
+            returnData.postValue(Data.Error("User is not authenticated or he didn't`t like this comment"))
+        }
+        return returnData
     }
 
     override suspend fun deleteSubCommentLike(
@@ -312,7 +367,28 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         fatherCommentId: Long,
         subCommentId: Long
     ): LiveData<Data<out String>> {
-        TODO("Not yet implemented")
+        val returnData = MutableLiveData<Data<out String>>()
+        if (authenticator.uid != null && checkIfHasSubCommentLike(
+                source,
+                postId,
+                fatherCommentId,
+                subCommentId
+            )
+        ) {
+            try {
+                dbInstance.getReference("posts").child(postId.toString()).child("comments")
+                    .child(fatherCommentId.toString()).child("subComments")
+                    .child(subCommentId.toString()).child("likes").child(authenticator.uid!!)
+                    .removeValue()
+                    .await()
+                returnData.postValue(Data.Ok("Ok"))
+            } catch (e: Exception) {
+                returnData.postValue(Data.Error(e.message.toString()))
+            }
+        } else {
+            returnData.postValue(Data.Error("User is not authenticated or he didn't`t like this subComment"))
+        }
+        return returnData
     }
 
     private suspend fun getUsernameById(uid: String): String =
