@@ -23,6 +23,7 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
+import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Status
 
 @AndroidEntryPoint
@@ -39,19 +40,27 @@ class SpaceXFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        launchesViewModel.getViewModelScope().launch(Dispatchers.IO) {
-            launchesViewModel.loadSpaceXLaunches()
-        }
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
-        spaceXLaunchAdapter = SpaceXLaunchAdapter(requireContext())
+        spaceXLaunchAdapter = SpaceXLaunchAdapter()
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
 
+        binding.loadProgressbar.visibility = View.VISIBLE
+        launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
+            binding.loadProgressbar.visibility = View.GONE
+            when (data){
+                is Data.Ok ->{
+                    spaceXLaunchAdapter.submitList(data.data)
+                }
+                is Data.Error -> {
+                }
+                is Data.Local -> {
+                    spaceXLaunchAdapter.submitList(data.data)
+                }
+                Data.Loading -> {
 
+                }
+            }
 
-        launchesViewModel.getLaunchesList().observe(viewLifecycleOwner) {
-            Log.d("SpaceX_Fragment_TAG", "Something changed in view model! $it")
-            spaceXLaunchAdapter.submitList(it)
-            Log.d("SpaceX_Fragment_TAG", "${spaceXLaunchAdapter.currentList}")
         }
 
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
@@ -59,17 +68,26 @@ class SpaceXFragment : Fragment() {
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 binding.errorIcon.visibility = View.VISIBLE
-                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.disabled_button), PorterDuff.Mode.SRC_ATOP);
+                binding.explore.getBackground().setColorFilter(
+                    resources.getColor(R.color.disabled_button),
+                    PorterDuff.Mode.SRC_ATOP
+                );
 
             } else if ((error == Status.LOADING)) {
                 binding.loadProgressbar.visibility = View.VISIBLE
                 binding.launchesRecycle.visibility = View.GONE
                 binding.errorIcon.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.disabled_button), PorterDuff.Mode.SRC_ATOP);
+                binding.explore.getBackground().setColorFilter(
+                    resources.getColor(R.color.disabled_button),
+                    PorterDuff.Mode.SRC_ATOP
+                );
             } else {
                 binding.launchesRecycle.visibility = View.VISIBLE
                 binding.loadProgressbar.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button), PorterDuff.Mode.SRC_ATOP);
+                binding.explore.getBackground().setColorFilter(
+                    resources.getColor(R.color.enabled_button),
+                    PorterDuff.Mode.SRC_ATOP
+                );
             }
 
             val animation = animateIt {

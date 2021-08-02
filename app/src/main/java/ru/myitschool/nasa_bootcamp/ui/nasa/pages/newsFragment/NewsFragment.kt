@@ -1,7 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.nasa.pages.newsFragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +9,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchAdapter
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModel
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModelImpl
-import java.util.Observer
+
 
 @AndroidEntryPoint
 class NewsFragment : Fragment() {

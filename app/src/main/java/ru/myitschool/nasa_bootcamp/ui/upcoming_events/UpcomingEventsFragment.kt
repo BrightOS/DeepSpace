@@ -11,10 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentUpcomingEventsBinding
-import ru.myitschool.nasa_bootcamp.ui.mars_rovers.RoverRecyclerAdapter
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchAdapter
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModel
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModelImpl
 
 @AndroidEntryPoint
 class UpcomingEventsFragment : Fragment() {

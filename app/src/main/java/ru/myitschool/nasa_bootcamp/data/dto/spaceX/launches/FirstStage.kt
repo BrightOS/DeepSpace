@@ -3,8 +3,7 @@ package ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches
 import com.google.gson.annotations.SerializedName
 
 class FirstStage (
-     @field:SerializedName("cores") val cores: ArrayList<StageCore>
-    )
+     @field:SerializedName("cores") val cores: ArrayList<StageCore>)
 
 data class StageCore(
     @field:SerializedName("core_serial") val core_serial: String,

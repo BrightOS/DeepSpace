@@ -1,55 +1,55 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
+import ru.myitschool.nasa_bootcamp.data.room.LaunchesDao
+import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Status
 import javax.inject.Inject
 
 @HiltViewModel
 class SpaceXViewModelImpl @Inject constructor(
-    private val repository: SpaceXRepository
+    private val repository: SpaceXRepository,
+    private val launchesDao: LaunchesDao
 ) : ViewModel(), SpaceXViewModel {
 
-    private var launchesModelsList: MutableLiveData<List<SxLaunchModel>> =
-        MutableLiveData<List<SxLaunchModel>>()
+    private var errorHandler: MutableLiveData<Status> = MutableLiveData<Status>(Status.SUCCESS)
+    private val liveData = MutableLiveData<Data<List<SxLaunchModel>>>(Data.Loading)
 
-    private var errorHandler: MutableLiveData<Status> = MutableLiveData<Status>(
-        Status.SUCCESS
-    )
-
-
-    var list: List<SxLaunchModel> = listOf()
-
-    override suspend fun loadSpaceXLaunches() {
-        errorHandler.postValue(Status.LOADING)
-        val response = repository.getSpaceXLaunches()
-
-        if (response.isSuccessful) {
-            if (response.body() != null) {
-                launchesModelsList.postValue(
-                    response.body()!!.map { launch -> launch.createLaunchModel() }.asReversed()
-                )
-                errorHandler.postValue(Status.SUCCESS)
+    override fun getSpaceXLaunches(): LiveData<Data<List<SxLaunchModel>>> {
+       /* viewModelScope.launch(Dispatchers.IO) {
+            val launches = launchesDao.getAllLaunches()
+            if(liveData.value !is Data.Ok){
+                liveData.postValue(Data.Local(launches))
+                Log.i("vm_debug","room got")
             }
-        } else {
-            Log.e(
-                "SPACEX_LAUNCH_VIEWMODEL_TAG",
-                "Error occured while trying to upload files from launches api"
-            )
-            errorHandler.postValue(Status.ERROR)
+        }*/
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = repository.getSpaceXLaunches()
+
+            if (response.isSuccessful) {
+                if (response.body() != null) {
+                    val launches = response.body()!!.map { launch -> launch.createLaunchModel() }.asReversed()
+                    liveData.postValue(Data.Ok(launches))
+                    errorHandler.postValue(Status.SUCCESS)
+                    Log.i("vm_debug","retrofit got")
+                    launchesDao.insertAllLaunches(launches)
+                    Log.i("vm_debug","launches saved")
+
+                }
+            }
         }
+        return liveData;
     }
 
-    override fun getLaunchesList(): MutableLiveData<List<SxLaunchModel>> {
-        return launchesModelsList
-    }
-
-    override fun getViewModelScope() = viewModelScope
     override fun getErrorHandler(): MutableLiveData<Status> {
         return errorHandler
     }

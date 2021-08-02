@@ -8,9 +8,6 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Status
 
 interface SpaceXViewModel {
-    suspend fun loadSpaceXLaunches()
-    //fun getSpaceXLaunches(): LiveData<Data<List>>
-    fun getLaunchesList(): MutableLiveData<List<SxLaunchModel>>
-    fun getViewModelScope(): CoroutineScope
+    fun getSpaceXLaunches(): LiveData<Data<List<SxLaunchModel>>>
     fun getErrorHandler() : MutableLiveData<Status>
 }

@@ -11,11 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentLaunchLandBinding
-import ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragmentDirections
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchAdapter
 
 @AndroidEntryPoint
 class LaunchLandFragment : Fragment() {
