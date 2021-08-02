@@ -8,13 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.model.ImagePost
-import ru.myitschool.nasa_bootcamp.data.model.PostView
-import ru.myitschool.nasa_bootcamp.data.model.TextPost
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.ImagePost
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostView
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.TextPost
 import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 
@@ -22,7 +21,7 @@ class ViewPostAdapter(
     private val context: Context,
     private val data: ArrayList<PostView>,
     private val postId: String,
-    private val viewModel: ViewAllPostViewModelImpl,
+    private val viewModel: ViewAllPostViewModel,
     private val viewLifecycleOwner: LifecycleOwner
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -37,7 +36,7 @@ class ViewPostAdapter(
     private inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.postImage)
         fun bind(position: Int) {
-            viewModel.viewModelScope.launch {
+            viewModel.getViewModelScope().launch {
                 viewModel.loadImage(postId, (data[position] as ImagePost).imagePath)
                     .observe(viewLifecycleOwner) {
                         when (it) {

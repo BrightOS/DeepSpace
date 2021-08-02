@@ -8,10 +8,9 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
-import ru.myitschool.nasa_bootcamp.data.model.Post
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import ru.myitschool.nasa_bootcamp.utils.Data
 import java.lang.Exception
-import java.lang.NumberFormatException
 import java.util.*
 
 class CreatePostViewModelImpl : ViewModel(), CreatePostViewModel {

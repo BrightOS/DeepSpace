@@ -2,7 +2,7 @@ package ru.myitschool.nasa_bootcamp.ui.user_create_post
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import ru.myitschool.nasa_bootcamp.data.model.Post
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import ru.myitschool.nasa_bootcamp.utils.Data
 
 interface CreatePostViewModel {
