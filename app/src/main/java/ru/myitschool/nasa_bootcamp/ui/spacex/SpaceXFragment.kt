@@ -55,13 +55,16 @@ class SpaceXFragment : Fragment() {
         }
 
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
-            if (error == Status.ERROR) {
+            if (error == ru.myitschool.nasa_bootcamp.utils.Status.ERROR) {
+
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 binding.errorIcon.visibility = View.VISIBLE
                 binding.explore.getBackground().setColorFilter(resources.getColor(R.color.disabled_button), PorterDuff.Mode.SRC_ATOP);
 
-            } else if ((error == Status.LOADING)) {
+              
+            } else if ((error == ru.myitschool.nasa_bootcamp.utils.Status.LOADING)) {
+
                 binding.loadProgressbar.visibility = View.VISIBLE
                 binding.launchesRecycle.visibility = View.GONE
                 binding.errorIcon.visibility = View.GONE
