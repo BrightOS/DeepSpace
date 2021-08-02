@@ -20,8 +20,8 @@ class ViewAllPostViewModelImpl @Inject constructor(
         return repository.getAllPosts()
     }
 
-    override suspend fun loadImage(postId: String, imageId: String): LiveData<Data<out Bitmap>> {
-        return repository.loadImage(postId, imageId)
+    override suspend fun downloadImage(postId: String, imageId: String): LiveData<Data<out Bitmap>> {
+        return repository.downloadImage(postId, imageId)
     }
 
     override suspend fun getAdditionalData(postId: String): LiveData<Data<out ArrayList<PostView>>> {

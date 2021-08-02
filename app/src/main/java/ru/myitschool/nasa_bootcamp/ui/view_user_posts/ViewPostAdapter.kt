@@ -37,7 +37,7 @@ class ViewPostAdapter(
         val imageView: ImageView = itemView.findViewById(R.id.postImage)
         fun bind(position: Int) {
             viewModel.getViewModelScope().launch {
-                viewModel.loadImage(postId, (data[position] as ImagePost).imagePath)
+                viewModel.downloadImage(postId, (data[position] as ImagePost).imagePath)
                     .observe(viewLifecycleOwner) {
                         when (it) {
                             is Data.Ok -> {
