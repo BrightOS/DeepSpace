@@ -24,6 +24,7 @@ fun NewsCarousel(
     title: String,
     articlesResource: Resource<List<ArticleModel>>,
     onShowMoreClick: () -> Unit,
+    onRetryButtonClick: () -> Unit,
     onItemClick: (article: ArticleModel) -> Unit
 ) {
     val titleTextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
@@ -31,6 +32,7 @@ fun NewsCarousel(
         modelsResource = articlesResource,
         title = title,
         onShowMoreClick = onShowMoreClick,
+        onRetryButtonClick = onRetryButtonClick,
         onItemClick = onItemClick, cardContent = { articleModel ->
             Image(
                 painter = rememberImagePainter(articleModel.imageUrl),
@@ -38,9 +40,11 @@ fun NewsCarousel(
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize()
             )
-            Box(modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+            ) {
                 Gradient(modifier = Modifier.matchParentSize())
                 Text(
                     style = titleTextStyle,

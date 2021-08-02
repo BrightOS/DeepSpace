@@ -23,6 +23,7 @@ fun <T> CarouselTemplate(
     title: String,
     onItemClick: (item: T) -> Unit,
     onShowMoreClick: () -> Unit,
+    onRetryButtonClick: () -> Unit,
     cardContent: @Composable BoxScope.(item: T) -> Unit
 ) {
     val listState = rememberLazyListState()
@@ -50,26 +51,37 @@ fun <T> CarouselTemplate(
                     .align(Alignment.CenterEnd)
             )
         }
-        Box(modifier = Modifier.padding(bottom = 4.dp)) {
-            if (modelsResource.status == Status.LOADING)
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            LazyRow(state = listState) {
-                if (modelsResource.status == Status.SUCCESS)
-                    items(modelsResource.data!!) { item ->
-                        Card(
-                            shape = RoundedCornerShape(8.dp),
-                            elevation = 4.dp, onClick = { onItemClick(item) }, modifier = Modifier
-                                .padding(8.dp, 4.dp, 0.dp, 4.dp)
-                        ) {
-                            Box(
+        Box(
+            modifier = Modifier
+                .padding(bottom = 4.dp)
+                .fillMaxWidth()
+        ) {
+            when (modelsResource.status) {
+                Status.LOADING -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                Status.SUCCESS -> LazyRow(state = listState) {
+                    if (modelsResource.status == Status.SUCCESS)
+                        items(modelsResource.data!!) { item ->
+                            Card(
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = 4.dp,
+                                onClick = { onItemClick(item) },
                                 modifier = Modifier
-                                    .width(160.dp)
-                                    .height(160.dp)
+                                    .padding(8.dp, 4.dp, 0.dp, 4.dp)
                             ) {
-                                cardContent(item)
+                                Box(
+                                    modifier = Modifier
+                                        .width(160.dp)
+                                        .height(160.dp)
+                                ) {
+                                    cardContent(item)
+                                }
                             }
                         }
-                    }
+                }
+                Status.ERROR -> ErrorMessage(
+                    onClick = onRetryButtonClick,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

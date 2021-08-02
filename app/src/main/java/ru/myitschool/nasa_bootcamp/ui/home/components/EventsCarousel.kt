@@ -17,6 +17,7 @@ fun EventsCarousel(
     title: String,
     eventsResource: Resource<List<EventModel>>,
     onShowMoreClick: () -> Unit,
+    onRetryButtonClick: () -> Unit,
     onItemClick: (event: EventModel) -> Unit
 ) {
     val titleTextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
@@ -24,6 +25,7 @@ fun EventsCarousel(
         modelsResource = eventsResource,
         title = title,
         onShowMoreClick = onShowMoreClick,
+        onRetryButtonClick = onRetryButtonClick,
         onItemClick = onItemClick, cardContent = { eventModel ->
             Text(
                 modifier = Modifier
