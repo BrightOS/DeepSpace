@@ -16,6 +16,11 @@
         <item
             android:id="@+id/spaceXFragment"
             android:title="@string/spacex" />
+
+        <item
+            android:id="@+id/navigationSkyFragment"
+            android:title="@string/space_nav"/>
+
         <item
             android:id="@+id/upcomingEventsFragment"
             android:title="@string/upcoming_events" />
@@ -23,6 +28,7 @@
         <item
             android:id="@+id/createPostFragment"
             android:title="@string/create_your_own_post"/>
+
 
         <item
             android:id="@+id/allUserPostFragment"

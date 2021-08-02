@@ -239,4 +239,9 @@
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
 
+    <fragment
+        android:id="@+id/navigationSkyFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.space_nav.NavigationSkyFragment"
+        android:label="NavigationSkyFragment" />
+
 </navigation>
