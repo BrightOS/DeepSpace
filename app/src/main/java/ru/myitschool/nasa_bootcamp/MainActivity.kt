@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -30,6 +31,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
+import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
+import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepositoryImpl
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 import ru.myitschool.nasa_bootcamp.databinding.NavHeaderMainBinding
 import ru.myitschool.nasa_bootcamp.utils.Data

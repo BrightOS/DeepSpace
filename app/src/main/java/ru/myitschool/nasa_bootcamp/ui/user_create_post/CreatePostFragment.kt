@@ -11,8 +11,11 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.ImagePost
@@ -22,11 +25,12 @@ import ru.myitschool.nasa_bootcamp.data.dto.firebase.TextPost
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCreatePostBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 
+@AndroidEntryPoint
 class CreatePostFragment : Fragment() {
     private val PICK_IMAGE_REQUEST = 71
 
     private var _binding: FragmentCreatePostBinding? = null
-    private val viewModel: CreatePostViewModelImpl = CreatePostViewModelImpl()
+    private val viewModel: CreatePostViewModel by viewModels<CreatePostViewModelImpl>()
 
     private val binding get() = _binding!!
 
@@ -102,7 +106,7 @@ class CreatePostFragment : Fragment() {
 
                     for (postItem in adapter.getList()) {
                         if (postItem.type == CreatePostRecyclerAdapter.IMAGE) {
-                            viewModel.loadImage(postId, picCount, postItem.imagePath!!)
+                            viewModel.uploadImage(postId, picCount, postItem.imagePath!!)
                                 .observe(viewLifecycleOwner) {
                                     when (it) {
                                         is Data.Ok -> {
@@ -128,7 +132,7 @@ class CreatePostFragment : Fragment() {
                         }
                     }
 
-                    viewModel.viewModelScope.launch {
+                    viewModel.getViewModelScope().launch {
                         viewModel.createPost(post, postId).observe(viewLifecycleOwner) {
                             when (it) {
                                 is Data.Ok -> {

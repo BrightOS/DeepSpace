@@ -6,24 +6,32 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
+import java.text.SimpleDateFormat
 import java.util.*
 
 class NotificationCentre {
-    fun scheduleNotification(context: Context) {
+    fun scheduleNotification(context: Context, title: String, text: String, date: String) {
+        println(parseDate(date) - Date().time)
         val intent = Intent(context, NotificationReceiver::class.java)
-        intent.putExtra(NotificationReceiver.titleIntent, "Title")
-        intent.putExtra(NotificationReceiver.textIntent, "Hey!")
+        intent.putExtra(NotificationReceiver.titleIntent, title)
+        intent.putExtra(NotificationReceiver.textIntent, text)
         val pendingIntent =
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis() + 5000,
+        alarmManager.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + (parseDate(date) - Date().time),
             pendingIntent
         )
+    }
+
+    private fun parseDate(date: String): Long {
+        return SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale("ru", "RU")).parse(date)!!.time
     }
 
     class NotificationReceiver : BroadcastReceiver() {
@@ -32,6 +40,7 @@ class NotificationCentre {
         private val notificationId = 0
 
         override fun onReceive(context: Context?, intent: Intent?) {
+            println("Its nice!")
             createNotificationChannel(context!!)
             val notification = createNotification(context, intent!!)
             val notificationManager = NotificationManagerCompat.from(context)
@@ -55,10 +64,17 @@ class NotificationCentre {
         }
 
         private fun createNotification(context: Context, intent: Intent): Notification {
+            val toDoAfterClick = Intent(context, MainActivity::class.java)
+            val pendingIntent = TaskStackBuilder.create(context).run {
+                addNextIntentWithParentStack(toDoAfterClick)
+                getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+            }
+
             return NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.deep_space_icon)
                 .setContentTitle(intent.getStringExtra(titleIntent))
                 .setContentText(intent.getStringExtra(textIntent))
+                .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build()
         }

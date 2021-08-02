@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +29,7 @@ class AuthFragment : Fragment() {
     private var _binding: FragmentAuthBinding? = null
     private val binding: FragmentAuthBinding get() = _binding!!
 
-    private lateinit var viewmodel: AuthViewModelImpl
+    private val viewModel: AuthViewModel by viewModels<AuthViewModelImpl>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val transition =
@@ -43,9 +44,6 @@ class AuthFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAuthBinding.inflate(inflater)
-
-        viewmodel = AuthViewModelImpl()
-
         return binding.root
     }
 
@@ -76,9 +74,9 @@ class AuthFragment : Fragment() {
                     loading = true
                     binding.progressBar.visibility = View.VISIBLE
 
-                    viewmodel.viewModelScope.launch {
-                        viewmodel.signOutUser()
-                        viewmodel.authenticateUser(userName, password).observe(viewLifecycleOwner) {
+                    viewModel.getViewModelScope().launch {
+                        viewModel.signOutUser()
+                        viewModel.authenticateUser(userName, password).observe(viewLifecycleOwner) {
                             binding.progressBar.visibility = View.GONE
                             loading = false
                             when (it) {

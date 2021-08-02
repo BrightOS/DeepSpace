@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAllUserPostBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 
+@AndroidEntryPoint
 class ViewAllPostFragment : Fragment() {
     private var _binding: FragmentAllUserPostBinding? = null
     private val viewModel: ViewAllPostViewModel by viewModels<ViewAllPostViewModelImpl>()
