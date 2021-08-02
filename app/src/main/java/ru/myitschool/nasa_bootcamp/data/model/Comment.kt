@@ -1,11 +1,23 @@
-package ru.myitschool.nasa_bootcamp.data.model.models
+package ru.myitschool.nasa_bootcamp.data.model
 
-import ru.myitschool.nasa_bootcamp.data.model.SubComment
-
-class Comment(val id: Long, val comment: String, val likes: List<String>, val subComments: List<SubComment>, val userId: String, val date: Long) {
-    constructor() : this(-1, "", listOf(), listOf(), "", -1)
+open class Comment(
+    val id: Long,
+    val text: String,
+    val likes: List<UserModel>,
+    val subComments: List<SubComment>,
+    val author: UserModel,
+    val date: Long
+) {
+    constructor() : this(
+        -1,
+        "",
+        listOf(),
+        listOf(),
+        UserModel(id = 1, avatarUrl = "", name = "Jason"),
+        -1L
+    )
 
     override fun toString(): String {
-        return "ID: $id\nComment: $comment;\nUserId: $userId\nDate: $date\nLikes: $likes\nComments: $subComments"
+        return "ID: $id\nComment: $text;\nUserId: ${author.id}\nDate: $date\nLikes: $likes\nComments: $subComments"
     }
 }

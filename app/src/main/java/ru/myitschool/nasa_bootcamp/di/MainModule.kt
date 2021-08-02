@@ -110,6 +110,21 @@ object MainModule {
 
     @Provides
     @Singleton
+    fun getFirebaseRepository(): FirebaseRepository {
+        return FirebaseRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun getNetworkRepository(
+        firebaseRepository: FirebaseRepository,
+        newsRepository: NewsRepository
+    ): NetworkRepository {
+        return NetworkRepositoryImpl(firebaseRepository, newsRepository)
+    }
+
+    @Provides
+    @Singleton
     fun getSpaceXLaunchRepository(spaceXApi: SpaceXApi): SpaceXRepository {
         return SpaceXRepositoryImpl(spaceXApi)
     }
@@ -122,7 +137,7 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun getUpcomingRepository(upcomingEventsApi : UpcomingEventsApi): UpcomingRepository {
+    fun getUpcomingRepository(upcomingEventsApi: UpcomingEventsApi): UpcomingRepository {
         return UpcomingRepositoryImpl(upcomingEventsApi)
     }
 
