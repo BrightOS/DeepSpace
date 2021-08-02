@@ -71,7 +71,7 @@ class SpaceXLaunchAdapter(val context: Context) :
                     target: Target<Drawable>,
                     isFirstResource: Boolean
                 ): Boolean {
-                    viewModel.error.value = Status.ERROR
+//                    viewModel.error.value = Status.ERROR
                     return false
                 }
 

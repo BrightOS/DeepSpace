@@ -246,4 +246,9 @@
         android:name="ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaFragment"
         android:label="SocialMediaFragment" />
 
+    <fragment
+        android:id="@+id/navigationSkyFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.space_nav.NavigationSkyFragment"
+        android:label="NavigationSkyFragment" />
+
 </navigation>
