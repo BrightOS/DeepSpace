@@ -459,13 +459,13 @@ class FirebaseRepositoryImpl : FirebaseRepository {
             .hasChild(authenticator.uid!!)
     }
 
-    suspend fun getCommentAuthor(source: String, postId: Int, commentId: Long): String? {
+    private suspend fun getCommentAuthor(source: String, postId: Int, commentId: Long): String? {
         return dbInstance.getReference("posts").child(source).child(postId.toString())
             .child("comments")
             .child(commentId.toString()).child("userId").get().await().getValue(String::class.java)
     }
 
-    suspend fun getSubCommentAuthor(
+    private suspend fun getSubCommentAuthor(
         source: String,
         postId: Int,
         fatherCommentId: Long,

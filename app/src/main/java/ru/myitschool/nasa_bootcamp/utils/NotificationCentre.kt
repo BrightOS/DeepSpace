@@ -12,20 +12,6 @@ import ru.myitschool.nasa_bootcamp.R
 import java.util.*
 
 class NotificationCentre {
-    fun scheduleNotification(context: Context) {
-        val intent = Intent(context, NotificationReceiver::class.java)
-        intent.putExtra(NotificationReceiver.titleIntent, "Title")
-        intent.putExtra(NotificationReceiver.textIntent, "Hey!")
-        val pendingIntent =
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis() + 5000,
-            pendingIntent
-        )
-    }
-
     class NotificationReceiver : BroadcastReceiver() {
         private val channelId = "channel-id"
         private val channelName = "channel-name"
@@ -68,5 +54,20 @@ class NotificationCentre {
             const val textIntent = "text"
             const val dateIntent = "date"
         }
+    }
+
+    fun scheduleNotification(context: Context) {
+        println("It is$context")
+        val intent = Intent(context, NotificationReceiver::class.java)
+        intent.putExtra(NotificationReceiver.titleIntent, "Title")
+        intent.putExtra(NotificationReceiver.textIntent, "Hey!")
+        val pendingIntent =
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            System.currentTimeMillis() + 5000,
+            pendingIntent
+        )
     }
 }
