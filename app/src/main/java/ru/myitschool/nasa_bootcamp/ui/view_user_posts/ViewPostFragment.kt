@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,7 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 
 class ViewPostFragment : Fragment() {
     private var _binding: FragmentViewPostBinding? = null
-    private val viewModel: ViewAllPostViewModelImpl = ViewAllPostViewModelImpl()
+    private val viewModel: ViewAllPostViewModel by viewModels<ViewAllPostViewModelImpl>()
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -49,7 +50,7 @@ class ViewPostFragment : Fragment() {
         binding.fbPostTitle.text = title
         binding.fbPostUsername.text = author
         binding.fbPostCreated.text = dateCreated
-        viewModel.viewModelScope.launch {
+        viewModel.getViewModelScope().launch {
             viewModel.getAdditionalData(id!!).observe(viewLifecycleOwner) {
                 when(it) {
                     is Data.Ok -> {

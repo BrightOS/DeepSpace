@@ -17,7 +17,7 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 
 class ViewAllPostFragment : Fragment() {
     private var _binding: FragmentAllUserPostBinding? = null
-    private val viewModel: ViewAllPostViewModelImpl = ViewAllPostViewModelImpl()
+    private val viewModel: ViewAllPostViewModel by viewModels<ViewAllPostViewModelImpl>()
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -38,7 +38,7 @@ class ViewAllPostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.viewModelScope.launch {
+        viewModel.getViewModelScope().launch {
             viewModel.getAllPosts().observe(viewLifecycleOwner){
                 when(it) {
                     is Data.Ok -> {

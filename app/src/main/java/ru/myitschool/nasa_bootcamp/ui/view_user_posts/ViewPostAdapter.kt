@@ -22,7 +22,7 @@ class ViewPostAdapter(
     private val context: Context,
     private val data: ArrayList<PostView>,
     private val postId: String,
-    private val viewModel: ViewAllPostViewModelImpl,
+    private val viewModel: ViewAllPostViewModel,
     private val viewLifecycleOwner: LifecycleOwner
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -37,7 +37,7 @@ class ViewPostAdapter(
     private inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.postImage)
         fun bind(position: Int) {
-            viewModel.viewModelScope.launch {
+            viewModel.getViewModelScope().launch {
                 viewModel.loadImage(postId, (data[position] as ImagePost).imagePath)
                     .observe(viewLifecycleOwner) {
                         when (it) {
