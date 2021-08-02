@@ -3,6 +3,7 @@ package ru.myitschool.nasa_bootcamp.data.repository
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.LiveData
+import com.google.firebase.auth.FirebaseUser
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostView
 import ru.myitschool.nasa_bootcamp.utils.Data
@@ -24,4 +25,7 @@ interface FirebaseRepository {
     suspend fun deleteLike(source: String, postId: Int): LiveData<Data<out String>>
     suspend fun deleteCommentLike(source: String, postId: Int, commentId: Long): LiveData<Data<out String>>
     suspend fun deleteSubCommentLike(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): LiveData<Data<out String>>
+    suspend fun authenticateUser(email: String, password: String): LiveData<Data<out FirebaseUser>>
+    fun signOutUser(): LiveData<Data<out String>>
+    suspend fun createUser(userName: String, email: String, password: String, imagePath: Uri?): LiveData<Data<out FirebaseUser>>
 }

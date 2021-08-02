@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -387,6 +388,58 @@ class FirebaseRepositoryImpl : FirebaseRepository {
             }
         } else {
             returnData.postValue(Data.Error("User is not authenticated or he didn't`t like this subComment"))
+        }
+        return returnData
+    }
+
+    override suspend fun authenticateUser(
+        email: String,
+        password: String
+    ): LiveData<Data<out FirebaseUser>> {
+        val returnData: MutableLiveData<Data<out FirebaseUser>> = MutableLiveData()
+        try {
+            val user = authenticator.signInWithEmailAndPassword(email, password).await()
+            returnData.postValue(Data.Ok(user?.user!!))
+        } catch (e: Exception) {
+            returnData.postValue(Data.Error(e.message.toString()))
+        }
+        return returnData
+    }
+
+    override fun signOutUser(): LiveData<Data<out String>> {
+        val returnData: MutableLiveData<Data<out String>> = MutableLiveData()
+        try {
+            authenticator.signOut()
+            returnData.postValue(Data.Ok("Ok"))
+        } catch (e: Exception) {
+            returnData.postValue(Data.Error(e.message.toString()))
+        }
+        return returnData
+    }
+
+    override suspend fun createUser(
+        userName: String,
+        email: String,
+        password: String,
+        imagePath: Uri?
+    ): LiveData<Data<out FirebaseUser>> {
+        val returnData: MutableLiveData<Data<out FirebaseUser>> = MutableLiveData()
+        try {
+            val user = authenticator.createUserWithEmailAndPassword(email, password).await()
+            if (user != null) {
+                dbInstance.getReference("user_data").child(user.user!!.uid).child("username")
+                    .setValue(userName).await()
+                val storageRef = storage.getReference("user_data/${user.user?.uid}")
+                if (imagePath != null) {
+                    storageRef.putFile(imagePath).await()
+                }
+                user.user!!.sendEmailVerification().await()
+                returnData.postValue(Data.Ok(user.user!!))
+            } else {
+                returnData.postValue(Data.Error("Unknown error happened."))
+            }
+        } catch (e: java.lang.Exception) {
+            returnData.postValue(Data.Error(e.message!!))
         }
         return returnData
     }
