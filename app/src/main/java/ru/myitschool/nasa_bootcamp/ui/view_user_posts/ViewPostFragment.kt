@@ -8,10 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentViewPostBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 
+@AndroidEntryPoint
 class ViewPostFragment : Fragment() {
     private var _binding: FragmentViewPostBinding? = null
     private val viewModel: ViewAllPostViewModel by viewModels<ViewAllPostViewModelImpl>()

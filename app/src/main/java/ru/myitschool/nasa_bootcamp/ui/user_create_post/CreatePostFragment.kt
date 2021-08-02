@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.ImagePost
@@ -23,6 +25,7 @@ import ru.myitschool.nasa_bootcamp.data.dto.firebase.TextPost
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCreatePostBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 
+@AndroidEntryPoint
 class CreatePostFragment : Fragment() {
     private val PICK_IMAGE_REQUEST = 71
 

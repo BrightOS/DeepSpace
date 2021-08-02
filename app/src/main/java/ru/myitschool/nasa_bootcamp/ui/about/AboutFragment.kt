@@ -30,8 +30,6 @@ class AboutFragment : Fragment() {
     ): View {
         // println(isNetworkAvailable(context))
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
-        val temp = NotificationCentre()
-        temp.scheduleNotification(requireContext())
         return binding.root
     }
 
