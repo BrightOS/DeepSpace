@@ -8,7 +8,6 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import ru.myitschool.nasa_bootcamp.databinding.UpcomingItemBinding
-import ru.myitschool.nasa_bootcamp.utils.ErrorHandler
 import javax.sql.DataSource
 
 class UpcomingRecyclerHolder (
