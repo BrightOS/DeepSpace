@@ -101,14 +101,15 @@ class MainActivity : AppCompatActivity() {
         if (mFirebaseUser.isUserAuthenticated()) {
             mFirebaseUser.viewModelScope.launch {
                 mFirebaseUser.getUserAvatar().observe(this@MainActivity) {
-                    navHeaderMainBinding.userAvatar.setOnClickListener {  }
+                    navHeaderMainBinding.userAvatar.setOnClickListener { }
                     when (it) {
                         is Data.Ok -> {
                             navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
                         }
                         is Data.Error -> {
                             // navHeaderMainBinding.userAvatar.setImageBitmap(null)
-                            navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_photo_mini)
+                            navHeaderMainBinding.userAvatar.foreground =
+                                getDrawable(R.drawable.ic_photo_mini)
                         }
                     }
                 }
@@ -154,7 +155,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun stopLoadingAnimation(showCheckIcon: Boolean) {
+    fun stopLoadingAnimation(showCheckIcon: Boolean = false) {
         MainScope().launch {
             if (showCheckIcon) {
                 var sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
@@ -187,12 +188,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onError(errorText: String) {
+    fun showError(errorText: String = "Произошла непредвиденная ошибка.") {
         MainScope().launch {
             var sharedAxis: MaterialSharedAxis
 
-            if (errorText != "")
-                error_text.text = errorText
+            error_text.text = errorText
 
             if (loading_root.visibility == View.GONE) {
                 prepareLoadingView()
