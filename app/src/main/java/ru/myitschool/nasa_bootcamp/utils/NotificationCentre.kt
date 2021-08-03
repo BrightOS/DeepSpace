@@ -4,34 +4,75 @@ import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.data.model.NotificationModel
+import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class NotificationCentre {
-    fun scheduleNotification(context: Context, title: String, text: String, date: String) {
-        println(parseDate(date) - Date().time)
+    private val sharedPreferencesFileName = "savedNotifications"
+    private val sharedPreferencesTableName = "notifs"
+
+    fun scheduleNotification(context: Context, title: String, text: String, date: String, launchModel: UpcomingLaunchModel): NotificationModel {
         val intent = Intent(context, NotificationReceiver::class.java)
         intent.putExtra(NotificationReceiver.titleIntent, title)
         intent.putExtra(NotificationReceiver.textIntent, text)
+        val dateAlarm = parseDate(date)
+        val notificationModel = NotificationModel(title, text, dateAlarm, launchModel)
+        saveNotification(context, notificationModel)
         val pendingIntent =
             PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + (parseDate(date) - Date().time),
+            SystemClock.elapsedRealtime() + (dateAlarm - Date().time),
             pendingIntent
         )
+        return notificationModel
+    }
+
+    fun cancelNotification(context: Context, notification: NotificationModel) {
+        val intent = Intent(context, NotificationReceiver::class.java)
+        intent.putExtra(NotificationReceiver.titleIntent, notification.title)
+        intent.putExtra(NotificationReceiver.textIntent, notification.text)
+        val pendingIntent =
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(pendingIntent)
+    }
+
+    fun getAllScheduledNotifications(context: Context): ArrayList<NotificationModel> {
+        val sharedPreferences =
+            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+        val json = sharedPreferences.getString(sharedPreferencesTableName, null)
+        val type = object : TypeToken<ArrayList<NotificationModel>>() {}.type
+        val notifications = Gson().fromJson<ArrayList<NotificationModel>>(json, type)
+        return notifications ?: ArrayList()
     }
 
     private fun parseDate(date: String): Long {
         return SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale("ru", "RU")).parse(date)!!.time
+    }
+
+    private fun saveNotification(context: Context, notification: NotificationModel) {
+        val sharedPreferencesEditable: SharedPreferences.Editor =
+            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+        val allNotifications = getAllScheduledNotifications(context)
+        allNotifications.add(notification)
+        val json = Gson().toJson(allNotifications)
+        sharedPreferencesEditable.putString(sharedPreferencesTableName, json)
+        sharedPreferencesEditable.apply()
     }
 
     class NotificationReceiver : BroadcastReceiver() {
@@ -40,7 +81,6 @@ class NotificationCentre {
         private val notificationId = 0
 
         override fun onReceive(context: Context?, intent: Intent?) {
-            println("Its nice!")
             createNotificationChannel(context!!)
             val notification = createNotification(context, intent!!)
             val notificationManager = NotificationManagerCompat.from(context)
