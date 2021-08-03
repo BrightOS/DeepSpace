@@ -61,16 +61,6 @@
                 tools:text="Falcon 9 Test Flight" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/status" />
-
-            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mission_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -140,6 +130,16 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="0.01dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
         <include
             android:id="@+id/characteristics_launch"
             layout="@layout/rocket_item"
@@ -149,7 +149,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/details"
             tools:visibility="visible" />
 
 
