@@ -21,24 +21,26 @@ class SpaceXViewModelImpl @Inject constructor(
     private val launchesDao: LaunchesDao
 ) : ViewModel(), SpaceXViewModel {
 
-    private var errorHandler: MutableLiveData<Status> = MutableLiveData<Status>(Status.SUCCESS)
+    private var errorHandler: MutableLiveData<Status> = MutableLiveData<Status>(Status.LOADING)
     private val liveData = MutableLiveData<Data<List<SxLaunchModel>>>(Data.Loading)
 
     override fun getSpaceXLaunches(): LiveData<Data<List<SxLaunchModel>>> {
-       /* viewModelScope.launch(Dispatchers.IO) {
-            val launches = launchesDao.getAllLaunches()
+       /*viewModelScope.launch(Dispatchers.IO) {
+            val launches = launchesDao.getAllLaunches().map { launch -> launch.createLaunchModel() }.asReversed()
             if(liveData.value !is Data.Ok){
                 liveData.postValue(Data.Local(launches))
+                errorHandler.postValue(Status.SUCCESS)
                 Log.i("vm_debug","room got")
             }
         }*/
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
             val response = repository.getSpaceXLaunches()
 
             if (response.isSuccessful) {
                 if (response.body() != null) {
-                    val launches = response.body()!!.map { launch -> launch.createLaunchModel() }.asReversed()
-                    liveData.postValue(Data.Ok(launches))
+                    val launches = response.body()!!
+                    val sxLaunches = launches.map { launch -> launch.createLaunchModel() }.asReversed()
+                    liveData.postValue(Data.Ok(sxLaunches))
                     errorHandler.postValue(Status.SUCCESS)
                     Log.i("vm_debug","retrofit got")
                     launchesDao.insertAllLaunches(launches)
@@ -47,7 +49,7 @@ class SpaceXViewModelImpl @Inject constructor(
                 }
             }
         }
-        return liveData;
+        return liveData
     }
 
     override fun getErrorHandler(): MutableLiveData<Status> {

@@ -43,10 +43,10 @@ class SpaceXFragment : Fragment() {
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
         spaceXLaunchAdapter = SpaceXLaunchAdapter()
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
+        binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
 
         binding.loadProgressbar.visibility = View.VISIBLE
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
-            binding.loadProgressbar.visibility = View.GONE
             when (data){
                 is Data.Ok ->{
                     spaceXLaunchAdapter.submitList(data.data)
@@ -84,10 +84,7 @@ class SpaceXFragment : Fragment() {
             } else {
                 binding.launchesRecycle.visibility = View.VISIBLE
                 binding.loadProgressbar.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(
-                    resources.getColor(R.color.enabled_button),
-                    PorterDuff.Mode.SRC_ATOP
-                );
+                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button), PorterDuff.Mode.SRC_ATOP);
             }
 
             val animation = animateIt {
@@ -123,9 +120,6 @@ class SpaceXFragment : Fragment() {
                 val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
                 navController.navigate(action)
             }
-
-//        binding.launchesRecycle.setHasFixedSize(true)
-            binding.launchesRecycle.layoutManager = GridLayoutManager(context, 1)
 
         }
 
