@@ -15,6 +15,7 @@ import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.model.SubComment
+import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
@@ -440,6 +441,24 @@ class FirebaseRepositoryImpl : FirebaseRepository {
             }
         } catch (e: java.lang.Exception) {
             returnData.postValue(Data.Error(e.message!!))
+        }
+        return returnData
+    }
+
+    override suspend fun getUser(uid: String): LiveData<Data<out UserModel>> {
+        val returnData = MutableLiveData<Data<out UserModel>>()
+        try {
+            val userName =
+                dbInstance.getReference("user_data").child(uid).child("username").get().await()
+                    .getValue(String::class.java)
+            var avatarUrl: Uri? = null
+            try {
+                avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
+            } catch (e: Exception) {
+            }
+            returnData.postValue(Data.Ok(UserModel(userName!!, avatarUrl, uid)))
+        } catch (e: Exception) {
+            returnData.postValue(Data.Error(e.message.toString()))
         }
         return returnData
     }

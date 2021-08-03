@@ -1,5 +1,7 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
+import android.net.Uri
+
 open class Comment(
     val id: Long,
     val text: String,
@@ -13,7 +15,7 @@ open class Comment(
         "",
         listOf(),
         listOf(),
-        UserModel(id = 1, avatarUrl = "", name = "Jason"),
+        UserModel(id = "", avatarUrl = Uri.EMPTY, name = "Jason"),
         -1L
     )
 

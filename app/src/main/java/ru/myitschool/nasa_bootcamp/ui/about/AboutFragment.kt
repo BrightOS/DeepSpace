@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import ru.myitschool.nasa_bootcamp.data.model.NotificationModel
+import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAboutBinding
 import ru.myitschool.nasa_bootcamp.utils.NotificationCentre
 
@@ -30,6 +32,9 @@ class AboutFragment : Fragment() {
     ): View {
         // println(isNetworkAvailable(context))
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
+        // NotificationCentre().saveNotification(requireContext(), NotificationModel("New", "Test"))
+        val notifModel = NotificationCentre().scheduleNotification(requireContext(), "New", "Hehe", "2021-08-04-00-48-00", UpcomingLaunchModel("Test", null, -1, true))
+        NotificationCentre().cancelNotification(requireContext(), notifModel)
         return binding.root
     }
 
