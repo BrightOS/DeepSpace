@@ -10,7 +10,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,23 +30,28 @@
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:minHeight="128dp"
-                app:collapsedTitleTextAppearance="@style/CollapsedSpaceAppBar"
+                android:layout_height="300dp"
+                android:minHeight="120dp"
                 app:contentScrim="@android:color/white"
                 app:expandedTitleGravity="center"
                 app:expandedTitleMarginTop="16dp"
                 app:expandedTitleTextAppearance="@style/ExpandedSpaceAppBar"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+
+                app:collapsedTitleTextAppearance="@style/CollapsedSpaceAppBar"
+                app:collapsedTitleGravity="bottom"
+
                 app:title="Capsules"
-                app:titleEnabled="true">
+                app:titleEnabled="true"
+
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                >
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/tool_bar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="top"
-                    android:layout_marginBottom="48dp"
+                    android:layout_marginBottom="24dp"
                     android:background="@android:color/transparent"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -77,11 +82,11 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:id="@+id/capsules_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="12dp" />
+                tools:listitem="@layout/capsule_item"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </LinearLayout>
 
