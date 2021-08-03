@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,7 @@ import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Status
+import kotlin.system.measureTimeMillis
 
 @AndroidEntryPoint
 class SpaceXFragment : Fragment() {
@@ -47,11 +49,12 @@ class SpaceXFragment : Fragment() {
 
         binding.loadProgressbar.visibility = View.VISIBLE
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
-            when (data){
-                is Data.Ok ->{
+            when (data) {
+                is Data.Ok -> {
                     spaceXLaunchAdapter.submitList(data.data)
                 }
                 is Data.Error -> {
+
                 }
                 is Data.Local -> {
                     spaceXLaunchAdapter.submitList(data.data)
@@ -67,7 +70,7 @@ class SpaceXFragment : Fragment() {
             if (error == Status.ERROR) {
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
-                binding.errorIcon.visibility = View.VISIBLE
+                //binding.errorIcon.visibility = View.VISIBLE
                 binding.explore.getBackground().setColorFilter(
                     resources.getColor(R.color.disabled_button),
                     PorterDuff.Mode.SRC_ATOP
@@ -76,7 +79,7 @@ class SpaceXFragment : Fragment() {
             } else if ((error == Status.LOADING)) {
                 binding.loadProgressbar.visibility = View.VISIBLE
                 binding.launchesRecycle.visibility = View.GONE
-                binding.errorIcon.visibility = View.GONE
+                //binding.errorIcon.visibility = View.GONE
                 binding.explore.getBackground().setColorFilter(
                     resources.getColor(R.color.disabled_button),
                     PorterDuff.Mode.SRC_ATOP
@@ -84,7 +87,10 @@ class SpaceXFragment : Fragment() {
             } else {
                 binding.launchesRecycle.visibility = View.VISIBLE
                 binding.loadProgressbar.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button), PorterDuff.Mode.SRC_ATOP);
+                binding.explore.getBackground().setColorFilter(
+                    resources.getColor(R.color.enabled_button),
+                    PorterDuff.Mode.SRC_ATOP
+                );
             }
 
             val animation = animateIt {
@@ -108,10 +114,10 @@ class SpaceXFragment : Fragment() {
                 }
             }
 
-            binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
-                val percent = scrollY * 1f / v.maxScrollAmount
+            binding.launchesRecycle.setOnScrollChangeListener { v, _, scrollY, _, _ ->
+                val percent = scrollY * 1f
                 animation.setPercent(percent)
-            })
+            }
 
             val navController = findNavController()
 

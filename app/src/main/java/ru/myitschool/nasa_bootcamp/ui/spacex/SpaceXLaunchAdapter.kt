@@ -35,8 +35,7 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = getItem(position)
-        holder.bind(model, position)
-
+        holder.bind(model)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,6 +52,18 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
 
         var expanded = false
 
+        val requestListener = object : RequestListener<Drawable> {
+            override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+                return false
+            }
+
+            override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+                binding.loadProgressbar.visibility = View.GONE
+                binding.layoutLaunchSpacex.visibility = View.VISIBLE
+                return false
+            }
+        }
+
         init {
             binding.root.setOnClickListener {
                 expanded = if (expanded){
@@ -65,24 +76,7 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
             }
         }
 
-        fun bind(launchModel : SxLaunchModel, position: Int) {
-            lateinit var viewModel: LaunchItemViewModel
-
-            var expanded = false
-
-
-            var requestListener = object : RequestListener<Drawable> {
-                override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
-                    return false
-                }
-
-                override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                    binding.loadProgressbar.visibility = View.GONE
-                    binding.layoutLaunchSpacex.visibility = View.VISIBLE
-                    return false
-                }
-            }
-
+        fun bind(launchModel : SxLaunchModel) {
             binding.missionName.text = launchModel.mission_name
             binding.missionYear.text = "${convertDateFromUnix(launchModel.launch_date_unix)}"
             binding.details.text = launchModel.details
@@ -151,6 +145,12 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
                     binding.recycleItemImg,
                     requestListener
                 )
+            }else{
+                loadImage(
+                    binding.recycleItemImg.context,
+                    "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
+                    binding.recycleItemImg,
+                    requestListener)
             }
             if (launchModel.launch_success) {
                 binding.status.setText("Status: success")
