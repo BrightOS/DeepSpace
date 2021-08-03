@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.data.model
+package ru.myitschool.nasa_bootcamp.data.dto.firebase
 
 import android.graphics.Bitmap
 import android.net.Uri

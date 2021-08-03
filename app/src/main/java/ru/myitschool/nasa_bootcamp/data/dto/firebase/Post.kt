@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.data.model
+package ru.myitschool.nasa_bootcamp.data.dto.firebase
 
 
 abstract class PostView(val _id: Int, val _type: Int)

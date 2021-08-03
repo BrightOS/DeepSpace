@@ -2,7 +2,6 @@ package ru.myitschool.nasa_bootcamp.ui.view_user_posts
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +10,9 @@ import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.model.Post
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.reflect.typeOf
 
 class ViewAllPostAdapter(private val context: Context, private val navController: NavController, var data: ArrayList<Post>) :
     RecyclerView.Adapter<ViewAllPostAdapter.MyViewHolder>() {

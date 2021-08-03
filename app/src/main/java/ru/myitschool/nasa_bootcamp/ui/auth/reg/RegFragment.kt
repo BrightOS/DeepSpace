@@ -12,8 +12,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
@@ -24,11 +26,12 @@ import ru.myitschool.nasa_bootcamp.utils.invalidEmail
 import ru.myitschool.nasa_bootcamp.utils.userAlreadyRegistered
 import java.io.IOException
 
+@AndroidEntryPoint
 class RegFragment : Fragment() {
     private val PICK_IMAGE_REQUEST = 71
     private var imagePath: Uri? = null
 
-    private lateinit var viewModel: RegViewModelImpl
+    private val viewModel: RegViewModel by viewModels<RegViewModelImpl>()
     private lateinit var interactionResult: ActivityResultLauncher<Intent>
 
     private var _binding: FragmentRegBinding? = null
@@ -40,8 +43,6 @@ class RegFragment : Fragment() {
     ): View {
         _binding = FragmentRegBinding.inflate(inflater, container, false)
 
-        viewModel = RegViewModelImpl()
-        // viewModel = ViewModelProvider(this).get(RegViewModelImpl::class.java)
         interactionResult =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 println("In")
@@ -107,7 +108,7 @@ class RegFragment : Fragment() {
                     val userName = binding.textName.text.toString()
                     val password = binding.textPassword.text.toString()
 
-                    viewModel.viewModelScope.launch {
+                    viewModel.getViewModelScope().launch {
                         viewModel.createUser(
                             userName,
                             binding.textEmail.text.toString(),

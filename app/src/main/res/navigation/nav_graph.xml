@@ -197,6 +197,9 @@
         <action
             android:id="@+id/action_homeFragment_to_nasaFragment"
             app:destination="@id/nasaFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_socialMediaFragment"
+            app:destination="@id/socialMediaFragment" />
     </fragment>
     <fragment
         android:id="@+id/asteroidDetails"
@@ -238,5 +241,14 @@
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/socialMediaFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaFragment"
+        android:label="SocialMediaFragment" />
+
+    <fragment
+        android:id="@+id/navigationSkyFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.space_nav.NavigationSkyFragment"
+        android:label="NavigationSkyFragment" />
 
 </navigation>

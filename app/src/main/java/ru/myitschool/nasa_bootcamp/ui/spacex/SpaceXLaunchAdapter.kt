@@ -64,6 +64,7 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
             }
         }
 
+
         init {
             binding.root.setOnClickListener {
                 expanded = if (expanded){

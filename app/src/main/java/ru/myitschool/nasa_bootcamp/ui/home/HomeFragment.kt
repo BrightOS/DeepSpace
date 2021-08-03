@@ -174,7 +174,7 @@ fun HomeScreen(
                     description = "Потом переделаю",
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
                     onClick = {
-                        onNavCardClick(HomeFragmentDirections.actionHomeFragmentToNasaFragment())
+                        onNavCardClick(HomeFragmentDirections.actionHomeFragmentToSocialMediaFragment())
                     }
                 )
                 NavigationCard(

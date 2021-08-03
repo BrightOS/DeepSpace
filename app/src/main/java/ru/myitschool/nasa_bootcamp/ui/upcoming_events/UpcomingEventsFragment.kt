@@ -49,4 +49,11 @@ class UpcomingEventsFragment : Fragment() {
 
         return binding.root
     }
+
+    /*
+        Plan a notification:
+
+        val temp = NotificationCentre()
+        temp.scheduleNotification(requireContext(), "Notification!", "Parse text", "2021-08-02-21-19-00")
+    */
 }

@@ -1,261 +1,103 @@
 package ru.myitschool.nasa_bootcamp.ui.comments
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import ru.myitschool.nasa_bootcamp.data.model.models.Comment
-import ru.myitschool.nasa_bootcamp.data.model.SubComment
+import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
+import ru.myitschool.nasa_bootcamp.utils.Data
 import java.lang.Exception
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.CommentDto
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.SubCommentDto
+import ru.myitschool.nasa_bootcamp.data.model.Comment
 import java.util.*
-import kotlin.collections.ArrayList
+import javax.inject.Inject
 
-class CommentsViewModelImpl : ViewModel(), CommentsViewModel {
-    private val fDb: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val userInstance: FirebaseAuth = FirebaseAuth.getInstance()
-    private var commentList: ArrayList<Comment?> = ArrayList()
-    var comments: MutableLiveData<ArrayList<Comment?>> = MutableLiveData()
-    var likes: MutableLiveData<Long> = MutableLiveData()
-    var errors: String = ""
+class CommentsViewModelImpl @Inject constructor(
+    private val repository: FirebaseRepository
+) : ViewModel(), CommentsViewModel {
 
-    private suspend fun getCommentCount(postId: Int): Long {
-        return fDb.getReference("posts").child(postId.toString()).child("comments").get()
-            .await().childrenCount + 1
+    override suspend fun pushComment(
+        source: String,
+        postId: Int,
+        comment: String
+    ): LiveData<Data<out String>> {
+        return repository.pushComment(source, postId, comment)
     }
 
-    private suspend fun getSubCommentCount(postId: Int, fatherCommentId: Long): Long {
-        return fDb.getReference("posts").child(postId.toString()).child("comments")
-            .child(fatherCommentId.toString()).child("subComments").get()
-            .await().childrenCount + 1
+    override suspend fun pushSubComment(
+        source: String,
+        postId: Int,
+        fatherCommentId: Long,
+        comment: String
+    ): LiveData<Data<out String>> {
+        return repository.pushSubComment(source, postId, fatherCommentId, comment)
     }
 
-    private suspend fun getLastCommentId(postId: Int): Long {
-        return try {
-            fDb.getReference("posts").child(postId.toString()).child("comments").get()
-                .await().children.last().key!!.toLong()
-        } catch (e: Exception) {
-            1
-        }
+    override suspend fun deleteComment(
+        source: String,
+        postId: Int,
+        commentId: Long
+    ): LiveData<Data<out String>> {
+        return repository.deleteComment(source, postId, commentId)
     }
 
-    private suspend fun getLastSubCommentId(postId: Int, fatherCommentId: Long): Long {
-        return try {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(fatherCommentId.toString()).child("subComments")
-                .get()
-                .await().children.last().key!!.toLong()
-        } catch (e: Exception) {
-            1
-        }
-    }
-
-    suspend fun getLikeCount(postId: Int): Long {
-        return fDb.getReference("posts").child(postId.toString()).child("likes").get()
-            .await().childrenCount
-    }
-
-    suspend fun checkIfHasLike(postId: Int): Boolean {
-        return fDb.getReference("posts").child(postId.toString()).child("likes").get().await()
-            .hasChild(userInstance.uid!!)
-    }
-
-    suspend fun checkIfHasCommentLike(postId: Int, commentId: Long): Boolean {
-        return fDb.getReference("posts").child(postId.toString()).child("comments")
-            .child(commentId.toString()).child("likes").get().await()
-            .hasChild(userInstance.uid!!)
-    }
-
-    suspend fun checkIfHasSubCommentLike(
+    override suspend fun deleteSubComment(
+        source: String,
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ): Boolean {
-        return fDb.getReference("posts").child(postId.toString()).child("comments")
-            .child(fatherCommentId.toString()).child("subComments").child(subCommentId.toString())
-            .child("likes").get().await()
-            .hasChild(userInstance.uid!!)
+    ): LiveData<Data<out String>> {
+        return repository.deleteSubComment(source, postId, fatherCommentId, subCommentId)
     }
 
-    suspend fun getCommentAuthor(postId: Int, commentId: Long): String? {
-        return fDb.getReference("posts").child(postId.toString()).child("comments")
-            .child(commentId.toString()).child("userId").get().await().getValue(String::class.java)
+    override suspend fun pushLike(source: String, postId: Int): LiveData<Data<out String>> {
+        return repository.pushLike(source, postId)
     }
 
-    suspend fun getSubCommentAuthor(
+    override suspend fun pushLikeForComment(
+        source: String,
         postId: Int,
-        fatherCommentId: Long,
-        subCommentId: Long
-    ): String? {
-        return fDb.getReference("posts").child(postId.toString()).child("comments")
-            .child(fatherCommentId.toString()).child("subComments").child(subCommentId.toString())
-            .child("userId").get().await().getValue(String::class.java)
-    }
-
-    override suspend fun pushComment(postId: Int, comment: String) {
-        errors = if (userInstance.uid != null) {
-            val commentId = getLastCommentId(postId) + 1
-            val commentObject =
-                Comment(
-                    commentId,
-                    comment,
-                    listOf(),
-                    listOf(),
-                    userInstance.uid!!,
-                    Date().time
-                )
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(commentId.toString()).setValue(commentObject).await()
-            ""
-        } else {
-            "User is not authenticated"
-        }
-    }
-
-    override suspend fun pushSubComment(postId: Int, fatherCommentId: Long, comment: String) {
-        errors = if (userInstance.uid != null) {
-            val subCommentId = getLastSubCommentId(postId, fatherCommentId) + 1
-            val subCommentObject = SubComment(
-                subCommentId, fatherCommentId, comment, listOf(),
-                userInstance.uid!!, Date().time
-            )
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(fatherCommentId.toString()).child("subComments")
-                .child(subCommentId.toString())
-                .setValue(subCommentObject).await()
-            ""
-        } else {
-            "User is not authenticated"
-        }
-    }
-
-    override suspend fun deleteComment(postId: Int, commentId: Long) {
-        errors = if (userInstance.uid != null && userInstance.uid == getCommentAuthor(
-                postId,
-                commentId
-            )
-        ) {
-            try {
-                fDb.getReference("posts").child(postId.toString()).child("comments")
-                    .child(commentId.toString()).removeValue().await()
-                ""
-            } catch (e: Exception) {
-                "Comment doesn't exist"
-            }
-        } else {
-            "User is not authenticated or he is not author of the comment"
-        }
-    }
-
-    override suspend fun deleteSubComment(postId: Int, fatherCommentId: Long, subCommentId: Long) {
-        errors = if (userInstance.uid != null && userInstance.uid == getSubCommentAuthor(
-                postId,
-                fatherCommentId,
-                subCommentId
-            )
-        ) {
-            try {
-                fDb.getReference("posts").child(postId.toString()).child("comments")
-                    .child(fatherCommentId.toString()).child("subComments")
-                    .child(subCommentId.toString()).removeValue().await()
-                ""
-            } catch (e: Exception) {
-                "SubComment doesn't exist"
-            }
-        } else {
-            "User is not authenticated or he is not author of the SubComment"
-        }
-    }
-
-    override suspend fun pushLike(postId: Int) {
-        errors = if (userInstance.uid != null && !checkIfHasLike(postId)) {
-            fDb.getReference("posts").child(postId.toString()).child("likes")
-                .child(userInstance.uid!!)
-                .setValue(userInstance.uid).await()
-            ""
-        } else {
-            "User is not authenticated or already has a like"
-        }
-    }
-
-    override suspend fun pushLikeForComment(postId: Int, commentId: Long) {
-        errors = if (userInstance.uid != null && !checkIfHasCommentLike(postId, commentId)) {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(commentId.toString()).child("likes").child(userInstance.uid!!)
-                .setValue(userInstance.uid).await()
-            ""
-        } else {
-            "User is not authenticated or already has a like"
-        }
+        commentId: Long
+    ): LiveData<Data<out String>> {
+        return repository.pushLikeForComment(source, postId, commentId)
     }
 
     override suspend fun pushLikeForSubComment(
+        source: String,
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ) {
-        errors = if (userInstance.uid != null && !checkIfHasSubCommentLike(
-                postId,
-                fatherCommentId,
-                subCommentId
-            )
-        ) {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(fatherCommentId.toString()).child("subComments")
-                .child(subCommentId.toString()).child("likes").child(userInstance.uid!!)
-                .setValue(userInstance.uid).await()
-            ""
-        } else {
-            "User is not authenticated or already has a like"
-        }
+    ): LiveData<Data<out String>> {
+        return repository.pushLikeForSubComment(source, postId, fatherCommentId, subCommentId)
     }
 
-    override suspend fun deleteLike(postId: Int) {
-        errors = if (userInstance.uid != null && checkIfHasLike(postId)) {
-            fDb.getReference("posts").child(postId.toString()).child("likes")
-                .child(userInstance.uid!!).removeValue().await()
-            ""
-        } else {
-            "User is not authenticated or he didn't`t like this post"
-        }
+    override suspend fun deleteLike(source: String, postId: Int): LiveData<Data<out String>> {
+        return repository.deleteLike(source, postId)
     }
 
-    override suspend fun deleteCommentLike(postId: Int, commentId: Long) {
-        errors = if (userInstance.uid != null && checkIfHasCommentLike(postId, commentId)) {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(commentId.toString()).child("likes").child(userInstance.uid!!).removeValue()
-                .await()
-            ""
-        } else {
-            "User is not authenticated or he didn't`t like this comment"
-        }
+    override suspend fun deleteCommentLike(
+        source: String,
+        postId: Int,
+        commentId: Long
+    ): LiveData<Data<out String>> {
+        return repository.deleteCommentLike(source, postId, commentId)
     }
 
     override suspend fun deleteSubCommentLike(
+        source: String,
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ) {
-        errors = if (userInstance.uid != null && checkIfHasSubCommentLike(
-                postId,
-                fatherCommentId,
-                subCommentId
-            )
-        ) {
-            fDb.getReference("posts").child(postId.toString()).child("comments")
-                .child(fatherCommentId.toString()).child("subComments")
-                .child(subCommentId.toString()).child("likes").child(userInstance.uid!!)
-                .removeValue()
-                .await()
-            ""
-        } else {
-            "User is not authenticated or he didn't`t like this subComment"
-        }
+    ): LiveData<Data<out String>> {
+        return repository.deleteSubCommentLike(source, postId, fatherCommentId, subCommentId)
     }
 
+    /*
     override fun listenForComments(postId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             fDb.getReference("posts").child(postId.toString()).child("comments")
@@ -321,4 +163,6 @@ class CommentsViewModelImpl : ViewModel(), CommentsViewModel {
                 })
         }
     }
+
+     */
 }

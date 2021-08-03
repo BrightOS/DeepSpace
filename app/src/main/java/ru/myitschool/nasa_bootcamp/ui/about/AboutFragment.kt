@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAboutBinding
+import ru.myitschool.nasa_bootcamp.utils.NotificationCentre
 
 
 @AndroidEntryPoint
@@ -27,7 +28,7 @@ class AboutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        println(isNetworkAvailable(context))
+        // println(isNetworkAvailable(context))
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
         return binding.root
     }
