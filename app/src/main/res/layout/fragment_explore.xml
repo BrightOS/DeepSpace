@@ -8,8 +8,10 @@
     android:layout_height="match_parent">
 
     <ru.myitschool.nasa_bootcamp.widget.SpaceButton
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/starmanGif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.949"
@@ -58,14 +60,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
                     android:background="@color/transparent_gray"
-
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/what_is_spacex"
                         android:textColor="@color/white"
                         android:textSize="18sp"
@@ -74,7 +76,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/learn_about_company"
                         android:textColor="@color/white_subtitle_color" />
                 </LinearLayout>
@@ -86,9 +87,9 @@
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_gravity="end"
+                android:layout_marginTop="12dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:layout_marginTop="12dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -120,12 +121,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent_gray"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/tesla_roadster"
                         android:textColor="@color/white"
                         android:textSize="18sp"
@@ -134,7 +136,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/where_is_starman"
                         android:textColor="@color/white_subtitle_color" />
 
@@ -147,10 +148,10 @@
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_gravity="end"
+                android:layout_marginTop="12dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -181,12 +182,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent_gray"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/dragons"
                         android:textColor="@color/white"
                         android:textSize="18sp"
@@ -195,7 +197,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/dragon_space_capsules"
                         android:textColor="@color/white_subtitle_color" />
 
@@ -207,10 +208,10 @@
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_gravity="end"
+                android:layout_marginTop="12dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -241,12 +242,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent_gray"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/capsules_list"
                         android:textColor="@color/white"
                         android:textSize="18sp"
@@ -255,7 +257,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/all_spacex_capsules_list"
                         android:textColor="@color/white_subtitle_color" />
 
@@ -268,10 +269,10 @@
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_gravity="end"
+                android:layout_marginTop="12dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -303,12 +304,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent_gray"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+
                         android:text="@string/cores"
                         android:textColor="@color/white"
                         android:textSize="18sp"
@@ -317,7 +320,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+
                         android:text="@string/cores_used_in_spacex_aircrafts"
                         android:textColor="@color/white_subtitle_color" />
 
@@ -329,9 +332,9 @@
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_gravity="end"
+                android:layout_marginTop="12dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:layout_marginTop="12dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -363,12 +366,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent_gray"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/launching_and_landing_pads"
                         android:textColor="@color/white"
                         android:textSize="18sp"
@@ -377,7 +381,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:text="@string/where_does_spacex_aircrafts_land_on"
                         android:textColor="@color/white_subtitle_color" />
 
@@ -389,10 +392,10 @@
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_gravity="end"
+                android:layout_marginTop="12dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

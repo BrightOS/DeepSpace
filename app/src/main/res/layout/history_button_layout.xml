@@ -17,15 +17,14 @@
 
     <ru.myitschool.nasa_bootcamp.widget.SpaceButton
         android:id="@+id/history_go"
-        android:layout_width="242dp"
+        android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_gravity="center"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.908"
-        app:layout_constraintStart_toStartOf="@+id/appCompatImageView3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:text="SpaceX HISTORY ->"
-         />
+        app:layout_constraintStart_toEndOf="@+id/appCompatImageView3"
+        app:text="SpaceX history" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/eight_margin"
     android:layout_marginEnd="@dimen/eight_margin"
-    android:layout_marginBottom="16dp"
+    android:layout_marginTop="16dp"
     app:cardCornerRadius="15dp"
     app:cardElevation="10dp"
     android:background="@color/transparent_gray"
@@ -17,17 +17,21 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/layout_launch_spacex"
         android:layout_width="match_parent"
-        android:visibility="invisible"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layoutDescription="@xml/launch_item_scene">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp">
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/recycle_item_img"
@@ -113,11 +117,10 @@
                 android:textColor="@color/white_subtitle_color"
                 android:textSize="13sp"
                 android:visibility="invisible"
-                android:text="AAAAA"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/status"
-                 />
+                tools:visibility="visible" />
 
             <ProgressBar
                 android:id="@+id/load_progressbar"
@@ -137,13 +140,19 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <include
             android:id="@+id/characteristics_launch"
             layout="@layout/rocket_item"
-            android:visibility="gone" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            tools:visibility="visible" />
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.cardview.widget.CardView>

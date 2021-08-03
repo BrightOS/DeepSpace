@@ -1,16 +1,16 @@
 package ru.myitschool.nasa_bootcamp
 
-import android.content.DialogInterface
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -18,18 +18,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
 import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepositoryImpl
@@ -37,7 +32,6 @@ import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 import ru.myitschool.nasa_bootcamp.databinding.NavHeaderMainBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
-import ru.myitschool.nasa_bootcamp.utils.errorEmailIsNotVerified
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -86,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     // enable close drawer on back pressed
     override fun onBackPressed() {
         main_loading.stopLoadingAnimation(false)
-
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         else

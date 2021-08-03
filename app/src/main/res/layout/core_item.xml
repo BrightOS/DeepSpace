@@ -10,8 +10,8 @@
         android:id="@+id/card_cores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:cardBackgroundColor="#00717171"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/transparent_gray"
+            android:padding="8dp"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -123,7 +124,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text=" Merlin is used because..." />
+                tools:text="Merlin is used because..." />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
 

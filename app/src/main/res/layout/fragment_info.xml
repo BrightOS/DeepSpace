@@ -19,7 +19,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/space_x_rocket_fly"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
@@ -34,20 +33,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button_back_info"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:src="@drawable/arrow_left_circle"
-            android:background="@null"
-            android:scaleType="fitCenter"
-            />
-
     </FrameLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_info"
         android:layout_width="match_parent"
+        android:paddingHorizontal="8dp"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -64,6 +55,7 @@
                 android:id="@+id/title_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
                 android:text="Company info"
                 android:textAlignment="center"
                 android:textSize="25sp"

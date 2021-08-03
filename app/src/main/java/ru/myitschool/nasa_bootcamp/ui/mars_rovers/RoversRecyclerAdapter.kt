@@ -4,19 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
-import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
-import ru.myitschool.nasa_bootcamp.databinding.AsteroidItemBinding
 import ru.myitschool.nasa_bootcamp.databinding.RoverItemBinding
-import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
-import ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidViewHolder
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchAdapter
-import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXLaunchViewHolder
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 import java.util.ArrayList
 
@@ -26,7 +19,7 @@ class RoverRecyclerAdapter internal constructor(
     val navController: NavController
 ) :
     RecyclerView.Adapter<RoverViewHolder>() {
-    var context: Context
+    var context: Context = context
     var roverModels: ArrayList<RoverModel>
 
     internal interface OnRoverClickListener {
@@ -62,12 +55,12 @@ class RoverRecyclerAdapter internal constructor(
             }
         }
 
-        holder.itemView.setOnClickListener({
+        holder.itemView.setOnClickListener {
             onRoverClickListener.onRoverClick(
                 roverModel,
                 position
             )
-        })
+        }
     }
 
     override fun getItemCount(): Int {
@@ -80,7 +73,6 @@ class RoverRecyclerAdapter internal constructor(
     }
 
     init {
-        this.context = context
         this.roverModels = roverModels
     }
 }
