@@ -4,9 +4,9 @@
         <item
             android:id="@+id/homeFragment"
             android:title="@string/home" />
-        <item
+       <!-- <item
             android:id="@+id/nasaFragment"
-            android:title="@string/nasa" />
+            android:title="@string/nasa" />-->
         <item
             android:id="@+id/asteroidRadarFragment"
             android:title="@string/asteroid_radar" />
