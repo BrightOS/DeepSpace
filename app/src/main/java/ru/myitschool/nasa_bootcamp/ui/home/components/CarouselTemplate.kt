@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
@@ -42,9 +43,7 @@ fun <T> CarouselTemplate(
                     )
             )
             Text(
-                style =
-                MaterialTheme.typography.h6,
-//                    .plus(TextStyle(textDecoration = TextDecoration.Underline)),
+                fontSize = 18.sp,
                 text = stringResource(R.string.show_more),
                 modifier = Modifier
                     .clickable { onShowMoreClick() }
