@@ -58,6 +58,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".lookbeyond.activities.SpaceNavigatorActivity"
+            >
+        </activity>
+
+        <activity
+            android:name=".lookbeyond.activities.SensorsActivity"
+            >
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize" />

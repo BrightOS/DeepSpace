@@ -1,6 +1,6 @@
-package ru.myitschool.nasa_bootcamp.lookbeyond.openGL
+package ru.myitschool.nasa_bootcamp.lookbeyond.renderer
 
-import ru.myitschool.nasa_bootcamp.lookbeyond.math.Vector3D
+import ru.myitschool.nasa_bootcamp.lookbeyond.maths.Vector3D
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.IntBuffer

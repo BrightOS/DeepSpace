@@ -178,7 +178,7 @@ fun HomeScreen(
                     }
                 )
                 NavigationCard(
-                    painter = painterResource(R.drawable.mars),
+                    painter = painterResource(R.drawable.mars_background),
                     title = stringResource(R.string.mars_rovers),
                     description = "",
                     modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),

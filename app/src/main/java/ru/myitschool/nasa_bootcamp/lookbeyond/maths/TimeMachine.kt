@@ -1,6 +1,7 @@
-package ru.myitschool.nasa_bootcamp.lookbeyond.math
+package ru.myitschool.nasa_bootcamp.lookbeyond.maths
 
 import java.util.*
+
 
 
 //МАШИНА ВРЕМЕНИ
@@ -11,8 +12,6 @@ object TimeMachine {
         val delta = jd - 2451545.0
         return delta / 36525.0
     }
-
-
 
     // JD = 367 * Y - INT(7 * (Y + INT((M + 9)/12))/4) + INT(275 * M / 9 + D + 1721013.5 + UT/24
     fun calculateJulianDay(date: Date?): Double {
@@ -27,24 +26,4 @@ object TimeMachine {
                 + 1721013.5 + hour / 24.0)
     }
 
-
-
-    // Срднее звездное время в градусах
-    fun meanSiderealTime(date: Date?, longitude: Double): Double {
-        // Число юлианский дней с 2000 года
-        val jd = calculateJulianDay(date)
-        val delta = jd - 2451545.0f
-
-        // Вычислить глобальное и локальное звездное время ( часовой угол весеннего равноденствия )
-        val gst = 280.461f + 360.98564737f * delta
-        val lst = normalizeAngle(gst + longitude)
-        return lst
-    }
-
-    // Чтобы было в пределах 360
-    fun normalizeAngle(angle: Double): Double {
-        var angle = angle % 360
-        if (angle < 0) angle += 360.0
-        return angle
-    }
 }

@@ -1,6 +1,5 @@
-package ru.myitschool.nasa_bootcamp.lookbeyond.openGL
+package ru.myitschool.nasa_bootcamp.lookbeyond.renderer
 
-import android.content.res.Resources
 import android.graphics.BitmapFactory
 import java.util.*
 import javax.microedition.khronos.opengles.GL10
@@ -12,7 +11,7 @@ interface Texture {
 }
 
 
-class TextureModule(private val resources: Resources) {
+class TextureModule {
     private val textures = ArrayList<TextureImpl>()
 
 
@@ -42,7 +41,6 @@ class TextureModule(private val resources: Resources) {
         val tex = createTex(gl)
         val opts = BitmapFactory.Options()
         opts.inScaled = false
-        val bmp = BitmapFactory.decodeResource(resources, res, opts)
         tex.create(gl)
 
         gl.glTexParameterf(
@@ -56,7 +54,6 @@ class TextureModule(private val resources: Resources) {
             GL10.GL_TEXTURE_WRAP_T,
             GL10.GL_CLAMP_TO_EDGE.toFloat()
         )
-        bmp.recycle()
         return tex
     }
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/stars_sky_background"
+     >
+
+    <fragment
+        android:id="@+id/sensors_fragm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="ru.myitschool.nasa_bootcamp.lookbeyond.activities.SensorFragment"
+        />
+</LinearLayout>

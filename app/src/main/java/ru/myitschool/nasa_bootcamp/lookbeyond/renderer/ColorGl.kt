@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.lookbeyond.openGL
+package ru.myitschool.nasa_bootcamp.lookbeyond.renderer
 
 import java.nio.Buffer
 import java.nio.ByteBuffer

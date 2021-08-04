@@ -251,4 +251,9 @@
         android:name="ru.myitschool.nasa_bootcamp.ui.space_nav.NavigationSkyFragment"
         android:label="NavigationSkyFragment" />
 
+    <activity
+        android:id="@+id/spaceNavigatorActivity"
+        android:name="ru.myitschool.nasa_bootcamp.lookbeyond.activities.SpaceNavigatorActivity"
+        android:label="SpaceNavigatorActivity" />
+
 </navigation>
