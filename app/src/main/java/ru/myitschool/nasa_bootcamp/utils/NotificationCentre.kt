@@ -16,6 +16,7 @@ import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.NotificationModel
 import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,10 +30,19 @@ class NotificationCentre {
         intent.putExtra(NotificationReceiver.titleIntent, title)
         intent.putExtra(NotificationReceiver.textIntent, text)
         val dateAlarm = parseDate(date)
-        val notificationModel = NotificationModel(title, text, dateAlarm, launchModel)
+        println(Date(dateAlarm).toString())
+
+        // getting last request code so we will be able to cancel scheduled notification
+        val lastRequestCode: Int = try{
+            getAllScheduledNotifications(context).last().requestCode + 1
+        } catch (e: Exception) {
+            0
+        }
+        val notificationModel = NotificationModel(title, text, dateAlarm, launchModel, lastRequestCode)
         saveNotification(context, notificationModel)
+
         val pendingIntent =
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(context, lastRequestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -46,8 +56,9 @@ class NotificationCentre {
         val intent = Intent(context, NotificationReceiver::class.java)
         intent.putExtra(NotificationReceiver.titleIntent, notification.title)
         intent.putExtra(NotificationReceiver.textIntent, notification.text)
+        deleteNotification(context, notification)
         val pendingIntent =
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(context, notification.requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
     }
@@ -61,8 +72,17 @@ class NotificationCentre {
         return notifications ?: ArrayList()
     }
 
+    private fun deleteNotification(context: Context, notification: NotificationModel) {
+        val sharedPreferencesEditable = context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+        val allNotifications = getAllScheduledNotifications(context)
+        allNotifications.remove(notification)
+        val json = Gson().toJson(allNotifications)
+        sharedPreferencesEditable.putString(sharedPreferencesTableName, json)
+        sharedPreferencesEditable.apply()
+    }
+
     private fun parseDate(date: String): Long {
-        return SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale("ru", "RU")).parse(date)!!.time
+        return SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale("ru", "RU")).parse(date)!!.time
     }
 
     private fun saveNotification(context: Context, notification: NotificationModel) {

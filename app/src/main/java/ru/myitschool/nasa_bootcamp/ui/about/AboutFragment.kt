@@ -33,7 +33,8 @@ class AboutFragment : Fragment() {
         // println(isNetworkAvailable(context))
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
         // NotificationCentre().saveNotification(requireContext(), NotificationModel("New", "Test"))
-        val notifModel = NotificationCentre().scheduleNotification(requireContext(), "New", "Hehe", "2021-08-04-00-48-00", UpcomingLaunchModel("Test", null, -1, true))
+        val notifModel = NotificationCentre().scheduleNotification(requireContext(), "New", "Hehe", "2021-08-04-19-50-00", UpcomingLaunchModel("Test", null, -1, true))
+        val notifModel2 = NotificationCentre().scheduleNotification(requireContext(), "New", "Best", "2021-08-04-19-51-00", UpcomingLaunchModel("Test", null, -1, true))
         NotificationCentre().cancelNotification(requireContext(), notifModel)
         return binding.root
     }
