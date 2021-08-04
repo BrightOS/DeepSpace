@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
@@ -27,20 +28,33 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.google.android.material.composethemeadapter.MdcTheme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.BlogsScreen
+import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.NewsScreen
+import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.ProfileScreen
 
+@AndroidEntryPoint
 class SocialMediaFragment : Fragment() {
+    val viewModel: SocialMediaViewModel by viewModels<SocialMediaViewModelImpl>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.getViewModelScope().launch(Dispatchers.IO) {
+            viewModel.loadNews()
+            viewModel.getBlogs()
+        }
         return ComposeView(requireContext()).apply {
             setContent {
                 MdcTheme {
                     ProvideWindowInsets {
-                        SocialMediaScreen(onBackArrowClick = { findNavController().navigateUp() })
+                        SocialMediaScreen(
+                            viewModel = viewModel,
+                            onBackArrowClick = { findNavController().navigateUp() })
                     }
                 }
             }
@@ -50,11 +64,11 @@ class SocialMediaFragment : Fragment() {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun SocialMediaScreen(onBackArrowClick: () -> Unit) {
+fun SocialMediaScreen(onBackArrowClick: () -> Unit, viewModel: SocialMediaViewModel) {
     val tabs = listOf(
-        TabItem.News,
-        TabItem.Blogs,
-        TabItem.Profile
+        TabItem.News(viewModel),
+        TabItem.Blogs(viewModel),
+        TabItem.Profile(viewModel)
     )
     val pagerState = rememberPagerState(tabs.size)
     Box(modifier = Modifier.fillMaxSize()) {
@@ -106,8 +120,17 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState, modifier: Modifier = Modif
     }
 }
 
-sealed class TabItem(val iconId: Int, val titleId: Int, val content: @Composable () -> Unit) {
-    object News : TabItem(R.drawable.ic_paper, R.string.news, { NewsScreen() })
-    object Blogs : TabItem(R.drawable.ic_chat, R.string.blogs, { BlogsScreen() })
-    object Profile : TabItem(R.drawable.ic_profile, R.string.profile, { ProfileScreen() })
+sealed class TabItem(
+    val iconId: Int,
+    val titleId: Int,
+    val content: @Composable () -> Unit
+) {
+    class News(viewModel: SocialMediaViewModel) :
+        TabItem(R.drawable.ic_paper, R.string.news, { NewsScreen(viewModel) })
+
+    class Blogs(viewModel: SocialMediaViewModel) :
+        TabItem(R.drawable.ic_chat, R.string.blogs, { BlogsScreen(viewModel) })
+
+    class Profile(viewModel: SocialMediaViewModel) :
+        TabItem(R.drawable.ic_profile, R.string.profile, { ProfileScreen(viewModel) })
 }

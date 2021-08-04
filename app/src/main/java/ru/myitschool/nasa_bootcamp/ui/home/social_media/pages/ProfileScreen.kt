@@ -1,8 +1,15 @@
-package ru.myitschool.nasa_bootcamp.ui.home.social_media
+package ru.myitschool.nasa_bootcamp.ui.home.social_media.pages
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Card
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 
 @Composable
-fun ProfileScreen() {
-
+fun ProfileScreen(viewModel: SocialMediaViewModel) {
+    Card(modifier = Modifier.fillMaxSize()) {
+        Text("Profile")
+    }
 }
