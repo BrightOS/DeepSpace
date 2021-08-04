@@ -1,5 +1,7 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
+import android.net.Uri
+
 class SubComment(
     id: Long,
     val fatherId: Long,
@@ -13,7 +15,7 @@ class SubComment(
         -1,
         "",
         listOf(),
-        UserModel(id = 1, avatarUrl = "", name = "Jason"),
+        UserModel(id = "", avatarUrl = Uri.EMPTY, name = "Jason"),
         -1
     )
 
