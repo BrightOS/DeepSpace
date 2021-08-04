@@ -1,11 +1,17 @@
 package ru.myitschool.nasa_bootcamp
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.view.WindowManager
 
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,11 +26,14 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
 import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepositoryImpl
@@ -32,9 +41,13 @@ import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 import ru.myitschool.nasa_bootcamp.databinding.NavHeaderMainBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
+import java.io.IOException
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private val PICK_IMAGE_REQUEST = 71
+    private lateinit var interactionResult: ActivityResultLauncher<Intent>
+
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -69,6 +82,14 @@ class MainActivity : AppCompatActivity() {
 
         navHeaderMainBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
         changeHeader()
+
+        interactionResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                println("In")
+                if (it.resultCode == Activity.RESULT_OK) {
+                    setImage(it.data)
+                }
+            }
     }
 
 
@@ -86,6 +107,23 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
     }
 
+    private fun setImage(data: Intent?) {
+        try {
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data?.data)
+            navHeaderMainBinding.userAvatar.setImageBitmap(bitmap)
+            val user = FirebaseAuth.getInstance()
+            if (data?.data != null) {
+                FirebaseStorage.getInstance().getReference("user_data/${user.uid}").putFile(data.data!!)
+            }
+        } catch (e: IOException) {
+            Toast.makeText(
+                this,
+                "Please, try another photo! (${e.message})",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     // open drawer from fragment
     fun openDrawer() {
         if (!binding.drawerLayout.isDrawerOpen(GravityCompat.START))
@@ -97,13 +135,20 @@ class MainActivity : AppCompatActivity() {
         if (mFirebaseUser.isUserAuthenticated()) {
             mFirebaseUser.viewModelScope.launch {
                 mFirebaseUser.getUserAvatar().observe(this@MainActivity) {
-                    navHeaderMainBinding.userAvatar.setOnClickListener { }
+                    navHeaderMainBinding.userAvatar.setOnClickListener {
+                        val intent = Intent()
+                        intent.type = "image/*"
+                        intent.action = Intent.ACTION_GET_CONTENT
+                        intent.putExtra("requestCode", PICK_IMAGE_REQUEST)
+                        interactionResult.launch(Intent.createChooser(intent, "Select avatar"))
+                    }
                     when (it) {
                         is Data.Ok -> {
+                            navHeaderMainBinding.userAvatar.foreground = null
                             navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
                         }
                         is Data.Error -> {
-                            // navHeaderMainBinding.userAvatar.setImageBitmap(null)
+                            navHeaderMainBinding.userAvatar.setImageBitmap(null)
                             navHeaderMainBinding.userAvatar.foreground =
                                 getDrawable(R.drawable.ic_photo_mini)
                         }
@@ -116,6 +161,7 @@ class MainActivity : AppCompatActivity() {
                 changeHeader()
             }
         } else {
+            navHeaderMainBinding.userAvatar.setImageBitmap(null)
             navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_login_mini)
             navHeaderMainBinding.userAvatar.setOnClickListener {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
