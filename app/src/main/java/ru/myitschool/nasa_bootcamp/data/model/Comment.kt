@@ -8,14 +8,14 @@ open class Comment(
     val author: UserModel,
     val date: Long
 ) {
-    constructor() : this(
-        -1,
-        "",
-        listOf(),
-        listOf(),
-        UserModel(id = 1, avatarUrl = "", name = "Jason"),
-        -1L
-    )
+//    constructor() : this(
+//        -1,
+//        "",
+//        listOf(),
+//        listOf(),
+//        UserModel(id = 1, avatarUrl = "", name = "Jason"),
+//        -1L
+//    )
 
     override fun toString(): String {
         return "ID: $id\nComment: $text;\nUserId: ${author.id}\nDate: $date\nLikes: $likes\nComments: $subComments"
