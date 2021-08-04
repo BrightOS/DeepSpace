@@ -1,8 +1,7 @@
-package ru.myitschool.nasa_bootcamp.lookbeyond.math
+package ru.myitschool.nasa_bootcamp.lookbeyond.maths
 
 import android.util.Log
-import ru.myitschool.nasa_bootcamp.lookbeyond.math.astronomy.LatLong
-import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.*
 
 
@@ -41,13 +40,6 @@ fun scaleVector(v: Vector3D, scale: Double): Vector3D {
 //сумма вектороф ( по координатам складываем)
 fun sumVector(first: Vector3D, second: Vector3D): Vector3D {
     return Vector3D(first.x + second.x, first.y + second.y, first.z + second.z)
-}
-
-//CrossProd(v1,v2)/||v1|*|v2|| (как в sklearn)
-fun cosineSimilarity(v1: Vector3D, v2: Vector3D): Double {
-    return (scalarMult(v1, v2) / sqrt(
-        scalarMult(v1, v1) * scalarMult(v2, v2)
-    ))
 }
 
 
@@ -91,23 +83,7 @@ const val DEGREES_TO_RADIANS = Math.PI / 180.0f
 const val RADIANS_TO_DEGREES = 180.0f / Math.PI
 
 
-//Поворот матрицы на degrees градусов
-fun calculateRotationMatrix(degrees: Double): Matrix3D {
-
-    val cosD = cos(degrees * DEGREES_TO_RADIANS)
-    val sinD = sin(degrees * DEGREES_TO_RADIANS)
-    val oneMinusCosD = 1f - cosD
-
-    return Matrix3D(
-        arrayListOf(
-            doubleArrayOf(oneMinusCosD + cosD, oneMinusCosD + sinD, oneMinusCosD - sinD),
-            doubleArrayOf(oneMinusCosD - sinD, oneMinusCosD + cosD, oneMinusCosD + sinD),
-            doubleArrayOf(oneMinusCosD + sinD, oneMinusCosD - sinD, oneMinusCosD + cosD)
-        )
-    )
-}
-
-class Matrix4x4(val contents: DoubleArray) {
+class Matrix4x4(contents: DoubleArray) {
     val floatArray: FloatArray
         get() {
             val fValue = FloatArray(16)
@@ -133,7 +109,6 @@ class Matrix4x4(val contents: DoubleArray) {
         var i = 0
         var j = 0
         for (m in values.indices) {
-            Log.d("IIII", " $i  $j")
             finalValues[i][j] = values[m]
             j++
             if ((m + 1) % 4 == 0) {
@@ -145,17 +120,6 @@ class Matrix4x4(val contents: DoubleArray) {
     }
 
     companion object {
-
-        fun createTranslation(x: Double, y: Double, z: Double): Matrix4x4 {
-            return Matrix4x4(
-                doubleArrayOf(
-                    1.0, 0.0, 0.0, 0.0,
-                    0.0, 1.0, 0.0, 0.0,
-                    0.0, 0.0, 1.0, 0.0,
-                    x, y, z, 1.0
-                )
-            )
-        }
 
         //Центральная проекция
         //https://songho.ca/opengl/gl_projectionmatrix.html
@@ -177,7 +141,11 @@ class Matrix4x4(val contents: DoubleArray) {
             )
         }
 
-        fun createMatrixViaLookDirection(lookDir: Vector3D, upVector: Vector3D, rightVector: Vector3D): Matrix4x4 {
+        fun createMatrixViaLookDirection(
+            lookDir: Vector3D,
+            upVector: Vector3D,
+            rightVector: Vector3D
+        ): Matrix4x4 {
             return Matrix4x4(
                 doubleArrayOf(
                     rightVector.x, upVector.x, -lookDir.x, 0.0,
@@ -197,7 +165,7 @@ class Matrix4x4(val contents: DoubleArray) {
             )
         }
 
-        fun matrixToList(arr: ArrayList<DoubleArray>): DoubleArray {
+        private fun matrixToList(arr: ArrayList<DoubleArray>): DoubleArray {
 
             val doublArr: DoubleArray = getZerosArray()
 
@@ -279,9 +247,6 @@ class Matrix3D {
     }
 
 
-    val det: Double
-        get() = arr[0][0] * arr[1][1] * arr[2][2] + arr[0][1] * arr[1][2] * arr[2][0] + arr[0][2] * arr[1][0] * arr[2][1] - arr[0][0] * arr[1][2] * arr[2][1] - arr[1][1] * arr[2][0] * arr[0][2] - arr[2][2] * arr[0][1] * arr[1][0]
-
     companion object {
         //единич
         val matrixE: Matrix3D
@@ -318,12 +283,6 @@ open class Vector3D(var x: Double, var y: Double, var z: Double) {
         return Vector3D(x, y, z)
     }
 
-    fun setupVector(x: Double, y: Double, z: Double) {
-        this.x = x
-        this.y = y
-        this.z = z
-    }
-
     fun setupVector(other: Vector3D) {
         x = other.x
         y = other.y
@@ -343,16 +302,16 @@ open class Vector3D(var x: Double, var y: Double, var z: Double) {
     //Норма вектора
     fun normalize() {
         val norm = length()
-        x = x / norm
-        y = y / norm
-        z = z / norm
+        x /= norm
+        y /= norm
+        z /= norm
     }
 
     //масштабирование вектора
     fun scale(scale: Double) {
-        x = x * scale
-        y = y * scale
-        z = z * scale
+        x *= scale
+        y *= scale
+        z *= scale
     }
 
     override fun equals(other: Any?): Boolean {
@@ -361,7 +320,65 @@ open class Vector3D(var x: Double, var y: Double, var z: Double) {
 
         return other.x == x && other.y == y && other.z == z
     }
+
+    override fun hashCode(): Int {
+        var result = x.hashCode()
+        result = 31 * result + y.hashCode()
+        result = 31 * result + z.hashCode()
+        result = 31 * result + array.contentHashCode()
+        return result
+    }
 }
 
 
+fun normalized(v: Vector3D): Vector3D {
+    val len = length(v)
+    return if (len < 0.000001f) {
+        unitVector()
+    } else scale(v, 1.0 / len)
+}
 
+fun crossV(p1: Vector3D, p2: Vector3D): Vector3D {
+    return Vector3D(
+        p1.y * p2.z - p1.z * p2.y,
+        -p1.x * p2.z + p1.z * p2.x,
+        p1.x * p2.y - p1.y * p2.x
+    )
+}
+
+//единичный вектор
+fun unitVector(): Vector3D {
+    return Vector3D(0.0, 0.0, 0.0)
+}
+
+//скалярное произведегние
+fun dotProduct(p1: Vector3D, p2: Vector3D): Double {
+    return p1.x * p2.x + p1.y * p2.y + p1.z * p2.z
+}
+
+//длина вектора
+fun length(v: Vector3D): Double {
+    return Math.sqrt(lengthSqr(v))
+}
+
+fun lengthSqr(v: Vector3D): Double {
+    return dotProduct(v, v)
+}
+
+fun mirrorVector(v: Vector3D): Vector3D {
+    return Vector3D(-v.x, -v.y, -v.z)
+}
+
+//масштабирование
+fun scale(v: Vector3D, koef: Double): Vector3D {
+    return Vector3D(v.x * koef, v.y * koef, v.z * koef)
+}
+
+
+fun sum(v1: Vector3D, v2: Vector3D): Vector3D {
+    return Vector3D(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z)
+}
+
+fun difference(v1: Vector3D, v2: Vector3D): Vector3D {
+    return sum(v1, mirrorVector(v2))
+}
