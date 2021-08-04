@@ -58,7 +58,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
-                    app:srcCompat="@drawable/mars" />
+                    app:srcCompat="@drawable/mars_background" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
