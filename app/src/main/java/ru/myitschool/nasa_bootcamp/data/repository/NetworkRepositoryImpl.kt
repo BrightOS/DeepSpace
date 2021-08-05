@@ -52,7 +52,9 @@ class NetworkRepositoryImpl @Inject constructor(
         return Resource.error("TO DO", null)
     }
 
-    override suspend fun pressedLikeOnArticle(item: ContentWithLikesAndComments<ArticleModel>): Resource<Nothing> {
+    override suspend fun pressedLikeOnItem(
+        item: ContentWithLikesAndComments<out Any>
+    ): Resource<Nothing> {
         item.likes.postValue(Resource.loading(item.likes.value?.data))
         item.likes.postValue(
             Resource.success(
@@ -68,13 +70,10 @@ class NetworkRepositoryImpl @Inject constructor(
         return Resource.success(null)
     }
 
-    override suspend fun pressedLikeOnPost(item: ContentWithLikesAndComments<PostModel>): Resource<Nothing> {
-        return Resource.error("TO DO", null)
-    }
-
     override suspend fun pressedLikeOnComment(comment: MutableLiveData<Comment>): Resource<Nothing> {
         return Resource.error("TO DO", null)
     }
+
 
     override suspend fun sendMessage(
         message: String,
