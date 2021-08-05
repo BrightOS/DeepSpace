@@ -8,7 +8,11 @@ interface NetworkRepository {
     suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>
     suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>
     suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
-    suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing>
+    suspend fun pressedLikeOnComment(
+        item: ContentWithLikesAndComments<out Any>,
+        comment: Comment
+    ): Resource<Nothing>
+
     suspend fun sendComment(
         message: String,
         id: Long,

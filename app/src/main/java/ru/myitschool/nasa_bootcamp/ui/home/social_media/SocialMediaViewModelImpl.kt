@@ -48,8 +48,11 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
 
     override fun getSelectedArticle() = selectedArticle
 
-    override suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing> {
-        return networkRepository.pressedLikeOnComment(comment)
+    override suspend fun pressedLikeOnComment(
+        item: ContentWithLikesAndComments<out Any>,
+        comment: Comment
+    ): Resource<Nothing> {
+        return networkRepository.pressedLikeOnComment(item, comment)
     }
 
     override suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing> {

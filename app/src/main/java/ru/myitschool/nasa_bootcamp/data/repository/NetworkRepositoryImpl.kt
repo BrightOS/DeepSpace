@@ -17,7 +17,6 @@ class NetworkRepositoryImpl @Inject constructor(
                 MutableLiveData(
                     ContentWithLikesAndComments(
                         likes = listOf(),
-                        id = 123,
                         comments =
                         listOf(
                             Comment(
@@ -57,7 +56,7 @@ class NetworkRepositoryImpl @Inject constructor(
         return Resource.error("TO DO", null)
     }
 
-    override suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing> {
+    override suspend fun pressedLikeOnComment(item: ContentWithLikesAndComments<out Any>, comment: Comment): Resource<Nothing> {
         return Resource.error("TO DO", null)
     }
 

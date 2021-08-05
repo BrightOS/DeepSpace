@@ -28,7 +28,7 @@ fun <T> Feed(
     itemContent: @Composable (T) -> Unit,
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
     onCommentButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
-    onLikeInCommentClick: (Comment) -> Unit,
+    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> Unit,
     onItemClick: (ContentWithLikesAndComments<T>) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -43,7 +43,7 @@ fun <T> Feed(
                                 itemContent = itemContent,
                                 onLikeButtonClick = { onLikeButtonClick(content!!) },
                                 onCommentButtonClick = { onCommentButtonClick(content!!) },
-                                onLikeInCommentClick = onLikeInCommentClick,
+                                onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
                                 onClick = { onItemClick(content!!) }
                             )
                     }
