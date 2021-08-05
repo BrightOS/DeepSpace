@@ -87,7 +87,8 @@
             app:layout_constraintVertical_bias="1.0"
             app:text="Еnable notification"
             android:layout_marginTop="20sp"
-            tools:layout_editor_absoluteX="8dp" />
+            tools:layout_editor_absoluteX="8dp"
+            android:id="@+id/enableNotificationButton"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

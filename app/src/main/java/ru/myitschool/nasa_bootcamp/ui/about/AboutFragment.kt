@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import ru.myitschool.nasa_bootcamp.data.model.NotificationModel
+import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAboutBinding
 import ru.myitschool.nasa_bootcamp.utils.NotificationCentre
 
