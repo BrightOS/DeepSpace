@@ -6,20 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.internal.api.FirebaseNoSignedInUserException
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
-import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
-import ru.myitschool.nasa_bootcamp.data.model.PostModel
-import ru.myitschool.nasa_bootcamp.data.model.SubComment
-import ru.myitschool.nasa_bootcamp.data.model.UserModel
+import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
@@ -60,7 +54,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
     }
 
     private fun getAllUserPostComments(postId: Int) {
-        
+
     }
 
     private fun getAllUserPostLikes(postId: Int) {
@@ -73,6 +67,35 @@ class FirebaseRepositoryImpl : FirebaseRepository {
     ): LiveData<Data<out Bitmap>> {
         val storageRef = storage.getReference("posts/$postId/$imageId")
         return downloadFirebaseImage(storageRef)
+    }
+
+    override suspend fun newsChildChangedListener(
+        source: String,
+        postId: Long,
+        articleModel: ArticleModel
+    ): LiveData<ContentWithLikesAndComments<ArticleModel>> {
+        val returnData = MutableLiveData<ContentWithLikesAndComments<ArticleModel>>()
+        dbInstance.getReference("posts").child(source).child(postId.toString()).addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                //val comments = snapshot.child("comments").
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+        return returnData
     }
 
     override suspend fun getAdditionalData(postId: String): LiveData<Data<out ArrayList<PostView>>> {
