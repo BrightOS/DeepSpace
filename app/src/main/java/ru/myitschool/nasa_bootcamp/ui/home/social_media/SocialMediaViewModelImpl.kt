@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,9 +17,9 @@ import javax.inject.Inject
 class SocialMediaViewModelImpl @Inject constructor(private val networkRepository: NetworkRepository) :
     SocialMediaViewModel, ViewModel() {
     private val blogs =
-        MutableLiveData<Resource<List<ContentWithLikesAndComments<PostModel>>>>()
+        MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>>()
     private val articles =
-        MutableLiveData<Resource<List<ContentWithLikesAndComments<ArticleModel>>>>()
+        MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>()
     private var selectedPost: ContentWithLikesAndComments<PostModel>? = null
     private var selectedArticle: ContentWithLikesAndComments<ArticleModel>? = null
 

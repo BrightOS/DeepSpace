@@ -7,11 +7,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
@@ -21,7 +23,7 @@ import ru.myitschool.nasa_bootcamp.utils.Status
 
 @Composable
 fun <T> Feed(
-    listResource: Resource<List<ContentWithLikesAndComments<T>>>,
+    listResource: Resource<List<LiveData<ContentWithLikesAndComments<T>>>>,
     onRetryButtonClick: () -> Unit,
     itemContent: @Composable (T) -> Unit,
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
@@ -34,14 +36,16 @@ fun <T> Feed(
             Status.SUCCESS ->
                 LazyColumn(Modifier.fillMaxSize()) {
                     items(listResource.data!!) { item ->
-                        ItemWithLikesAndComments(
-                            item = item,
-                            itemContent = itemContent,
-                            onLikeButtonClick = { onLikeButtonClick(item) },
-                            onCommentButtonClick = { onCommentButtonClick(item) },
-                            onLikeInCommentClick = onLikeInCommentClick,
-                            onClick = { onItemClick(item) }
-                        )
+                        val content by item.observeAsState()
+                        if (content != null)
+                            ItemWithLikesAndComments(
+                                item = content!!,
+                                itemContent = itemContent,
+                                onLikeButtonClick = { onLikeButtonClick(content!!) },
+                                onCommentButtonClick = { onCommentButtonClick(content!!) },
+                                onLikeInCommentClick = onLikeInCommentClick,
+                                onClick = { onItemClick(content!!) }
+                            )
                     }
                 }
             Status.LOADING ->
@@ -74,15 +78,15 @@ fun <T> ItemWithLikesAndComments(
         Column {
             itemContent(item.content)
             Divider(modifier = Modifier.padding(8.dp))
-                val bestComment =
-                    item.comments.maxByOrNull { it.likes.size }
-                if (bestComment != null)
-                    CommentItem(
-                        comment = bestComment,
-                        { onLikeInCommentClick(bestComment) },
-                        { onClick() },
-                        maxLines = 5
-                    )
+            val bestComment =
+                item.comments.maxByOrNull { it.likes.size }
+            if (bestComment != null)
+                CommentItem(
+                    comment = bestComment,
+                    { onLikeInCommentClick(bestComment) },
+                    { onClick() },
+                    maxLines = 5
+                )
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
