@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,7 +26,7 @@ fun <T> Feed(
     itemContent: @Composable (T) -> Unit,
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
     onCommentButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
-    onLikeInCommentClick: (MutableLiveData<Comment>) -> Unit,
+    onLikeInCommentClick: (Comment) -> Unit,
     onItemClick: (ContentWithLikesAndComments<T>) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -61,13 +59,11 @@ fun <T> Feed(
 fun <T> ItemWithLikesAndComments(
     item: ContentWithLikesAndComments<T>,
     itemContent: @Composable (T) -> Unit,
-    onLikeInCommentClick: (MutableLiveData<Comment>) -> Unit,
+    onLikeInCommentClick: (Comment) -> Unit,
     onLikeButtonClick: () -> Unit,
     onCommentButtonClick: () -> Unit,
     onClick: () -> Unit
 ) {
-    val comments by item.comments.observeAsState(Resource.success(listOf()))
-    val likes by item.likes.observeAsState(Resource.success(listOf()))
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -78,18 +74,15 @@ fun <T> ItemWithLikesAndComments(
         Column {
             itemContent(item.content)
             Divider(modifier = Modifier.padding(8.dp))
-            if (comments.status == Status.SUCCESS) {
                 val bestComment =
-                    comments.data!!.filterNot { it.value == null }
-                        .maxByOrNull { it.value?.likes?.size ?: 0 }
+                    item.comments.maxByOrNull { it.likes.size }
                 if (bestComment != null)
                     CommentItem(
-                        commentLiveData = bestComment,
+                        comment = bestComment,
                         { onLikeInCommentClick(bestComment) },
                         { onClick() },
                         maxLines = 5
                     )
-            }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -106,14 +99,14 @@ fun <T> ItemWithLikesAndComments(
                             contentDescription = "comments"
                         )
                     }
-                    Text(text = (comments.data?.size ?: 0).toString())
+                    Text(text = item.comments.size.toString())
                     IconButton(onClick = onLikeButtonClick) {
                         Icon(
                             painter = painterResource(R.drawable.ic_heart),
                             contentDescription = "likes"
                         )
                     }
-                    Text(text = (likes.data?.size ?: 0).toString())
+                    Text(text = item.likes.size.toString())
                 }
             }
         }

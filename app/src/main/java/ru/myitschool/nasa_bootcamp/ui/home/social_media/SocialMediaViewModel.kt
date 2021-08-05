@@ -1,7 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
 import ru.myitschool.nasa_bootcamp.data.model.Comment
@@ -19,9 +18,14 @@ interface SocialMediaViewModel {
     fun getSelectedPost(): ContentWithLikesAndComments<PostModel>?
     fun setSelectedArticle(article: ContentWithLikesAndComments<ArticleModel>)
     fun getSelectedArticle(): ContentWithLikesAndComments<ArticleModel>?
-    suspend fun pressedLikeOnComment(comment: MutableLiveData<Comment>): Resource<Nothing>
+    suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing>
     suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
-    suspend fun sendMessage(message: String, id: Long, _class: Class<*>): Resource<Nothing>
+    suspend fun sendMessage(
+        message: String,
+        id: Long,
+        _class: Class<*>,
+        parentComment: Comment? = null
+    ): Resource<Nothing>
 //    suspend fun getCommentsByItemId(id: Long, _class: Class<*>): List<LiveData<Comment>>
 //    suspend fun getLikesByItemId(id: Long, _class: Class<*>): List<UserModel>
 //    suspend fun getLikesByCommentId(id: Long): List<UserModel>
