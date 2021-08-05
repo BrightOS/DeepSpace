@@ -9,8 +9,8 @@ import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 interface SocialMediaViewModel {
-    fun getBlogs(): LiveData<Resource<List<ContentWithLikesAndComments<PostModel>>>>
-    fun getNews(): LiveData<Resource<List<ContentWithLikesAndComments<ArticleModel>>>>
+    fun getBlogs(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>>
+    fun getNews(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>
     suspend fun loadBlogs()
     suspend fun loadNews()
     fun getViewModelScope(): CoroutineScope
@@ -18,7 +18,11 @@ interface SocialMediaViewModel {
     fun getSelectedPost(): ContentWithLikesAndComments<PostModel>?
     fun setSelectedArticle(article: ContentWithLikesAndComments<ArticleModel>)
     fun getSelectedArticle(): ContentWithLikesAndComments<ArticleModel>?
-    suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing>
+    suspend fun pressedLikeOnComment(
+        item: ContentWithLikesAndComments<out Any>,
+        comment: Comment
+    ): Resource<Nothing>
+
     suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
     suspend fun sendMessage(
         message: String,
