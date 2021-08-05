@@ -93,7 +93,7 @@ fun HomeScreen(
     val imageOfTheDayModel by viewModel.getImageOfTheDayModel()
         .observeAsState(Resource.loading(null))
 
-    val articles by viewModel.getArticles().observeAsState(Resource.loading(null))
+    val articles by viewModel.getArticles().observeAsState(Resource.success(listOf()))
     val scrollState = rememberScrollState()
 
     Column(modifier = Modifier.verticalScroll(scrollState)) {
