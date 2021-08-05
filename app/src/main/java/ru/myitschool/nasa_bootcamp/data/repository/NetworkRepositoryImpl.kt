@@ -14,7 +14,6 @@ class NetworkRepositoryImpl @Inject constructor(
 
         return Resource.success(
             listOf(
-
                 MutableLiveData(
                     ContentWithLikesAndComments(
                         likes = listOf(),
@@ -47,22 +46,41 @@ class NetworkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>> {
+        val allPosts = firebaseRepository.getAllPosts()
         return Resource.error("TO DO", null)
     }
 
     override suspend fun pressedLikeOnItem(
         item: ContentWithLikesAndComments<out Any>
     ): Resource<Nothing> {
-        if (item.content::class.java == ArticleModel::class.java) {
-            firebaseRepository.pushLike("ArticleModel", (item.content as ArticleModel).id.toInt())!!
-        } else {
-            firebaseRepository.pushLike("UserPost", (item.content as ArticleModel).id.toInt())!!
+        try {
+            if (item.content::class.java == ArticleModel::class.java) {
+                firebaseRepository.pushLike(
+                    "ArticleModel",
+                    (item.content as ArticleModel).id.toInt()
+                )!!
+            } else {
+                firebaseRepository.pushLike("UserPost", (item.content as ArticleModel).id.toInt())!!
+            }
+        }
+        catch (e: Exception) {
+            return Resource.error(e.message.toString(), null)
         }
         return Resource.success(null)
     }
 
     override suspend fun pressedLikeOnComment(item: ContentWithLikesAndComments<out Any>, comment: Comment): Resource<Nothing> {
-        return Resource.error("TO DO", null)
+        try{
+            if (item.content::class.java == ArticleModel::class.java) {
+                firebaseRepository.pushLikeForComment("ArticleModel", (item.content as ArticleModel).id.toInt(), comment.id)
+            } else {
+                firebaseRepository.pushLikeForComment("UserPost", (item.content as ArticleModel).id.toInt(), comment.id)
+            }
+        }
+        catch (e: Exception) {
+            return Resource.error(e.message.toString(), null)
+        }
+        return Resource.success(null)
     }
 
     override suspend fun sendComment(

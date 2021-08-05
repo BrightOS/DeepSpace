@@ -16,6 +16,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
+import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
+import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.data.model.SubComment
 import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
@@ -51,6 +53,18 @@ class FirebaseRepositoryImpl : FirebaseRepository {
             returnData.postValue(Data.Error(e.message.toString()))
         }
         return returnData
+    }
+
+    override suspend fun getAllPostsRawData(): LiveData<ContentWithLikesAndComments<PostModel>> {
+        TODO("Not yet implemented")
+    }
+
+    private fun getAllUserPostComments(postId: Int) {
+        
+    }
+
+    private fun getAllUserPostLikes(postId: Int) {
+
     }
 
     override suspend fun downloadImage(
@@ -283,7 +297,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         val returnData = MutableLiveData<Data<out String>>()
         if (authenticator.uid != null && !checkIfHasCommentLike(source, postId, commentId)) {
             try {
-                dbInstance.getReference("posts").child(postId.toString()).child("comments")
+                dbInstance.getReference("posts").child(source).child(postId.toString()).child("comments")
                     .child(commentId.toString()).child("likes").child(authenticator.uid!!)
                     .setValue(authenticator.uid).await()
                 returnData.postValue(Data.Ok("Ok"))

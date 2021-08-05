@@ -6,10 +6,13 @@ import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseUser
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostView
+import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
+import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.utils.Data
 
 interface FirebaseRepository {
+    suspend fun getAllPostsRawData(): LiveData<ContentWithLikesAndComments<PostModel>>
     suspend fun getAllPosts(): LiveData<Data<out ArrayList<Post>>>
     suspend fun downloadImage(postId: String, imageId: String): LiveData<Data<out Bitmap>>
     suspend fun getAdditionalData(postId: String): LiveData<Data<out ArrayList<PostView>>>
