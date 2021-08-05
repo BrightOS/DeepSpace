@@ -3,6 +3,7 @@ package ru.myitschool.nasa_bootcamp.data.model
 import android.net.Uri
 
 open class Comment(
+    val _postClass: Class<*>,
     val id: Long,
     val text: String,
     val likes: List<UserModel>,

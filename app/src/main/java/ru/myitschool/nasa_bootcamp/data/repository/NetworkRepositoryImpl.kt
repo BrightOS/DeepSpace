@@ -14,27 +14,24 @@ class NetworkRepositoryImpl @Inject constructor(
         return Resource.success(
             listOf(
                 ContentWithLikesAndComments(
-                    likes = MutableLiveData(Resource.success(listOf())),
+                    likes = listOf(),
                     id = 123,
-                    comments = MutableLiveData(
-                        Resource.success(
-                            listOf(
-                                MutableLiveData(
-                                    Comment(
-                                        text = "ds/lkfsdfksdfsd",
-                                        subComments = listOf(),
-                                        id = 4,
-                                        author = UserModel(
-                                            id = "4",
-                                            avatarUrl = "https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ",
-                                            name = "Zach"
-                                        ),
-                                        likes = listOf(),
-                                        date = 1628008932
-                                    )
-                                )
-                            )
+                    comments =
+                    listOf(
+                        Comment(
+                            _postClass = ArticleModel::class.java,
+                            text = "ds/lkfsdfksdfsd",
+                            subComments = listOf(),
+                            id = 4,
+                            author = UserModel(
+                                id = "4",
+                                avatarUrl = "https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ",
+                                name = "Zach"
+                            ),
+                            likes = listOf(),
+                            date = 1628008932
                         )
+
                     ),
                     content = ArticleModel(
                         id = 123,
@@ -55,40 +52,33 @@ class NetworkRepositoryImpl @Inject constructor(
     override suspend fun pressedLikeOnItem(
         item: ContentWithLikesAndComments<out Any>
     ): Resource<Nothing> {
-        item.likes.postValue(Resource.loading(item.likes.value?.data))
-        val userLiked: UserModel = if (item.content::class.java == ArticleModel::class.java) {
+        if (item.content::class.java == ArticleModel::class.java) {
             firebaseRepository.pushLike("ArticleModel", item.id.toInt())!!
         } else {
             firebaseRepository.pushLike("UserPost", item.id.toInt())!!
         }
-        item.likes.postValue(
-            Resource.success(
-                item.likes.value?.data?.plus(
-                    userLiked
-                )
-            )
-        )
         return Resource.success(null)
     }
 
-    override suspend fun pressedLikeOnComment(comment: MutableLiveData<Comment>): Resource<Nothing> {
+    override suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing> {
+
         return Resource.error("TO DO", null)
     }
 
-    override suspend fun sendMessage(
+    override suspend fun sendComment(
         message: String,
         id: Long,
-        _class: Class<*>
+        _class: Class<*>,
+        parentComment: Comment?
     ): Resource<Nothing> {
         if (_class == ArticleModel::class.java) {
             firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
         } else {
             firebaseRepository.pushComment("UserPost", id.toInt(), message)
         }
-        return Resource.error("TO DO", null)
+        return Resource.success(null)
     }
 
     override suspend fun getCurrentUser(): UserModel = firebaseRepository.getCurrentUser()!!
-
 }
 

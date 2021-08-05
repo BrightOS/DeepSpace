@@ -48,7 +48,7 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
 
     override fun getSelectedArticle() = selectedArticle
 
-    override suspend fun pressedLikeOnComment(comment: MutableLiveData<Comment>): Resource<Nothing> {
+    override suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing> {
         return networkRepository.pressedLikeOnComment(comment)
     }
 
@@ -59,9 +59,10 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     override suspend fun sendMessage(
         message: String,
         id: Long,
-        _class: Class<*>
+        _class: Class<*>,
+        parentComment: Comment?
     ): Resource<Nothing> {
-        return networkRepository.sendMessage(message, id, _class)
+        return networkRepository.sendComment(message, id, _class, parentComment)
     }
 
 

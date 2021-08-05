@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +21,6 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.navGraphViewModels
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -37,7 +35,6 @@ import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModelImpl
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.CommentItem
-import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 
 @AndroidEntryPoint
@@ -70,21 +67,17 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
             Spacer(modifier = Modifier.statusBarsPadding())
             when {
                 viewModel.getSelectedArticle() != null -> {
-                    val comments by viewModel.getSelectedArticle()!!.comments
-                        .observeAsState(Resource.success(listOf()))
                     ArticleContent(articleModel = viewModel.getSelectedArticle()!!.content)
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
                     )
-                    Comments(list = comments) {
+                    Comments(list = viewModel.getSelectedArticle()!!.comments) {
                         viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(it) }
                     }
                 }
                 viewModel.getSelectedPost() != null -> {
-                    val comments by viewModel.getSelectedPost()!!.comments
-                        .observeAsState(Resource.success(listOf()))
                     PostContent(postModel = viewModel.getSelectedPost()!!.content)
                     Spacer(
                         modifier = Modifier
@@ -92,7 +85,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                             .padding(16.dp)
                     )
                     Comments(
-                        list = comments
+                        list = viewModel.getSelectedPost()!!.comments
                     ) {
                         viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(it) }
                     }
@@ -106,7 +99,6 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                 .fillMaxWidth(),
             onClick = {
                 viewModel.getViewModelScope().launch {
-                    println("Inside")
                     viewModel.sendMessage(
                         message = it,
                         id = when {
@@ -150,18 +142,17 @@ fun BottomTextField(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
 
 @Composable
 fun Comments(
-    list: Resource<List<MutableLiveData<Comment>>>,
-    onLikeInCommentClick: (MutableLiveData<Comment>) -> Unit
+    list: List<Comment>,
+    onLikeInCommentClick: (Comment) -> Unit
 ) {
     Column {
-        if (list.data != null)
-            list.data.forEach {
-                CommentItem(
-                    commentLiveData = it,
-                    onLikeClick = { onLikeInCommentClick(it) },
-                    onCommentClick = { }
-                )
-            }
+        list.forEach {
+            CommentItem(
+                comment = it,
+                onLikeClick = { onLikeInCommentClick(it) },
+                onCommentClick = { }
+            )
+        }
     }
 }
 

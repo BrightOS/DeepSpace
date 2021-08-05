@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
-import androidx.lifecycle.MutableLiveData
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
@@ -8,7 +7,12 @@ interface NetworkRepository {
     suspend fun getNews(): Resource<List<ContentWithLikesAndComments<ArticleModel>>>
     suspend fun getBlogPosts(): Resource<List<ContentWithLikesAndComments<PostModel>>>
     suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
-    suspend fun pressedLikeOnComment(comment: MutableLiveData<Comment>): Resource<Nothing>
-    suspend fun sendMessage(message: String, id: Long, _class: Class<*>): Resource<Nothing>
     suspend fun getCurrentUser(): UserModel
+    suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing>
+    suspend fun sendComment(
+        message: String,
+        id: Long,
+        _class: Class<*>,
+        parentComment: Comment? = null
+    ): Resource<Nothing>
 }
