@@ -20,7 +20,7 @@ interface FirebaseRepository {
     suspend fun pushSubComment(source: String, postId: Int, fatherCommentId: Long, comment: String): LiveData<Data<out String>>
     suspend fun deleteComment(source: String, postId: Int, commentId: Long): LiveData<Data<out String>>
     suspend fun deleteSubComment(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): LiveData<Data<out String>>
-    suspend fun pushLike(source: String, postId: Int): LiveData<Data<out String>>
+    suspend fun pushLike(source: String, postId: Int): UserModel?
     suspend fun pushLikeForComment(source: String, postId: Int, commentId: Long): LiveData<Data<out String>>
     suspend fun pushLikeForSubComment(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): LiveData<Data<out String>>
     suspend fun deleteLike(source: String, postId: Int): LiveData<Data<out String>>

@@ -56,19 +56,15 @@ class NetworkRepositoryImpl @Inject constructor(
         item: ContentWithLikesAndComments<out Any>
     ): Resource<Nothing> {
         item.likes.postValue(Resource.loading(item.likes.value?.data))
-        println(item.content::class.java)
-        if (item.content == ArticleModel::class.java) {
-            println("in")
-            firebaseRepository.pushLike("ArticleModel", item.id.toInt())
+        val userLiked: UserModel = if (item.content::class.java == ArticleModel::class.java) {
+            firebaseRepository.pushLike("ArticleModel", item.id.toInt())!!
+        } else {
+            firebaseRepository.pushLike("UserPost", item.id.toInt())!!
         }
         item.likes.postValue(
             Resource.success(
                 item.likes.value?.data?.plus(
-                    UserModel(
-                        id = "4",
-                        avatarUrl = "https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ",
-                        name = "Zach"
-                    )
+                    userLiked
                 )
             )
         )
@@ -86,8 +82,7 @@ class NetworkRepositoryImpl @Inject constructor(
     ): Resource<Nothing> {
         if (_class == ArticleModel::class.java) {
             firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
-        }
-        else {
+        } else {
             firebaseRepository.pushComment("UserPost", id.toInt(), message)
         }
         return Resource.error("TO DO", null)

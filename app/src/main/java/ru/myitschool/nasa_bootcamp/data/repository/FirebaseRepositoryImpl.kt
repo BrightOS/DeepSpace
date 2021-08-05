@@ -261,21 +261,18 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return returnData
     }
 
-    override suspend fun pushLike(source: String, postId: Int): LiveData<Data<out String>> {
-        val returnData = MutableLiveData<Data<out String>>()
+    override suspend fun pushLike(source: String, postId: Int): UserModel? {
+        var user: UserModel? = null
         if (authenticator.uid != null && !checkIfHasLike(source, postId)) {
             try {
-                dbInstance.getReference("posts").child(postId.toString()).child("likes")
+                dbInstance.getReference("posts").child(source).child(postId.toString()).child("likes")
                     .child(authenticator.uid!!)
                     .setValue(authenticator.uid).await()
-                returnData.postValue(Data.Ok("Ok"))
+                user = getCurrentUser()
             } catch (e: Exception) {
-                returnData.postValue(Data.Error(e.message.toString()))
             }
-        } else {
-            returnData.postValue(Data.Error("User is not authenticated or already has a like"))
         }
-        return returnData
+        return user
     }
 
     override suspend fun pushLikeForComment(
