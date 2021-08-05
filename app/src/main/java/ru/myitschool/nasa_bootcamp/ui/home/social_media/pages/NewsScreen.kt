@@ -43,7 +43,8 @@ fun NewsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
         onLikeInCommentClick = { item, comment ->
             viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(item, comment) }
         },
-        listResource = listResource
+        listResource = listResource,
+        currentUser = viewModel.getCurrentUser()
     )
 }
 

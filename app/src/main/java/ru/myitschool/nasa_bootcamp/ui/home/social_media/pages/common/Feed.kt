@@ -17,6 +17,7 @@ import androidx.lifecycle.LiveData
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
+import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.ui.home.components.ErrorMessage
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
@@ -24,6 +25,7 @@ import ru.myitschool.nasa_bootcamp.utils.Status
 @Composable
 fun <T> Feed(
     listResource: Resource<List<LiveData<ContentWithLikesAndComments<T>>>>,
+    currentUser: UserModel,
     onRetryButtonClick: () -> Unit,
     itemContent: @Composable (T) -> Unit,
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
@@ -41,6 +43,7 @@ fun <T> Feed(
                             ItemWithLikesAndComments(
                                 item = content!!,
                                 itemContent = itemContent,
+                                currentUser = currentUser,
                                 onLikeButtonClick = { onLikeButtonClick(content!!) },
                                 onCommentButtonClick = { onCommentButtonClick(content!!) },
                                 onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
@@ -62,6 +65,7 @@ fun <T> Feed(
 @Composable
 fun <T> ItemWithLikesAndComments(
     item: ContentWithLikesAndComments<T>,
+    currentUser: UserModel,
     itemContent: @Composable (T) -> Unit,
     onLikeInCommentClick: (Comment) -> Unit,
     onLikeButtonClick: () -> Unit,
@@ -83,6 +87,7 @@ fun <T> ItemWithLikesAndComments(
             if (bestComment != null)
                 CommentItem(
                     comment = bestComment,
+                    currentUser,
                     { onLikeInCommentClick(bestComment) },
                     { onClick() },
                     maxLines = 5
@@ -104,13 +109,11 @@ fun <T> ItemWithLikesAndComments(
                         )
                     }
                     Text(text = item.comments.size.toString())
-                    IconButton(onClick = onLikeButtonClick) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_heart),
-                            contentDescription = "likes"
-                        )
-                    }
-                    Text(text = item.likes.size.toString())
+                    LikeButton(
+                        list = item.likes,
+                        currentUser = currentUser,
+                        onClick = onLikeButtonClick
+                    )
                 }
             }
         }
