@@ -20,7 +20,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -38,7 +40,9 @@ import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.ProfileScreen
 
 @AndroidEntryPoint
 class SocialMediaFragment : Fragment() {
-    val viewModel: SocialMediaViewModel by viewModels<SocialMediaViewModelImpl>()
+    val viewModel: SocialMediaViewModel
+            by navGraphViewModels<SocialMediaViewModelImpl>(R.id.socialMediaNavGraph) {defaultViewModelProviderFactory}
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,7 +50,7 @@ class SocialMediaFragment : Fragment() {
     ): View {
         viewModel.getViewModelScope().launch(Dispatchers.IO) {
             viewModel.loadNews()
-            viewModel.getBlogs()
+            viewModel.loadBlogs()
         }
         return ComposeView(requireContext()).apply {
             setContent {
@@ -54,7 +58,8 @@ class SocialMediaFragment : Fragment() {
                     ProvideWindowInsets {
                         SocialMediaScreen(
                             viewModel = viewModel,
-                            onBackArrowClick = { findNavController().navigateUp() })
+                            navController = findNavController()
+                        )
                     }
                 }
             }
@@ -64,18 +69,24 @@ class SocialMediaFragment : Fragment() {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun SocialMediaScreen(onBackArrowClick: () -> Unit, viewModel: SocialMediaViewModel) {
+fun SocialMediaScreen(
+    viewModel: SocialMediaViewModel,
+    navController: NavController
+) {
     val tabs = listOf(
-        TabItem.News(viewModel),
-        TabItem.Blogs(viewModel),
-        TabItem.Profile(viewModel)
+        TabItem.News(viewModel, navController),
+        TabItem.Blogs(viewModel, navController),
+        TabItem.Profile(viewModel, navController)
     )
     val pagerState = rememberPagerState(tabs.size)
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
             Spacer(modifier = Modifier.statusBarsPadding())
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBackArrowClick, modifier = Modifier.padding(8.dp)) {
+                IconButton(
+                    onClick = { navController.navigateUp() },
+                    modifier = Modifier.padding(8.dp)
+                ) {
                     Icon(Icons.Filled.ArrowBack, "")
                 }
                 Text(
@@ -86,6 +97,11 @@ fun SocialMediaScreen(onBackArrowClick: () -> Unit, viewModel: SocialMediaViewMo
             HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
                 tabs[page].content()
             }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp)
+            )
         }
         Tabs(
             tabs = tabs,
@@ -93,6 +109,7 @@ fun SocialMediaScreen(onBackArrowClick: () -> Unit, viewModel: SocialMediaViewMo
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
+                .height(52.dp)
         )
     }
 }
@@ -125,12 +142,15 @@ sealed class TabItem(
     val titleId: Int,
     val content: @Composable () -> Unit
 ) {
-    class News(viewModel: SocialMediaViewModel) :
-        TabItem(R.drawable.ic_paper, R.string.news, { NewsScreen(viewModel) })
+    class News(viewModel: SocialMediaViewModel, navController: NavController) :
+        TabItem(R.drawable.ic_paper, R.string.news, { NewsScreen(viewModel, navController) })
 
-    class Blogs(viewModel: SocialMediaViewModel) :
-        TabItem(R.drawable.ic_chat, R.string.blogs, { BlogsScreen(viewModel) })
+    class Blogs(viewModel: SocialMediaViewModel, navController: NavController) :
+        TabItem(R.drawable.ic_chat, R.string.blogs, { BlogsScreen(viewModel, navController) })
 
-    class Profile(viewModel: SocialMediaViewModel) :
-        TabItem(R.drawable.ic_profile, R.string.profile, { ProfileScreen(viewModel) })
+    class Profile(viewModel: SocialMediaViewModel, navController: NavController) :
+        TabItem(
+            R.drawable.ic_profile,
+            R.string.profile,
+            { ProfileScreen(viewModel, navController) })
 }

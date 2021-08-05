@@ -13,11 +13,15 @@ import com.bumptech.glide.request.RequestListener
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
 import java.io.File
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-public fun loadImage(context: Context, url: String?, view : ImageView, requestListener : RequestListener<Drawable> ) {
+public fun loadImage(
+    context: Context,
+    url: String?,
+    view: ImageView,
+    requestListener: RequestListener<Drawable>
+) {
     Glide.with(context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -25,7 +29,7 @@ public fun loadImage(context: Context, url: String?, view : ImageView, requestLi
         .into(view)
 }
 
-public fun loadImage(context: Context, url: String?, view : ImageView) {
+public fun loadImage(context: Context, url: String?, view: ImageView) {
     Glide.with(context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -50,9 +54,12 @@ suspend fun downloadFirebaseImage(storageRef: StorageReference): LiveData<Data<o
     return returnData
 }
 
-fun convertDateFromUnix(date : Int) : String{
+fun convertDateFromUnix(date: Int): String {
     val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
     val date = Date(date * 1000L)
 
     return sdf.format(date)
 }
+
+fun getDateFromUnixTimestamp(time: Long): String =
+    SimpleDateFormat.getDateTimeInstance().format(Date(time * 1000))

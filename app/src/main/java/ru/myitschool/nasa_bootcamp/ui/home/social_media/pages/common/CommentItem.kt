@@ -8,6 +8,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,58 +18,64 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
 import coil.compose.rememberImagePainter
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
-import java.text.SimpleDateFormat
-import java.util.*
+import ru.myitschool.nasa_bootcamp.utils.Resource
+import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 
 @Composable
 fun CommentItem(
-    comment: Comment,
+    commentLiveData: LiveData<Comment>,
     onLikeClick: () -> Unit,
     onCommentClick: () -> Unit,
-    onProfileClick: () -> Unit,
     maxLines: Int = Int.MAX_VALUE
 ) {
-    Column(modifier = Modifier
-        .clickable { onCommentClick() }
-        .fillMaxWidth()
-        .padding(8.dp)) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(bottom = 8.dp)
-        ) {
-            Image(
-                painter = rememberImagePainter(comment.author.avatarUrl),
-                contentScale = ContentScale.Crop,
-                contentDescription = "",
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(CircleShape)
-                    .clickable { onProfileClick() }
-            )
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .weight(fill = true, weight = 1f)
+    val comment by commentLiveData.observeAsState()
+    if (comment != null) {
+        val data = comment!!
+        Column(modifier = Modifier
+            .clickable { onCommentClick() }
+            .fillMaxWidth()
+            .padding(8.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 8.dp)
             ) {
-                Text(fontSize = 18.sp, text = comment.author.name)
-                Text(
-                    fontSize = 14.sp,
-                    text = SimpleDateFormat.getDateTimeInstance().format(Date(comment.date))
+                Image(
+                    painter = rememberImagePainter(data.author.avatarUrl),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
                 )
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .weight(fill = true, weight = 1f)
+                ) {
+                    Text(fontSize = 18.sp, text = data.author.name)
+                    Text(
+                        fontSize = 14.sp,
+                        text = getDateFromUnixTimestamp(data.date)
+                    )
+                }
+                IconButton(onClick = onLikeClick) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_heart),
+                        contentDescription = "like"
+                    )
+                }
+                Text(text = data.likes.size.toString())
             }
-            IconButton(onClick = onLikeClick) {
-                Icon(painter = painterResource(R.drawable.ic_heart), contentDescription = "like")
-            }
-            Text(text = comment.likes.size.toString())
+            Text(
+                fontSize = 16.sp,
+                text = data.text,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = maxLines
+            )
         }
-        Text(
-            fontSize = 16.sp,
-            text = comment.text,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = maxLines
-        )
     }
 }
