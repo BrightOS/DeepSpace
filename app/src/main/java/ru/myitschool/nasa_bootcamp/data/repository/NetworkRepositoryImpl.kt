@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.myitschool.nasa_bootcamp.data.model.*
@@ -25,7 +26,7 @@ class NetworkRepositoryImpl @Inject constructor(
                                 id = 4,
                                 author = UserModel(
                                     id = "4",
-                                    avatarUrl = "https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ",
+                                    avatarUrl = Uri.parse("https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ"),
                                     name = "Zach"
                                 ),
                                 likes = listOf(),
@@ -73,7 +74,7 @@ class NetworkRepositoryImpl @Inject constructor(
     override fun getCurrentUser(): UserModel {
         return UserModel(
             id = "4",
-            avatarUrl = "https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ",
+            avatarUrl = Uri.parse("https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ"),
             name = "Zach"
         )
     }

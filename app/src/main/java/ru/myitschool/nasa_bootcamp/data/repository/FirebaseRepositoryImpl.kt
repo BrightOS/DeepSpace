@@ -456,7 +456,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
                 avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
             } catch (e: Exception) {
             }
-            returnData.postValue(Data.Ok(UserModel(userName!!, avatarUrl.toString(), uid)))
+            returnData.postValue(Data.Ok(UserModel(userName!!, avatarUrl, uid)))
         } catch (e: Exception) {
             returnData.postValue(Data.Error(e.message.toString()))
         }
