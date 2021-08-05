@@ -10,5 +10,5 @@ interface NetworkRepository {
     suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
     suspend fun pressedLikeOnComment(comment: MutableLiveData<Comment>): Resource<Nothing>
     suspend fun sendMessage(message: String, id: Long, _class: Class<*>): Resource<Nothing>
-    fun getCurrentUser(): UserModel
+    suspend fun getCurrentUser(): UserModel
 }

@@ -56,6 +56,11 @@ class NetworkRepositoryImpl @Inject constructor(
         item: ContentWithLikesAndComments<out Any>
     ): Resource<Nothing> {
         item.likes.postValue(Resource.loading(item.likes.value?.data))
+        println(item.content::class.java)
+        if (item.content == ArticleModel::class.java) {
+            println("in")
+            firebaseRepository.pushLike("ArticleModel", item.id.toInt())
+        }
         item.likes.postValue(
             Resource.success(
                 item.likes.value?.data?.plus(
@@ -74,16 +79,21 @@ class NetworkRepositoryImpl @Inject constructor(
         return Resource.error("TO DO", null)
     }
 
-
     override suspend fun sendMessage(
         message: String,
         id: Long,
         _class: Class<*>
     ): Resource<Nothing> {
+        if (_class == ArticleModel::class.java) {
+            firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
+        }
+        else {
+            firebaseRepository.pushComment("UserPost", id.toInt(), message)
+        }
         return Resource.error("TO DO", null)
     }
 
-    override fun getCurrentUser(): UserModel = firebaseRepository.getCurrentUser()!!
+    override suspend fun getCurrentUser(): UserModel = firebaseRepository.getCurrentUser()!!
 
 }
 

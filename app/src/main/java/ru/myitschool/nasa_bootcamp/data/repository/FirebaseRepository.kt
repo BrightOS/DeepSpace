@@ -30,5 +30,5 @@ interface FirebaseRepository {
     fun signOutUser(): LiveData<Data<out String>>
     suspend fun createUser(userName: String, email: String, password: String, imagePath: Uri?): LiveData<Data<out FirebaseUser>>
     suspend fun getUser(uid: String): UserModel?
-    fun getCurrentUser(): UserModel?
+    suspend fun getCurrentUser(): UserModel?
 }

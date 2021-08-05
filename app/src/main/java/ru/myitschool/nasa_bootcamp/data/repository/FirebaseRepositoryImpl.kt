@@ -10,7 +10,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.internal.api.FirebaseNoSignedInUserException
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
@@ -166,6 +168,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
                     .child(commentId.toString()).setValue(commentObject).await()
                 returnData.postValue(Data.Ok("Ok"))
             } catch (e: Exception) {
+                println(e.message.toString())
                 returnData.postValue(Data.Error(e.message.toString()))
             }
         } else {
@@ -461,24 +464,20 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return user
     }
 
-    override fun getCurrentUser(): UserModel? {
+    override suspend fun getCurrentUser(): UserModel? {
         var user: UserModel? = null
         try {
             var userName: String = ""
-            dbInstance.getReference("user_data").child(authenticator.uid!!).child("username").get().addOnSuccessListener {
-                userName = it.getValue(String::class.java).toString()
-            }
             var avatarUrl: String = ""
-            try {
-                storage.getReference("user_data/${authenticator.uid}").downloadUrl.addOnSuccessListener {
-                    avatarUrl = it.normalizeScheme().toString()
-                }
-            } catch (e: Exception) {
+                userName = dbInstance.getReference("user_data").child(authenticator.uid!!).child("username").get().await().getValue(
+                    String::class.java).toString()
+                try {
+                    avatarUrl = storage.getReference("user_data/${authenticator.uid}").downloadUrl.await().toString()
+                } catch (e: Exception) {
             }
             user = UserModel(userName.toString(), avatarUrl.toString(), authenticator.uid.toString())
         }
         catch (e: Exception) {
-
         }
         return user
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.runBlocking
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
