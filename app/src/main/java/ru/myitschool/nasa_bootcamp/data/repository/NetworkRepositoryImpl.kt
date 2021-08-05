@@ -6,7 +6,7 @@ import ru.myitschool.nasa_bootcamp.utils.Resource
 import javax.inject.Inject
 
 class NetworkRepositoryImpl @Inject constructor(
-    firebaseRepository: FirebaseRepository,
+    private val firebaseRepository: FirebaseRepository,
     newsRepository: NewsRepository
 ) : NetworkRepository {
     override suspend fun getNews(): Resource<List<ContentWithLikesAndComments<ArticleModel>>> {
@@ -84,13 +84,7 @@ class NetworkRepositoryImpl @Inject constructor(
         return Resource.error("TO DO", null)
     }
 
-    override fun getCurrentUser(): UserModel {
-        return UserModel(
-            id = "4",
-            avatarUrl = "https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ",
-            name = "Zach"
-        )
-    }
+    override fun getCurrentUser(): UserModel = firebaseRepository.getCurrentUser()!!
 
 }
 

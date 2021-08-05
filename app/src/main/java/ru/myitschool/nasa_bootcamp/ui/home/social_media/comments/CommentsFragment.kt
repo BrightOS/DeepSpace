@@ -106,6 +106,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                 .fillMaxWidth(),
             onClick = {
                 viewModel.getViewModelScope().launch {
+                    println("Inside")
                     viewModel.sendMessage(
                         message = it,
                         id = when {

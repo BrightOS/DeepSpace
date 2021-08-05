@@ -445,8 +445,8 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return returnData
     }
 
-    override suspend fun getUser(uid: String): LiveData<Data<out UserModel>> {
-        val returnData = MutableLiveData<Data<out UserModel>>()
+    override suspend fun getUser(uid: String): UserModel? {
+        var user: UserModel? = null
         try {
             val userName =
                 dbInstance.getReference("user_data").child(uid).child("username").get().await()
@@ -456,11 +456,31 @@ class FirebaseRepositoryImpl : FirebaseRepository {
                 avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
             } catch (e: Exception) {
             }
-            returnData.postValue(Data.Ok(UserModel(userName!!, avatarUrl.toString(), uid)))
-        } catch (e: Exception) {
-            returnData.postValue(Data.Error(e.message.toString()))
+            user = UserModel(userName.toString(), avatarUrl.toString(), uid)
+        } catch (e: Exception) {}
+        return user
+    }
+
+    override fun getCurrentUser(): UserModel? {
+        var user: UserModel? = null
+        try {
+            var userName: String = ""
+            dbInstance.getReference("user_data").child(authenticator.uid!!).child("username").get().addOnSuccessListener {
+                userName = it.getValue(String::class.java).toString()
+            }
+            var avatarUrl: String = ""
+            try {
+                storage.getReference("user_data/${authenticator.uid}").downloadUrl.addOnSuccessListener {
+                    avatarUrl = it.normalizeScheme().toString()
+                }
+            } catch (e: Exception) {
+            }
+            user = UserModel(userName.toString(), avatarUrl.toString(), authenticator.uid.toString())
         }
-        return returnData
+        catch (e: Exception) {
+
+        }
+        return user
     }
 
     private suspend fun getUsernameById(uid: String): String =
