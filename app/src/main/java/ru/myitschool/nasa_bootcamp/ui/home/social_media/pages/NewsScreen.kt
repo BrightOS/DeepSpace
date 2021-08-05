@@ -34,7 +34,7 @@ fun NewsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
             navController.navigate(action)
         },
         onLikeButtonClick = {
-            viewModel.getViewModelScope().launch { viewModel.pressedLikeOnArticle(it) }
+            viewModel.getViewModelScope().launch { viewModel.pressedLikeOnItem(it) }
         },
         onItemClick = {
             viewModel.setSelectedArticle(it)
