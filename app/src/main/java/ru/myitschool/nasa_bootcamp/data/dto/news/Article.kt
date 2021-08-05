@@ -13,8 +13,17 @@ class Article(
     @field:SerializedName("publishedAt") val publishedAt: String,
     @field:SerializedName("updatedAt") val updatedAt: String
 ) {
-    fun createArticleModel() : ArticleModel{
-        return ArticleModel(id, title, url, imageUrl, newsSite, summary, publishedAt, updatedAt)
+    fun createArticleModel(): ArticleModel {
+        return ArticleModel(
+            id.toLong(),
+            title,
+            url,
+            imageUrl,
+            newsSite,
+            summary,
+            publishedAt,
+            updatedAt
+        )
     }
 }
 

@@ -18,7 +18,11 @@ interface SocialMediaViewModel {
     fun getSelectedPost(): ContentWithLikesAndComments<PostModel>?
     fun setSelectedArticle(article: ContentWithLikesAndComments<ArticleModel>)
     fun getSelectedArticle(): ContentWithLikesAndComments<ArticleModel>?
-    suspend fun pressedLikeOnComment(comment: Comment): Resource<Nothing>
+    suspend fun pressedLikeOnComment(
+        item: ContentWithLikesAndComments<out Any>,
+        comment: Comment
+    ): Resource<Nothing>
+
     suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
     suspend fun sendMessage(
         message: String,

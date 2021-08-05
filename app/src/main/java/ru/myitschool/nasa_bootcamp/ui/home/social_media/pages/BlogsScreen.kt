@@ -41,8 +41,8 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
             viewModel.setSelectedPost(it)
             navController.navigate(action)
         },
-        onLikeInCommentClick = {
-            viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(it) }
+        onLikeInCommentClick = { item, comment ->
+            viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(item, comment) }
         },
         listResource = listResource
     )
