@@ -74,6 +74,7 @@
             android:configChanges="orientation|screenSize" />
 
         <receiver android:name=".utils.NotificationCentre$NotificationReceiver" />
+        <meta-data android:name="io.sentry.dsn" android:value="https://e5ebd3549df14c98a5fac161c9a0ac23@o923792.ingest.sentry.io/5871504" />
     </application>
 
 </manifest>

@@ -162,6 +162,7 @@ dependencies {
     implementation 'com.google.protobuf:protobuf-javalite:3.13.0'
     // Pager for Compose
     implementation "com.google.accompanist:accompanist-pager:0.15.0"
+    implementation 'io.sentry:sentry-android:5.0.1'
 }
 
 protobuf {

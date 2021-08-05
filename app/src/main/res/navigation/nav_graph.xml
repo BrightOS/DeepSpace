@@ -53,7 +53,11 @@
     <fragment
         android:id="@+id/contactFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.contact.ContactFragment"
-        android:label="ContactFragment" />
+        android:label="ContactFragment" >
+        <action
+            android:id="@+id/contactToMain"
+            app:destination="@id/nasaFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/createPostFragment"
