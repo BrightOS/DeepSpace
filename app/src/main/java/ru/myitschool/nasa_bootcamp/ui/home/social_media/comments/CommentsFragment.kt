@@ -67,27 +67,31 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
             Spacer(modifier = Modifier.statusBarsPadding())
             when {
                 viewModel.getSelectedArticle() != null -> {
-                    ArticleContent(articleModel = viewModel.getSelectedArticle()!!.content)
-                    Spacer(
+                    val article = viewModel.getSelectedArticle()!!
+                    ArticleContent(articleModel = article.content)
+                    Divider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(bottom = 16.dp)
                     )
-                    Comments(list = viewModel.getSelectedArticle()!!.comments) {
-                        viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(it) }
+                    Comments(list = article.comments) {
+                        viewModel.getViewModelScope()
+                            .launch { viewModel.pressedLikeOnComment(article, it) }
                     }
                 }
                 viewModel.getSelectedPost() != null -> {
-                    PostContent(postModel = viewModel.getSelectedPost()!!.content)
-                    Spacer(
+                    val post = viewModel.getSelectedPost()!!
+                    PostContent(postModel = post.content)
+                    Divider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(bottom = 16.dp)
                     )
                     Comments(
-                        list = viewModel.getSelectedPost()!!.comments
+                        list = post.comments
                     ) {
-                        viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(it) }
+                        viewModel.getViewModelScope()
+                            .launch { viewModel.pressedLikeOnComment(post, it) }
                     }
                 }
                 else -> throw KotlinNullPointerException()
@@ -102,8 +106,8 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                     viewModel.sendMessage(
                         message = it,
                         id = when {
-                            viewModel.getSelectedArticle() != null -> viewModel.getSelectedArticle()!!.id
-                            viewModel.getSelectedPost() != null -> viewModel.getSelectedPost()!!.id
+                            viewModel.getSelectedArticle() != null -> viewModel.getSelectedArticle()!!.content.id
+                            viewModel.getSelectedPost() != null -> viewModel.getSelectedPost()!!.content.id
                             else -> throw KotlinNullPointerException()
                         },
                         _class = when {
@@ -162,23 +166,16 @@ fun ArticleContent(articleModel: ArticleModel) {
     val annotatedText = buildAnnotatedString {
         withStyle(
             style = SpanStyle(
-                color = MaterialTheme.colors.onSurface,
-                fontSize = MaterialTheme.typography.body1.fontSize
+                color = Color.LightGray,
+                textDecoration = TextDecoration.Underline,
+                fontSize = MaterialTheme.typography.h6.fontSize
             )
         ) {
-            append(stringResource(R.string.source_colon_space))
-            withStyle(
-                style = SpanStyle(
-                    color = Color.LightGray,
-                    textDecoration = TextDecoration.Underline
-                )
+            withAnnotation(
+                tag = "URL",
+                annotation = articleModel.url
             ) {
-                withAnnotation(
-                    tag = "URL",
-                    annotation = articleModel.url
-                ) {
-                    append(articleModel.url)
-                }
+                append("Read in source")
             }
         }
     }
@@ -191,10 +188,12 @@ fun ArticleContent(articleModel: ArticleModel) {
                 .fillMaxWidth()
                 .height(200.dp)
         )
-        Text(text = articleModel.title, style = MaterialTheme.typography.h5)
-        Text(text = articleModel.summary, modifier = Modifier.padding(vertical = 8.dp))
-        Text(text = articleModel.publishedAt)
-        TextWithLinks(annotatedText = annotatedText, modifier = Modifier.padding(8.dp))
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = articleModel.title, style = MaterialTheme.typography.h4)
+            Text(text = articleModel.summary, modifier = Modifier.padding(vertical = 8.dp))
+            Text(text = articleModel.publishedAt)
+            TextWithLinks(annotatedText = annotatedText)
+        }
     }
 }
 
