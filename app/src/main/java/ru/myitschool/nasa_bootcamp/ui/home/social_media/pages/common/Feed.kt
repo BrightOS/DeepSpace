@@ -1,16 +1,21 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.MutableLiveData
 import ru.myitschool.nasa_bootcamp.R
+import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
 import ru.myitschool.nasa_bootcamp.ui.home.components.ErrorMessage
 import ru.myitschool.nasa_bootcamp.utils.Resource
@@ -21,9 +26,10 @@ fun <T> Feed(
     listResource: Resource<List<ContentWithLikesAndComments<T>>>,
     onRetryButtonClick: () -> Unit,
     itemContent: @Composable (T) -> Unit,
-    onLikeClick: () -> Unit,
-    onCommentClick: () -> Unit,
-    onProfileClick: () -> Unit
+    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
+    onCommentButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
+    onLikeInCommentClick: (MutableLiveData<Comment>) -> Unit,
+    onItemClick: (ContentWithLikesAndComments<T>) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (listResource.status) {
@@ -33,9 +39,10 @@ fun <T> Feed(
                         ItemWithLikesAndComments(
                             item = item,
                             itemContent = itemContent,
-                            onLikeClick = onLikeClick,
-                            onCommentClick = onCommentClick,
-                            onProfileClick = onProfileClick
+                            onLikeButtonClick = { onLikeButtonClick(item) },
+                            onCommentButtonClick = { onCommentButtonClick(item) },
+                            onLikeInCommentClick = onLikeInCommentClick,
+                            onClick = { onItemClick(item) }
                         )
                     }
                 }
@@ -54,27 +61,35 @@ fun <T> Feed(
 fun <T> ItemWithLikesAndComments(
     item: ContentWithLikesAndComments<T>,
     itemContent: @Composable (T) -> Unit,
-    onLikeClick: () -> Unit,
-    onCommentClick: () -> Unit,
-    onProfileClick: () -> Unit
+    onLikeInCommentClick: (MutableLiveData<Comment>) -> Unit,
+    onLikeButtonClick: () -> Unit,
+    onCommentButtonClick: () -> Unit,
+    onClick: () -> Unit
 ) {
-    val bestComment = item.comments.maxByOrNull { comment -> comment.likes.size }
+    val comments by item.comments.observeAsState(Resource.success(listOf()))
+    val likes by item.likes.observeAsState(Resource.success(listOf()))
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp), shape = RoundedCornerShape(16.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(16.dp)
     ) {
         Column {
             itemContent(item.content)
             Divider(modifier = Modifier.padding(8.dp))
-            if (bestComment != null)
-                CommentItem(
-                    comment = bestComment,
-                    onLikeClick,
-                    onCommentClick,
-                    onProfileClick,
-                    maxLines = 5
-                )
+            if (comments.status == Status.SUCCESS) {
+                val bestComment =
+                    comments.data!!.filterNot { it.value == null }
+                        .maxByOrNull { it.value?.likes?.size ?: 0 }
+                if (bestComment != null)
+                    CommentItem(
+                        commentLiveData = bestComment,
+                        { onLikeInCommentClick(bestComment) },
+                        { onClick() },
+                        maxLines = 5
+                    )
+            }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -85,20 +100,20 @@ fun <T> ItemWithLikesAndComments(
                         .align(Alignment.TopEnd),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = onLikeClick) {
+                    IconButton(onClick = onCommentButtonClick) {
                         Icon(
                             painter = painterResource(R.drawable.ic_chat),
                             contentDescription = "comments"
                         )
                     }
-                    Text(text = item.comments.size.toString())
-                    IconButton(onClick = onLikeClick) {
+                    Text(text = (comments.data?.size ?: 0).toString())
+                    IconButton(onClick = onLikeButtonClick) {
                         Icon(
                             painter = painterResource(R.drawable.ic_heart),
                             contentDescription = "likes"
                         )
                     }
-                    Text(text = item.likes.size.toString())
+                    Text(text = (likes.data?.size ?: 0).toString())
                 }
             }
         }
