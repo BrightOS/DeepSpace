@@ -3,6 +3,7 @@ package ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -17,6 +18,7 @@ import androidx.lifecycle.LiveData
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
+import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.ui.home.components.ErrorMessage
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
@@ -24,23 +26,29 @@ import ru.myitschool.nasa_bootcamp.utils.Status
 @Composable
 fun <T> Feed(
     listResource: Resource<List<LiveData<ContentWithLikesAndComments<T>>>>,
+    currentUser: UserModel?,
     onRetryButtonClick: () -> Unit,
     itemContent: @Composable (T) -> Unit,
+    headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
     onCommentButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
     onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> Unit,
     onItemClick: (ContentWithLikesAndComments<T>) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box {
         when (listResource.status) {
-            Status.SUCCESS ->
+            Status.SUCCESS -> {
                 LazyColumn(Modifier.fillMaxSize()) {
+                    item {
+                        headerContent()
+                    }
                     items(listResource.data!!) { item ->
                         val content by item.observeAsState()
                         if (content != null)
                             ItemWithLikesAndComments(
                                 item = content!!,
                                 itemContent = itemContent,
+                                currentUser = currentUser,
                                 onLikeButtonClick = { onLikeButtonClick(content!!) },
                                 onCommentButtonClick = { onCommentButtonClick(content!!) },
                                 onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
@@ -48,13 +56,14 @@ fun <T> Feed(
                             )
                     }
                 }
-            Status.LOADING ->
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            Status.ERROR ->
-                ErrorMessage(
-                    onClick = onRetryButtonClick,
-                    modifier = Modifier.align(Alignment.Center)
-                )
+            }
+
+            Status.LOADING -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+
+            Status.ERROR -> ErrorMessage(
+                onClick = onRetryButtonClick,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 }
@@ -62,6 +71,7 @@ fun <T> Feed(
 @Composable
 fun <T> ItemWithLikesAndComments(
     item: ContentWithLikesAndComments<T>,
+    currentUser: UserModel?,
     itemContent: @Composable (T) -> Unit,
     onLikeInCommentClick: (Comment) -> Unit,
     onLikeButtonClick: () -> Unit,
@@ -83,6 +93,7 @@ fun <T> ItemWithLikesAndComments(
             if (bestComment != null)
                 CommentItem(
                     comment = bestComment,
+                    currentUser,
                     { onLikeInCommentClick(bestComment) },
                     { onClick() },
                     maxLines = 5
@@ -104,13 +115,11 @@ fun <T> ItemWithLikesAndComments(
                         )
                     }
                     Text(text = item.comments.size.toString())
-                    IconButton(onClick = onLikeButtonClick) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_heart),
-                            contentDescription = "likes"
-                        )
-                    }
-                    Text(text = item.likes.size.toString())
+                    LikeButton(
+                        list = item.likes,
+                        currentUser = currentUser,
+                        onClick = onLikeButtonClick
+                    )
                 }
             }
         }

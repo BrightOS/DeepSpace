@@ -19,16 +19,20 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
+import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 
 @Composable
 fun CommentItem(
     comment: Comment,
+    currentUser: UserModel?,
     onLikeClick: () -> Unit,
     onCommentClick: () -> Unit,
+    modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE
 ) {
-        Column(modifier = Modifier
+    Column {
+        Column(modifier = modifier
             .clickable { onCommentClick() }
             .fillMaxWidth()
             .padding(8.dp)) {
@@ -55,13 +59,7 @@ fun CommentItem(
                         text = getDateFromUnixTimestamp(comment.date)
                     )
                 }
-                IconButton(onClick = onLikeClick) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_heart),
-                        contentDescription = "like"
-                    )
-                }
-                Text(text = comment.likes.size.toString())
+                LikeButton(list = comment.likes, currentUser = currentUser, onClick = onLikeClick)
             }
             Text(
                 fontSize = 16.sp,
@@ -70,4 +68,14 @@ fun CommentItem(
                 maxLines = maxLines
             )
         }
+        comment.subComments.forEach {
+            CommentItem(
+                comment = it,
+                currentUser,
+                onLikeClick,
+                onCommentClick,
+                modifier = Modifier.padding(start = 32.dp)
+            )
+        }
+    }
 }

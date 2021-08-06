@@ -14,7 +14,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.*
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
@@ -23,10 +27,16 @@ import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class FirebaseRepositoryImpl : FirebaseRepository {
+interface OnGetDataListener {
+    fun onSuccess(dataSnapshotValue: String?)
+}
+
+class FirebaseRepositoryImpl(val appContext: Context) :
+    FirebaseRepository {
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private val dbInstance = FirebaseDatabase.getInstance()
@@ -511,9 +521,9 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return user
     }
 
-    override fun getCurrentUser(context: Context): UserModel? {
+    override fun getCurrentUser(): UserModel? {
         val sharedPreferences =
-            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+            appContext.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
         try {
             val id = sharedPreferences.getString(sharedPreferencesId, null)!!
             val userName = sharedPreferences.getString(sharedPreferencesUserName, null)!!

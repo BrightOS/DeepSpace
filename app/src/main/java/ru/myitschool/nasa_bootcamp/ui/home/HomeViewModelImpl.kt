@@ -43,19 +43,6 @@ class HomeViewModelImpl @Inject constructor(
     }
 
     override suspend fun loadArticles() {
-        articles.postValue(Resource.loading(null))
-        try {
-            val response = newsRepository.getNews()
-            if (response.body() != null)
-                articles.postValue(
-                    Resource.success(
-                        response.body()!!.map { dto -> dto.createArticleModel() }.take(10)
-                    )
-                )
-            else articles.postValue(Resource.error("Empty response body", null))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            articles.postValue(Resource.error(e.message.toString(), null))
-        }
+        articles.postValue(newsRepository.getNews())
     }
 }

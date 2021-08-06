@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,9 +13,9 @@ class NetworkRepositoryImpl @Inject constructor(
 ) : NetworkRepository {
     override suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>> {
         val newsList = mutableListOf<LiveData<ContentWithLikesAndComments<ArticleModel>>>()
-        for (news in newsRepository.getNews().body()!!) {
+        for (article in newsRepository.getNews().data.orEmpty()) {
             val data = MutableLiveData<ContentWithLikesAndComments<ArticleModel>>()
-            data.postValue(ContentWithLikesAndComments(ArticleModel(news.id.toLong(), news.title, news.url, news.newsSite, news.summary, news.publishedAt, news.updatedAt), listOf(), listOf()))
+            data.postValue(ContentWithLikesAndComments(article, listOf(), listOf()))
             firebaseRepository.articleModelEventListener(data)
             newsList.add(data)
         }
@@ -81,6 +80,6 @@ class NetworkRepositoryImpl @Inject constructor(
         return firebaseRepository.getUser(uid)
     }
 
-    override fun getCurrentUser(context: Context): UserModel = firebaseRepository.getCurrentUser(context)!!
+    override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()
 }
 

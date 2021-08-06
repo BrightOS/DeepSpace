@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentDragonsBinding
+import ru.myitschool.nasa_bootcamp.utils.DRAGONS_GIF
+import ru.myitschool.nasa_bootcamp.utils.loadImage
 
 @AndroidEntryPoint
 class DragonsFragment : Fragment() {
@@ -31,6 +33,8 @@ class DragonsFragment : Fragment() {
 
         binding.dragonsRecycle.setHasFixedSize(true)
         binding.dragonsRecycle.layoutManager = GridLayoutManager(context, 1)
+
+        loadImage(context!!, DRAGONS_GIF, binding.dragonImage)
 
         dragonsViewModel.getViewModelScope().launch {
             dragonsViewModel.getDragons()

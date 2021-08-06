@@ -45,9 +45,9 @@ class SpaceXFragment : Fragment() {
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
         spaceXLaunchAdapter = SpaceXLaunchAdapter()
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
-        binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
-
+        binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext
         binding.loadProgressbar.visibility = View.VISIBLE
+
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
             when (data) {
                 is Data.Ok -> {

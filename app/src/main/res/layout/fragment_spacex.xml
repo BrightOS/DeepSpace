@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="@color/black"
 >
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -18,6 +18,12 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/launches_gif"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                />
             <View
                 android:id="@+id/background"
                 android:layout_width="match_parent"
