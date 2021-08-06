@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.lookbeyond.control
+package ru.myitschool.nasa_bootcamp.lookbeyond.managers
 
 import android.content.Context
 import android.location.*
@@ -46,10 +46,8 @@ class GpsManager constructor(
             val locationProvider = locationManager.getBestProvider(locationCriteria, true)
 
             if (locationProvider == null) {
-                val possiblelocationProvider =
-                    locationManager.getBestProvider(locationCriteria, false)
-                if (possiblelocationProvider == null) {
-
+                val provider = locationManager.getBestProvider(locationCriteria, false)
+                if (provider == null) {
                     val longitude = 0.0
                     val latitude = 0.0
 
@@ -61,7 +59,6 @@ class GpsManager constructor(
                     setLocationInModel(pos, "location")
                     return
                 }
-
                 return
             }
 
@@ -75,7 +72,10 @@ class GpsManager constructor(
     }
 
     override fun stop() {
-        TODO("Not yet implemented")
+        if (locationManager == null) {
+            return
+        }
+        locationManager.removeUpdates(this)
     }
 
     private fun setLocationInModel(location: LatLong, provider: String) {

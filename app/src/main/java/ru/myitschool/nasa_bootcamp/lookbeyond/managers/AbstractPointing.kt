@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.lookbeyond.control
+package ru.myitschool.nasa_bootcamp.lookbeyond.managers
 
 
 import ru.myitschool.nasa_bootcamp.lookbeyond.Math.GeocentricCoord

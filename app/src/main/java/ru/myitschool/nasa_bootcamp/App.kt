@@ -4,8 +4,8 @@ import android.app.Application
 import android.hardware.SensorManager
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.HiltAndroidApp
-import ru.myitschool.nasa_bootcamp.lookbeyond.control.AbstractPointing
-import ru.myitschool.nasa_bootcamp.lookbeyond.control.VectorPointing
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.AbstractPointing
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.VectorPointing
 import ru.myitschool.nasa_bootcamp.lookbeyond.layer.LayerManager
 
 
