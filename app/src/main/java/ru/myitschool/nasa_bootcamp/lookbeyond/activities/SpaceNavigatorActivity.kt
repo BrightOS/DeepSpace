@@ -8,42 +8,27 @@ import android.hardware.SensorManager
 import android.location.LocationManager
 import android.opengl.GLSurfaceView
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ru.myitschool.nasa_bootcamp.databinding.SpaceNavigatorBinding
 import ru.myitschool.nasa_bootcamp.lookbeyond.managers.*
 import ru.myitschool.nasa_bootcamp.lookbeyond.layer.LayerManager
 import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.MainRender
+import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.RenderViewModel
 import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.RendererThreadRun
 import kotlin.math.atan2
+import androidx.lifecycle.*
 
-class GooglePlayServicesChecker(val parentA: Activity?) {
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 
-fun locServicesEnabled() {
-    if (ActivityCompat.checkSelfPermission(
-            parentA!!.applicationContext,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED
-    ) {
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(parentA,
-                Manifest.permission.ACCESS_FINE_LOCATION)) {
-            requestLocPermission()
-        }
-    }
-}
-
-private fun requestLocPermission() {
-    ActivityCompat.requestPermissions(
-        parentA!!, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-        SpaceNavigatorActivity.LOCATION_PERMISSION_CODE
-    )
-}
-}
-
-class SpaceNavigatorActivity : Activity() {
+class SpaceNavigatorActivity : AppCompatActivity() {
     private var _binding: SpaceNavigatorBinding? = null
     private val binding get() = _binding!!
+    val viewModel : RenderViewModel by viewModels()
 
     private class RenderThread(
         private val p: AbstractPointing?,
@@ -89,6 +74,11 @@ class SpaceNavigatorActivity : Activity() {
         _binding = SpaceNavigatorBinding.inflate(layoutInflater)
 
 
+        viewModel.isLoaded.observe(this) {
+         //   Log.d("LOAD", "LOAEDDD")
+           // binding.loadProgressbar.visibility = View.GONE
+        }
+
         controller = Managers(
             SensorManager(
                 ContextCompat.getSystemService(
@@ -115,6 +105,7 @@ class SpaceNavigatorActivity : Activity() {
 
 
         setContentView(binding.root)
+
         skyView = binding.spaceNav
         skyView!!.setEGLConfigChooser(false)
         val renderer = MainRender(resources)
@@ -125,10 +116,16 @@ class SpaceNavigatorActivity : Activity() {
             RenderThread(
                 model,
                 rendererThreadRun!!
-            )
+            ),
+            viewModel
         )
+
+
+
         layerManager!!.renderLayouts(rendererThreadRun)
         controller.model = model
+
+        binding.spaceNav.visibility = View.VISIBLE
 
         binding.sensorsButton.setOnClickListener {
             startActivity(Intent(applicationContext, SensorsActivity::class.java))
@@ -153,9 +150,32 @@ class SpaceNavigatorActivity : Activity() {
         binding.spaceNav.onPause()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {}
+
 
     companion object {
         const val LOCATION_PERMISSION_CODE = 2
+    }
+}
+
+class GooglePlayServicesChecker(val parentA: Activity?) {
+
+    fun locServicesEnabled() {
+        if (ActivityCompat.checkSelfPermission(
+                parentA!!.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(parentA,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                requestLocPermission()
+            }
+        }
+    }
+
+    private fun requestLocPermission() {
+        ActivityCompat.requestPermissions(
+            parentA!!, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            SpaceNavigatorActivity.LOCATION_PERMISSION_CODE
+        )
     }
 }

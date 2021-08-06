@@ -18,7 +18,7 @@
             android:title="@string/spacex" />
 
         <item
-            android:id="@+id/spaceNavigatorActivity"
+            android:id="@+id/waitingFragment"
             android:title="@string/space_nav"/>
 
         <item

@@ -72,9 +72,18 @@ abstract class RendererRunner(protected val renderer: MainRender) {
         runRunnables { renderer.setViewOrientation(lookX, lookY, lookZ, upX, upY, upZ) }
     }
 
-    fun newRunTask(runnable: Runnable?) {
-        runRunnables { renderer.addRunTask(runnable!!) }
+    fun newRunTask(runnable: Runnable?, viewModel: RenderViewModel) {
+        runRunnables {
+            renderer.addRunTask(runnable!!, viewModel)
+        }
     }
+
+    fun newRunTask(runnable: Runnable?) {
+        runRunnables {
+            renderer.addRunTask(runnable!!)
+        }
+    }
+
 
     fun  queueAddManager(rom: RenderManager ) {
         runRunnables { renderer.addObjectManager(rom.manager) }
@@ -85,13 +94,13 @@ abstract class RendererRunner(protected val renderer: MainRender) {
     protected fun runRunnables(r: Runnable) {
         val queuer = queueToRun
         runRunnables(queuer, r)
+
     }
+
 
     companion object {
         protected fun runRunnables(queuer: ObjectRunner, r: Runnable) {
             queuer.runObj(r)
         }
-
-
     }
 }
