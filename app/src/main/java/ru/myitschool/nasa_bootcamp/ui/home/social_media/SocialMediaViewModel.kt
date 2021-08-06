@@ -29,6 +29,7 @@ interface SocialMediaViewModel {
     ): Resource<Nothing>
 
     fun getCurrentUser(): UserModel
+    fun createPost(post: PostModel)
 //    suspend fun getCommentsByItemId(id: Long, _class: Class<*>): List<LiveData<Comment>>
 //    suspend fun getLikesByItemId(id: Long, _class: Class<*>): List<UserModel>
 //    suspend fun getLikesByCommentId(id: Long): List<UserModel>

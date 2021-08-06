@@ -3,6 +3,7 @@ package ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -28,15 +29,19 @@ fun <T> Feed(
     currentUser: UserModel,
     onRetryButtonClick: () -> Unit,
     itemContent: @Composable (T) -> Unit,
+    headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
     onCommentButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
     onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> Unit,
     onItemClick: (ContentWithLikesAndComments<T>) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box {
         when (listResource.status) {
-            Status.SUCCESS ->
+            Status.SUCCESS -> {
                 LazyColumn(Modifier.fillMaxSize()) {
+                    item {
+                        headerContent()
+                    }
                     items(listResource.data!!) { item ->
                         val content by item.observeAsState()
                         if (content != null)
@@ -51,13 +56,14 @@ fun <T> Feed(
                             )
                     }
                 }
-            Status.LOADING ->
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            Status.ERROR ->
-                ErrorMessage(
-                    onClick = onRetryButtonClick,
-                    modifier = Modifier.align(Alignment.Center)
-                )
+            }
+
+            Status.LOADING -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+
+            Status.ERROR -> ErrorMessage(
+                onClick = onRetryButtonClick,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 }
