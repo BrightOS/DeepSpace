@@ -1,7 +1,9 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
@@ -9,6 +11,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.internal.api.FirebaseNoSignedInUserException
 import com.google.firebase.storage.FirebaseStorage
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -28,6 +32,11 @@ class FirebaseRepositoryImpl : FirebaseRepository {
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private val dbInstance = FirebaseDatabase.getInstance()
+
+    private val sharedPreferencesFileName = "currentUser"
+    private val sharedPreferencesUserName = "userName"
+    private val sharedPreferencesUri = "uri"
+    private val sharedPreferencesId = "uid"
 
 
     // VIEW CUSTOM USER POSTS
@@ -271,19 +280,16 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return returnData
     }
 
-    override suspend fun pushLike(source: String, postId: Int): UserModel? {
-        var user: UserModel? = null
+    override suspend fun pushLike(source: String, postId: Int) {
         if (authenticator.uid != null && !checkIfHasLike(source, postId)) {
             try {
                 dbInstance.getReference("posts").child(source).child(postId.toString())
                     .child("likes")
                     .child(authenticator.uid!!)
                     .setValue(authenticator.uid).await()
-                user = getCurrentUser()
             } catch (e: Exception) {
             }
         }
-        return user
     }
 
     override suspend fun pushLikeForComment(
@@ -406,12 +412,22 @@ class FirebaseRepositoryImpl : FirebaseRepository {
     }
 
     override suspend fun authenticateUser(
+        context: Context,
         email: String,
         password: String
     ): LiveData<Data<out FirebaseUser>> {
         val returnData: MutableLiveData<Data<out FirebaseUser>> = MutableLiveData()
         try {
             val user = authenticator.signInWithEmailAndPassword(email, password).await()
+            val userInfo = getUser(user.user!!.uid)
+
+            val sharedPreferences =
+                context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+            sharedPreferences.putString(sharedPreferencesUserName, userInfo!!.name)
+            sharedPreferences.putString(sharedPreferencesUri, userInfo.avatarUrl.toString())
+            sharedPreferences.putString(sharedPreferencesId, user.user!!.uid)
+            sharedPreferences.apply()
+
             returnData.postValue(Data.Ok(user?.user!!))
         } catch (e: Exception) {
             returnData.postValue(Data.Error(e.message.toString()))
@@ -419,10 +435,11 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return returnData
     }
 
-    override fun signOutUser(): LiveData<Data<out String>> {
+    override fun signOutUser(context: Context): LiveData<Data<out String>> {
         val returnData: MutableLiveData<Data<out String>> = MutableLiveData()
         try {
             authenticator.signOut()
+            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit().clear().apply()
             returnData.postValue(Data.Ok("Ok"))
         } catch (e: Exception) {
             returnData.postValue(Data.Error(e.message.toString()))
@@ -431,6 +448,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
     }
 
     override suspend fun createUser(
+        context: Context,
         userName: String,
         email: String,
         password: String,
@@ -447,6 +465,14 @@ class FirebaseRepositoryImpl : FirebaseRepository {
                     storageRef.putFile(imagePath).await()
                 }
                 user.user!!.sendEmailVerification().await()
+
+                val sharedPreferences =
+                    context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+                sharedPreferences.putString(sharedPreferencesUserName, userName)
+                sharedPreferences.putString(sharedPreferencesUri, imagePath.toString())
+                sharedPreferences.putString(sharedPreferencesId, user.user!!.uid)
+                sharedPreferences.apply()
+
                 returnData.postValue(Data.Ok(user.user!!))
             } else {
                 returnData.postValue(Data.Error("Unknown error happened."))
@@ -475,26 +501,19 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return user
     }
 
-    override suspend fun getCurrentUser(): UserModel? {
-        var user: UserModel? = null
+    override fun getCurrentUser(context: Context): UserModel? {
+        val sharedPreferences =
+            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
         try {
-            var userName: String = ""
-            var avatarUrl: Uri? = null
-            userName =
-                dbInstance.getReference("user_data").child(authenticator.uid!!).child("username")
-                    .get().await().getValue(
-                    String::class.java
-                ).toString()
-            try {
-                avatarUrl =
-                    storage.getReference("user_data/${authenticator.uid}").downloadUrl.await()
-            } catch (e: Exception) {
-            }
-            user =
-                UserModel(userName.toString(), avatarUrl, authenticator.uid.toString())
-        } catch (e: Exception) {
+            val id = sharedPreferences.getString(sharedPreferencesId, null)!!
+            val userName = sharedPreferences.getString(sharedPreferencesUserName, null)!!
+            val url = sharedPreferences.getString(sharedPreferencesUri, null)!!.toUri()
+            return UserModel(userName, url, id)
         }
-        return user
+        catch (e: Exception) {
+
+        }
+        return null
     }
 
     private suspend fun getUsernameById(uid: String): String =
