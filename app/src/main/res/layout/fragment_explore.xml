@@ -7,18 +7,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ru.myitschool.nasa_bootcamp.widget.SpaceButton
+    <ImageView
         android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
+        android:background="@drawable/circle"
+        android:elevation="10dp"
+        android:paddingVertical="8dp"
+        android:paddingEnd="4dp"
+        android:backgroundTint="@color/transparent_gray"
+        android:src="@drawable/ic_arrow_back"
         app:layout_constraintBottom_toBottomOf="@+id/starmanGif"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
+
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.099"
-        app:text="Go back" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/starmanGif"
