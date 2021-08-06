@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:background="@android:color/black">
+    android:orientation="vertical">
 
 
     <FrameLayout
@@ -27,8 +26,8 @@
             android:id="@+id/icon_info"
             android:layout_width="124dp"
             android:layout_height="124dp"
-            android:scaleType="centerCrop"
             android:layout_gravity="end"
+            android:scaleType="centerCrop"
             android:src="@drawable/deep_space_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,8 +37,8 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_info"
         android:layout_width="match_parent"
-        android:paddingHorizontal="8dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lin_lay_info"
@@ -55,9 +54,10 @@
                 android:id="@+id/title_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Company info"
+                android:layout_marginTop="20dp"
+                android:text="@string/company_info"
                 android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Company : SpaceX"
+                android:text="@string/company_spacex"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -74,8 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-
-                android:text="Founder : "
+                tools:text="Founder : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -83,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Founded : "
+                tools:text="Founded : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -91,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Employees : "
+                tools:text="Employees : "
                 android:textSize="18sp" />
 
 
@@ -100,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Vehicles : "
+                tools:text="Vehicles : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -108,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Launch sites : "
+                tools:text="Launch sites : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -116,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="CEO : "
+                tools:text="CEO : "
                 android:textSize="18sp" />
 
 
@@ -125,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="CTO : "
+                tools:text="CTO : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -133,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="COO : "
+                tools:text="COO : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -141,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="CTO propulsion : "
+                tools:text="CTO propulsion : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -149,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Valuation : "
+                tools:text="Valuation : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -157,7 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Summary : "
+                tools:text="Summary : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -165,7 +164,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Address : "
+                tools:text="Address : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -173,7 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="City : "
+                tools:text="City : "
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -181,13 +180,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="State : "
+                tools:text="State : "
                 android:textSize="18sp" />
 
             <include
-                layout="@layout/history_button_layout"
                 android:id="@+id/lay_history"
-                />
+                layout="@layout/history_button_layout" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

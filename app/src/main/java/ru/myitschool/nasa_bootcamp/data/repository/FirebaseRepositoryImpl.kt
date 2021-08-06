@@ -177,6 +177,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         comment: String
     ): LiveData<Data<out String>> {
+        println("In")
         val returnData = MutableLiveData<Data<out String>>()
         if (authenticator.uid != null) {
             try {
@@ -199,6 +200,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                 returnData.postValue(Data.Error(e.message.toString()))
             }
         } else {
+            println("Hmm")
             returnData.postValue(Data.Error("User is not authenticated."))
         }
         return returnData
@@ -297,8 +299,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .setValue(authenticator.uid).await()
             } catch (e: Exception) {
             }
-        }
-        else {
+        } else {
             try {
                 dbInstance.getReference("posts").child(source).child(postId.toString())
                     .child("likes")
@@ -541,56 +542,59 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             dbInstance.getReference("posts").child("ArticleModel")
                 .child(articleModel.value!!.content.id.toString()).child("id")
                 .setValue(articleModel.value!!.content.id.toString())
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
-        dbInstance.getReference("posts").child("ArticleModel")
-            .child(articleModel.value!!.content.id.toString())
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val comments: MutableList<Comment> = mutableListOf()
-                    val likes: MutableList<UserModel> = mutableListOf()
+        try {
+            dbInstance.getReference("posts").child("ArticleModel")
+                .child(articleModel.value!!.content.id.toString())
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val comments: MutableList<Comment> = mutableListOf()
+                        val likes: MutableList<UserModel> = mutableListOf()
 
-                    scope.launch {
-                        snapshot.child("comments").children.forEach {
-                            val id = it.child("id").getValue(Long::class.java)
-                            val text = it.child("comment").getValue(String::class.java)
-                            val commentLikes = mutableListOf<UserModel>()
-                            it.child("likes").children.forEach { like ->
-                                val userModel = getUser(like.getValue(String::class.java)!!)
-                                commentLikes.add(userModel!!)
+                        scope.launch {
+                            snapshot.child("comments").children.forEach {
+                                val id = it.child("id").getValue(Long::class.java)
+                                val text = it.child("comment").getValue(String::class.java)
+                                val commentLikes = mutableListOf<UserModel>()
+                                it.child("likes").children.forEach { like ->
+                                    val userModel = getUser(like.getValue(String::class.java)!!)
+                                    commentLikes.add(userModel!!)
+                                }
+
+                                val subComments = mutableListOf<SubComment>()
+                                val author = getUser(
+                                    it.child("userId").getValue(String::class.java).toString()
+                                )!!
+                                val date = it.child("date").getValue(Long::class.java)
+                                comments.add(
+                                    Comment(id!!, text!!, commentLikes, subComments, author, date!!)
+                                )
                             }
 
-                            val subComments = mutableListOf<SubComment>()
-                            val author = getUser(
-                                it.child("userId").getValue(String::class.java).toString()
-                            )!!
-                            val date = it.child("date").getValue(Long::class.java)
-                            comments.add(
-                                Comment(id!!, text!!, commentLikes, subComments, author, date!!)
+                            snapshot.child("likes").children.forEach {
+                                val userModel = getUser(it.getValue(String::class.java)!!)
+                                likes.add(userModel!!)
+                            }
+
+                            articleModel.postValue(
+                                ContentWithLikesAndComments(
+                                    articleModel.value!!.content,
+                                    likes,
+                                    comments
+                                )
                             )
                         }
-
-                        snapshot.child("likes").children.forEach {
-                            val userModel = getUser(it.getValue(String::class.java)!!)
-                            likes.add(userModel!!)
-                        }
-
-                        articleModel.postValue(
-                            ContentWithLikesAndComments(
-                                articleModel.value!!.content,
-                                likes,
-                                comments
-                            )
-                        )
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("Firebase Error", error.message)
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.d("Firebase Error", error.message)
+                    }
+                })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private suspend fun getUsernameById(uid: String): String =

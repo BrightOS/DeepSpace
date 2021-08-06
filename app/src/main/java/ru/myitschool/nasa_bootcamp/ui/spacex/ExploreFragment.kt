@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_explore.*
 import ru.myitschool.nasa_bootcamp.databinding.FragmentExploreBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
+import ru.myitschool.nasa_bootcamp.utils.SPACEX_LOGO_GIF
 import ru.myitschool.nasa_bootcamp.utils.STARMAN_GIF_LINK
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
@@ -72,6 +73,6 @@ class ExploreFragment : Fragment() {
         binding.back.setOnClickListener{
             navController.navigateUp()
         }
-        loadImage(requireContext(), STARMAN_GIF_LINK, binding.starmanGif)
+        loadImage(requireContext(), SPACEX_LOGO_GIF, binding.starmanGif)
     }
 }
