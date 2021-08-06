@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common
 
+import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -17,11 +18,12 @@ fun LikeButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
+//    Log.d("HELP ME", "LikeButton: ${currentUser?.name}")
     Row(verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onClick, modifier = modifier) {
             Icon(
                 painter = painterResource(R.drawable.ic_heart),
-                tint = if (list.contains(currentUser))
+                tint = if (currentUser != null && list.map { it.name }.contains(currentUser.name))
                     Color.Red
                 else LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
                 contentDescription = "like"
