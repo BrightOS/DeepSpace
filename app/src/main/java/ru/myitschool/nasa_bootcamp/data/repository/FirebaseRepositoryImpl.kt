@@ -31,8 +31,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
 
 
     // VIEW CUSTOM USER POSTS
-    override suspend fun getAllPosts(): LiveData<Data<out ArrayList<Post>>> {
-        val returnData = MutableLiveData<Data<out ArrayList<Post>>>()
+    override suspend fun getAllPosts(): Data<ArrayList<Post>> {
         val allPosts = ArrayList<Post>()
         try {
             dbInstance.getReference("user_posts").get().await().children.forEach {
@@ -46,11 +45,10 @@ class FirebaseRepositoryImpl : FirebaseRepository {
                 )
                 allPosts.add(postData)
             }
-            returnData.postValue(Data.Ok(allPosts))
+            return Data.Ok(allPosts)
         } catch (e: Exception) {
-            returnData.postValue(Data.Error(e.message.toString()))
+            return Data.Error(e.message.toString())
         }
-        return returnData
     }
 
     override suspend fun getAllPostsRawData(): LiveData<ContentWithLikesAndComments<PostModel>> {
@@ -463,15 +461,15 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         var user: UserModel? = null
         try {
             var userName = ""
-            var avatarUrl = ""
+            var avatarUrl: Uri? = null
             userName =
                 dbInstance.getReference("user_data").child(uid).child("username").get().await()
                     .getValue(String::class.java).toString()
             try {
-                avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await().toString()
+                avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
             } catch (e: Exception) {
             }
-            user = UserModel(userName.toString(), avatarUrl.toString(), uid)
+            user = UserModel(userName.toString(), avatarUrl, uid)
         } catch (e: Exception) {
         }
         return user
@@ -481,7 +479,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         var user: UserModel? = null
         try {
             var userName: String = ""
-            var avatarUrl: String = ""
+            var avatarUrl: Uri? = null
             userName =
                 dbInstance.getReference("user_data").child(authenticator.uid!!).child("username")
                     .get().await().getValue(
@@ -490,11 +488,10 @@ class FirebaseRepositoryImpl : FirebaseRepository {
             try {
                 avatarUrl =
                     storage.getReference("user_data/${authenticator.uid}").downloadUrl.await()
-                        .toString()
             } catch (e: Exception) {
             }
             user =
-                UserModel(userName.toString(), avatarUrl.toString(), authenticator.uid.toString())
+                UserModel(userName.toString(), avatarUrl, authenticator.uid.toString())
         } catch (e: Exception) {
         }
         return user

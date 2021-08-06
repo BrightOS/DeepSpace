@@ -6,10 +6,6 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/nasaFragment"
-        android:name="ru.myitschool.nasa_bootcamp.ui.nasa.NasaFragment"
-        android:label="NasaFragment" />
-    <fragment
         android:id="@+id/asteroidRadarFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidRadarFragment"
         android:label="AsteroidRadarFragment">
@@ -126,7 +122,7 @@
             app:popExitAnim="@anim/slide_pop_exit_anim" />
         <action
             android:id="@+id/success_login"
-            app:destination="@id/nasaFragment"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -136,7 +132,7 @@
         android:label="RegFragment">
         <action
             android:id="@+id/success_reg"
-            app:destination="@id/nasaFragment"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -194,9 +190,6 @@
         <action
             android:id="@+id/action_homeFragment_to_marsRoversFragment"
             app:destination="@id/marsRoversFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_nasaFragment"
-            app:destination="@id/nasaFragment" />
         <action
             android:id="@+id/action_homeFragment_to_socialMediaFragment"
             app:destination="@id/socialMediaNavGraph" />

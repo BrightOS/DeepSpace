@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@drawable/stars_sky_background">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/stars_sky_background_blur" />
+
+    <androidx.core.widget.NestedScrollView
+     android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,153 +24,183 @@
         android:showDividers="beginning|middle|end">
 
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
+            style="bold"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/sensors"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <View
+            android:id="@+id/divider3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:weightSum="2">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sensors"
-                android:textSize="30sp"
-                style="bold"
-                android:layout_gravity="center"
+                android:layout_width="58dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/proximity"
+
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"
                 />
 
-
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:weightSum="2"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="58dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="@string/proximity" />
-
-                <TextView
-                    android:id="@+id/proximity"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="@string/down_line"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:weightSum="2"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="58dp"
-                    android:textAlignment="center"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/rotation_vector" />
-
-                <TextView
-                    android:id="@+id/rotation"
-                    android:textAlignment="center"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="@string/down_line"/>
-            </LinearLayout>
-
-            <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:weightSum="2"
-            android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="58dp"
-                    android:layout_height="match_parent"
-                    android:textAlignment="center"
-                    android:layout_weight="1"
-                    android:text="@string/rotation_matrix" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:id="@+id/rotation_matrix_1"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="@string/down_line"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:weightSum="2"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:id="@+id/rotation_matrix_2"
-                    android:layout_width="wrap_content"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:text="@string/down_line"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:weightSum="2"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="56dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_weight="1"
-                    android:id="@+id/rotation_matrix_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="@string/down_line"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:weightSum="2"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="55dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="@string/light_level" />
-
-                <TextView
-                    android:id="@+id/light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="@string/down_line"/>
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/proximity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/down_line"
+                android:textAlignment="center" />
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="58dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingStart="16dp"
+                android:text="@string/rotation_vector"
+                android:textAlignment="textStart" />
+
+            <TextView
+                android:id="@+id/rotation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/down_line"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+        android:weightSum="2">
+
+            <TextView
+                android:layout_width="58dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"/>
+
+            <TextView
+                android:id="@+id/rotation_matrix_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/down_line"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:textAlignment="textStart"
+                android:text="@string/rotation_matrix"
+                android:paddingStart="16dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/rotation_matrix_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/down_line"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/rotation_matrix_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/down_line"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/light_level"
+
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"/>
+
+            <TextView
+                android:id="@+id/light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/down_line"
+                android:textAlignment="center" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -172,7 +213,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/compass"
-                android:textAlignment="center" />
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"/>
 
             <TextView
                 android:layout_weight="1"
@@ -194,7 +236,8 @@
                 android:layout_width="58dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"
                 android:text="@string/gyroscope" />
 
             <TextView
@@ -217,7 +260,8 @@
                 android:layout_width="58dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"
                 android:text="@string/accelerometer" />
 
             <TextView
@@ -239,7 +283,8 @@
                 android:layout_width="58dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"
                 android:text="@string/temperature" />
 
             <TextView
@@ -262,7 +307,8 @@
                 android:layout_width="58dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
+                android:paddingStart="16dp"
                 android:text="@string/pressure" />
 
             <TextView
@@ -277,3 +323,4 @@
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
+</FrameLayout>

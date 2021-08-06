@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/stars_sky_background"
-     >
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/stars_sky_background_blur" />
 
     <fragment
         android:id="@+id/sensors_fragm"
+        android:name="ru.myitschool.nasa_bootcamp.lookbeyond.activities.SensorFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="ru.myitschool.nasa_bootcamp.lookbeyond.activities.SensorFragment"
-        />
-</LinearLayout>
+        tools:visibility="gone" />
+</FrameLayout>

@@ -1,7 +1,6 @@
-package ru.myitschool.nasa_bootcamp.lookbeyond.maths
+package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 
 import kotlin.math.*
-
 
 /**
 Изучалось через сайт http://ssd.jpl.nasa.gov/?planet_pos
@@ -48,8 +47,7 @@ class OrbitalElements(// Mean distance
 
     companion object {
 
-        // calculation error
-        private const val EPSILON = 1.0e-6f
+        private const val EPSILON = 1.0e-5f
 
         //Вычислить true nomaly из mean anomaly
         private fun calculateTrueAnomaly(meanAnomaly: Double, e: Double): Double {
@@ -63,12 +61,11 @@ class OrbitalElements(// Mean distance
 
             } while (abs(_yv - e1) > EPSILON)
 
-            // convert eccentric anomaly to true anomaly
-            val v = 2f * atan(
+             val v = 2f * atan(
                 sqrt((1 + e) / (1 - e))
                         * tan(0.5f * _yv)
             )
-            return mod(v)
+            return modPart(v)
         }
     }
 }

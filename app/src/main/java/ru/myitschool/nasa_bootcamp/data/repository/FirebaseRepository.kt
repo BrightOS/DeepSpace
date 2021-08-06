@@ -14,7 +14,7 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 
 interface FirebaseRepository {
     suspend fun getAllPostsRawData(): LiveData<ContentWithLikesAndComments<PostModel>>
-    suspend fun getAllPosts(): LiveData<Data<out ArrayList<Post>>>
+    suspend fun getAllPosts(): Data<out ArrayList<Post>>
     suspend fun downloadImage(postId: String, imageId: String): LiveData<Data<out Bitmap>>
     suspend fun getAdditionalData(postId: String): LiveData<Data<out ArrayList<PostView>>>
     suspend fun createPost(post: Post, postId: String): LiveData<Data<out String>>

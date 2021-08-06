@@ -13,8 +13,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSensorsBinding
-import ru.myitschool.nasa_bootcamp.lookbeyond.pointing.AbstractPointing
-import ru.myitschool.nasa_bootcamp.lookbeyond.pointing.VectorPointing
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.AbstractPointing
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.VectorPointing
+
 import java.util.*
 
 class SensorFragment : Fragment(), SensorEventListener {
@@ -27,7 +28,6 @@ class SensorFragment : Fragment(), SensorEventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         model = VectorPointing()
     }
 

@@ -20,7 +20,7 @@ class TextureModule {
     }
 
     fun loadResourceTexture(gl: GL10, res: Int): Texture {
-        return createTextureFromResource(gl, res)
+        return createTextureFromResource(gl)
     }
 
     fun reload() {
@@ -37,7 +37,7 @@ class TextureModule {
         }
     }
 
-    private fun createTextureFromResource(gl: GL10, res: Int): TextureImpl {
+    private fun createTextureFromResource(gl: GL10): TextureImpl {
         val tex = createTex(gl)
         val opts = BitmapFactory.Options()
         opts.inScaled = false
