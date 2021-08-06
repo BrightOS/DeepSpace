@@ -1,5 +1,7 @@
 package ru.myitschool.nasa_bootcamp.utils
 
+import kotlin.math.PI
+
 const val TAG = "BERS"
 const val NASA_BASE_URL = "https://api.nasa.gov/"
 const val SPACEX_BASE_URL = "https://api.spacexdata.com/v3/"
@@ -11,3 +13,8 @@ const val wrongCredits = "invalidCredentials"
 const val userAlreadyRegistered = "userAlreadyRegistered"
 const val invalidEmail = "invalidEmail"
 const val errorEmailIsNotVerified = "Your email is not verified. Click 'send' button to recieve an email!"
+
+const val SEC_HOUR = 3600000L
+const val DEGREES_TO_RADIANS = PI / 180.0
+const val RADIANS_TO_DEGREES = 180.0 / PI
+const val OBLIQUITY = 23.439281f * DEGREES_TO_RADIANS //Наклонность Земли

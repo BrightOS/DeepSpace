@@ -1,19 +1,18 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.renderer
 
-import ru.myitschool.nasa_bootcamp.lookbeyond.maths.Vector3D
+import ru.myitschool.nasa_bootcamp.lookbeyond.Math.Vector3D
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.IntBuffer
+import java.nio.ShortBuffer
 import javax.microedition.khronos.opengles.GL10
 import javax.microedition.khronos.opengles.GL11
 
 class TexCoordGl {
 
-    fun reload(numVertices: Int) {
-        var numVertices = numVertices
-        if (numVertices < 0) numVertices = 0
-
-        this.vertexCount = numVertices
+    fun reset(_vertexCount: Int) {
+        val vertexCount = _vertexCount
+        this.vertexCount = vertexCount
         regenerateBuffer()
     }
 
@@ -21,11 +20,7 @@ class TexCoordGl {
         glBuffer.reload()
     }
 
-
-//  float->fix point
-//    n=(int)(f*65536);
-//
-    fun addCoords(u: Float, v: Float) {
+    fun addTexCoords(u: Float, v: Float) {
         coordBuffer!!.put((65536f * u).toInt())
         coordBuffer!!.put((65536f * v).toInt())
     }
@@ -35,9 +30,7 @@ class TexCoordGl {
             return
         }
         coordBuffer!!.position(0)
-
         gl.glTexCoordPointer(2, GL10.GL_FIXED, 0, coordBuffer)
-
     }
 
     private fun regenerateBuffer() {
@@ -62,13 +55,9 @@ class TexCoordGl {
 
 class VertexBuffer {
 
-    fun reload(vertexCount: Int) {
-        this.vertexCount = vertexCount
+    fun reload(numVertices: Int) {
+        vertexCount = numVertices
         rebuffer()
-    }
-
-    fun reload() {
-        glBuffer.reload()
     }
 
     fun point(p: Vector3D) {
@@ -96,10 +85,44 @@ class VertexBuffer {
 
     private var pos: IntBuffer? = null
     private var vertexCount = 0
-    private val glBuffer = GLBuffer(GL11.GL_ARRAY_BUFFER)
+    internal val glBuffer = GLBuffer(GL11.GL_ARRAY_BUFFER)
 
     init {
         vertexCount = 0
     }
 }
 
+class IndexGl {
+    fun reset(numVertices: Int) {
+        vertexCount = numVertices
+
+        if (vertexCount == 0) {
+            return
+        }
+        val bb = ByteBuffer.allocateDirect(2 * vertexCount)
+        bb.order(ByteOrder.nativeOrder())
+        val ib = bb.asShortBuffer()
+        ib.position(0)
+        shortBufInd = ib
+    }
+
+
+    fun draw(gl: GL10, primitiveType: Int) {
+        if (vertexCount == 0) {
+            return
+        }
+        shortBufInd!!.position(0)
+
+        gl.glDrawElements(primitiveType, vertexCount, GL10.GL_UNSIGNED_SHORT, shortBufInd)
+
+
+    }
+
+    internal var shortBufInd: ShortBuffer? = null
+    private var vertexCount = 0
+    internal val glBuffer = GLBuffer(GL11.GL_ELEMENT_ARRAY_BUFFER)
+
+    init {
+        vertexCount = 0
+    }
+}

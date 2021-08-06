@@ -1,7 +1,7 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond
 
 //Изучала с помощью сайта http://astro.if.ufrgs.br/trigesf/position.html
-// +сайт наса (орбитальные элементы)
+// +сайт наса (ВСЕ орбитальные элементы)
 
 /*
 Declination and Right ascension
