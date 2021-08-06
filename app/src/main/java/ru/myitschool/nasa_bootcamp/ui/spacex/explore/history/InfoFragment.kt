@@ -41,6 +41,8 @@ class InfoFragment : Fragment() {
         infoViewModel.getInfoLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             binding.addressInfo.text =
                 "Address: ${infoViewModel.getInfoLiveData().value!!.headquarters.address}"
+            binding.founderInfo.text = "Founder : ${infoViewModel.getInfoLiveData().value!!.founder}"
+            binding.foundedInfo.text = "Founded : ${infoViewModel.getInfoLiveData().value!!.founded}"
             binding.summaryInfo.text = infoViewModel.getInfoLiveData().value!!.summary
             binding.ceoInfo.text = "CEO : ${infoViewModel.getInfoLiveData().value!!.ceo}"
             binding.cooInfo.text = "COO : ${infoViewModel.getInfoLiveData().value!!.coo}"

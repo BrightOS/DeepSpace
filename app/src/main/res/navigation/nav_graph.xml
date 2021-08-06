@@ -145,7 +145,10 @@
         android:label="HistoryFragment" >
         <action
             android:id="@+id/action_historyFragment_to_historyFragment2"
-            app:destination="@id/historyFragment2" />
+            app:destination="@id/historyFragment2"
+            app:enterAnim="@animator/slide_in_right"
+            app:exitAnim="@animator/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/capsulesFragment"

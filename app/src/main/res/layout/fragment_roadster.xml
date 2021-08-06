@@ -43,6 +43,7 @@
                 android:id="@+id/launch_mass_kg_roadster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_marginHorizontal="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
@@ -55,6 +56,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
+                android:layout_margin="8dp"
                 tools:text="Orbit type : " />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -64,6 +66,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
+                android:layout_margin="8dp"
                 tools:text="Longtitude : " />
 
 
@@ -74,6 +77,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
+                android:layout_margin="8dp"
                 tools:text="Distance from the Earth : " />
 
 
@@ -83,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-
+                android:layout_margin="8dp"
                 android:textSize="18sp"
                 tools:text="Distance from the Mars : " />
 
@@ -95,6 +99,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
+                android:layout_margin="8dp"
                 tools:text="Details : " />
 
             <androidx.appcompat.widget.AppCompatImageView
