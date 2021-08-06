@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Resource
+import ru.myitschool.nasa_bootcamp.utils.Status
 import javax.inject.Inject
 
 class NetworkRepositoryImpl @Inject constructor(
@@ -13,7 +14,11 @@ class NetworkRepositoryImpl @Inject constructor(
 ) : NetworkRepository {
     override suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>> {
         val newsList = mutableListOf<LiveData<ContentWithLikesAndComments<ArticleModel>>>()
-        for (article in newsRepository.getNews().data.orEmpty()) {
+        val news = newsRepository.getNews()
+        if (news.status == Status.ERROR) {
+            return Resource.error(news.message!!, null)
+        }
+        for (article in news.data.orEmpty()) {
             val data = MutableLiveData<ContentWithLikesAndComments<ArticleModel>>()
             data.postValue(ContentWithLikesAndComments(article, listOf(), listOf()))
             firebaseRepository.articleModelEventListener(data)
