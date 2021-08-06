@@ -8,14 +8,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun Gradient(modifier: Modifier) {
+fun Gradient(modifier: Modifier, color: Color = Color(0xAA000000)) {
     Box( // gradient
         modifier = modifier
             .background(
                 Brush.verticalGradient(
                     colors = listOf(
                         Color.Transparent,
-                        Color(0xAA000000)
+                        color
                     )
                 )
             )

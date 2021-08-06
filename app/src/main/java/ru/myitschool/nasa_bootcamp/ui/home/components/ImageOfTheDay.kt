@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -56,7 +57,7 @@ fun ImageOfTheDay(
                             .fillMaxWidth()
                             .align(Alignment.BottomCenter)
                     ) {
-                        Gradient(modifier = Modifier.matchParentSize())
+                        Gradient(modifier = Modifier.matchParentSize(), color = Color(0xFF000000))
                         Column(
                             modifier = Modifier
                                 .padding(16.dp)

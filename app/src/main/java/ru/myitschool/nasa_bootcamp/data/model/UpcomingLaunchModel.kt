@@ -8,4 +8,9 @@ class UpcomingLaunchModel(
     val patch: PatchUpcoming?,
     val static_fire_date_unix: Int?,
     val upcoming: Boolean?
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is UpcomingLaunchModel) return false
+        return name == other.name && patch == other.patch && static_fire_date_unix == other.static_fire_date_unix && upcoming == other.upcoming
+    }
+}

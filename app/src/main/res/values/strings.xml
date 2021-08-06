@@ -83,5 +83,7 @@
     <string name="accelerometer">Accelerometer</string>
     <string name="temperature">Temperature</string>
     <string name="pressure">Pressure</string>
+    <string name="source_colon_space">Source: </string>
+    <string name="comment">Comment</string>
 
 </resources>
