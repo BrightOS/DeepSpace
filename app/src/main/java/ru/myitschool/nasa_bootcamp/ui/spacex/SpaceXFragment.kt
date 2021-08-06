@@ -68,7 +68,6 @@ class SpaceXFragment : Fragment() {
 
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
             if (error == ru.myitschool.nasa_bootcamp.utils.Status.ERROR) {
-
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 //binding.errorIcon.visibility = View.VISIBLE
@@ -78,7 +77,7 @@ class SpaceXFragment : Fragment() {
                 );
 
               
-            } else if ((error == ru.myitschool.nasa_bootcamp.utils.Status.LOADING)) {
+            } else if ((error == Status.LOADING)) {
 
                 binding.loadProgressbar.visibility = View.VISIBLE
                 binding.launchesRecycle.visibility = View.GONE
@@ -90,8 +89,7 @@ class SpaceXFragment : Fragment() {
             } else {
                 binding.launchesRecycle.visibility = View.VISIBLE
                 binding.loadProgressbar.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(
-                    resources.getColor(R.color.enabled_button),
+                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button),
                     PorterDuff.Mode.SRC_ATOP
                 );
             }
@@ -123,7 +121,6 @@ class SpaceXFragment : Fragment() {
             }
 
             val navController = findNavController()
-
 
             binding.explore.setOnClickListener {
                 val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
