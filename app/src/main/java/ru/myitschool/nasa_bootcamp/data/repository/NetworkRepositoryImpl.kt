@@ -8,7 +8,7 @@ import ru.myitschool.nasa_bootcamp.utils.Resource
 import javax.inject.Inject
 
 class NetworkRepositoryImpl @Inject constructor(
-    firebaseRepository: FirebaseRepository,
+    private val firebaseRepository: FirebaseRepository,
     newsRepository: NewsRepository
 ) : NetworkRepository {
     override suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>> {
@@ -32,7 +32,6 @@ class NetworkRepositoryImpl @Inject constructor(
                                 likes = listOf(),
                                 date = 1628008932
                             )
-
                         ),
                         content = ArticleModel(
                             id = 123,
@@ -48,17 +47,41 @@ class NetworkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>> {
+        //val allPosts = firebaseRepository.getAllPosts()
         return Resource.error("TO DO", null)
     }
 
     override suspend fun pressedLikeOnItem(
         item: ContentWithLikesAndComments<out Any>
     ): Resource<Nothing> {
-        return Resource.error("TO DO", null)
+        try {
+            if (item.content::class.java == ArticleModel::class.java) {
+                firebaseRepository.pushLike(
+                    "ArticleModel",
+                    (item.content as ArticleModel).id.toInt()
+                )!!
+            } else {
+                firebaseRepository.pushLike("UserPost", (item.content as ArticleModel).id.toInt())!!
+            }
+        }
+        catch (e: Exception) {
+            return Resource.error(e.message.toString(), null)
+        }
+        return Resource.success(null)
     }
 
     override suspend fun pressedLikeOnComment(item: ContentWithLikesAndComments<out Any>, comment: Comment): Resource<Nothing> {
-        return Resource.error("TO DO", null)
+        try{
+            if (item.content::class.java == ArticleModel::class.java) {
+                firebaseRepository.pushLikeForComment("ArticleModel", (item.content as ArticleModel).id.toInt(), comment.id)
+            } else {
+                firebaseRepository.pushLikeForComment("UserPost", (item.content as ArticleModel).id.toInt(), comment.id)
+            }
+        }
+        catch (e: Exception) {
+            return Resource.error(e.message.toString(), null)
+        }
+        return Resource.success(null)
     }
 
     override suspend fun sendComment(
@@ -67,17 +90,18 @@ class NetworkRepositoryImpl @Inject constructor(
         _class: Class<*>,
         parentComment: Comment?
     ): Resource<Nothing> {
-        return Resource.error("TO DO", null)
+        if (_class == ArticleModel::class.java) {
+            firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
+        } else {
+            firebaseRepository.pushComment("UserPost", id.toInt(), message)
+        }
+        return Resource.success(null)
     }
 
-
-    override fun getCurrentUser(): UserModel {
-        return UserModel(
-            id = "4",
-            avatarUrl = Uri.parse("https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ"),
-            name = "Zach"
-        )
+    override suspend fun getUser(uid: String): UserModel? {
+        return firebaseRepository.getUser(uid)
     }
 
+    override suspend fun getCurrentUser(): UserModel = firebaseRepository.getCurrentUser()!!
 }
 

@@ -6,10 +6,14 @@ import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseUser
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostView
+import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
+import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
+import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.utils.Data
 
 interface FirebaseRepository {
+    suspend fun getAllPostsRawData(): LiveData<ContentWithLikesAndComments<PostModel>>
     suspend fun getAllPosts(): Data<out ArrayList<Post>>
     suspend fun downloadImage(postId: String, imageId: String): LiveData<Data<out Bitmap>>
     suspend fun getAdditionalData(postId: String): LiveData<Data<out ArrayList<PostView>>>
@@ -20,7 +24,7 @@ interface FirebaseRepository {
     suspend fun pushSubComment(source: String, postId: Int, fatherCommentId: Long, comment: String): LiveData<Data<out String>>
     suspend fun deleteComment(source: String, postId: Int, commentId: Long): LiveData<Data<out String>>
     suspend fun deleteSubComment(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): LiveData<Data<out String>>
-    suspend fun pushLike(source: String, postId: Int): LiveData<Data<out String>>
+    suspend fun pushLike(source: String, postId: Int): UserModel?
     suspend fun pushLikeForComment(source: String, postId: Int, commentId: Long): LiveData<Data<out String>>
     suspend fun pushLikeForSubComment(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): LiveData<Data<out String>>
     suspend fun deleteLike(source: String, postId: Int): LiveData<Data<out String>>
@@ -29,5 +33,6 @@ interface FirebaseRepository {
     suspend fun authenticateUser(email: String, password: String): LiveData<Data<out FirebaseUser>>
     fun signOutUser(): LiveData<Data<out String>>
     suspend fun createUser(userName: String, email: String, password: String, imagePath: Uri?): LiveData<Data<out FirebaseUser>>
-    suspend fun getUser(uid: String): LiveData<Data<out UserModel>>
+    suspend fun getUser(uid: String): UserModel?
+    suspend fun getCurrentUser(): UserModel?
 }
