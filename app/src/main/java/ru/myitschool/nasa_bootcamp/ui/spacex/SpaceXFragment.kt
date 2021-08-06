@@ -52,6 +52,7 @@ class SpaceXFragment : Fragment() {
             when (data) {
                 is Data.Ok -> {
                     spaceXLaunchAdapter.submitList(data.data)
+                    binding.loadProgressbar.visibility = View.GONE
                 }
                 is Data.Error -> {
 
@@ -67,7 +68,7 @@ class SpaceXFragment : Fragment() {
         }
 
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
-            if (error == ru.myitschool.nasa_bootcamp.utils.Status.ERROR) {
+            if (error == Status.ERROR) {
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 //binding.errorIcon.visibility = View.VISIBLE
@@ -75,10 +76,7 @@ class SpaceXFragment : Fragment() {
                     resources.getColor(R.color.disabled_button),
                     PorterDuff.Mode.SRC_ATOP
                 );
-
-              
             } else if ((error == Status.LOADING)) {
-
                 binding.loadProgressbar.visibility = View.VISIBLE
                 binding.launchesRecycle.visibility = View.GONE
                 //binding.errorIcon.visibility = View.GONE
@@ -88,8 +86,7 @@ class SpaceXFragment : Fragment() {
                 );
             } else {
                 binding.launchesRecycle.visibility = View.VISIBLE
-                binding.loadProgressbar.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button),
+                 binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button),
                     PorterDuff.Mode.SRC_ATOP
                 );
             }
