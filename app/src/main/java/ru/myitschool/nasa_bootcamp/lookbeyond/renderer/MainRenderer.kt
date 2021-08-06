@@ -32,6 +32,7 @@ open class MainRender(res: Resources?) : GLSurfaceView.Renderer {
         var fullReload: Boolean
     )
 
+    private var viewModel : RenderViewModel?= null
 
     private val managersToReload = ArrayList<ManagerReloadData>()
 
@@ -55,6 +56,8 @@ open class MainRender(res: Resources?) : GLSurfaceView.Renderer {
         for (update in taasks) {
             update.run()
         }
+        viewModel!!.isLoaded.postValue(true)
+
     }
 
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
@@ -85,8 +88,14 @@ open class MainRender(res: Resources?) : GLSurfaceView.Renderer {
         updateProjection = true
     }
 
+    fun addRunTask(update: Runnable, viewModel : RenderViewModel) {
+        taasks.add(update)
+        this.viewModel = viewModel
+    }
+
     fun addRunTask(update: Runnable) {
         taasks.add(update)
+        this.viewModel = viewModel
     }
 
     fun addObjectManager(rendererManager: RendererManager) {
