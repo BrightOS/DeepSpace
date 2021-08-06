@@ -24,8 +24,7 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
-import ru.myitschool.nasa_bootcamp.utils.Data
-import ru.myitschool.nasa_bootcamp.utils.Status
+import ru.myitschool.nasa_bootcamp.utils.*
 import kotlin.system.measureTimeMillis
 
 @AndroidEntryPoint
@@ -45,9 +44,9 @@ class SpaceXFragment : Fragment() {
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
         spaceXLaunchAdapter = SpaceXLaunchAdapter()
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
-        binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext
-        binding.loadProgressbar.visibility = View.VISIBLE
+        binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
 
+        binding.loadProgressbar.visibility = View.VISIBLE
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
             when (data) {
                 is Data.Ok -> {
@@ -68,6 +67,7 @@ class SpaceXFragment : Fragment() {
 
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
             if (error == ru.myitschool.nasa_bootcamp.utils.Status.ERROR) {
+
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 //binding.errorIcon.visibility = View.VISIBLE
@@ -89,7 +89,8 @@ class SpaceXFragment : Fragment() {
             } else {
                 binding.launchesRecycle.visibility = View.VISIBLE
                 binding.loadProgressbar.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button),
+                binding.explore.getBackground().setColorFilter(
+                    resources.getColor(R.color.enabled_button),
                     PorterDuff.Mode.SRC_ATOP
                 );
             }
@@ -121,6 +122,7 @@ class SpaceXFragment : Fragment() {
             }
 
             val navController = findNavController()
+
 
             binding.explore.setOnClickListener {
                 val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
