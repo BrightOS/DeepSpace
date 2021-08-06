@@ -3,19 +3,18 @@ package ru.myitschool.nasa_bootcamp.data.repository
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
-import com.google.firebase.internal.api.FirebaseNoSignedInUserException
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import okhttp3.internal.wait
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
@@ -25,8 +24,13 @@ import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
 import java.util.*
+import java.util.logging.Handler
 import kotlin.collections.ArrayList
-import kotlin.coroutines.suspendCoroutine
+
+
+interface OnGetDataListener {
+    fun onSuccess(dataSnapshotValue: String?)
+}
 
 class FirebaseRepositoryImpl : FirebaseRepository {
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
@@ -439,7 +443,8 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         val returnData: MutableLiveData<Data<out String>> = MutableLiveData()
         try {
             authenticator.signOut()
-            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit().clear().apply()
+            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+                .clear().apply()
             returnData.postValue(Data.Ok("Ok"))
         } catch (e: Exception) {
             returnData.postValue(Data.Error(e.message.toString()))
@@ -467,7 +472,8 @@ class FirebaseRepositoryImpl : FirebaseRepository {
                 user.user!!.sendEmailVerification().await()
 
                 val sharedPreferences =
-                    context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+                    context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+                        .edit()
                 sharedPreferences.putString(sharedPreferencesUserName, userName)
                 sharedPreferences.putString(sharedPreferencesUri, imagePath.toString())
                 sharedPreferences.putString(sharedPreferencesId, user.user!!.uid)
@@ -509,11 +515,61 @@ class FirebaseRepositoryImpl : FirebaseRepository {
             val userName = sharedPreferences.getString(sharedPreferencesUserName, null)!!
             val url = sharedPreferences.getString(sharedPreferencesUri, null)!!.toUri()
             return UserModel(userName, url, id)
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
 
         }
         return null
+    }
+
+    override fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>) {
+        val dbInstance = FirebaseDatabase.getInstance()
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
+        dbInstance.getReference("posts").child("ArticleModel")
+            .child(articleModel.value!!.content.id.toString())
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val comments: MutableList<Comment> = mutableListOf()
+                    val likes: MutableList<UserModel> = mutableListOf()
+
+                    scope.launch {
+                        snapshot.child("comments").children.forEach {
+                            val id = it.child("id").getValue(Long::class.java)
+                            val text = it.child("comment").getValue(String::class.java)
+                            val commentLikes = mutableListOf<UserModel>()
+                            it.child("likes").children.forEach { like ->
+                                val userModel = getUser(like.getValue(String::class.java)!!)
+                                commentLikes.add(userModel!!)
+                            }
+
+                            val subComments = mutableListOf<SubComment>()
+                            val author = getUser(
+                                it.child("userId").getValue(String::class.java).toString()
+                            )!!
+                            val date = it.child("date").getValue(Long::class.java)
+                            comments.add(
+                                Comment(id!!, text!!, commentLikes, subComments, author, date!!)
+                            )
+                        }
+
+                        snapshot.child("likes").children.forEach {
+                            val userModel = getUser(it.getValue(String::class.java)!!)
+                            likes.add(userModel!!)
+                        }
+
+                        articleModel.postValue(
+                            ContentWithLikesAndComments(
+                                articleModel.value!!.content,
+                                likes,
+                                comments
+                            )
+                        )
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("Firebase Error", error.message)
+                }
+            })
     }
 
     private suspend fun getUsernameById(uid: String): String =

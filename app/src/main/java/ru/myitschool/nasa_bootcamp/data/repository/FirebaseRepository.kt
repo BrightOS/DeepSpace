@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostView
@@ -17,7 +18,7 @@ interface FirebaseRepository {
     suspend fun getAllPostsRawData(): LiveData<ContentWithLikesAndComments<PostModel>>
     suspend fun getAllPosts(): Data<out ArrayList<Post>>
     suspend fun downloadImage(postId: String, imageId: String): LiveData<Data<out Bitmap>>
-    suspend fun getAdditionalData(postId: String): LiveData<Data<out ArrayList<PostView>>>
+    suspend fun getAdditionalData(postId: String): LiveData<Data<ArrayList<PostView>>>
     suspend fun createPost(post: Post, postId: String): LiveData<Data<out String>>
     fun uploadImage(postId: String, imageId: Int,  imagePath: Uri) : LiveData<Data<out String>>
     fun getLastPostId():  LiveData<Data<out String>>
@@ -36,4 +37,5 @@ interface FirebaseRepository {
     suspend fun createUser(context: Context, userName: String, email: String, password: String, imagePath: Uri?): LiveData<Data<out FirebaseUser>>
     suspend fun getUser(uid: String): UserModel?
     fun getCurrentUser(context: Context): UserModel?
+    fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>)
 }
