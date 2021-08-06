@@ -17,7 +17,7 @@ class ViewAllPostViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository
 ) : ViewModel(), ViewAllPostViewModel {
 
-    override suspend fun getAllPosts(): LiveData<Data<out ArrayList<Post>>> {
+    override suspend fun getAllPosts(): Data<ArrayList<Post>> {
         return repository.getAllPosts()
     }
 

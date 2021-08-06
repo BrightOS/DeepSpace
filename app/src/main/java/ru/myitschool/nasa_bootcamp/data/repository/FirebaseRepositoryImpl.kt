@@ -29,8 +29,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
 
 
     // VIEW CUSTOM USER POSTS
-    override suspend fun getAllPosts(): LiveData<Data<out ArrayList<Post>>> {
-        val returnData = MutableLiveData<Data<out ArrayList<Post>>>()
+    override suspend fun getAllPosts(): Data<ArrayList<Post>> {
         val allPosts = ArrayList<Post>()
         try {
             dbInstance.getReference("user_posts").get().await().children.forEach {
@@ -44,11 +43,10 @@ class FirebaseRepositoryImpl : FirebaseRepository {
                 )
                 allPosts.add(postData)
             }
-            returnData.postValue(Data.Ok(allPosts))
+            return Data.Ok(allPosts)
         } catch (e: Exception) {
-            returnData.postValue(Data.Error(e.message.toString()))
+            return Data.Error(e.message.toString())
         }
-        return returnData
     }
 
     override suspend fun downloadImage(
