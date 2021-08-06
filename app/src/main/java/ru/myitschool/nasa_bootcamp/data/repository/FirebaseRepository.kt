@@ -36,6 +36,6 @@ interface FirebaseRepository {
     fun signOutUser(context: Context): LiveData<Data<out String>>
     suspend fun createUser(context: Context, userName: String, email: String, password: String, imagePath: Uri?): LiveData<Data<out FirebaseUser>>
     suspend fun getUser(uid: String): UserModel?
-    fun getCurrentUser(context: Context): UserModel?
+    fun getCurrentUser(): UserModel?
     fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>)
 }
