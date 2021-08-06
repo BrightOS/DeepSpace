@@ -298,6 +298,15 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             } catch (e: Exception) {
             }
         }
+        else {
+            try {
+                dbInstance.getReference("posts").child(source).child(postId.toString())
+                    .child("likes")
+                    .child(authenticator.uid!!)
+                    .setValue(authenticator.uid).await()
+            } catch (e: Exception) {
+            }
+        }
     }
 
     override suspend fun pushLikeForComment(
@@ -528,6 +537,14 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     override fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>) {
         val dbInstance = FirebaseDatabase.getInstance()
         val scope = CoroutineScope(Job() + Dispatchers.Main)
+        try {
+            dbInstance.getReference("posts").child("ArticleModel")
+                .child(articleModel.value!!.content.id.toString()).child("id")
+                .setValue(articleModel.value!!.content.id.toString())
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
         dbInstance.getReference("posts").child("ArticleModel")
             .child(articleModel.value!!.content.id.toString())
             .addValueEventListener(object : ValueEventListener {
