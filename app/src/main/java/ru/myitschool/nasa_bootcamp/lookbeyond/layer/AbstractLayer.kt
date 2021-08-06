@@ -1,18 +1,19 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.layer
 
 import android.content.res.Resources
-import ru.myitschool.nasa_bootcamp.lookbeyond.pointing.AbstractPointing
 import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.RendererRunner
 import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.RendererThreadRun
-import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.ImageRes
-import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.LineSource
+import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.ImageRes
+import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.LineRes
+
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 
-
 interface Layer {
-    fun init(model : AbstractPointing)
+    fun init()
+    fun renderIt(threadRun: RendererThreadRun)
 }
+
 
 enum class ClassType {
     IMAGE,
@@ -22,29 +23,36 @@ enum class ClassType {
 
 abstract class AbstractLayer(protected val resources: Resources) : Layer {
     private val renderMapLock = ReentrantLock()
-    private val type: ClassType = ClassType.NO
-
+    private val renderMap = HashMap<ClassType, RendererRunner.RenderManager>()
     private var renderer: RendererThreadRun? = null
 
-     fun renderIt(threadRun: RendererThreadRun) {
+
+    protected abstract fun updateLayer()
+
+    protected fun addNewRunTask(closure: Runnable?) {
+        if (renderer != null) {
+            renderer!!.newRunTask(closure)
+        }
+    }
+
+    override fun renderIt(threadRun: RendererThreadRun) {
+        renderMap.clear()
         renderer = threadRun
         updateLayer()
     }
 
-    protected abstract fun updateLayer()
-
-
     protected fun repaint(
-        lineSources: ArrayList<LineSource>?,
-        imageRes: ArrayList<ImageRes>?,
-     ) {
-        if (renderer == null) return
+        lineRes: ArrayList<LineRes>,
+        imageRes: ArrayList<ImageRes>,
+    ) {
 
+        if (renderer == null) {
+            return
+        }
         renderMapLock.lock()
         try {
-            val atomic = renderer!!.createAtomic()
-
-            setSources(lineSources, ClassType.LINE, atomic)
+            val atomic = renderer!!.createQueue()
+            setSources(lineRes, ClassType.LINE, atomic)
             setSources(imageRes, ClassType.IMAGE, atomic)
             renderer!!.queueRender(atomic)
         } finally {
@@ -52,39 +60,32 @@ abstract class AbstractLayer(protected val resources: Resources) : Layer {
         }
     }
 
-
     private fun <E> setSources(
         sources: ArrayList<E>?,
-        classType: ClassType, runRendering: RendererThreadRun.RunRendering
+        classType: ClassType, run: RendererThreadRun.RunRendering
     ) {
-        var manager: RendererRunner.RenderManager? = null
-        val type = classType
-
-        when (type) {
-            ClassType.IMAGE -> {
-                manager = createRenderers(classType, runRendering)
+        var manager = renderMap[classType] as RendererRunner.RenderManager?
+        if (sources == null || sources.isEmpty()) {
+            if (manager != null) {
+                manager.runObjects<E>(emptyList(), run)
             }
-            ClassType.LINE -> {
-                manager = createRenderers(classType, runRendering)
-            }
-            else -> {
-            }
+            return
         }
-
-        if (sources != null && manager != null) manager.runObjects(sources, runRendering)
+        if (manager == null) {
+            manager = createRenderManager(classType, run)
+            renderMap[classType] = manager
+        }
+        manager.runObjects(sources, run)
     }
 
-    fun createRenderers(
+    fun createRenderManager(
         classType: ClassType,
         controller: RendererRunner
     ): RendererRunner.RenderManager {
+
         when (classType) {
-            ClassType.IMAGE -> {
-                    return controller.createImageManager(30)
-            }
-            ClassType.LINE -> {
-                return controller.createLineManager(10)
-            }
+            ClassType.IMAGE -> return controller.createImageManager(30)
+            ClassType.LINE -> return controller.createLineManager(10)
             else -> {
             }
         }

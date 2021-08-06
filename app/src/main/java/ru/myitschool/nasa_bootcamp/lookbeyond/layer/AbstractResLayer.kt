@@ -1,41 +1,34 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.layer
 
 import android.content.res.Resources
-import ru.myitschool.nasa_bootcamp.lookbeyond.maths.Planet
-import ru.myitschool.nasa_bootcamp.lookbeyond.maths.PlanetSource
-import ru.myitschool.nasa_bootcamp.lookbeyond.pointing.AbstractPointing
-import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.ImageRes
-import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.InitialResource
-import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.LineSource
+import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.ImageRes
+import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.InitialResource
+import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.LineRes
+
 import java.util.*
 
-class AbstractResLayer(resources: Resources?) :
+abstract class AbstractResLayer(resources: Resources?) :
     AbstractLayer(resources!!) {
     private val imageSources = ArrayList<ImageRes>()
-    private val lineSources = ArrayList<LineSource>()
-    private val sources = ArrayList<InitialResource>()
+    private val lineSources = ArrayList<LineRes>()
+    private val resoursec = ArrayList<InitialResource>()
 
-    @Synchronized
-    override fun init(model: AbstractPointing) {
-        sources.clear()
-
-        for (planet in Planet.values()) {
-            sources.add(PlanetSource(planet, resources, model))
+    override fun init() {
+        resoursec.clear()
+        init(resoursec)
+        for (astroSource in resoursec) {
+            val resources = astroSource.create()
+            imageSources.addAll(resources.images)
+            lineSources.addAll(resources.lines)
         }
-        sources.add(LatLongGrid(resources, 24, 10))
-
-        for (astroSource in sources) {
-            val sources = astroSource.initialize()
-            imageSources.addAll(sources.imagesResources())
-            lineSources.addAll(sources.lineResources())
-        }
+        updateLayer()
     }
 
     override fun updateLayer() {
         super.repaint(lineSources, imageSources)
     }
 
-
+    protected abstract fun init(sources: ArrayList<InitialResource>)
 
 
 }
