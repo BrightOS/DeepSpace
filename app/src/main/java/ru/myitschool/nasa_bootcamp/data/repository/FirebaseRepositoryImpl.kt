@@ -16,7 +16,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import okhttp3.internal.wait
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.model.*
@@ -24,13 +23,8 @@ import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
 import java.util.*
-import java.util.logging.Handler
 import kotlin.collections.ArrayList
 
-
-interface OnGetDataListener {
-    fun onSuccess(dataSnapshotValue: String?)
-}
 
 class FirebaseRepositoryImpl : FirebaseRepository {
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
@@ -294,6 +288,15 @@ class FirebaseRepositoryImpl : FirebaseRepository {
             } catch (e: Exception) {
             }
         }
+        else {
+            try {
+                dbInstance.getReference("posts").child(source).child(postId.toString())
+                    .child("likes")
+                    .child(authenticator.uid!!)
+                    .setValue(authenticator.uid).await()
+            } catch (e: Exception) {
+            }
+        }
     }
 
     override suspend fun pushLikeForComment(
@@ -524,6 +527,14 @@ class FirebaseRepositoryImpl : FirebaseRepository {
     override fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>) {
         val dbInstance = FirebaseDatabase.getInstance()
         val scope = CoroutineScope(Job() + Dispatchers.Main)
+        try {
+            dbInstance.getReference("posts").child("ArticleModel")
+                .child(articleModel.value!!.content.id.toString()).child("id")
+                .setValue(articleModel.value!!.content.id.toString())
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
         dbInstance.getReference("posts").child("ArticleModel")
             .child(articleModel.value!!.content.id.toString())
             .addValueEventListener(object : ValueEventListener {
