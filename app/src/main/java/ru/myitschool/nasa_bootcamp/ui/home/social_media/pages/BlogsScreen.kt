@@ -35,10 +35,6 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
     Feed(
         onRetryButtonClick = { viewModel.getViewModelScope().launch { viewModel.loadBlogs() } },
         itemContent = { item: PostModel -> BlogItemContent(item) },
-        onCommentButtonClick = {
-            viewModel.setSelectedPost(it)
-            navController.navigate(action)
-        },
         onLikeButtonClick = {
             viewModel.getViewModelScope().launch { viewModel.pressedLikeOnItem(it) }
         },

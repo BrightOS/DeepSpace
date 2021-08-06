@@ -18,7 +18,7 @@ fun LikeButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-//    Log.d("HELP ME", "LikeButton: ${currentUser?.name}")
+    Log.d("HELP ME", "LikeButton: ${currentUser?.name}")
     Row(verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onClick, modifier = modifier) {
             Icon(

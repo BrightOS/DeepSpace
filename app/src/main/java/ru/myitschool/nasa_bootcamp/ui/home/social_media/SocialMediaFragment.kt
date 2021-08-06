@@ -51,6 +51,7 @@ class SocialMediaFragment : Fragment() {
         viewModel.getViewModelScope().launch(Dispatchers.IO) {
             viewModel.loadNews()
             viewModel.loadBlogs()
+            viewModel.loadCurrentUser()
         }
         return ComposeView(requireContext()).apply {
             setContent {
@@ -97,11 +98,6 @@ fun SocialMediaScreen(
             HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
                 tabs[page].content()
             }
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp)
-            )
         }
         Tabs(
             tabs = tabs,
