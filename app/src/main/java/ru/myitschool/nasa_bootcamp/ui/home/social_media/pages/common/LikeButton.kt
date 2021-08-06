@@ -13,7 +13,7 @@ import ru.myitschool.nasa_bootcamp.data.model.UserModel
 @Composable
 fun LikeButton(
     list: List<UserModel>,
-    currentUser: UserModel,
+    currentUser: UserModel?,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {

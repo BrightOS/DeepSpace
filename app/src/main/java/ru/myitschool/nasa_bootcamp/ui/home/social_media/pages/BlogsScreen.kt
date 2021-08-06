@@ -27,6 +27,7 @@ import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
     val listResource by viewModel.getBlogs().observeAsState(Resource.success(listOf()))
     val action = SocialMediaFragmentDirections.actionSocialMediaFragmentToCommentsFragment()
+    val currentUser by viewModel.getCurrentUser().observeAsState()
     Feed(
         onRetryButtonClick = { viewModel.getViewModelScope().launch { viewModel.loadBlogs() } },
         itemContent = { item: PostModel -> BlogItemContent(item) },
@@ -45,7 +46,7 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
             viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(item, comment) }
         },
         listResource = listResource,
-        currentUser = viewModel.getCurrentUser(),
+        currentUser = currentUser,
         headerContent = {
             BlogHeader(
                 onSendButton = { post -> viewModel.createPost(post) },

@@ -10,6 +10,7 @@ interface SocialMediaViewModel {
     fun getNews(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>
     suspend fun loadBlogs()
     suspend fun loadNews()
+    suspend fun loadCurrentUser()
     fun getViewModelScope(): CoroutineScope
     fun setSelectedPost(post: ContentWithLikesAndComments<PostModel>)
     fun getSelectedPost(): ContentWithLikesAndComments<PostModel>?
@@ -28,7 +29,7 @@ interface SocialMediaViewModel {
         parentComment: Comment? = null
     ): Resource<Nothing>
 
-    fun getCurrentUser(): UserModel
+    fun getCurrentUser(): LiveData<UserModel?>
     fun createPost(post: PostModel)
 //    suspend fun getCommentsByItemId(id: Long, _class: Class<*>): List<LiveData<Comment>>
 //    suspend fun getLikesByItemId(id: Long, _class: Class<*>): List<UserModel>

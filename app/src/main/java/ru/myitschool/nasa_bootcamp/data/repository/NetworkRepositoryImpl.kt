@@ -103,6 +103,6 @@ class NetworkRepositoryImpl @Inject constructor(
         return firebaseRepository.getUser(uid)
     }
 
-    override suspend fun getCurrentUser(): UserModel = firebaseRepository.getCurrentUser()!!
+    override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()
 }
 

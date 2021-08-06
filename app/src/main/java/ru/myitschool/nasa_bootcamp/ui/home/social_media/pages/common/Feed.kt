@@ -26,7 +26,7 @@ import ru.myitschool.nasa_bootcamp.utils.Status
 @Composable
 fun <T> Feed(
     listResource: Resource<List<LiveData<ContentWithLikesAndComments<T>>>>,
-    currentUser: UserModel,
+    currentUser: UserModel?,
     onRetryButtonClick: () -> Unit,
     itemContent: @Composable (T) -> Unit,
     headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
@@ -71,7 +71,7 @@ fun <T> Feed(
 @Composable
 fun <T> ItemWithLikesAndComments(
     item: ContentWithLikesAndComments<T>,
-    currentUser: UserModel,
+    currentUser: UserModel?,
     itemContent: @Composable (T) -> Unit,
     onLikeInCommentClick: (Comment) -> Unit,
     onLikeButtonClick: () -> Unit,

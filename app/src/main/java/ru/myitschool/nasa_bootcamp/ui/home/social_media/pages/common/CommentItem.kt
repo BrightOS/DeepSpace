@@ -25,7 +25,7 @@ import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 @Composable
 fun CommentItem(
     comment: Comment,
-    currentUser: UserModel,
+    currentUser: UserModel?,
     onLikeClick: () -> Unit,
     onCommentClick: () -> Unit,
     modifier: Modifier = Modifier,

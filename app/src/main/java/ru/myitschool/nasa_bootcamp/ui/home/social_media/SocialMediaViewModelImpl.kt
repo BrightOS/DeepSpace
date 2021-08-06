@@ -19,6 +19,7 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
         MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>()
     private var selectedPost: ContentWithLikesAndComments<PostModel>? = null
     private var selectedArticle: ContentWithLikesAndComments<ArticleModel>? = null
+    private val currentUser = MutableLiveData<UserModel?>(null)
 
     override fun getBlogs() = blogs
     override fun getNews() = articles
@@ -29,6 +30,10 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
 
     override suspend fun loadNews() {
         articles.postValue(networkRepository.getNews())
+    }
+
+    override suspend fun loadCurrentUser() {
+        currentUser.postValue(networkRepository.getCurrentUser())
     }
 
     override fun getViewModelScope() = viewModelScope
@@ -65,6 +70,9 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
         return networkRepository.sendComment(message, id, _class, parentComment)
     }
 
-    override fun getCurrentUser() = networkRepository.getCurrentUser()
+    override fun getCurrentUser() = currentUser
+    override fun createPost(post: PostModel) {
+        TODO("Not yet implemented")
+    }
 
 }

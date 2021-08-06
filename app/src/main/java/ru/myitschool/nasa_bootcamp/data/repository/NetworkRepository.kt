@@ -8,7 +8,7 @@ interface NetworkRepository {
     suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>
     suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>
     suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
-    suspend fun getCurrentUser(): UserModel
+    suspend fun getCurrentUser(): UserModel?
     suspend fun pressedLikeOnComment(
         item: ContentWithLikesAndComments<out Any>,
         comment: Comment
