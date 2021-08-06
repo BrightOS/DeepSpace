@@ -1,18 +1,13 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media
 
-import android.util.Log
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.database.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import ru.myitschool.nasa_bootcamp.data.dto.firebase.CommentDto
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.data.repository.NetworkRepository
-import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import javax.inject.Inject
 
@@ -25,7 +20,7 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
         MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>()
     private var selectedPost: ContentWithLikesAndComments<PostModel>? = null
     private var selectedArticle: ContentWithLikesAndComments<ArticleModel>? = null
-
+    private val currentUser = MutableLiveData<UserModel?>(null)
 
     override fun getBlogs() = blogs
     override fun getNews() = articles
@@ -36,6 +31,10 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
 
     override suspend fun loadNews() {
         articles.postValue(networkRepository.getNews())
+    }
+
+    override suspend fun loadCurrentUser() {
+        currentUser.postValue(networkRepository.getCurrentUser())
     }
 
     override fun getViewModelScope() = viewModelScope
@@ -71,4 +70,10 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     ): Resource<Nothing> {
         return networkRepository.sendComment(message, id, _class, parentComment)
     }
+
+    override fun getCurrentUser() = currentUser
+    override fun createPost(post: String, text: String, bitmap: Bitmap?) {
+        TODO("Not yet implemented")
+    }
+
 }

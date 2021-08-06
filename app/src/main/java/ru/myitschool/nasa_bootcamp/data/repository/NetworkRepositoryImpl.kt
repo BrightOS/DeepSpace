@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -81,6 +80,6 @@ class NetworkRepositoryImpl @Inject constructor(
         return firebaseRepository.getUser(uid)
     }
 
-    override fun getCurrentUser(context: Context): UserModel = firebaseRepository.getCurrentUser(context)!!
+    override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()
 }
 
