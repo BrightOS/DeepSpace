@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSensorsBinding
-import ru.myitschool.nasa_bootcamp.lookbeyond.control.AbstractPointing
-import ru.myitschool.nasa_bootcamp.lookbeyond.control.VectorPointing
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.AbstractPointing
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.VectorPointing
 
 import java.util.*
 

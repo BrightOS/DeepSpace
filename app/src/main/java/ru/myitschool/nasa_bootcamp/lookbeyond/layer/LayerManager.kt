@@ -2,7 +2,7 @@ package ru.myitschool.nasa_bootcamp.lookbeyond.layer
 
 import android.content.res.Resources
 
-import ru.myitschool.nasa_bootcamp.lookbeyond.control.AbstractPointing
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.AbstractPointing
 import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.RendererThreadRun
 import java.util.*
 

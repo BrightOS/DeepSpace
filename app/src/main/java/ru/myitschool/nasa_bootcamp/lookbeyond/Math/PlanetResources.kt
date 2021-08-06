@@ -2,7 +2,7 @@ package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 
 import android.content.res.Resources
 
-import ru.myitschool.nasa_bootcamp.lookbeyond.control.AbstractPointing
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.AbstractPointing
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.ImageRes
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.ImageResImpl
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.PlanetaryResources

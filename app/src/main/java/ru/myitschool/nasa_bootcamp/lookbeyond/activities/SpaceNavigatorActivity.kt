@@ -12,7 +12,7 @@ import android.view.MenuItem
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ru.myitschool.nasa_bootcamp.databinding.SpaceNavigatorBinding
-import ru.myitschool.nasa_bootcamp.lookbeyond.control.*
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.*
 import ru.myitschool.nasa_bootcamp.lookbeyond.layer.LayerManager
 import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.MainRender
 import ru.myitschool.nasa_bootcamp.lookbeyond.renderer.RendererThreadRun
