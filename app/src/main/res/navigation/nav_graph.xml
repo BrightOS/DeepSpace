@@ -259,5 +259,14 @@
             android:name="ru.myitschool.nasa_bootcamp.ui.home.social_media.comments.CommentsFragment"
             android:label="CommentsFragment" />
     </navigation>
+    <fragment
+        android:id="@+id/waitingFragment"
+        android:name="ru.myitschool.nasa_bootcamp.lookbeyond.activities.WaitingFragment"
+        android:label="fragment_waiting"
+        tools:layout="@layout/fragment_waiting" >
+        <action
+            android:id="@+id/action_waitingFragment_to_spaceNavigatorActivity"
+            app:destination="@id/spaceNavigatorActivity" />
+    </fragment>
 
 </navigation>

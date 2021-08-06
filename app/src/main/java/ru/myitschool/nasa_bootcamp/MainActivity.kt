@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             binding.navView.menu.findItem(R.id.createPostFragment).isEnabled = true
             navHeaderMainBinding.signIn.text = getString(R.string.sign_out)
             navHeaderMainBinding.signIn.setOnClickListener {
-                mFirebaseUser.signOutUser()
+                mFirebaseUser.signOutUser(this)
                 changeHeader()
             }
         } else {
@@ -167,6 +167,7 @@ class MainActivity : AppCompatActivity() {
             //binding.navView.menu.findItem(R.id.createPostFragment).isVisible = false
             navHeaderMainBinding.userAvatar.setImageBitmap(null)
             navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_login_mini)
+
             navHeaderMainBinding.userAvatar.setOnClickListener {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
                 findNavController(R.id.nav_host_fragment).navigate(R.id.login)

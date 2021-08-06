@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.auth.login
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,14 +16,15 @@ class AuthViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository
 ) : ViewModel(), AuthViewModel {
     override suspend fun authenticateUser(
+        context: Context,
         email: String,
         password: String
     ): LiveData<Data<out FirebaseUser>> {
-        return repository.authenticateUser(email, password)
+        return repository.authenticateUser(context, email, password)
     }
 
-    override fun signOutUser(): LiveData<Data<out String>> {
-        return repository.signOutUser()
+    override fun signOutUser(context: Context): LiveData<Data<out String>> {
+        return repository.signOutUser(context)
     }
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope
