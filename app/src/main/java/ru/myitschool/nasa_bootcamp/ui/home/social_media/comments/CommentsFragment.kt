@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -65,6 +66,7 @@ class CommentsFragment : Fragment() {
 @Composable
 fun CommentsScreen(viewModel: SocialMediaViewModel) {
     val scrollState = rememberScrollState()
+    val currentUser by viewModel.getCurrentUser().observeAsState()
     Box {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
             Spacer(modifier = Modifier.statusBarsPadding())
@@ -77,7 +79,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                             .fillMaxWidth()
                             .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                     )
-                    Comments(list = article.comments, currentUser = viewModel.getCurrentUser()) {
+                    Comments(list = article.comments, currentUser = currentUser) {
                         viewModel.getViewModelScope()
                             .launch { viewModel.pressedLikeOnComment(article, it) }
                     }
@@ -92,7 +94,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                     )
                     Comments(
                         list = post.comments,
-                        currentUser = viewModel.getCurrentUser()
+                        currentUser = currentUser
                     ) {
                         viewModel.getViewModelScope()
                             .launch { viewModel.pressedLikeOnComment(post, it) }
@@ -151,7 +153,7 @@ fun BottomTextField(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
 @Composable
 fun Comments(
     list: List<Comment>,
-    currentUser: UserModel,
+    currentUser: UserModel?,
     onLikeInCommentClick: (Comment) -> Unit
 ) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {

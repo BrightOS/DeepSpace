@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -71,7 +72,7 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     }
 
     override fun getCurrentUser() = currentUser
-    override fun createPost(post: PostModel) {
+    override fun createPost(post: String, text: String, bitmap: Bitmap?) {
         TODO("Not yet implemented")
     }
 

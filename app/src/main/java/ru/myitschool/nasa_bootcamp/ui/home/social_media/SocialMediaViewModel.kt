@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.model.*
@@ -30,7 +31,7 @@ interface SocialMediaViewModel {
     ): Resource<Nothing>
 
     fun getCurrentUser(): LiveData<UserModel?>
-    fun createPost(post: PostModel)
+    fun createPost(post: String, text: String, bitmap: Bitmap?)
 //    suspend fun getCommentsByItemId(id: Long, _class: Class<*>): List<LiveData<Comment>>
 //    suspend fun getLikesByItemId(id: Long, _class: Class<*>): List<UserModel>
 //    suspend fun getLikesByCommentId(id: Long): List<UserModel>
