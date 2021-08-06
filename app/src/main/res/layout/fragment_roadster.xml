@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
 
     <androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -36,13 +35,16 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:textSize="18sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:gravity="end"
                 tools:text="Lauched: 20/12/2021 9:35" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/launch_mass_kg_roadster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
                 tools:text="Launch mass (Kg) : " />
 
@@ -50,7 +52,8 @@
                 android:id="@+id/orbit_type_roadster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
                 tools:text="Orbit type : " />
 
@@ -58,7 +61,8 @@
                 android:id="@+id/longitude_roadster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
                 tools:text="Longtitude : " />
 
@@ -67,7 +71,8 @@
                 android:id="@+id/earth_distance_roadster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
                 tools:text="Distance from the Earth : " />
 
@@ -76,7 +81,9 @@
                 android:id="@+id/mars_distance_roadster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+
                 android:textSize="18sp"
                 tools:text="Distance from the Mars : " />
 
@@ -85,7 +92,8 @@
                 android:id="@+id/details_roadster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="18sp"
                 tools:text="Details : " />
 
@@ -93,23 +101,18 @@
                 android:id="@+id/roadster_gif"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_margin="5dp"
                 tools:src="@drawable/space_x_background" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/roadster_gif2"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_margin="5dp"
                 tools:src="@drawable/space_x_background" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/roadster_gif3"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_margin="5dp"
                 tools:src="@drawable/space_x_background" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>

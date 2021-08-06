@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_map"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -11,11 +11,19 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/sensors_button"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_screen_rotation"
         android:text="@string/sensors"
+        android:background="@drawable/circle"
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="visible" />
 
 </RelativeLayout>
