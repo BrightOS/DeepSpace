@@ -31,9 +31,8 @@ fun <T> Feed(
     itemContent: @Composable (T) -> Unit,
     headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
-    onCommentButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
     onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> Unit,
-    onItemClick: (ContentWithLikesAndComments<T>) -> Unit
+    onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
 ) {
     Box {
         when (listResource.status) {
@@ -50,10 +49,13 @@ fun <T> Feed(
                                 itemContent = itemContent,
                                 currentUser = currentUser,
                                 onLikeButtonClick = { onLikeButtonClick(content!!) },
-                                onCommentButtonClick = { onCommentButtonClick(content!!) },
+                                onCommentButtonClick = { onItemClick(item) },
                                 onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
-                                onClick = { onItemClick(content!!) }
+                                onClick = { onItemClick(item) }
                             )
+                    }
+                    item {
+                        Spacer(modifier = Modifier.fillMaxWidth().height(52.dp))
                     }
                 }
             }

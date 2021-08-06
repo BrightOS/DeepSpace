@@ -33,9 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
-import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.PostModel
-import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModelImpl
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.CommentItem
@@ -65,65 +63,81 @@ class CommentsFragment : Fragment() {
 
 @Composable
 fun CommentsScreen(viewModel: SocialMediaViewModel) {
-    val scrollState = rememberScrollState()
     val currentUser by viewModel.getCurrentUser().observeAsState()
-    Box {
-        Column(modifier = Modifier.verticalScroll(scrollState)) {
-            Spacer(modifier = Modifier.statusBarsPadding())
-            when {
-                viewModel.getSelectedArticle() != null -> {
-                    val article = viewModel.getSelectedArticle()!!
-                    ArticleContent(articleModel = article.content)
+    if (viewModel.getSelectedPost() != null) {
+        val post by viewModel.getSelectedPost()!!.observeAsState()
+        Column {
+            LazyColumn(modifier = Modifier.weight(1f)) {
+                item {
+                    PostContent(postModel = post!!.content)
                     Divider(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                     )
-                    Comments(list = article.comments, currentUser = currentUser) {
-                        viewModel.getViewModelScope()
-                            .launch { viewModel.pressedLikeOnComment(article, it) }
-                    }
                 }
-                viewModel.getSelectedPost() != null -> {
-                    val post = viewModel.getSelectedPost()!!
-                    PostContent(postModel = post.content)
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
-                    )
-                    Comments(
-                        list = post.comments,
-                        currentUser = currentUser
-                    ) {
-                        viewModel.getViewModelScope()
-                            .launch { viewModel.pressedLikeOnComment(post, it) }
-                    }
-                }
-                else -> throw KotlinNullPointerException()
-            }
-        }
-        BottomTextField(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-            onClick = {
-                viewModel.getViewModelScope().launch {
-                    viewModel.sendMessage(
-                        message = it,
-                        id = when {
-                            viewModel.getSelectedArticle() != null -> viewModel.getSelectedArticle()!!.content.id
-                            viewModel.getSelectedPost() != null -> viewModel.getSelectedPost()!!.content.id
-                            else -> throw KotlinNullPointerException()
+                items(post!!.comments) {
+                    CommentItem(
+                        comment = it,
+                        currentUser = currentUser,
+                        onLikeClick = {
+                            viewModel.getViewModelScope()
+                                .launch { viewModel.pressedLikeOnComment(post!!, it) }
                         },
-                        _class = when {
-                            viewModel.getSelectedArticle() != null -> ArticleModel::class.java
-                            viewModel.getSelectedPost() != null -> PostModel::class.java
-                            else -> throw KotlinNullPointerException()
-                        }
+                        onCommentClick = { }
                     )
                 }
-            })
+            }
+            BottomTextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = {
+                    viewModel.getViewModelScope().launch {
+                        viewModel.sendMessage(
+                            message = it,
+                            id = post!!.content.id,
+                            _class = ArticleModel::class.java
+                        )
+                    }
+                })
+        }
+    } else if (viewModel.getSelectedArticle() != null) {
+        val article by viewModel.getSelectedArticle()!!.observeAsState()
+        Column {
+            LazyColumn(modifier = Modifier.weight(1f)) {
+                item {
+                    ArticleContent(articleModel = article!!.content)
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+                    )
+                }
+                items(article!!.comments) {
+                    CommentItem(
+                        comment = it,
+                        currentUser = currentUser,
+                        onLikeClick = {
+                            viewModel.getViewModelScope()
+                                .launch { viewModel.pressedLikeOnComment(article!!, it) }
+                        },
+                        onCommentClick = { }
+                    )
+                }
+            }
+            BottomTextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = {
+                    viewModel.getViewModelScope().launch {
+                        viewModel.sendMessage(
+                            message = it,
+                            id = article!!.content.id,
+                            _class = ArticleModel::class.java
+                        )
+                    }
+                })
+        }
     }
 }
 
@@ -143,27 +157,12 @@ fun BottomTextField(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
                     .weight(1f, true)
                     .padding(8.dp)
             )
-            IconButton(onClick = { onClick(messageTextField) }, modifier = Modifier.padding(8.dp)) {
+            IconButton(
+                onClick = { onClick(messageTextField) },
+                modifier = Modifier.padding(8.dp)
+            ) {
                 Icon(painter = painterResource(R.drawable.ic_send), contentDescription = "send")
             }
-        }
-    }
-}
-
-@Composable
-fun Comments(
-    list: List<Comment>,
-    currentUser: UserModel?,
-    onLikeInCommentClick: (Comment) -> Unit
-) {
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        list.forEach {
-            CommentItem(
-                comment = it,
-                currentUser = currentUser,
-                onLikeClick = { onLikeInCommentClick(it) },
-                onCommentClick = { }
-            )
         }
     }
 }

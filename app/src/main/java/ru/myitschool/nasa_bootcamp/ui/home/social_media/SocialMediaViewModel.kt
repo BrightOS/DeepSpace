@@ -13,10 +13,10 @@ interface SocialMediaViewModel {
     suspend fun loadNews()
     suspend fun loadCurrentUser()
     fun getViewModelScope(): CoroutineScope
-    fun setSelectedPost(post: ContentWithLikesAndComments<PostModel>)
-    fun getSelectedPost(): ContentWithLikesAndComments<PostModel>?
-    fun setSelectedArticle(article: ContentWithLikesAndComments<ArticleModel>)
-    fun getSelectedArticle(): ContentWithLikesAndComments<ArticleModel>?
+    fun setSelectedPost(post: LiveData<ContentWithLikesAndComments<PostModel>>?)
+    fun getSelectedPost(): LiveData<ContentWithLikesAndComments<PostModel>>?
+    fun setSelectedArticle(article: LiveData<ContentWithLikesAndComments<ArticleModel>>?)
+    fun getSelectedArticle(): LiveData<ContentWithLikesAndComments<ArticleModel>>?
     suspend fun pressedLikeOnComment(
         item: ContentWithLikesAndComments<out Any>,
         comment: Comment
