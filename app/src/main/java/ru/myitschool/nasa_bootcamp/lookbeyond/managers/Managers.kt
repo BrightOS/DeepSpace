@@ -10,10 +10,10 @@ interface Manager {
 
 
 class Managers internal constructor(
-    sensorOrientationController: SensorOrientationManager, gpsManager: GpsManager
+    sensorController: SensorManager, gpsManager: GpsManager
 ) : Manager {
     private val controllers = ArrayList<Manager>()
-    private val sensorOrientationController: SensorOrientationManager
+    private val sensorController: SensorManager
 
     override var model: AbstractPointing? = null
         set(value) {
@@ -42,7 +42,7 @@ class Managers internal constructor(
 
     init {
         addController(gpsManager)
-        this.sensorOrientationController = sensorOrientationController
-        addController(sensorOrientationController)
+        this.sensorController = sensorController
+        addController(sensorController)
     }
 }
