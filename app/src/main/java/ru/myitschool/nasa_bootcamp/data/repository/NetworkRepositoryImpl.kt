@@ -97,11 +97,9 @@ class NetworkRepositoryImpl @Inject constructor(
         return Resource.success(null)
     }
 
-    override suspend fun newsEventListener(
-        source: String,
-        postId: Long,
-        articleModel: ArticleModel
-    ): LiveData<ContentWithLikesAndComments<ArticleModel>> = firebaseRepository.newsChildChangedListener(source, postId, articleModel)
+    override suspend fun getUser(uid: String): UserModel? {
+        return firebaseRepository.getUser(uid)
+    }
 
     override suspend fun getCurrentUser(): UserModel = firebaseRepository.getCurrentUser()!!
 }

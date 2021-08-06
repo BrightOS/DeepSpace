@@ -16,7 +16,6 @@ interface FirebaseRepository {
     suspend fun getAllPostsRawData(): LiveData<ContentWithLikesAndComments<PostModel>>
     suspend fun getAllPosts(): LiveData<Data<out ArrayList<Post>>>
     suspend fun downloadImage(postId: String, imageId: String): LiveData<Data<out Bitmap>>
-    suspend fun newsChildChangedListener(source: String, postId: Long, articleModel: ArticleModel): LiveData<ContentWithLikesAndComments<ArticleModel>>
     suspend fun getAdditionalData(postId: String): LiveData<Data<out ArrayList<PostView>>>
     suspend fun createPost(post: Post, postId: String): LiveData<Data<out String>>
     fun uploadImage(postId: String, imageId: Int,  imagePath: Uri) : LiveData<Data<out String>>

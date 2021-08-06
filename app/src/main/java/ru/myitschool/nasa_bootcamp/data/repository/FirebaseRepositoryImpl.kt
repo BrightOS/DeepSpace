@@ -9,8 +9,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.internal.api.FirebaseNoSignedInUserException
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+import okhttp3.internal.wait
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.model.*
@@ -19,6 +22,7 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.coroutines.suspendCoroutine
 
 class FirebaseRepositoryImpl : FirebaseRepository {
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
@@ -67,35 +71,6 @@ class FirebaseRepositoryImpl : FirebaseRepository {
     ): LiveData<Data<out Bitmap>> {
         val storageRef = storage.getReference("posts/$postId/$imageId")
         return downloadFirebaseImage(storageRef)
-    }
-
-    override suspend fun newsChildChangedListener(
-        source: String,
-        postId: Long,
-        articleModel: ArticleModel
-    ): LiveData<ContentWithLikesAndComments<ArticleModel>> {
-        val returnData = MutableLiveData<ContentWithLikesAndComments<ArticleModel>>()
-        dbInstance.getReference("posts").child(source).child(postId.toString()).addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                //val comments = snapshot.child("comments").
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-        return returnData
     }
 
     override suspend fun getAdditionalData(postId: String): LiveData<Data<out ArrayList<PostView>>> {
@@ -302,7 +277,8 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         var user: UserModel? = null
         if (authenticator.uid != null && !checkIfHasLike(source, postId)) {
             try {
-                dbInstance.getReference("posts").child(source).child(postId.toString()).child("likes")
+                dbInstance.getReference("posts").child(source).child(postId.toString())
+                    .child("likes")
                     .child(authenticator.uid!!)
                     .setValue(authenticator.uid).await()
                 user = getCurrentUser()
@@ -320,7 +296,8 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         val returnData = MutableLiveData<Data<out String>>()
         if (authenticator.uid != null && !checkIfHasCommentLike(source, postId, commentId)) {
             try {
-                dbInstance.getReference("posts").child(source).child(postId.toString()).child("comments")
+                dbInstance.getReference("posts").child(source).child(postId.toString())
+                    .child("comments")
                     .child(commentId.toString()).child("likes").child(authenticator.uid!!)
                     .setValue(authenticator.uid).await()
                 returnData.postValue(Data.Ok("Ok"))
@@ -485,16 +462,18 @@ class FirebaseRepositoryImpl : FirebaseRepository {
     override suspend fun getUser(uid: String): UserModel? {
         var user: UserModel? = null
         try {
-            val userName =
+            var userName = ""
+            var avatarUrl = ""
+            userName =
                 dbInstance.getReference("user_data").child(uid).child("username").get().await()
-                    .getValue(String::class.java)
-            var avatarUrl: Uri? = null
+                    .getValue(String::class.java).toString()
             try {
-                avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
+                avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await().toString()
             } catch (e: Exception) {
             }
             user = UserModel(userName.toString(), avatarUrl.toString(), uid)
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+        }
         return user
     }
 
@@ -503,15 +482,20 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         try {
             var userName: String = ""
             var avatarUrl: String = ""
-                userName = dbInstance.getReference("user_data").child(authenticator.uid!!).child("username").get().await().getValue(
-                    String::class.java).toString()
-                try {
-                    avatarUrl = storage.getReference("user_data/${authenticator.uid}").downloadUrl.await().toString()
-                } catch (e: Exception) {
+            userName =
+                dbInstance.getReference("user_data").child(authenticator.uid!!).child("username")
+                    .get().await().getValue(
+                    String::class.java
+                ).toString()
+            try {
+                avatarUrl =
+                    storage.getReference("user_data/${authenticator.uid}").downloadUrl.await()
+                        .toString()
+            } catch (e: Exception) {
             }
-            user = UserModel(userName.toString(), avatarUrl.toString(), authenticator.uid.toString())
-        }
-        catch (e: Exception) {
+            user =
+                UserModel(userName.toString(), avatarUrl.toString(), authenticator.uid.toString())
+        } catch (e: Exception) {
         }
         return user
     }

@@ -19,5 +19,5 @@ interface NetworkRepository {
         _class: Class<*>,
         parentComment: Comment? = null
     ): Resource<Nothing>
-    suspend fun newsEventListener(source: String, postId: Long, articleModel: ArticleModel): LiveData<ContentWithLikesAndComments<ArticleModel>>
+    suspend fun getUser(uid: String): UserModel?
 }
