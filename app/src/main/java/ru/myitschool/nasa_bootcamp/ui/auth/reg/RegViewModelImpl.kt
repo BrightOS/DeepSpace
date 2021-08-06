@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.auth.reg
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -16,12 +17,13 @@ class RegViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository
 ) : ViewModel(), RegViewModel {
     override suspend fun createUser(
+        context: Context,
         userName: String,
         email: String,
         password: String,
         imagePath: Uri?
     ): LiveData<Data<out FirebaseUser>> {
-        return repository.createUser(userName, email, password, imagePath)
+        return repository.createUser(context, userName, email, password, imagePath)
     }
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope

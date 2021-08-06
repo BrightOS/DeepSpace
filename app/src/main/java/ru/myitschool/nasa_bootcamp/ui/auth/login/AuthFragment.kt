@@ -75,8 +75,7 @@ class AuthFragment : Fragment() {
                     binding.progressBar.visibility = View.VISIBLE
 
                     viewModel.getViewModelScope().launch {
-                        viewModel.signOutUser()
-                        viewModel.authenticateUser(userName, password).observe(viewLifecycleOwner) {
+                        viewModel.authenticateUser(requireContext(), userName, password).observe(viewLifecycleOwner) {
                             binding.progressBar.visibility = View.GONE
                             loading = false
                             when (it) {

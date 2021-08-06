@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.auth.login
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
@@ -16,7 +17,7 @@ interface AuthViewModel {
      * если вход с неправильными данными, пароль или почта то должен вернуться Data.Error с
      * message = Constants.wrongCredits
      */
-    suspend fun authenticateUser(email: String, password: String): LiveData<Data<out FirebaseUser>>
-    fun signOutUser(): LiveData<Data<out String>>
+    suspend fun authenticateUser(context: Context, email: String, password: String): LiveData<Data<out FirebaseUser>>
+    fun signOutUser(context: Context): LiveData<Data<out String>>
     fun getViewModelScope(): CoroutineScope
 }
