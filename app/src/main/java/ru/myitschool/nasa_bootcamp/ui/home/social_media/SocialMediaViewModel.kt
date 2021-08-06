@@ -31,8 +31,6 @@ interface SocialMediaViewModel {
         _class: Class<*>,
         parentComment: Comment? = null
     ): Resource<Nothing>
-    fun newsChildChangedListener(articleModel: ArticleModel)
-    fun getChildChangedObserver(): LiveData<Data<out ContentWithLikesAndComments<ArticleModel>>>
 //    suspend fun getCommentsByItemId(id: Long, _class: Class<*>): List<LiveData<Comment>>
 //    suspend fun getLikesByItemId(id: Long, _class: Class<*>): List<UserModel>
 //    suspend fun getLikesByCommentId(id: Long): List<UserModel>
