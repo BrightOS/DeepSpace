@@ -36,20 +36,6 @@ class AboutFragment : Fragment() {
     ): View {
         // println(isNetworkAvailable(context))
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
-        val test = MutableLiveData<ContentWithLikesAndComments<ArticleModel>>()
-        test.value =
-            ContentWithLikesAndComments(
-                ArticleModel(
-                    id = 123,
-                    title = "Hello World",
-                    summary = "Hmm d;lfksd ;fkhsa ldkhf;s aldkhfl sdjfaskdhalsdl asdak  sdhlas khdlask dlkasdas ldkhas/ ldkha /sldkh a/skd a/skda skhdas",
-                    imageUrl = "https://i.ytimg.com/vi/0QaX4KMjeVQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDEYHd9BOxp4Qnw0gdFKQe2fNf1xg",
-                    publishedAt = "2021-08-03T20:40:02.000Z"
-                ),
-                listOf(),
-                listOf()
-        )
-        FirebaseRepositoryImpl().articleModelEventListener(test)
         return binding.root
     }
 
