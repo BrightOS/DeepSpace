@@ -6,21 +6,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.google.firebase.internal.api.FirebaseNoSignedInUserException
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+import okhttp3.internal.wait
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
-import ru.myitschool.nasa_bootcamp.data.model.SubComment
-import ru.myitschool.nasa_bootcamp.data.model.UserModel
+import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostRecyclerAdapter
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.coroutines.suspendCoroutine
 
 class FirebaseRepositoryImpl : FirebaseRepository {
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
@@ -47,6 +49,18 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         } catch (e: Exception) {
             return Data.Error(e.message.toString())
         }
+    }
+
+    override suspend fun getAllPostsRawData(): LiveData<ContentWithLikesAndComments<PostModel>> {
+        TODO("Not yet implemented")
+    }
+
+    private fun getAllUserPostComments(postId: Int) {
+
+    }
+
+    private fun getAllUserPostLikes(postId: Int) {
+
     }
 
     override suspend fun downloadImage(
@@ -164,6 +178,7 @@ class FirebaseRepositoryImpl : FirebaseRepository {
                     .child(commentId.toString()).setValue(commentObject).await()
                 returnData.postValue(Data.Ok("Ok"))
             } catch (e: Exception) {
+                println(e.message.toString())
                 returnData.postValue(Data.Error(e.message.toString()))
             }
         } else {
@@ -256,21 +271,19 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return returnData
     }
 
-    override suspend fun pushLike(source: String, postId: Int): LiveData<Data<out String>> {
-        val returnData = MutableLiveData<Data<out String>>()
+    override suspend fun pushLike(source: String, postId: Int): UserModel? {
+        var user: UserModel? = null
         if (authenticator.uid != null && !checkIfHasLike(source, postId)) {
             try {
-                dbInstance.getReference("posts").child(postId.toString()).child("likes")
+                dbInstance.getReference("posts").child(source).child(postId.toString())
+                    .child("likes")
                     .child(authenticator.uid!!)
                     .setValue(authenticator.uid).await()
-                returnData.postValue(Data.Ok("Ok"))
+                user = getCurrentUser()
             } catch (e: Exception) {
-                returnData.postValue(Data.Error(e.message.toString()))
             }
-        } else {
-            returnData.postValue(Data.Error("User is not authenticated or already has a like"))
         }
-        return returnData
+        return user
     }
 
     override suspend fun pushLikeForComment(
@@ -281,7 +294,8 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         val returnData = MutableLiveData<Data<out String>>()
         if (authenticator.uid != null && !checkIfHasCommentLike(source, postId, commentId)) {
             try {
-                dbInstance.getReference("posts").child(postId.toString()).child("comments")
+                dbInstance.getReference("posts").child(source).child(postId.toString())
+                    .child("comments")
                     .child(commentId.toString()).child("likes").child(authenticator.uid!!)
                     .setValue(authenticator.uid).await()
                 returnData.postValue(Data.Ok("Ok"))
@@ -443,22 +457,44 @@ class FirebaseRepositoryImpl : FirebaseRepository {
         return returnData
     }
 
-    override suspend fun getUser(uid: String): LiveData<Data<out UserModel>> {
-        val returnData = MutableLiveData<Data<out UserModel>>()
+    override suspend fun getUser(uid: String): UserModel? {
+        var user: UserModel? = null
         try {
-            val userName =
-                dbInstance.getReference("user_data").child(uid).child("username").get().await()
-                    .getValue(String::class.java)
+            var userName = ""
             var avatarUrl: Uri? = null
+            userName =
+                dbInstance.getReference("user_data").child(uid).child("username").get().await()
+                    .getValue(String::class.java).toString()
             try {
                 avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
             } catch (e: Exception) {
             }
-            returnData.postValue(Data.Ok(UserModel(userName!!, avatarUrl, uid)))
+            user = UserModel(userName.toString(), avatarUrl, uid)
         } catch (e: Exception) {
-            returnData.postValue(Data.Error(e.message.toString()))
         }
-        return returnData
+        return user
+    }
+
+    override suspend fun getCurrentUser(): UserModel? {
+        var user: UserModel? = null
+        try {
+            var userName: String = ""
+            var avatarUrl: Uri? = null
+            userName =
+                dbInstance.getReference("user_data").child(authenticator.uid!!).child("username")
+                    .get().await().getValue(
+                    String::class.java
+                ).toString()
+            try {
+                avatarUrl =
+                    storage.getReference("user_data/${authenticator.uid}").downloadUrl.await()
+            } catch (e: Exception) {
+            }
+            user =
+                UserModel(userName.toString(), avatarUrl, authenticator.uid.toString())
+        } catch (e: Exception) {
+        }
+        return user
     }
 
     private suspend fun getUsernameById(uid: String): String =

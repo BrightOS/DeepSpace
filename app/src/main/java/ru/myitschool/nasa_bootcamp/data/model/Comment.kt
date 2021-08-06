@@ -12,6 +12,6 @@ open class Comment(
 ) {
 
     override fun toString(): String {
-        return "ID: $id\nComment: $text;\nUserId: ${author.id}\nDate: $date\nLikes: $likes\nComments: $subComments"
+        return "ID: $id\nComment: $text;\nUserId: ${author}\nDate: $date\nLikes: $likes\nComments: $subComments"
     }
 }
