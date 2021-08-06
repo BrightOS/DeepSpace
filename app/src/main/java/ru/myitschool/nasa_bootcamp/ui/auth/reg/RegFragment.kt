@@ -110,6 +110,7 @@ class RegFragment : Fragment() {
 
                     viewModel.getViewModelScope().launch {
                         viewModel.createUser(
+                            requireContext(),
                             userName,
                             binding.textEmail.text.toString(),
                             password,

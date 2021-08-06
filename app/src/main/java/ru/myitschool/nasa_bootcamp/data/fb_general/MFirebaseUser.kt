@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.data.fb_general
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
@@ -18,6 +19,8 @@ import java.lang.Exception
 class MFirebaseUser() : ViewModel() {
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
+
+    private val sharedPreferencesFileName = "currentUser"
 
     fun isUserAuthenticated(): Boolean {
         return authenticator.currentUser != null
@@ -47,10 +50,11 @@ class MFirebaseUser() : ViewModel() {
         return downloadFirebaseImage(storageRef)
     }
 
-    fun signOutUser(): LiveData<Data<out FirebaseUser>> {
+    fun signOutUser(context: Context): LiveData<Data<out FirebaseUser>> {
         val returnData: MutableLiveData<Data<out FirebaseUser>> = MutableLiveData()
         try {
             authenticator.signOut()
+            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit().clear().apply()
         } catch (e: Exception) {
             returnData.postValue(Data.Error(e.message!!))
         }

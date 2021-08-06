@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import ru.myitschool.nasa_bootcamp.data.model.NotificationModel
 import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
+import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepositoryImpl
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAboutBinding
 import ru.myitschool.nasa_bootcamp.utils.NotificationCentre
 
