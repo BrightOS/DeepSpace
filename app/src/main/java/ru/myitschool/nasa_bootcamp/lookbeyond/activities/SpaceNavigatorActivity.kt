@@ -90,7 +90,7 @@ class SpaceNavigatorActivity : Activity() {
 
 
         controller = Managers(
-            SensorOrientationManager(
+            SensorManager(
                 ContextCompat.getSystemService(
                     this,
                     SensorManager::class.java

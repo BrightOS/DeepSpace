@@ -6,7 +6,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 
 
-class SensorOrientationManager internal
+class SensorManager internal
 constructor(private val manager: SensorManager) :
      Manager, SensorEventListener {
     private val rotationSensor: Sensor
