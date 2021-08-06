@@ -85,6 +85,8 @@
     <string name="pressure">Pressure</string>
     <string name="source_colon_space">Source: </string>
     <string name="comment">Comment</string>
+    <string name="create_post">Create post</string>
+    <string name="title">Title</string>
     <string name="company_info">Company info</string>
     <string name="company_spacex">Company : SpaceX</string>
 

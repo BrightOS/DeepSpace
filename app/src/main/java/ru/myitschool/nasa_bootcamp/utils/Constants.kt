@@ -16,6 +16,7 @@ const val wrongCredits = "invalidCredentials"
 const val userAlreadyRegistered = "userAlreadyRegistered"
 const val invalidEmail = "invalidEmail"
 const val errorEmailIsNotVerified = "Your email is not verified. Click 'send' button to recieve an email!"
+const val PICK_IMAGE_REQUEST = 71
 
 const val SEC_HOUR = 3600000L
 const val DEGREES_TO_RADIANS = PI / 180.0

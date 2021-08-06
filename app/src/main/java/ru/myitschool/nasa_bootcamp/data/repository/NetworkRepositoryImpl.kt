@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,40 +9,18 @@ import javax.inject.Inject
 
 class NetworkRepositoryImpl @Inject constructor(
     private val firebaseRepository: FirebaseRepository,
-    newsRepository: NewsRepository
+    private val newsRepository: NewsRepository
 ) : NetworkRepository {
     override suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>> {
-
+        val newsList = mutableListOf<LiveData<ContentWithLikesAndComments<ArticleModel>>>()
+        for (news in newsRepository.getNews().body()!!) {
+            val data = MutableLiveData<ContentWithLikesAndComments<ArticleModel>>()
+            data.postValue(ContentWithLikesAndComments(ArticleModel(news.id.toLong(), news.title, news.url, news.newsSite, news.summary, news.publishedAt, news.updatedAt), listOf(), listOf()))
+            firebaseRepository.articleModelEventListener(data)
+            newsList.add(data)
+        }
         return Resource.success(
-            listOf(
-                MutableLiveData(
-                    ContentWithLikesAndComments(
-                        likes = listOf(),
-                        comments =
-                        listOf(
-                            Comment(
-                                text = "ds/lkfsdfksdfsd",
-                                subComments = listOf(),
-                                id = 4,
-                                author = UserModel(
-                                    id = "4",
-                                    avatarUrl = Uri.parse("https://lh3.googleusercontent.com/0xn6EsKc4lfdgFBt_1rA8uN6FgUUCrNO7cmTQny30x6wQhFrlTuZomwENpYsyMW00lytSuv6hLSHOs1voqpUautXcQ"),
-                                    name = "Zach"
-                                ),
-                                likes = listOf(),
-                                date = 1628008932
-                            )
-                        ),
-                        content = ArticleModel(
-                            id = 123,
-                            title = "Hello World",
-                            summary = "Hmm d;lfksd ;fkhsa ldkhf;s aldkhfl sdjfaskdhalsdl asdak  sdhlas khdlask dlkasdas ldkhas/ ldkha /sldkh a/skd a/skda skhdas",
-                            imageUrl = "https://i.ytimg.com/vi/0QaX4KMjeVQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDEYHd9BOxp4Qnw0gdFKQe2fNf1xg",
-                            publishedAt = "2021-08-03T20:40:02.000Z"
-                        )
-                    )
-                )
-            )
+            newsList
         )
     }
 
@@ -103,6 +80,6 @@ class NetworkRepositoryImpl @Inject constructor(
         return firebaseRepository.getUser(uid)
     }
 
-    override fun getCurrentUser(context: Context): UserModel = firebaseRepository.getCurrentUser(context)!!
+    override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()
 }
 

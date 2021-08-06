@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +35,7 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.PostModel
+import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModelImpl
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.CommentItem
@@ -62,6 +66,7 @@ class CommentsFragment : Fragment() {
 @Composable
 fun CommentsScreen(viewModel: SocialMediaViewModel) {
     val scrollState = rememberScrollState()
+    val currentUser by viewModel.getCurrentUser().observeAsState()
     Box {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
             Spacer(modifier = Modifier.statusBarsPadding())
@@ -72,9 +77,9 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                     Divider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp)
+                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                     )
-                    Comments(list = article.comments) {
+                    Comments(list = article.comments, currentUser = currentUser) {
                         viewModel.getViewModelScope()
                             .launch { viewModel.pressedLikeOnComment(article, it) }
                     }
@@ -85,10 +90,11 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                     Divider(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp)
+                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                     )
                     Comments(
-                        list = post.comments
+                        list = post.comments,
+                        currentUser = currentUser
                     ) {
                         viewModel.getViewModelScope()
                             .launch { viewModel.pressedLikeOnComment(post, it) }
@@ -147,12 +153,14 @@ fun BottomTextField(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
 @Composable
 fun Comments(
     list: List<Comment>,
+    currentUser: UserModel?,
     onLikeInCommentClick: (Comment) -> Unit
 ) {
-    Column {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         list.forEach {
             CommentItem(
                 comment = it,
+                currentUser = currentUser,
                 onLikeClick = { onLikeInCommentClick(it) },
                 onCommentClick = { }
             )

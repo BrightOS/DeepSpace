@@ -1,12 +1,9 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
-import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
-import ru.myitschool.nasa_bootcamp.data.model.Comment
-import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
-import ru.myitschool.nasa_bootcamp.data.model.PostModel
-import ru.myitschool.nasa_bootcamp.utils.Data
+import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 interface SocialMediaViewModel {
@@ -14,6 +11,7 @@ interface SocialMediaViewModel {
     fun getNews(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>
     suspend fun loadBlogs()
     suspend fun loadNews()
+    suspend fun loadCurrentUser()
     fun getViewModelScope(): CoroutineScope
     fun setSelectedPost(post: ContentWithLikesAndComments<PostModel>)
     fun getSelectedPost(): ContentWithLikesAndComments<PostModel>?
@@ -31,8 +29,9 @@ interface SocialMediaViewModel {
         _class: Class<*>,
         parentComment: Comment? = null
     ): Resource<Nothing>
-    fun newsChildChangedListener(articleModel: ArticleModel)
-    fun getChildChangedObserver(): LiveData<Data<out ContentWithLikesAndComments<ArticleModel>>>
+
+    fun getCurrentUser(): LiveData<UserModel?>
+    fun createPost(post: String, text: String, bitmap: Bitmap?)
 //    suspend fun getCommentsByItemId(id: Long, _class: Class<*>): List<LiveData<Comment>>
 //    suspend fun getLikesByItemId(id: Long, _class: Class<*>): List<UserModel>
 //    suspend fun getLikesByCommentId(id: Long): List<UserModel>
