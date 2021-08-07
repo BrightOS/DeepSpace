@@ -18,8 +18,8 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
         MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>>()
     private val articles =
         MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>()
-    private var selectedPost: ContentWithLikesAndComments<PostModel>? = null
-    private var selectedArticle: ContentWithLikesAndComments<ArticleModel>? = null
+    private var selectedPost: LiveData<ContentWithLikesAndComments<PostModel>>? = null
+    private var selectedArticle: LiveData<ContentWithLikesAndComments<ArticleModel>>? = null
     private val currentUser = MutableLiveData<UserModel?>(null)
 
     override fun getBlogs() = blogs
@@ -38,14 +38,12 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     }
 
     override fun getViewModelScope() = viewModelScope
-
-    override fun setSelectedPost(post: ContentWithLikesAndComments<PostModel>) {
+    override fun setSelectedPost(post: LiveData<ContentWithLikesAndComments<PostModel>>?) {
         selectedPost = post
     }
 
     override fun getSelectedPost() = selectedPost
-
-    override fun setSelectedArticle(article: ContentWithLikesAndComments<ArticleModel>) {
+    override fun setSelectedArticle(article: LiveData<ContentWithLikesAndComments<ArticleModel>>?) {
         selectedArticle = article
     }
 

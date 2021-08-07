@@ -530,7 +530,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             val url = sharedPreferences.getString(sharedPreferencesUri, null)!!.toUri()
             return UserModel(userName, url, id)
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
         return null
     }

@@ -30,10 +30,6 @@ fun NewsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
     Feed(
         onRetryButtonClick = { viewModel.getViewModelScope().launch { viewModel.loadNews() } },
         itemContent = { item: ArticleModel -> NewsItem(item) },
-        onCommentButtonClick = {
-            viewModel.setSelectedArticle(it)
-            navController.navigate(action)
-        },
         onLikeButtonClick = {
             viewModel.getViewModelScope().launch { viewModel.pressedLikeOnItem(it) }
         },

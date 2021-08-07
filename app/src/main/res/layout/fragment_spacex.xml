@@ -19,11 +19,6 @@
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/launches_gif"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                />
             <View
                 android:id="@+id/background"
                 android:layout_width="match_parent"
@@ -31,6 +26,7 @@
                 android:background="@drawable/space_x_background4"
                 app:layout_collapseMode="parallax"
                 android:elevation="4dp" />
+
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
@@ -47,6 +43,7 @@
                     android:layout_height="match_parent"
                     android:elevation="4dp"
                     android:orientation="horizontal">
+
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/space_x_logo"
@@ -70,6 +67,7 @@
                         />
 
                 </FrameLayout>
+
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -82,8 +80,8 @@
         tools:listitem="@layout/launch_item" />
     <ProgressBar
         android:id="@+id/load_progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:visibility="visible" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

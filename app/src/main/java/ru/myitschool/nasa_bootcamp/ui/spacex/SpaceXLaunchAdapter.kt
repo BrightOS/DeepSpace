@@ -17,6 +17,7 @@ import org.xml.sax.ErrorHandler
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
+import ru.myitschool.nasa_bootcamp.utils.LAUNCH_LOGOS_GIF
 import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
 import ru.myitschool.nasa_bootcamp.utils.loadImage
@@ -35,6 +36,7 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = getItem(position)
+
         holder.bind(model)
     }
 
@@ -78,6 +80,9 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
         }
 
         fun bind(launchModel : SxLaunchModel) {
+
+
+
             binding.missionName.text = launchModel.mission_name
             binding.missionYear.text = "${convertDateFromUnix(launchModel.launch_date_unix)}"
             binding.details.text = launchModel.details
@@ -142,7 +147,7 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
                     )
                 else loadImage(
                     binding.recycleItemImg.context,
-                    "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
+                    LAUNCH_LOGOS_GIF,
                     binding.recycleItemImg,
                     requestListener
                 )

@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
-                    android:background="@color/transparent_gray"
+                    android:background="@color/default_blue_button_color"
                     android:orientation="vertical">
 
                     <TextView
@@ -125,7 +125,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent_gray"
+                    android:background="@color/default_blue_button_color"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
                     android:orientation="vertical">
@@ -186,7 +186,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent_gray"
+                    android:background="@color/default_blue_button_color"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
                     android:orientation="vertical">
@@ -246,7 +246,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent_gray"
+                    android:background="@color/default_blue_button_color"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
                     android:orientation="vertical">
@@ -308,7 +308,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent_gray"
+                    android:background="@color/default_blue_button_color"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
                     android:orientation="vertical">
@@ -370,7 +370,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/transparent_gray"
+                    android:background="@color/default_blue_button_color"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="8dp"
                     android:orientation="vertical">
