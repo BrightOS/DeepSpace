@@ -7,21 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".lookbeyond.activities.WaitingFragment">
 
-
-    <ProgressBar
-        android:id="@+id/load_progressbar"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:indeterminate="true"
-        android:paddingBottom="?actionBarSize"
-        android:theme="@style/CardView.Dark"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ru.myitschool.nasa_bootcamp.widget.SpaceLoadingView
+        android:id="@+id/waiting_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
