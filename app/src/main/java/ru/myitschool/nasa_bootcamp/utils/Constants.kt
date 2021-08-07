@@ -33,4 +33,9 @@ const val DEGREES_TO_RADIANS = PI / 180.0
 const val RADIANS_TO_DEGREES = 180.0 / PI
 const val OBLIQUITY = 23.439281f * DEGREES_TO_RADIANS //Наклонность Земли
 
-const val LINES_WIDTH = 400
+const val LINES_WIDTH_FACTOR = 700
+const val DEGREE_90 = 90.0
+const val DEGREE_180 = 180.0
+const val DEGREE_360 = 360.0
+const val DEC_LINES_COUNT = 36
+const val RA_LINES_COUNT = 2

@@ -3,7 +3,6 @@ package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 import kotlin.math.*
 
 /**
-Изучалось через сайт http://ssd.jpl.nasa.gov/?planet_pos
 ОБЪЕДИНИТЬ С КЛАССОМ RaRec!!!
  */
 class OrbitalElements(// Mean distance

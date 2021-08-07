@@ -244,9 +244,9 @@ internal class RenderingValues : RenderingValuesInterface {
             upDirection = dir!!.copy()
         }
     override var upAngle: Double
-        get() = mUpAngle
+        get() = upDir
         set(angle) {
-            mUpAngle = angle
+            upDir = angle
             cosUpAngle = cos(angle)
             sinUpAngle = sin(angle)
         }
@@ -268,7 +268,7 @@ internal class RenderingValues : RenderingValuesInterface {
     private var upDirection = GeocentricCoord(0.0, 1.0, 0.0)
 
     override var radiusOfView = 45.0
-    private var mUpAngle = 0.0
+    private var upDir = 0.0
 
     override var cosUpAngle = 1.0
         private set

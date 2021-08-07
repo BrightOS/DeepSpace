@@ -1,6 +1,8 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 
+import ru.myitschool.nasa_bootcamp.utils.DEGREES_TO_RADIANS
 import ru.myitschool.nasa_bootcamp.utils.OBLIQUITY
+import ru.myitschool.nasa_bootcamp.utils.RADIANS_TO_DEGREES
 import java.util.*
 import kotlin.math.*
 
@@ -69,12 +71,8 @@ class HeliocentricCoords(
         return HeliocentricCoords(
             radius,
             x,
-            y * cos(OBLIQUITY) - z * sin(
-                OBLIQUITY
-            ),
-            y * sin(OBLIQUITY) + z * cos(
-                OBLIQUITY
-            )
+            y * cos(OBLIQUITY) - z * sin(OBLIQUITY),
+            y * sin(OBLIQUITY) + z * cos(OBLIQUITY)
         )
     }
 

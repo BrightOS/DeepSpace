@@ -1,14 +1,30 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.layer
 
 import android.content.res.Resources
+import ru.myitschool.nasa_bootcamp.lookbeyond.Math.Planet
+import ru.myitschool.nasa_bootcamp.lookbeyond.Math.PlanetResources
+import ru.myitschool.nasa_bootcamp.lookbeyond.managers.AbstractPointing
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.ImageRes
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.InitialResource
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.LineRes
 
 import java.util.*
 
-abstract class AbstractResLayer(resources: Resources?) :
-    AbstractLayer(resources!!) {
+class PlanetsBaseLayerImpl(
+    private val model: AbstractPointing,
+    resources: Resources?
+) :
+    ResBaseLayerImpl(resources) {
+
+    override fun init(sources: ArrayList<InitialResource>) {
+        for (planet in Planet.values()) {
+            sources.add(PlanetResources(planet, resources, model))
+        }
+    }
+}
+
+abstract class ResBaseLayerImpl(resources: Resources?) :
+    BaseLayerImpl(resources!!) {
     private val imageSources = ArrayList<ImageRes>()
     private val lineSources = ArrayList<LineRes>()
     private val resoursec = ArrayList<InitialResource>()
@@ -29,6 +45,4 @@ abstract class AbstractResLayer(resources: Resources?) :
     }
 
     protected abstract fun init(sources: ArrayList<InitialResource>)
-
-
 }

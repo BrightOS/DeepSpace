@@ -7,6 +7,7 @@ import ru.myitschool.nasa_bootcamp.lookbeyond.Math.RaDec
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.InitialResource
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.LineResImpl
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.SomethResource
+import ru.myitschool.nasa_bootcamp.utils.*
 import java.util.*
 
 
@@ -15,25 +16,25 @@ class LatLongGrid(
     private val raCount: Int,
     private val decCount: Int
 ) :
-    AbstractResLayer(resources) {
+    ResBaseLayerImpl(resources) {
     override fun init(sources: ArrayList<InitialResource>) {
         sources.add(GridSource(raCount, decCount))
     }
 
-    internal class GridSource(numRaSources: Int, numDecSources: Int) :
+    internal class GridSource(raCount: Int, decCount: Int) :
         SomethResource() {
        override val lines = ArrayList<LineResImpl>()
 
-        private fun createRaLine(index: Int, numRaSources: Int): LineResImpl {
+        private fun createRaLine(index: Int, raCount: Int): LineResImpl {
             val line = LineResImpl(Color.WHITE)
-            val ra = index * 360.0 / numRaSources
-            for (i in 0 until 2) {
-                val dec = 90.0 - i * 180.0 / 2
+            val ra = index * DEGREE_360 / raCount
+            for (i in 0 until RA_LINES_COUNT) {
+                val dec = DEGREE_90 - i * DEGREE_180/ RA_LINES_COUNT
                 val raDec = RaDec(ra, dec)
                 line.raDecs.add(raDec)
                 line.vertexGeocentric.add(GeocentricCoord.getInstance(raDec))
             }
-            val raDec = RaDec(0.0, -90.0)
+            val raDec = RaDec(0.0, -DEGREE_90)
             line.raDecs.add(raDec)
             line.vertexGeocentric.add(GeocentricCoord.getInstance(raDec))
             return line
@@ -41,8 +42,8 @@ class LatLongGrid(
 
         private fun createDecLine(dec: Double): LineResImpl {
             val line = LineResImpl(Color.WHITE)
-            for (i in 0 until 36) {
-                val ra = i * 360.0 / 36
+            for (i in 0 until DEC_LINES_COUNT) {
+                val ra = i * DEGREE_360 / DEC_LINES_COUNT
                 val raDec = RaDec(ra, dec)
                 line.raDecs.add(raDec)
                 line.vertexGeocentric.add(GeocentricCoord.getInstance(raDec))
@@ -55,12 +56,12 @@ class LatLongGrid(
 
 
         init {
-            for (r in 0 until numRaSources) {
-                lines.add(createRaLine(r, numRaSources))
+            for (res in 0 until raCount) {
+                lines.add(createRaLine(res, raCount))
             }
             lines.add(createDecLine(0.0))
-            for (d in 1 until numDecSources) {
-                val dec = d * 90.0 / numDecSources
+            for (d in 1 until decCount) {
+                val dec = d * DEGREE_90 / decCount
                 lines.add(createDecLine(dec))
                 lines.add(createDecLine(-dec))
             }

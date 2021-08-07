@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 
+ import ru.myitschool.nasa_bootcamp.utils.RADIANS_TO_DEGREES
  import java.util.*
 import kotlin.math.*
 

@@ -1,8 +1,9 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond
 
-//Изучала с помощью сайта http://astro.if.ufrgs.br/trigesf/position.html
-// +сайт наса (ВСЕ орбитальные элементы)
-
+//Материалы
+// http://astro.if.ufrgs.br/trigesf/position.html
+// http://ssd.jpl.nasa.gov/?planet_pos
+//https://space.stackexchange.com/questions/48946/calculated-classical-orbital-elements-of-the-iss-seem-to-differ-from-the-actual
 /*
 Declination and Right ascension
 Склонение и прямое восхождение. Вторая экваториальная система координат.

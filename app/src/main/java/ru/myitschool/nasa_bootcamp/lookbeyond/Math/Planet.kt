@@ -134,7 +134,7 @@ enum class Planet(
                     237.77599772309975
                 )
             }
-            else -> throw RuntimeException("No such Planet")
+            else -> throw UNKNOWN_PLANET("Planet.kt", "No such Planet $this")
         }
     }
 
@@ -286,6 +286,7 @@ enum class Planet(
             )
         }
 
+        //
         fun getLocationViaOrbitalElements(
             time: Date?, _longtitude: Double,
             _inclination: Double, _perihelion: Double,
@@ -345,7 +346,7 @@ enum class Planet(
             )
         }
 
-
+        //NASA
         fun getMoonLocation1(time: Date?): RaDec {
             val t = ((TimeMachine.julianDay(time) - 2451545.0) / 36525.0)
 
