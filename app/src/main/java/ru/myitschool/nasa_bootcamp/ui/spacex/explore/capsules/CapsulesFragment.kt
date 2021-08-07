@@ -13,6 +13,8 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCapsulesBinding
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCoresBinding
 import ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores.CoresAdapter
+import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
+import ru.myitschool.nasa_bootcamp.utils.loadImage
 
 @AndroidEntryPoint
 class CapsulesFragment : Fragment() {
@@ -35,6 +37,8 @@ class CapsulesFragment : Fragment() {
         capsulesViewModel.getViewModelScope().launch {
             capsulesViewModel.getCapsules()
         }
+
+        loadImage(requireContext(), STARS_ANIMATED_BACKGROUND,binding.capsuleBackg)
 
         binding.capsulesRecycler.setHasFixedSize(true)
         binding.capsulesRecycler.layoutManager = GridLayoutManager(context, 1)

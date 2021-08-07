@@ -22,7 +22,8 @@ import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
-class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
+class SpaceXLaunchAdapter :
+    ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
 
     class DiffCallback : DiffUtil.ItemCallback<SxLaunchModel>() {
         override fun areItemsTheSame(oldItem: SxLaunchModel, newItem: SxLaunchModel): Boolean {
@@ -49,17 +50,30 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
             )
         )
     }
-    class ViewHolder(private val binding: LaunchItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    class ViewHolder(private val binding: LaunchItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val context = binding.root.context
 
         var expanded = false
 
         val requestListener = object : RequestListener<Drawable> {
-            override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any,
+                target: Target<Drawable>,
+                isFirstResource: Boolean
+            ): Boolean {
                 return false
             }
 
-            override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
+            override fun onResourceReady(
+                resource: Drawable,
+                model: Any,
+                target: Target<Drawable>,
+                dataSource: DataSource,
+                isFirstResource: Boolean
+            ): Boolean {
                 binding.loadProgressbar.visibility = View.GONE
                 binding.layoutLaunchSpacex.visibility = View.VISIBLE
                 return false
@@ -69,18 +83,17 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
 
         init {
             binding.root.setOnClickListener {
-                expanded = if (expanded){
+                expanded = if (expanded) {
                     binding.layoutLaunchSpacex.transitionToStart()
                     false
-                }else{
+                } else {
                     binding.layoutLaunchSpacex.transitionToEnd()
                     true
                 }
             }
         }
 
-        fun bind(launchModel : SxLaunchModel) {
-
+        fun bind(launchModel: SxLaunchModel) {
 
 
             binding.missionName.text = launchModel.mission_name
@@ -89,29 +102,48 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
             binding.launchSite.text = launchModel.launch_site.site_name_long
 
 
-            binding.characteristicsLaunch.rocketName.text = "Rocket name: ${launchModel.rocket.rocket_name}"
+            binding.characteristicsLaunch.rocketName.text =
+                "Rocket name: ${launchModel.rocket.rocket_name}"
 
-            binding.characteristicsLaunch.rocketType.text = "Rocket type: ${launchModel.rocket.rocket_type}"
+            binding.characteristicsLaunch.rocketType.text =
+                "Rocket type: ${launchModel.rocket.rocket_type}"
 
-            binding.characteristicsLaunch.flightNumber.text = "Flight number: ${launchModel.rocket.first_stage.cores[0].flight}"
+            binding.characteristicsLaunch.flightNumber.text =
+                "Flight number: ${launchModel.rocket.first_stage.cores[0].flight}"
 
-            binding.characteristicsLaunch.country.text = "Nationality: ${launchModel.rocket.second_stage.payloads[0].nationality}"
+            binding.characteristicsLaunch.country.text =
+                "Nationality: ${launchModel.rocket.second_stage.payloads[0].nationality}"
 
-            binding.characteristicsLaunch.block.text = "Blocks: ${launchModel.rocket.second_stage.block}"
+            binding.characteristicsLaunch.block.text =
+                "Blocks: ${launchModel.rocket.second_stage.block}"
 
-            binding.characteristicsLaunch.coreSerial.text = "Core serial : ${launchModel.rocket.first_stage.cores[0].core_serial}"
 
-            binding.characteristicsLaunch.reusedCore.text = "Reused? : ${if (launchModel.rocket.first_stage.cores[0].reused) "Yes " else "No, not yet"}"
+            binding.characteristicsLaunch.coreSerial.text =
+                if (launchModel.rocket.first_stage.cores[0].core_serial != null)
+                    "Core serial : ${launchModel.rocket.first_stage.cores[0].core_serial}"
+                else "Core serial — "
 
-            binding.characteristicsLaunch.payloadId.text = "Payload : ${launchModel.rocket.second_stage.payloads[0].payload_id}"
+            binding.characteristicsLaunch.reusedCore.text =
+                "Reused? : ${if (launchModel.rocket.first_stage.cores[0].reused) "Yes " else "No, not yet"}"
 
-            binding.characteristicsLaunch.payloadMass.text = "Payload mass : ${launchModel.rocket.second_stage.payloads[0].payload_mass_kg}"
+            binding.characteristicsLaunch.payloadId.text =
+                "Payload : ${launchModel.rocket.second_stage.payloads[0].payload_id}"
 
-            binding.characteristicsLaunch.payloadType.text = "Payload type : ${launchModel.rocket.second_stage.payloads[0].payload_type}"
+            binding.characteristicsLaunch.payloadMass.text =
+                "Payload mass : ${launchModel.rocket.second_stage.payloads[0].payload_mass_kg}"
 
-            binding.characteristicsLaunch.manufacturer.text = "Manufacturer : ${launchModel.rocket.second_stage.payloads[0].manufacturer}"
+            binding.characteristicsLaunch.payloadType.text =
+                "Payload type : ${launchModel.rocket.second_stage.payloads[0].payload_type}"
 
-            binding.characteristicsLaunch.refSystem.text = "Payload : ${launchModel.rocket.second_stage.payloads[0].reference_system}"
+            binding.characteristicsLaunch.manufacturer.text =
+                if( binding.characteristicsLaunch.manufacturer!=null)
+                "Manufacturer : ${launchModel.rocket.second_stage.payloads[0].manufacturer}"
+            else "Manufacturer — "
+
+            binding.characteristicsLaunch.refSystem.text =
+                if (launchModel.rocket.second_stage.payloads[0].reference_system != null)
+                    "Payload : ${launchModel.rocket.second_stage.payloads[0].reference_system}"
+                else "Payload —  "
 
             var reused = "Reused? : No"
             if (launchModel.rocket.fairings != null && launchModel.rocket.fairings.reused != null)
@@ -135,9 +167,12 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
             binding.characteristicsLaunch.recovered.text = recovered
 
 
-            Log.d("LAUNCH_ADAPTER_TAG", "Mission patch is null? ${(launchModel.links?.mission_patch == null)}")
+            Log.d(
+                "LAUNCH_ADAPTER_TAG",
+                "Mission patch is null? ${(launchModel.links?.mission_patch == null)}"
+            )
 
-            if(launchModel.links != null){
+            if (launchModel.links != null) {
                 if (launchModel.links.mission_patch != null)
                     loadImage(
                         binding.recycleItemImg.context,
@@ -151,12 +186,13 @@ class SpaceXLaunchAdapter : ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewH
                     binding.recycleItemImg,
                     requestListener
                 )
-            }else{
+            } else {
                 loadImage(
                     binding.recycleItemImg.context,
                     "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
                     binding.recycleItemImg,
-                    requestListener)
+                    requestListener
+                )
             }
             if (launchModel.launch_success) {
                 binding.status.setText("Status: success")

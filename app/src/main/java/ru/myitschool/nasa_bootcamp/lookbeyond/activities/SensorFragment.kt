@@ -112,7 +112,11 @@ class SensorFragment : Fragment(), SensorEventListener {
         temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
         if (temperatureSensor == null)
             binding.temperature.setTextColor(nosensorColor)
-         else sensorManager.registerListener(this, temperatureSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        else sensorManager.registerListener(
+            this,
+            temperatureSensor,
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
 
         pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
         if (pressureSensor == null) binding.temperature.setTextColor(nosensorColor)
@@ -174,9 +178,10 @@ class SensorFragment : Fragment(), SensorEventListener {
         val sensor = event.sensor
 
         val valuesText = StringBuilder()
-        for (value in event.values) {
-            valuesText.append(String.format("%.2f", value))
-            valuesText.append(',')
+        for (i in event.values.indices) {
+            valuesText.append(String.format("%.2f", event.values[i]))
+
+            if ((i + 1) < event.values.size) valuesText.append(" , ")
         }
         valuesText.setLength(valuesText.length - 1)
 
@@ -201,7 +206,7 @@ class SensorFragment : Fragment(), SensorEventListener {
                 val valuesText = StringBuilder()
                 for (value in event.values) {
                     valuesText.append(String.format("%.2f", value))
-                    valuesText.append(',')
+                    valuesText.append(" , ")
                 }
 
                 when (row) {
@@ -210,6 +215,7 @@ class SensorFragment : Fragment(), SensorEventListener {
                     2 -> binding.rotationMatrix3.text = valuesText
                     else -> binding.rotationMatrix3.text = valuesText
                 }
+
                 val rowValues = FloatArray(3)
                 System.arraycopy(matrix, row * 3, rowValues, 0, 3)
 

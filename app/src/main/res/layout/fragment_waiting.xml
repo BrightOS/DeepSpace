@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:indeterminate="true"
         android:paddingBottom="?actionBarSize"
-        android:theme="@style/Theme.AppCompat.Light"
+        android:theme="@style/CardView.Dark"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
