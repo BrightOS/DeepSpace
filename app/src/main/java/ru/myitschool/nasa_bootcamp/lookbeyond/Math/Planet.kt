@@ -125,12 +125,13 @@ enum class Planet(
             }
             ISS -> {
                 OrbitalElements(
-                    39.48211675 - 0.00031596 * time,
-                    0.001220230040456721 + 0.00005170 * time,
-                    (223.77968914802696 + 0.00004818 * time) * DEGREES_TO_RADIANS,
-                    (110.30393684 - 0.01183482 * time) * DEGREES_TO_RADIANS,
-                    (269.4598 * time) * DEGREES_TO_RADIANS,
-                    modPart((238.92903833 + 145.20780515 * time) * DEGREES_TO_RADIANS)
+                    0.001220230040456721 +  0.0001925 * time,
+                    51.58120030298049 + 0.00005170 * time,
+                    (51.5914 + 0.05818 * time) * DEGREES_TO_RADIANS,
+                    (223.77968914802696 - 0.01183482 * time) * DEGREES_TO_RADIANS,
+                    (122.33400836496219 * time) * DEGREES_TO_RADIANS,
+                    0.0,
+                    237.77599772309975
                 )
             }
             else -> throw RuntimeException("No such Planet")

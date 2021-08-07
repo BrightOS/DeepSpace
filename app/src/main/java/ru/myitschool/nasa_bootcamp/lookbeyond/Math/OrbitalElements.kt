@@ -14,12 +14,31 @@ class OrbitalElements(// Mean distance
     _perihelion: Double, // Mean longitude
     _meanLongitude: Double
 ) {
+
+    constructor(// Mean distance
+        _eccentricity: Double, // Eccentricity of orbit
+        _inclination: Double, // Inclination of orbit
+        _ascnode: Double, // Longitude of ascending node
+        _longitude: Double, // Longitude of perihelion
+        _perihelion: Double, // Mean longitude
+        _meanLongitude: Double,
+        _trueAnomaly2 : Double
+    ) : this(_eccentricity,_inclination,_ascnode,_longitude,_perihelion,_meanLongitude){
+        eccentricity = _eccentricity
+        inclination = _inclination
+        ascnode = _ascnode
+        longitude = _longitude
+        perihelion = _perihelion
+        trueAnomaly2 = _trueAnomaly2
+    }
+
     var eccentricity: Double? = null
     var inclination: Double? = null
     var ascnode: Double? = null
     var longitude: Double? = null
     var perihelion: Double? = null
     var meanAnomaly: Double? = null
+    var trueAnomaly2 : Double? = null
 
     init {
         eccentricity = _eccentricity
@@ -42,7 +61,9 @@ class OrbitalElements(// Mean distance
     val v = atan2(yv, xv)
 
     val anomaly: Double
-        get() = calculateTrueAnomaly(meanAnomaly!! - perihelion!!, inclination!!)
+        get() = if(trueAnomaly2==null)
+            calculateTrueAnomaly(meanAnomaly!! - perihelion!!, inclination!!)
+        else trueAnomaly2!!
 
 
     companion object {
