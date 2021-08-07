@@ -7,6 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentWaitingBinding
@@ -29,15 +33,25 @@ class WaitingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentWaitingBinding.inflate(inflater,container,false)
+        _binding = FragmentWaitingBinding.inflate(inflater, container, false)
 
         val navController = findNavController()
 
-        val action = WaitingFragmentDirections.actionWaitingFragmentToSpaceNavigatorActivity()
-        navController.navigate(action)
+        GlobalScope.launch {
+            delay(1000)
+            val action = WaitingFragmentDirections.actionWaitingFragmentToSpaceNavigatorActivity()
+            MainScope().launch {
+                navController.navigate(action)
+            }
+        }
 
         return binding.root
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.waitingLoading.startLoadingAnimation()
+    }
 
 }

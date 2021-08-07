@@ -11,9 +11,10 @@
         <item name="colorOnSecondary">@color/black</item>
 
         <item name="mainBackground">@color/very_dark_blue</item>
-        <item name="buttonBackgroundColor">#2A255B</item>
+        <item name="buttonBackgroundColor">?attr/colorPrimary</item>
         <item name="buttonTextColor">@android:color/white</item>
         <item name="materialButtonStyle">@style/buttonStyle</item>
+        <item name="cardBackgroundColor">#201d2e</item>
 
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:windowLightStatusBar">false</item>
@@ -31,6 +32,9 @@
         <item name="android:colorBackground">@android:color/transparent</item>
         <item name="android:textCursorDrawable">@null</item>
 
+
+        <item name="materialCalendarTheme">@style/DatePicker</item>
+        <item name="android:typeface">sans</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

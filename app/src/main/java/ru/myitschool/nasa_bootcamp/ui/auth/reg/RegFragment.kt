@@ -15,7 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
@@ -64,8 +66,12 @@ class RegFragment : Fragment() {
         binding.textPassword.checkForErrors(binding.textLayoutPassword)
         binding.textPasswordRepeat.checkForErrors(binding.textLayoutPasswordRepeat)
 
+        binding.loginToAnExistingAccount.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.buttonBack.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         binding.imageView.setOnClickListener {
@@ -78,8 +84,7 @@ class RegFragment : Fragment() {
 
         binding.buttonSend.setOnClickListener {
             if (!loading) {
-                binding.progressBar.visibility = View.VISIBLE
-                binding.textError.visibility = View.GONE
+                (activity as MainActivity).hideKeyboard()
                 loading = true
 
                 var fieldsValidation = true
@@ -105,6 +110,8 @@ class RegFragment : Fragment() {
                 }
 
                 if (fieldsValidation) {
+                    (activity as MainActivity).main_loading.startLoadingAnimation()
+
                     val userName = binding.textName.text.toString()
                     val password = binding.textPassword.text.toString()
 
@@ -116,7 +123,6 @@ class RegFragment : Fragment() {
                             password,
                             imagePath
                         ).observe(viewLifecycleOwner) {
-                            binding.progressBar.visibility = View.GONE
                             loading = false
 
                             when (it) {
@@ -124,22 +130,24 @@ class RegFragment : Fragment() {
                                     successRegister()
                                 }
                                 is Data.Error -> {
-                                    showError(it.message)
+                                    (activity as MainActivity).main_loading.showError(it.message)
                                 }
                             }
                         }
                     }
                 } else {
                     loading = false
-                    binding.progressBar.visibility = View.GONE
                 }
             }
         }
     }
 
     private fun successRegister() {
-        binding.textError.visibility = View.GONE
-        (activity as MainActivity).changeHeader()
+        (activity as MainActivity).apply {
+            main_loading.stopLoadingAnimation(true)
+            changeHeader()
+            hideKeyboard()
+        }
         findNavController().navigate(R.id.success_reg)
 
     }
@@ -155,20 +163,6 @@ class RegFragment : Fragment() {
                 "Please, try another photo! (${e.message})",
                 Toast.LENGTH_SHORT
             ).show()
-        }
-    }
-
-    private fun showError(error: String) {
-        when (error) {
-            userAlreadyRegistered -> {
-                binding.textError.visibility = View.VISIBLE
-            }
-            invalidEmail -> {
-                binding.textInputLayoutEmail.error = getString(R.string.invalidEmail)
-            }
-            else -> {
-                Toast.makeText(requireContext(), "unknown error: $error", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 }
