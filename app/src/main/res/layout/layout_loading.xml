@@ -8,7 +8,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loading_root"
-        android:alpha="0.85"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,7 +16,7 @@
             android:id="@+id/loading_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.5"
+            android:alpha="0.6"
             android:background="@android:color/black" />
 
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -52,12 +51,13 @@
 
         <TextView
             android:id="@+id/error_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="25dp"
             android:fontFamily="@font/inter_regular"
             android:text="Произошла непредвиденная ошибка."
-            android:textColor="?colorAccent"
+            android:textColor="@android:color/white"
+            android:gravity="center"
             android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -10,7 +10,7 @@
     android:layout_marginStart="@dimen/eight_margin"
     android:layout_marginTop="16dp"
     android:layout_marginEnd="@dimen/eight_margin"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="16dp"
     app:cardElevation="10dp"
     app:cardBackgroundColor="@color/transparent_blue"
     app:layout_constraintBottom_toBottomOf="parent"
