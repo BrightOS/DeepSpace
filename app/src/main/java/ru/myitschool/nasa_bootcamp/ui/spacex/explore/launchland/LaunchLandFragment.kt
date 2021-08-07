@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentLaunchLandBinding
+import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
+import ru.myitschool.nasa_bootcamp.utils.loadImage
 
 @AndroidEntryPoint
 class LaunchLandFragment : Fragment() {
@@ -43,6 +45,9 @@ class LaunchLandFragment : Fragment() {
 
         binding.launchLandRecycler.setHasFixedSize(true)
         binding.launchLandRecycler.layoutManager = GridLayoutManager(context, 1)
+
+        loadImage(requireContext(), STARS_ANIMATED_BACKGROUND, binding.launchLandBackground)
+
         val navController = findNavController()
 
         launchLandViewModel.getLandList().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -57,7 +62,7 @@ class LaunchLandFragment : Fragment() {
         })
 
         launchLandViewModel.getLaunchList()
-            .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            .observe(viewLifecycleOwner, {
                 launchAdapter =
                     LaunchAdapter(
                         requireContext(),

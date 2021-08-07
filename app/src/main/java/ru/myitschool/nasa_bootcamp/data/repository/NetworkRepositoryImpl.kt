@@ -30,7 +30,7 @@ class NetworkRepositoryImpl @Inject constructor(
 
     override suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>> {
         //val allPosts = firebaseRepository.getAllPosts()
-        return Resource.success(listOf())
+        return Resource.error("TO DO", null)
     }
 
     override suspend fun pressedLikeOnItem(
@@ -38,12 +38,21 @@ class NetworkRepositoryImpl @Inject constructor(
     ): Resource<Nothing> {
         try {
             if (item.content::class.java == ArticleModel::class.java) {
-                firebaseRepository.pushLike(
+                val result = firebaseRepository.pushLike(
                     "ArticleModel",
                     (item.content as ArticleModel).id.toInt()
-                )!!
+                )
+                if (result.status == Status.ERROR) {
+                    return Resource.error(result.message.toString(), null)
+                }
             } else {
-                firebaseRepository.pushLike("UserPost", (item.content as ArticleModel).id.toInt())!!
+                val result = firebaseRepository.pushLike(
+                    "UserPost",
+                    (item.content as ArticleModel).id.toInt()
+                )
+                if (result.status == Status.ERROR) {
+                    return Resource.error(result.message.toString(), null)
+                }
             }
         } catch (e: Exception) {
             return Resource.error(e.message.toString(), null)
@@ -57,17 +66,23 @@ class NetworkRepositoryImpl @Inject constructor(
     ): Resource<Nothing> {
         try {
             if (item.content::class.java == ArticleModel::class.java) {
-                firebaseRepository.pushLikeForComment(
+                val result = firebaseRepository.pushLikeForComment(
                     "ArticleModel",
                     (item.content as ArticleModel).id.toInt(),
                     comment.id
                 )
+                if (result.status == Status.ERROR) {
+                    return Resource.error(result.message.toString(), null)
+                }
             } else {
-                firebaseRepository.pushLikeForComment(
+                val result = firebaseRepository.pushLikeForComment(
                     "UserPost",
                     (item.content as ArticleModel).id.toInt(),
                     comment.id
                 )
+                if (result.status == Status.ERROR) {
+                    return Resource.error(result.message.toString(), null)
+                }
             }
         } catch (e: Exception) {
             return Resource.error(e.message.toString(), null)
@@ -82,9 +97,15 @@ class NetworkRepositoryImpl @Inject constructor(
         parentComment: Comment?
     ): Resource<Nothing> {
         if (_class == ArticleModel::class.java) {
-            firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
+            val result = firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
+            if (result.status == Status.ERROR) {
+                return Resource.error(result.message.toString(), null)
+            }
         } else {
-            firebaseRepository.pushComment("UserPost", id.toInt(), message)
+            val result = firebaseRepository.pushComment("UserPost", id.toInt(), message)
+            if (result.status == Status.ERROR) {
+                return Resource.error(result.message.toString(), null)
+            }
         }
         return Resource.success(null)
     }

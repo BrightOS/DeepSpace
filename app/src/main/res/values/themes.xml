@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.NASA_Bootcamp" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/main_deep_space_color</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="colorSurface">@color/very_dark_blue</item>

@@ -40,13 +40,16 @@ class CoresAdapter internal constructor(
     override fun onBindViewHolder(holder: CoresViewHolder, position: Int) {
         val coreModel: CoreModel = coreModels[position]
 
-        holder.binding.coreItemBlocks.text = "Blocks : ${coreModel.block}"
+        holder.binding.coreItemBlocks.text = if (coreModel.block != null)
+            "Blocks : ${coreModel.block}"
+        else "Blocks : none"
+
         holder.binding.coreItemSerial.text = "Core : ${coreModel.core_serial}"
         holder.binding.coreItemMissions.text = "Mission : ${coreModel.missions[0].name}"
         holder.binding.coreItemReuseCount.text = "Reused : ${coreModel.reuse_count} times}"
 
-        if(coreModel.status!=null)
-        holder.binding.coreItemStatus.text = "Status : ${coreModel.status}"
+        if (coreModel.status != null)
+            holder.binding.coreItemStatus.text = "Status : ${coreModel.status}"
 
         if (coreModel.details != null)
             holder.binding.coreItemDescription.text = "${coreModel.details}"

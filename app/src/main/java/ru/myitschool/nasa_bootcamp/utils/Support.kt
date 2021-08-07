@@ -29,6 +29,15 @@ public fun loadImage(
         .into(view)
 }
 
+public fun loadImageCircle(context: Context, url: String?, view: ImageView) {
+    Glide.with(context)
+        .load(url)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .circleCrop()
+        .into(view)
+}
+
+
 public fun loadImage(context: Context, url: String?, view: ImageView) {
     Glide.with(context)
         .load(url)
