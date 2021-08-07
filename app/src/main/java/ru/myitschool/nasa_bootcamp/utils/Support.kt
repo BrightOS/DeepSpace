@@ -79,12 +79,7 @@ fun convertDateFromUnix(date: Long): String {
     val calendar = GregorianCalendar()
     calendar.time = date
 
-    return finalString.addSubstringAtIndex(
-        getDayOfMonthSuffix(
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ),
-        finalString.indexOf('.')
-    )
+    return finalString
 }
 
 fun getDateFromUnixTimestamp(time: Long): String =
