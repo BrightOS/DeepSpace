@@ -15,6 +15,8 @@ const val SPACEX_LOGO_GIF = "https://thumbs.gfycat.com/AbleTartJanenschia-size_r
 const val LAUNCH_LOGOS_GIF = "https://thumbs.gfycat.com/BouncyThornyAgama-size_restricted.gif"
 const val DRAGONS_GIF = "https://pub.creaders.net/upload_files/image/202008/20200802_15964299637690.gif"
 const val ANIMATED_DEEP_SPACE = "https://cdn.dribbble.com/users/743832/screenshots/3818628/day15-16_spacex_tx.gif"
+const val STARS_ANIMATED_BACKGROUND = "https://i.pinimg.com/originals/72/1c/68/721c68c83bffa6d2a720313fb08fc27e.gif"
+const val SPACEMAN_ANIMATED = "https://thumbs.gfycat.com/LightUnsteadyAdouri-size_restricted.gif"
 
 const val wrongCredits = "invalidCredentials"
 const val userAlreadyRegistered = "userAlreadyRegistered"

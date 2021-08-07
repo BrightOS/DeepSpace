@@ -14,6 +14,7 @@
         android:layout_marginTop="8dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="10dp"
+        app:cardBackgroundColor="@color/transparent_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,12 +38,14 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/type_dragon"
                 android:layout_width="match_parent"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/active_dragon"
                 android:layout_width="match_parent"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
                 android:textSize="18sp" />
 
@@ -50,30 +53,36 @@
                 android:id="@+id/orbit_duration_dragon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mass_kg_dragon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/launch_payload_mass_dragon"
                 android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:textSize="18sp"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/land_payload_mass_dragon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/description_dragon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -81,36 +90,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:textSize="25sp" />
+                android:layout_margin="5dp"
+                android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/type_thruster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/amount_thruster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fuel_1_thruster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fuel_2_thruster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/pods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:textSize="18sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
