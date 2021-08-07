@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentUpcomingEventsBinding
+import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 
 @AndroidEntryPoint
 class UpcomingEventsFragment : Fragment() {
@@ -22,16 +23,17 @@ class UpcomingEventsFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         _binding = FragmentUpcomingEventsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.recylcerUpcoming.setHasFixedSize(true)
         binding.recylcerUpcoming.layoutManager = GridLayoutManager(context, 1)
 
@@ -42,12 +44,23 @@ class UpcomingEventsFragment : Fragment() {
         launchesViewModel.getUpcomingList().observe(viewLifecycleOwner) {
 
             upcomingEventsAdapter =
-                UpcomingRecylcerAdapter(requireContext(), launchesViewModel.getUpcomingList().value!!)
+                UpcomingRecylcerAdapter(
+                    requireContext(),
+                    launchesViewModel.getUpcomingList().value!!
+                )
 
             binding.recylcerUpcoming.adapter = upcomingEventsAdapter
         }
 
-        return binding.root
+        DimensionsUtil.dpToPx(requireContext(), 10).let {
+            DimensionsUtil.setMargins(
+                binding.upcomingDescription,
+                it,
+                DimensionsUtil.getStatusBarHeight(resources) + it,
+                it,
+                0
+            )
+        }
     }
 
     /*

@@ -55,8 +55,6 @@ abstract class AsteroidEpoxyModel(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         holder.asteroidCard.outlineSpotShadowColor = it
                         holder.asteroidCard.outlineAmbientShadowColor = it
-                    } else {
-
                     }
                 }
             }
