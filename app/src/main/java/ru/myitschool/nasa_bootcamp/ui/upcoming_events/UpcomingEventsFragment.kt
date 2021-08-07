@@ -35,7 +35,7 @@ class UpcomingEventsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recylcerUpcoming.setHasFixedSize(true)
+        binding.recylcerUpcoming.setHasFixedSize(false)
         binding.recylcerUpcoming.layoutManager = GridLayoutManager(context, 1)
 
         launchesViewModel.getViewModelScope().launch {

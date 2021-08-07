@@ -25,10 +25,12 @@ class NotificationCentre {
     private val sharedPreferencesFileName = "savedNotifications"
     private val sharedPreferencesTableName = "notifs"
 
-    fun scheduleNotification(context: Context, title: String, text: String, date: Long, launchModel: UpcomingLaunchModel): NotificationModel {
+    fun scheduleNotification(context: Context, title: String, text: String, date: String, launchModel: UpcomingLaunchModel): NotificationModel {
         val intent = Intent(context, NotificationReceiver::class.java)
         intent.putExtra(NotificationReceiver.titleIntent, title)
         intent.putExtra(NotificationReceiver.textIntent, text)
+        val dateAlarm = parseDate(date)
+        println(Date(dateAlarm).toString())
 
         // getting last request code so we will be able to cancel scheduled notification
         val lastRequestCode: Int = try{
@@ -36,7 +38,7 @@ class NotificationCentre {
         } catch (e: Exception) {
             0
         }
-        val notificationModel = NotificationModel(title, text, date, launchModel, lastRequestCode)
+        val notificationModel = NotificationModel(title, text, dateAlarm, launchModel, lastRequestCode)
         saveNotification(context, notificationModel)
 
         val pendingIntent =
@@ -44,7 +46,7 @@ class NotificationCentre {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + (date - Date().time),
+            SystemClock.elapsedRealtime() + (dateAlarm - Date().time),
             pendingIntent
         )
         return notificationModel
@@ -80,7 +82,7 @@ class NotificationCentre {
     }
 
     private fun parseDate(date: String): Long {
-        return SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale("ru", "RU")).parse(date)!!.time
+        return SimpleDateFormat("MMMM d. yyyy. hh:mm", Locale.US).parse(date)!!.time
     }
 
     private fun saveNotification(context: Context, notification: NotificationModel) {
