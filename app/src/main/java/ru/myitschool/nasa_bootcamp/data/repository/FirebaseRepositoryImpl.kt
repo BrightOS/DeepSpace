@@ -82,7 +82,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                 data.add(_data.getValue(String::class.java)!!)
             }
 
-            val date = it.child("date").getValue(Long::class.java)!!
+            val date = it.child("date").getValue(Long::class.java)!! / 1000
 
             val id = it.child("id").getValue(Long::class.java)!!
 
@@ -600,9 +600,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                                 it.child("userId").child("id").getValue(String::class.java)!!
                             val author = UserModel(authorUsername, authorUrl, authorId)
 
-                            val date = it.child("date").getValue(Long::class.java)
+                            val date = it.child("date").getValue(Long::class.java)!! / 1000
                             comments.add(
-                                Comment(id!!, text!!, commentLikes, subComments, author, date!!)
+                                Comment(id!!, text!!, commentLikes, subComments, author, date)
                             )
                         }
 

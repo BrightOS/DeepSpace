@@ -132,7 +132,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            binding.navView.menu.findItem(R.id.createPostFragment).isEnabled = true
             navHeaderMainBinding.signIn.text = getString(R.string.sign_out)
             navHeaderMainBinding.signIn.setOnClickListener {
                 mFirebaseUser.signOutUser(this)
