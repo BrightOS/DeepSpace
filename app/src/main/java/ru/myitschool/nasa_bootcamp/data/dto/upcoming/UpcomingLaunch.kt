@@ -8,7 +8,7 @@ import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
 class UpcomingLaunch( //MAIN !!! in V5
     @field:SerializedName("name") val name: String?,
     @field:SerializedName("patch") val patch: PatchUpcoming?,
-    @field:SerializedName("date_unix") val date_unix: Int?,
+    @field:SerializedName("date_unix") val date_unix: Long?,
     @field:SerializedName("upcoming") val upcoming: Boolean?
 ){
     fun createUpcomingLaunchModel() : UpcomingLaunchModel{

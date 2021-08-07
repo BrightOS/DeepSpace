@@ -293,4 +293,5 @@
     <color name="vaerybad">#E91E63</color>
     <color name="none">#A9CDC2</color>
     <color name="default_blue_button_color">#59155D97</color>
+    <color name="upcoming_blue">#7C8DED</color>
 </resources>

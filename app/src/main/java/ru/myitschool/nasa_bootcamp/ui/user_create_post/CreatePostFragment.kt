@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -132,18 +133,16 @@ class CreatePostFragment : Fragment() {
                         }
                     }
 
-                    viewModel.getViewModelScope().launch {
-                        viewModel.createPost(post, postId).observe(viewLifecycleOwner) {
-                            when (it) {
-                                is Data.Ok -> {
-                                    Toast.makeText(requireContext(), "Success!", Toast.LENGTH_LONG)
-                                        .show()
-                                    // TODO: add progress bar and move to another activity
-                                }
-                                is Data.Error -> {
-                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG)
-                                        .show()
-                                }
+                    lifecycleScope.launchWhenStarted {
+                        when (val it =  viewModel.createPost(post, postId)) {
+                            is Data.Ok -> {
+                                Toast.makeText(requireContext(), "Success!", Toast.LENGTH_LONG)
+                                    .show()
+                                // TODO: add progress bar and move to another activity
+                            }
+                            is Data.Error -> {
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG)
+                                    .show()
                             }
                         }
                     }

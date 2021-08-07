@@ -39,7 +39,7 @@ class Launch( //MAIN
     val launch_success: Boolean,
 
     @field:SerializedName("launch_date_unix")
-    val launch_date_unix : Int,
+    val launch_date_unix : Long,
 
     @field:SerializedName("details")
     val details: String?,
@@ -71,7 +71,7 @@ class Launch( //MAIN
                 links: Links?, //Cсылка на эмблему миссии
                 upcoming: Boolean,
                 launch_success: Boolean,
-                launch_date_unix : Int,
+                launch_date_unix : Long,
                 details: String?,
                 launch_site: LaunchSite)
             : this(flight_number,

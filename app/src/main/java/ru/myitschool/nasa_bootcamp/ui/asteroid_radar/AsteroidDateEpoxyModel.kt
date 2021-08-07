@@ -6,8 +6,9 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.airbnb.epoxy.stickyheader.StickyHeaderCallbacks
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.utils.Extensions
+
 import ru.myitschool.nasa_bootcamp.utils.KotlinEpoxyHolder
+import ru.myitschool.nasa_bootcamp.utils.dateToAmericanFormat
 
 @EpoxyModelClass(layout = R.layout.date_item)
 abstract class AsteroidDateEpoxyModel :
@@ -17,7 +18,7 @@ abstract class AsteroidDateEpoxyModel :
     lateinit var date: String
 
     override fun bind(holder: Holder) {
-        holder.time.text = Extensions.dateToAmericanFormat(date)
+        holder.time.text = dateToAmericanFormat(date)
     }
 
     inner class Holder : KotlinEpoxyHolder() {

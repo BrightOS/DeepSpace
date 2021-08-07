@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
@@ -23,7 +24,7 @@ import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentRegBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
-import ru.myitschool.nasa_bootcamp.utils.Extensions.checkForErrors
+import ru.myitschool.nasa_bootcamp.utils.checkForErrors
 import ru.myitschool.nasa_bootcamp.utils.invalidEmail
 import ru.myitschool.nasa_bootcamp.utils.userAlreadyRegistered
 import java.io.IOException
@@ -115,23 +116,19 @@ class RegFragment : Fragment() {
                     val userName = binding.textName.text.toString()
                     val password = binding.textPassword.text.toString()
 
-                    viewModel.getViewModelScope().launch {
-                        viewModel.createUser(
+                    lifecycleScope.launchWhenStarted {
+                        when (val it = viewModel.createUser(
                             requireContext(),
                             userName,
                             binding.textEmail.text.toString(),
                             password,
                             imagePath
-                        ).observe(viewLifecycleOwner) {
-                            loading = false
-
-                            when (it) {
-                                is Data.Ok -> {
-                                    successRegister()
-                                }
-                                is Data.Error -> {
-                                    (activity as MainActivity).main_loading.showError(it.message)
-                                }
+                        )) {
+                            is Data.Ok -> {
+                                successRegister()
+                            }
+                            is Data.Error -> {
+                                (activity as MainActivity).main_loading.showError(it.message)
                             }
                         }
                     }
