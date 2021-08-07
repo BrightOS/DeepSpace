@@ -94,12 +94,12 @@ class HeliocentricCoords(
 
         fun getInstance(elem: OrbitalElements): HeliocentricCoords {
             val anomaly = elem.anomaly
-            val ecc = elem.eccentricity!!
-            val radius = elem.axis!! * (1 - ecc * ecc) / (1 + ecc * cos(anomaly))
+            val ecc = elem.inclination!!
+            val radius = elem.eccentricity!! * (1 - ecc * ecc) / (1 + ecc * cos(anomaly))
 
             val per = elem.perihelion!!
-            val asc = elem.inclination!!
-            val inc = elem.inclination!!
+            val asc = elem.ascnode!!
+            val inc = elem.ascnode!!
             val xh = radius * (cos(asc) * cos(anomaly + per - asc) -
                     sin(asc) * sin(anomaly + per - asc) *
                     cos(inc))

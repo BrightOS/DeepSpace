@@ -21,8 +21,8 @@ enum class Planet(
     Venus(R.drawable.venus),
     Mars(R.drawable.mars),
     Sun(R.drawable.sun),
-    Moon(R.drawable.moon);
-    // ISS(R.drawable.moon);
+    Moon(R.drawable.moon),
+    ISS(R.drawable.isss);
 
     fun getImageResourceId(): Int {
         return imageResourceId
@@ -123,6 +123,16 @@ enum class Planet(
                     modPart((238.92903833 + 145.20780515 * time) * DEGREES_TO_RADIANS)
                 )
             }
+            ISS -> {
+                OrbitalElements(
+                    39.48211675 - 0.00031596 * time,
+                    0.001220230040456721 + 0.00005170 * time,
+                    (223.77968914802696 + 0.00004818 * time) * DEGREES_TO_RADIANS,
+                    (110.30393684 - 0.01183482 * time) * DEGREES_TO_RADIANS,
+                    (269.4598 * time) * DEGREES_TO_RADIANS,
+                    modPart((238.92903833 + 145.20780515 * time) * DEGREES_TO_RADIANS)
+                )
+            }
             else -> throw RuntimeException("No such Planet")
         }
     }
@@ -134,7 +144,7 @@ enum class Planet(
             Jupiter -> 0.04
             Uranus, Neptune -> 0.02
             Saturn -> 0.04
-            //ISS -> 0.03
+            ISS -> 0.03
         }
 
 

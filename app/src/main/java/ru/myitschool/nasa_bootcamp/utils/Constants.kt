@@ -32,3 +32,5 @@ const val SEC_HOUR = 3600000L
 const val DEGREES_TO_RADIANS = PI / 180.0
 const val RADIANS_TO_DEGREES = 180.0 / PI
 const val OBLIQUITY = 23.439281f * DEGREES_TO_RADIANS //Наклонность Земли
+
+const val LINES_WIDTH = 400
