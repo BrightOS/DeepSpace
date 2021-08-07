@@ -25,12 +25,18 @@
 
             <TextView
                 style="bold"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/my_boarder"
                 android:text="@string/sensors"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                  />
 
             <View
                 android:id="@+id/divider3"
@@ -45,7 +51,6 @@
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/my_boarder"
                 android:orientation="vertical"
                 android:weightSum="2">
 
@@ -72,7 +77,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:background="@drawable/my_boarder"
                 android:orientation="vertical"
                 android:weightSum="2">
 
@@ -109,7 +113,6 @@
                 android:layout_marginTop="12dp"
                 android:orientation="vertical"
                 android:layout_margin="8dp"
-                android:background="@drawable/my_boarder"
                 android:weightSum="3">
 
                 <TextView
@@ -160,7 +163,6 @@
                 android:layout_marginTop="12dp"
                 android:orientation="vertical"
                 android:layout_margin="8dp"
-                android:background="@drawable/my_boarder"
                 android:weightSum="2">
 
                 <TextView
@@ -186,7 +188,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_margin="8dp"
-                android:background="@drawable/my_boarder"
                 android:weightSum="2">
 
                 <TextView
@@ -213,7 +214,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_margin="8dp"
-                android:background="@drawable/my_boarder"
                 android:weightSum="2">
 
                 <TextView
@@ -240,7 +240,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_margin="8dp"
-                android:background="@drawable/my_boarder"
                 android:weightSum="2">
 
                 <TextView
@@ -266,7 +265,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_margin="8dp"
-                android:background="@drawable/my_boarder"
                 android:weightSum="2">
 
                 <TextView
@@ -293,7 +291,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_margin="8dp"
-                android:background="@drawable/my_boarder"
                 android:weightSum="2">
 
                 <TextView
