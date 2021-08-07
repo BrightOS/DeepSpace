@@ -25,7 +25,9 @@ import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.Data
+import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
 import ru.myitschool.nasa_bootcamp.utils.Status
+import ru.myitschool.nasa_bootcamp.utils.loadImage
 import kotlin.system.measureTimeMillis
 
 @AndroidEntryPoint
@@ -47,6 +49,8 @@ class SpaceXFragment : Fragment() {
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
         binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
+
+        loadImage(requireContext(), STARS_ANIMATED_BACKGROUND,binding.spacexBackg)
 
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
             when (data) {
