@@ -26,6 +26,7 @@
                 android:layout_margin="5dp"
                 android:textAlignment="center"
                 android:textSize="25sp"
+                android:background="@drawable/my_boarder"
                 android:textStyle="bold"
                 tools:text="Name" />
 

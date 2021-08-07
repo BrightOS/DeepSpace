@@ -1,18 +1,12 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland
 
 import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
-import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchPadTemBinding
-import ru.myitschool.nasa_bootcamp.ui.mars_rovers.RoverRecyclerAdapter
 import java.util.ArrayList
 
 class LaunchAdapter internal constructor(
@@ -31,8 +25,7 @@ class LaunchAdapter internal constructor(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            context
+            )
         )
     }
 
@@ -57,7 +50,8 @@ class LaunchAdapter internal constructor(
                 val action = LaunchLandFragmentDirections.actionLaunchLandFragmentToMapsFragment(
                     launchModel.location.longitude.toFloat(),
                     launchModel.location.latitude.toFloat(),
-                    launchModel.name
+                    launchModel.name,
+                    launchModel.details
                 )
 
                 navController.navigate(action)

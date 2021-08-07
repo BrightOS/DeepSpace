@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/allUserPostFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.view_user_posts.ViewAllPostFragment"
-        android:label="user_posts"/>
+        android:label="user_posts" />
 
     <fragment
         android:id="@+id/exploreFragment"
@@ -142,7 +142,7 @@
     <fragment
         android:id="@+id/infoFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.InfoFragment"
-        android:label="HistoryFragment" >
+        android:label="HistoryFragment">
         <action
             android:id="@+id/action_historyFragment_to_historyFragment2"
             app:destination="@id/historyFragment2"
@@ -173,7 +173,7 @@
         android:id="@+id/launchLandFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.LaunchLandFragment"
         android:label="fragment_launch_land"
-        tools:layout="@layout/fragment_launch_land" >
+        tools:layout="@layout/fragment_launch_land">
         <action
             android:id="@+id/action_launchLandFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />
@@ -183,7 +183,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.home.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_spaceXFragment"
             app:destination="@id/spaceXFragment" />
@@ -208,23 +208,30 @@
         android:label="fragment_rover_details"
         tools:layout="@layout/fragment_rover_details" />
 
-      <fragment
+    <fragment
         android:id="@+id/mapsFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" >
+        tools:layout="@layout/fragment_maps">
+
         <argument
             android:name="longitude"
-            app:argType="float"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="float" />
         <argument
-            app:argType="float"
             android:name="latitude"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="float" />
         <argument
             android:name="name"
-            app:argType="string"
-            android:defaultValue="details" />
+            android:defaultValue="none"
+            app:argType="string" />
+
+        <argument
+            android:name="details"
+            android:defaultValue="none"
+            app:argType="string" />
+
     </fragment>
 
     <fragment
@@ -247,7 +254,8 @@
         android:id="@+id/spaceNavigatorActivity"
         android:name="ru.myitschool.nasa_bootcamp.lookbeyond.activities.SpaceNavigatorActivity"
         android:label="SpaceNavigatorActivity" />
-    <navigation android:id="@+id/socialMediaNavGraph"
+    <navigation
+        android:id="@+id/socialMediaNavGraph"
         app:startDestination="@id/socialMediaFragment">
         <fragment
             android:id="@+id/socialMediaFragment"
@@ -266,7 +274,7 @@
         android:id="@+id/waitingFragment"
         android:name="ru.myitschool.nasa_bootcamp.lookbeyond.activities.WaitingFragment"
         android:label="fragment_waiting"
-        tools:layout="@layout/fragment_waiting" >
+        tools:layout="@layout/fragment_waiting">
         <action
             android:id="@+id/action_waitingFragment_to_spaceNavigatorActivity"
             app:destination="@id/spaceNavigatorActivity" />
