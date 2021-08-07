@@ -38,8 +38,6 @@ class CapsulesFragment : Fragment() {
             capsulesViewModel.getCapsules()
         }
 
-        loadImage(requireContext(), STARS_ANIMATED_BACKGROUND,binding.capsuleBackg)
-
         binding.capsulesRecycler.setHasFixedSize(true)
         binding.capsulesRecycler.layoutManager = GridLayoutManager(context, 1)
 
