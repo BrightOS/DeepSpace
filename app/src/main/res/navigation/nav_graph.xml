@@ -9,13 +9,6 @@
         android:id="@+id/asteroidRadarFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidRadarFragment"
         android:label="AsteroidRadarFragment">
-        <action
-            android:id="@+id/action_asteroidRadarFragment_to_asteroidDetails"
-            app:destination="@id/asteroidDetails"
-            app:enterAnim="@animator/slide_in_right"
-            app:exitAnim="@animator/slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/marsRoversFragment"
