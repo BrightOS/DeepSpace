@@ -26,6 +26,7 @@
                 android:layout_margin="5dp"
                 android:textAlignment="center"
                 android:textSize="25sp"
+                android:background="@drawable/my_boarder"
                 android:textStyle="bold"
                 tools:text="Name" />
 
@@ -101,6 +102,12 @@
                 android:textSize="18sp"
                 android:layout_margin="8dp"
                 tools:text="Details : " />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/roadster_orbit_gif"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                tools:src="@drawable/space_x_background" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/roadster_gif"

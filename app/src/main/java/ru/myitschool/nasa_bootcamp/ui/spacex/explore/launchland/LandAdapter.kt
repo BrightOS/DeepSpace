@@ -56,7 +56,8 @@ class LandAdapter internal constructor(
                 val action = LaunchLandFragmentDirections.actionLaunchLandFragmentToMapsFragment(
                     landModel.location.longitude.toFloat(),
                     landModel.location.latitude.toFloat(),
-                    landModel.full_name
+                    landModel.full_name,
+                    landModel.details
                 )
                 navController.navigate(action)
             }

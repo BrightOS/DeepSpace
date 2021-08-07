@@ -17,6 +17,10 @@ const val DRAGONS_GIF = "https://pub.creaders.net/upload_files/image/202008/2020
 const val ANIMATED_DEEP_SPACE = "https://cdn.dribbble.com/users/743832/screenshots/3818628/day15-16_spacex_tx.gif"
 const val STARS_ANIMATED_BACKGROUND = "https://i.pinimg.com/originals/72/1c/68/721c68c83bffa6d2a720313fb08fc27e.gif"
 const val SPACEMAN_ANIMATED = "https://thumbs.gfycat.com/LightUnsteadyAdouri-size_restricted.gif"
+const val TESLA_ROADSTER_ORBIT = "https://media1.tenor.com/images/17406a38a5bec73cfd689f886853adef/tenor.gif?itemid=11135950"
+const val STARMAN_1 = "https://media1.tenor.com/images/3e4be755dbd97b74ceab4721d6f935c3/tenor.gif?itemid=11008638"
+const val STARMAN_2 = "https://media1.tenor.com/images/56beadf4c8c6646591c0dfb33989c2d9/tenor.gif?itemid=12084001"
+const val STARMAN_3 = "https://avatars.mds.yandex.net/get-zen_doc/26916/pub_5c66833030a74d00ae3c1147_5c668334d867ce00ae722ce7/orig"
 
 const val wrongCredits = "invalidCredentials"
 const val userAlreadyRegistered = "userAlreadyRegistered"
