@@ -543,7 +543,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                 .child(articleModel.value!!.content.id.toString()).child("id")
                 .setValue(articleModel.value!!.content.id.toString())
         } catch (e: Exception) {
-            e.printStackTrace()
+            // value has already been set
         }
         try {
             dbInstance.getReference("posts").child("ArticleModel")
