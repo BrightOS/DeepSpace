@@ -4,6 +4,7 @@ import android.graphics.Color
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.lookbeyond.Math.*
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.LineRes
+import ru.myitschool.nasa_bootcamp.utils.DEGREE_180
 import ru.myitschool.nasa_bootcamp.utils.LINES_WIDTH_FACTOR
 import javax.microedition.khronos.opengles.GL10
 import kotlin.math.PI
@@ -25,18 +26,18 @@ class LineTexture(layer: Int, textureModule: TextureModule?) :
             numLineSegments += l.vertexGeocentric.size - 1
         }
 
-        val numVertices = 4 * numLineSegments
-        val numIndices = 6 * numLineSegments
+        val numVertices = 6 * numLineSegments
+        val numIndices = 8 * numLineSegments
         val vb = vertexBuffer
-        vb.reload(4 * numLineSegments)
+        vb.reload(6 * numLineSegments)
         val cb = colorGl
-        cb.reload(4 * numLineSegments)
+        cb.reload(6 * numLineSegments)
         val tb = texCoordBuffer
         tb.reset(numVertices)
         val ib = indexGl
         ib.reset(numIndices)
 
-        val fovyInRadians = 60 * PI / 180.0
+        val fovyInRadians = 60 * PI / DEGREE_180
         val sizeFactor = tan(fovyInRadians * 0.5) / LINES_WIDTH_FACTOR
 
         var vertexIndex: Short = 0
@@ -58,22 +59,22 @@ class LineTexture(layer: Int, textureModule: TextureModule?) :
 
                 // Нижний левый угол
                 vb.point(sumNormalToOpposite(p1, v))
-                cb.intBuffer!!.put(Color.WHITE)
+                cb.intBuffer!!.put(R.color.blue_900)
                 tb.addTexCoords(0f, 1f)
 
                 //Верзний левый угол
                 vb.point(sum(p1, v))
-                cb.intBuffer!!.put(Color.WHITE)
+                cb.intBuffer!!.put(R.color.blue_900)
                 tb.addTexCoords(0f, 0f)
 
                 //Левый нижний угол
                 vb.point(sumNormalToOpposite(p2, v))
-                cb.intBuffer!!.put(Color.WHITE)
+                cb.intBuffer!!.put(R.color.blue_900)
                 tb.addTexCoords(1f, 1f)
 
                 // Верхний левый угол
                 vb.point(sum(p2, v))
-                cb.intBuffer!!.put(Color.WHITE)
+                cb.intBuffer!!.put(R.color.blue_900)
                 tb.addTexCoords(1f, 0f)
 
 
