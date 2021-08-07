@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 
+import ru.myitschool.nasa_bootcamp.utils.DEGREES_TO_RADIANS
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.*
@@ -266,10 +267,6 @@ fun scale(v: Vector3D, factor: Double): Vector3D {
 }
 
 
-const val DEGREES_TO_RADIANS = PI / 180.0
-const val RADIANS_TO_DEGREES = 180.0 / PI
-
-
 fun realSide(x: Double): Double {
     val result: Double = if (x >= 0.0) floor(x) else ceil(x)
     return result
@@ -381,11 +378,12 @@ fun matrixMultiply(m1: Matrix3D, m2: Matrix3D): Matrix3D {
     )
 }
 
-fun matrixVectorMultiply(m: Matrix3D, v: Vector3D): Vector3D {
+//хардкожжж
+fun matrixVectorMultiply(matrix: Matrix3D, vector: Vector3D): Vector3D {
     return Vector3D(
-        m.arr[0][0] * v.x + m.arr[0][1] * v.y + m.arr[0][2] * v.z,
-        m.arr[1][0] * v.x + m.arr[1][1] * v.y + m.arr[1][2] * v.z,
-        m.arr[2][0] * v.x + m.arr[2][1] * v.y + m.arr[2][2] * v.z
+        matrix.arr[0][0] * vector.x + matrix.arr[0][1] * vector.y + matrix.arr[0][2] * vector.z,
+        matrix.arr[1][0] * vector.x + matrix.arr[1][1] * vector.y + matrix.arr[1][2] * vector.z,
+        matrix.arr[2][0] * vector.x + matrix.arr[2][1] * vector.y + matrix.arr[2][2] * vector.z
     )
 }
 

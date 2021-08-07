@@ -3,46 +3,66 @@ package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 import kotlin.math.*
 
 /**
-Изучалось через сайт http://ssd.jpl.nasa.gov/?planet_pos
 ОБЪЕДИНИТЬ С КЛАССОМ RaRec!!!
  */
 class OrbitalElements(// Mean distance
-    _axis: Double, // Eccentricity of orbit
-    _eccentricity: Double, // Inclination of orbit
-    _inclination: Double, // Longitude of ascending node
+    _eccentricity: Double, // Eccentricity of orbit
+    _inclination: Double, // Inclination of orbit
+    _ascnode: Double, // Longitude of ascending node
     _longitude: Double, // Longitude of perihelion
     _perihelion: Double, // Mean longitude
     _meanLongitude: Double
 ) {
-    var axis: Double? = null
+
+    constructor(// Mean distance
+        _eccentricity: Double, // Eccentricity of orbit
+        _inclination: Double, // Inclination of orbit
+        _ascnode: Double, // Longitude of ascending node
+        _longitude: Double, // Longitude of perihelion
+        _perihelion: Double, // Mean longitude
+        _meanLongitude: Double,
+        _trueAnomaly2 : Double
+    ) : this(_eccentricity,_inclination,_ascnode,_longitude,_perihelion,_meanLongitude){
+        eccentricity = _eccentricity
+        inclination = _inclination
+        ascnode = _ascnode
+        longitude = _longitude
+        perihelion = _perihelion
+        trueAnomaly2 = _trueAnomaly2
+    }
+
     var eccentricity: Double? = null
     var inclination: Double? = null
+    var ascnode: Double? = null
     var longitude: Double? = null
     var perihelion: Double? = null
     var meanAnomaly: Double? = null
+    var trueAnomaly2 : Double? = null
 
     init {
-        axis = _axis
         eccentricity = _eccentricity
         inclination = _inclination
+        ascnode = _ascnode
         longitude = _longitude
         perihelion = _perihelion
         meanAnomaly = _meanLongitude
     }
 
     private val E =
-        meanAnomaly!! + eccentricity!! * (180 / Math.PI) * Math.sin(meanAnomaly!!.toDouble()) * (1.0 + eccentricity!! * Math.cos(
+        meanAnomaly!! + inclination!! * (180 / Math.PI) * Math.sin(meanAnomaly!!.toDouble()) * (1.0 + inclination!! * Math.cos(
             meanAnomaly!!.toDouble()
         ))
     //or  E = M + e * sin(M) * ( 1.0 + e * cos(M) ) in radians
 
-    private val xv = cos(E) - eccentricity!!
-    private val yv = sqrt(1.0 - eccentricity!! * eccentricity!!) * Math.sin(E)
+    private val xv = cos(E) - inclination!!
+    private val yv = sqrt(1.0 - inclination!! * inclination!!) * Math.sin(E)
 
     val v = atan2(yv, xv)
 
     val anomaly: Double
-        get() = calculateTrueAnomaly(meanAnomaly!! - perihelion!!, eccentricity!!)
+        get() = if(trueAnomaly2==null)
+            calculateTrueAnomaly(meanAnomaly!! - perihelion!!, inclination!!)
+        else trueAnomaly2!!
 
 
     companion object {

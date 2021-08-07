@@ -1,5 +1,8 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 
+import ru.myitschool.nasa_bootcamp.utils.DEGREE_180
+import ru.myitschool.nasa_bootcamp.utils.DEGREE_360
+
 
 class LatLong(var latitude: Double, var longitude: Double) {
 
@@ -10,6 +13,6 @@ class LatLong(var latitude: Double, var longitude: Double) {
     }
 
     init {
-        longitude = flooredMod(longitude + 180.0, 360.0) - 180.0
+        longitude = flooredMod(longitude + DEGREE_180, DEGREE_360) - DEGREE_180
     }
 }
