@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_map"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+
+
+
     <android.opengl.GLSurfaceView
         android:id="@+id/space_nav"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+ 
     <ImageButton
         android:id="@+id/sensors_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="false"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_screen_rotation"
-        android:text="@string/sensors"
         android:background="@drawable/circle"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="visible" />
+        android:src="@drawable/ic_screen_rotation"
+        android:text="@string/sensors"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

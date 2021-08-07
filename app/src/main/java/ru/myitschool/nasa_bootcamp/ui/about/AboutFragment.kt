@@ -18,7 +18,10 @@ import ru.myitschool.nasa_bootcamp.data.model.NotificationModel
 import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
 import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepositoryImpl
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAboutBinding
+import ru.myitschool.nasa_bootcamp.utils.ANIMATED_DEEP_SPACE
 import ru.myitschool.nasa_bootcamp.utils.NotificationCentre
+import ru.myitschool.nasa_bootcamp.utils.loadImage
+import ru.myitschool.nasa_bootcamp.utils.loadImageCircle
 
 
 @AndroidEntryPoint
@@ -36,6 +39,9 @@ class AboutFragment : Fragment() {
     ): View {
         // println(isNetworkAvailable(context))
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
+
+        loadImageCircle(requireContext(), ANIMATED_DEEP_SPACE, binding.logoGif)
+
         return binding.root
     }
 

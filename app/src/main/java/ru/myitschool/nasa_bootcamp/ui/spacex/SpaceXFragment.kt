@@ -25,7 +25,9 @@ import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.Data
+import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
 import ru.myitschool.nasa_bootcamp.utils.Status
+import ru.myitschool.nasa_bootcamp.utils.loadImage
 import kotlin.system.measureTimeMillis
 
 @AndroidEntryPoint
@@ -48,10 +50,13 @@ class SpaceXFragment : Fragment() {
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
         binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
 
+        loadImage(requireContext(), STARS_ANIMATED_BACKGROUND,binding.spacexBackg)
+
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
             when (data) {
                 is Data.Ok -> {
                     spaceXLaunchAdapter.submitList(data.data)
+                    binding.loadProgressbar.visibility = View.GONE
                 }
                 is Data.Error -> {
 
@@ -67,7 +72,7 @@ class SpaceXFragment : Fragment() {
         }
 
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
-            if (error == ru.myitschool.nasa_bootcamp.utils.Status.ERROR) {
+            if (error == Status.ERROR) {
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
                 binding.launchesRecycle.visibility = View.GONE
                 //binding.errorIcon.visibility = View.VISIBLE
@@ -75,10 +80,7 @@ class SpaceXFragment : Fragment() {
                     resources.getColor(R.color.disabled_button),
                     PorterDuff.Mode.SRC_ATOP
                 );
-
-              
             } else if ((error == Status.LOADING)) {
-
                 binding.loadProgressbar.visibility = View.VISIBLE
                 binding.launchesRecycle.visibility = View.GONE
                 //binding.errorIcon.visibility = View.GONE
@@ -88,8 +90,7 @@ class SpaceXFragment : Fragment() {
                 );
             } else {
                 binding.launchesRecycle.visibility = View.VISIBLE
-                binding.loadProgressbar.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button),
+                 binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button),
                     PorterDuff.Mode.SRC_ATOP
                 );
             }
