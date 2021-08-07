@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidRadarBinding
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
-import ru.myitschool.nasa_bootcamp.utils.Extensions
+import ru.myitschool.nasa_bootcamp.utils.getColorFromAttributes
 
 
 @AndroidEntryPoint
@@ -54,14 +54,15 @@ class AsteroidRadarFragment : Fragment() {
         binding.appbar.addOnOffsetChangedListener(object : OnOffsetChangedListener {
             var scrollRange = -1
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                //Initialize the size of the scroll
+                // Initialize the size of the scroll
                 if (scrollRange == -1) {
                     scrollRange = appBarLayout.totalScrollRange
                 }
-                //Check if the view is collapsed
+
+                // Check if the view is collapsed
                 if (scrollRange + verticalOffset == 0) {
                     binding.toolBar.setBackgroundColor(
-                        Extensions.getColorFromAttributes(requireContext(), R.attr.mainBackground)
+                        getColorFromAttributes(requireContext(), R.attr.mainBackground)
                     )
                 } else {
                     binding.toolBar.setBackgroundColor(
@@ -70,9 +71,6 @@ class AsteroidRadarFragment : Fragment() {
                 }
             }
         })
-
-//        binding.asteroidList.setHasFixedSize(true)
-//        binding.asteroidList.layoutManager = GridLayoutManager(context, 1)
 
         if (!this::asteroidController.isInitialized) {
             asteroidController = AsteroidEpoxyController(requireContext())
@@ -83,8 +81,6 @@ class AsteroidRadarFragment : Fragment() {
             }
         }
 
-        val layoutManager = LinearLayoutManager(context)
-
         val list = ArrayList<Long>()
         for (i in -8..-1)
             list.add(AsteroidDateEpoxyModel_().id(-1).id())
@@ -92,15 +88,9 @@ class AsteroidRadarFragment : Fragment() {
         binding.asteroidList.let {
             it.layoutManager = StickyHeaderLinearLayoutManager(requireContext())
             it.adapter = asteroidController.adapter
-//            it.addItemDecoration(
-//                DateStickyHeaderItemDecoration(
-//                    asteroidController,
-//                    list
-//                )
-//            )
         }
 
-        asteroidViewModel.getAsteroidListViewModel().observe(viewLifecycleOwner, Observer {
+        asteroidViewModel.getAsteroidListViewModel().observe(viewLifecycleOwner, {
             GlobalScope.launch {
                 asteroidController.setData(
                     asteroidViewModel.getAsteroidListViewModel().value

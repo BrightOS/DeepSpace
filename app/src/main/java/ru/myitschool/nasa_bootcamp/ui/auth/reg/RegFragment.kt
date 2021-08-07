@@ -23,7 +23,7 @@ import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentRegBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
-import ru.myitschool.nasa_bootcamp.utils.Extensions.checkForErrors
+import ru.myitschool.nasa_bootcamp.utils.checkForErrors
 import ru.myitschool.nasa_bootcamp.utils.invalidEmail
 import ru.myitschool.nasa_bootcamp.utils.userAlreadyRegistered
 import java.io.IOException

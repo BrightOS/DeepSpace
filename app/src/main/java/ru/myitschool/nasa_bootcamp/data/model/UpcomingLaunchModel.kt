@@ -6,7 +6,7 @@ import ru.myitschool.nasa_bootcamp.data.dto.upcoming.PatchUpcoming
 class UpcomingLaunchModel(
     val name: String?,
     val patch: PatchUpcoming?,
-    val static_fire_date_unix: Int?,
+    val static_fire_date_unix: Long?,
     val upcoming: Boolean?
 ) {
     override fun equals(other: Any?): Boolean {

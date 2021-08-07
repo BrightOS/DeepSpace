@@ -7,7 +7,7 @@ data class CoreModel(
     val block: Int?,
     val status: String?,
     val original_launch: String,
-    val original_launch_unix: Int,
+    val original_launch_unix: Long,
     val missions: List<Mission>,
     val reuse_count: Int,
     val water_landing: Boolean,

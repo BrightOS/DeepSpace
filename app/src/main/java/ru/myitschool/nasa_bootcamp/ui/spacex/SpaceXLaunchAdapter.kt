@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -93,11 +94,12 @@ class SpaceXLaunchAdapter :
             }
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(launchModel: SxLaunchModel) {
 
 
             binding.missionName.text = launchModel.mission_name
-            binding.missionYear.text = "${convertDateFromUnix(launchModel.launch_date_unix)}"
+            binding.missionYear.text = convertDateFromUnix(launchModel.launch_date_unix)
             binding.details.text = launchModel.details
             binding.launchSite.text = launchModel.launch_site.site_name_long
 
