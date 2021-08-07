@@ -50,7 +50,6 @@ class SpaceXFragment : Fragment() {
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
         binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
 
-        loadImage(requireContext(), STARS_ANIMATED_BACKGROUND,binding.spacexBackg)
 
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
             when (data) {
