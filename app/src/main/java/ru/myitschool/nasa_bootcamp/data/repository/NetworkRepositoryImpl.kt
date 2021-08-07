@@ -29,8 +29,7 @@ class NetworkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>> {
-        //val allPosts = firebaseRepository.getAllPosts()
-        return Resource.error("TO DO", null)
+        return Resource.success(listOf())
     }
 
     override suspend fun pressedLikeOnItem(
@@ -115,6 +114,7 @@ class NetworkRepositoryImpl @Inject constructor(
     }
 
     override fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+        firebaseRepository.createPost(title, postItems)
         return Resource.error("TO DO", null)
     }
 
