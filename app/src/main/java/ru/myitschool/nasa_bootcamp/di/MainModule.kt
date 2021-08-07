@@ -6,7 +6,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.myitschool.nasa_bootcamp.data.api.NasaApi
@@ -14,23 +16,53 @@ import ru.myitschool.nasa_bootcamp.data.api.NewsApi
 import ru.myitschool.nasa_bootcamp.data.api.SpaceXApi
 import ru.myitschool.nasa_bootcamp.data.api.UpcomingEventsApi
 import ru.myitschool.nasa_bootcamp.data.repository.*
-import ru.myitschool.nasa_bootcamp.utils.NASA_BASE_URL
-import ru.myitschool.nasa_bootcamp.utils.NEWS_BASE_URL
-import ru.myitschool.nasa_bootcamp.utils.SPACEX_BASE_URL
-import ru.myitschool.nasa_bootcamp.utils.SPACEX_BASE_V5_URL
+import ru.myitschool.nasa_bootcamp.utils.*
+import java.net.InetAddress
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
 object MainModule {
 
 
+    fun checkInternetConnection(): Boolean {
+        return try {
+            val inAddress: InetAddress = InetAddress.getByName("http://google.com")
+            if (inAddress.equals("")) {
+                false
+            } else {
+                true
+            }
+        } catch (e: java.lang.Exception) {
+            false
+        }
+    }
+
+    private val interceptor = object : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            if (!checkInternetConnection()) {
+                throw NoConnectivityException()
+                // Throwing our custom exception 'NoConnectivityException'
+            }
+
+            val builder = chain.request().newBuilder()
+            return chain.proceed(builder.build())
+        }
+    }
+
     @Provides
     @Singleton
     @Named("NASA")
     fun getNasaRetrofit(): Retrofit {
         val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+
+//        okHttpBuilder.interceptors().add(interceptor)
 
         return Retrofit.Builder()
             .baseUrl(NASA_BASE_URL)
@@ -44,6 +76,11 @@ object MainModule {
     @Named("SPACEX")
     fun getSpaceXRetrofit(): Retrofit {
         val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+
+//        okHttpBuilder.interceptors().add(interceptor)
 
         return Retrofit.Builder()
             .baseUrl(SPACEX_BASE_URL)
