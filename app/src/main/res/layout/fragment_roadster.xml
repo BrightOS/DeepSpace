@@ -103,6 +103,12 @@
                 tools:text="Details : " />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/roadster_orbit_gif"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                tools:src="@drawable/space_x_background" />
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/roadster_gif"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
