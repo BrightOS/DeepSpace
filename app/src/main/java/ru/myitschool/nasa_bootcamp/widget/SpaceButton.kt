@@ -11,7 +11,8 @@ import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.layout_space_button.view.*
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
-import ru.myitschool.nasa_bootcamp.utils.Extensions
+import ru.myitschool.nasa_bootcamp.utils.getColorFromAttributes
+
 
 class SpaceButton constructor(
     cont: Context,
@@ -31,7 +32,7 @@ class SpaceButton constructor(
         radius = DimensionsUtil.dpToPx(context, 16).toFloat()
         setBackgroundTintList(
             ColorStateList.valueOf(
-                Extensions.getColorFromAttributes(
+                getColorFromAttributes(
                     context,
                     R.attr.buttonBackgroundColor
                 )

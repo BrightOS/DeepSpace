@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -110,29 +111,27 @@ class MainActivity : AppCompatActivity() {
     fun changeHeader() {
         val mFirebaseUser = MFirebaseUser()
         if (mFirebaseUser.isUserAuthenticated()) {
-            mFirebaseUser.viewModelScope.launch {
-                mFirebaseUser.getUserAvatar().observe(this@MainActivity) {
-                    navHeaderMainBinding.userAvatar.setOnClickListener {
-                        val intent = Intent()
-                        intent.type = "image/*"
-                        intent.action = Intent.ACTION_GET_CONTENT
-                        intent.putExtra("requestCode", PICK_IMAGE_REQUEST)
-                        interactionResult.launch(Intent.createChooser(intent, "Select avatar"))
+            lifecycleScope.launchWhenStarted {
+                navHeaderMainBinding.userAvatar.setOnClickListener {
+                    val intent = Intent()
+                    intent.type = "image/*"
+                    intent.action = Intent.ACTION_GET_CONTENT
+                    intent.putExtra("requestCode", PICK_IMAGE_REQUEST)
+                    interactionResult.launch(Intent.createChooser(intent, "Select avatar"))
+                }
+                when (val it = mFirebaseUser.getUserAvatar()) {
+                    is Data.Ok -> {
+                        navHeaderMainBinding.userAvatar.foreground = null
+                        navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
                     }
-                    when (it) {
-                        is Data.Ok -> {
-                            navHeaderMainBinding.userAvatar.foreground = null
-                            navHeaderMainBinding.userAvatar.setImageBitmap(it.data)
-                        }
-                        is Data.Error -> {
-                            navHeaderMainBinding.userAvatar.setImageBitmap(null)
-                            navHeaderMainBinding.userAvatar.foreground =
-                                getDrawable(R.drawable.ic_photo_mini)
-                        }
+                    is Data.Error -> {
+                        navHeaderMainBinding.userAvatar.setImageBitmap(null)
+                        navHeaderMainBinding.userAvatar.foreground =
+                            getDrawable(R.drawable.ic_photo_mini)
                     }
                 }
             }
-            //binding.navView.menu.findItem(R.id.createPostFragment).isVisible = true
+
             binding.navView.menu.findItem(R.id.createPostFragment).isEnabled = true
             navHeaderMainBinding.signIn.text = getString(R.string.sign_out)
             navHeaderMainBinding.signIn.setOnClickListener {

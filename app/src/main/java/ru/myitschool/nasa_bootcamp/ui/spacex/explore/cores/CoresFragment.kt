@@ -38,8 +38,6 @@ class CoresFragment : Fragment() {
         binding.coresRecycle.setHasFixedSize(true)
         binding.coresRecycle.layoutManager = GridLayoutManager(context, 1)
 
-        loadImage(requireContext(), STARS_ANIMATED_BACKGROUND, binding.backgroundCores)
-
         coresViewModel.getViewModelScope().launch {
             coresViewModel.getCores()
         }

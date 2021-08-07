@@ -9,7 +9,7 @@
         android:id="@+id/background_cores"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/stars_sky_background"
+        android:src="@drawable/stars_backg_nasa"
         />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

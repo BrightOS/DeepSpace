@@ -19,7 +19,7 @@ class AuthViewModelImpl @Inject constructor(
         context: Context,
         email: String,
         password: String
-    ): LiveData<Data<out FirebaseUser>> {
+    ): Data<FirebaseUser> {
         return repository.authenticateUser(context, email, password)
     }
 

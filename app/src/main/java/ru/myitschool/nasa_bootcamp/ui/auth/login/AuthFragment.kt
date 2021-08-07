@@ -11,6 +11,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,18 +82,12 @@ class AuthFragment : Fragment() {
                         hideKeyboard()
                     }
 
-                    viewModel.getViewModelScope().launch {
-                        viewModel.authenticateUser(requireContext(), userName, password)
-                            .observe(viewLifecycleOwner) {
-                                loading = false
-                                when (it) {
-                                    is Data.Ok ->
-                                        onSuccessLogin()
-
-                                    is Data.Error ->
-                                        (activity as MainActivity).main_loading.showError(it.message)
-                                }
-                            }
+                    lifecycleScope.launchWhenStarted {
+                        when (val it = viewModel.authenticateUser(requireContext(), userName, password)) {
+                            is Data.Ok -> onSuccessLogin()
+                            is Data.Error ->
+                                (activity as MainActivity).main_loading.showError(it.message)
+                        }
                     }
                 }
             }

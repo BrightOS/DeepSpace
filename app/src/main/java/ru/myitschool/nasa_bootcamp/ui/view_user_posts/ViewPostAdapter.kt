@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
@@ -36,19 +37,16 @@ class ViewPostAdapter(
     private inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.postImage)
         fun bind(position: Int) {
-            viewModel.getViewModelScope().launch {
-                viewModel.downloadImage(postId, (data[position] as ImagePost).imagePath)
-                    .observe(viewLifecycleOwner) {
-                        when (it) {
-                            is Data.Ok -> {
-                                imageView.setImageBitmap(it.data)
-                            }
-
-                            is Data.Error -> {
-                                Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
-                            }
-                        }
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                when (val it = viewModel.downloadImage(postId, (data[position] as ImagePost).imagePath)) {
+                    is Data.Ok -> {
+                        imageView.setImageBitmap(it.data)
                     }
+
+                    is Data.Error -> {
+                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }
