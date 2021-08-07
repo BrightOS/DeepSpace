@@ -1,14 +1,10 @@
 package ru.myitschool.nasa_bootcamp.ui.mars_rovers
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_rover_details.*
-import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidDetailsBinding
+import androidx.fragment.app.Fragment
 import ru.myitschool.nasa_bootcamp.databinding.FragmentRoverDetailsBinding
 
 

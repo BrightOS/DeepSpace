@@ -5,6 +5,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,12 +18,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.navGraphViewModels
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -35,6 +41,8 @@ import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModelImpl
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.CommentItem
+import ru.myitschool.nasa_bootcamp.utils.Resource
+import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 
 @AndroidEntryPoint
@@ -79,8 +87,11 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                         comment = it,
                         currentUser = currentUser,
                         onLikeClick = {
-                            viewModel.getViewModelScope()
-                                .launch { viewModel.pressedLikeOnComment(post!!, it) }
+                            val liveData = MutableLiveData(Resource.loading(null))
+                            viewModel.getViewModelScope().launch {
+                                liveData.postValue(viewModel.pressedLikeOnComment(post!!, it))
+                            }
+                            liveData
                         },
                         onCommentClick = { }
                     )
@@ -90,13 +101,17 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                 modifier = Modifier
                     .fillMaxWidth(),
                 onClick = {
+                    val liveData = MutableLiveData(Resource.loading(null))
                     viewModel.getViewModelScope().launch {
-                        viewModel.sendMessage(
-                            message = it,
-                            id = post!!.content.id,
-                            _class = ArticleModel::class.java
+                        liveData.postValue(
+                            viewModel.sendMessage(
+                                message = it,
+                                id = post!!.content.id,
+                                _class = ArticleModel::class.java
+                            )
                         )
                     }
+                    liveData
                 })
         }
     } else if (viewModel.getSelectedArticle() != null) {
@@ -116,8 +131,11 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                         comment = it,
                         currentUser = currentUser,
                         onLikeClick = {
-                            viewModel.getViewModelScope()
-                                .launch { viewModel.pressedLikeOnComment(article!!, it) }
+                            val liveData = MutableLiveData(Resource.loading(null))
+                            viewModel.getViewModelScope().launch {
+                                liveData.postValue(viewModel.pressedLikeOnComment(article!!, it))
+                            }
+                            liveData
                         },
                         onCommentClick = { }
                     )
@@ -127,20 +145,31 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                 modifier = Modifier
                     .fillMaxWidth(),
                 onClick = {
+                    val liveData = MutableLiveData(Resource.loading(null))
                     viewModel.getViewModelScope().launch {
-                        viewModel.sendMessage(
-                            message = it,
-                            id = article!!.content.id,
-                            _class = ArticleModel::class.java
+                        liveData.postValue(
+                            viewModel.sendMessage(
+                                message = it,
+                                id = article!!.content.id,
+                                _class = ArticleModel::class.java
+                            )
                         )
                     }
+                    liveData
                 })
         }
     }
 }
 
 @Composable
-fun BottomTextField(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
+fun BottomTextField(
+    modifier: Modifier = Modifier,
+    onClick: (String) -> LiveData<Resource<Nothing>>
+) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    var isButtonEnabled by remember { mutableStateOf(true)}
     var messageTextField by remember { mutableStateOf("") }
     Card(modifier = modifier) {
         Row(
@@ -156,7 +185,29 @@ fun BottomTextField(modifier: Modifier = Modifier, onClick: (String) -> Unit) {
                     .padding(8.dp)
             )
             IconButton(
-                onClick = { onClick(messageTextField) },
+                onClick = {
+                    focusManager.clearFocus()
+                    val liveData = onClick(messageTextField)
+                    liveData.observe(lifecycleOwner) {
+                        isButtonEnabled = false
+                        when (it.status) {
+                            Status.SUCCESS -> {
+                                isButtonEnabled = true
+                                messageTextField = ""
+                            }
+                            Status.ERROR -> {
+                                isButtonEnabled = true
+                                Toast.makeText(
+                                    context,
+                                    "Failed to send a comment",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            else -> {
+                            }
+                        }
+                    }
+                },
                 modifier = Modifier.padding(8.dp)
             ) {
                 Icon(painter = painterResource(R.drawable.ic_send), contentDescription = "send")

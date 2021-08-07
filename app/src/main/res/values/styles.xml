@@ -61,13 +61,31 @@
     </style>
 
     <style name="ThemeOverlay.App.NavigationView" parent="">
-        <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.App.Subtitle1</item>
         <item name="textAppearanceSubtitle2">@style/TextAppearance.App.Subtitle2</item>
         <item name="textAppearanceBody2">@style/TextAppearance.App.Body2</item>
         <item name="shapeAppearanceSmallComponent">@style/NavigationShapeAppearance.App.SmallComponent</item>
     </style>
 
-    <style name="TextAppearance.App.Headline6" parent="TextAppearance.MaterialComponents.Subtitle1">
+    <style name="TextAppearance.App.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+    </style>
+
+    <style name="TextAppearance.App.Headline6" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+
+    <style name="TextAppearance.App.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="fontFamily">@font/inter_semibold</item>
+        <item name="android:fontFamily">@font/inter_semibold</item>
+    </style>
+    <style name="TextAppearance.App.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/inter_extrabold</item>
+        <item name="android:fontFamily">@font/inter_extrabold</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">@font/inter_regular</item>
         <item name="android:fontFamily">@font/inter_regular</item>
     </style>

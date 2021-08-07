@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
@@ -36,6 +36,7 @@ import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
 import ru.myitschool.nasa_bootcamp.ui.home.components.NavigationCard
+import ru.myitschool.nasa_bootcamp.ui.home.components.NavigationCardData
 import ru.myitschool.nasa_bootcamp.ui.home.components.NewsCarousel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
@@ -43,6 +44,7 @@ import ru.myitschool.nasa_bootcamp.utils.Resource
 class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels<HomeViewModelImpl>()
 
+    @ExperimentalFoundationApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,11 +70,9 @@ class HomeFragment : Fragment() {
                                 }
                             },
                             onShowMoreNewsClick = {
-                                Toast.makeText(
-                                    context,
-                                    "Так вроде не сделали",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                val action =
+                                    HomeFragmentDirections.actionHomeFragmentToSocialMediaFragment()
+                                findNavController().navigate(action)
                             })
                     }
                 }
@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@ExperimentalFoundationApi
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
@@ -90,7 +90,8 @@ fun HomeScreen(
     onNewsItemClick: (articleModel: ArticleModel) -> Unit,
     onShowMoreNewsClick: () -> Unit
 ) {
-    val imageOfTheDayModel by viewModel.getImageOfTheDayModel().observeAsState(Resource.loading(null))
+    val imageOfTheDayModel by viewModel.getImageOfTheDayModel()
+        .observeAsState(Resource.loading(null))
     val articles by viewModel.getArticles().observeAsState(Resource.success(listOf()))
     val scrollState = rememberScrollState()
 
@@ -155,44 +156,74 @@ fun HomeScreen(
                     style = MaterialTheme.typography.h5,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
-                NavigationCard(
-                    painter = painterResource(R.drawable.space_x_background3),
-                    title = stringResource(R.string.spacex_card_title),
-                    description = stringResource(R.string.spacex_card_description),
-                    modifier = Modifier.padding(
-                        vertical = 8.dp, horizontal = 16.dp,
+                val cardModifier =
+                    Modifier
+                        .aspectRatio(1f)
+                        .padding(8.dp)
+                val navDataList = listOf(
+                    NavigationCardData(
+                        painter = painterResource(R.drawable.space_x_background3),
+                        title = stringResource(R.string.spacex_card_title),
+                        modifier = cardModifier,
+                        onClick = {
+                            val action = HomeFragmentDirections.actionHomeFragmentToSpaceXFragment()
+                            action.arguments.putInt("index", 2)
+                            onNavCardClick(action)
+                        }
                     ),
-                    onClick = {
-                        onNavCardClick(HomeFragmentDirections.actionHomeFragmentToSpaceXFragment())
-                    }
+                    NavigationCardData(
+                        painter = painterResource(R.drawable.pack2279),
+                        title = stringResource(R.string.blogs),
+                        modifier = cardModifier,
+                        onClick = {
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToSocialMediaFragment())
+                        }
+                    ),
+                    NavigationCardData(
+                        painter = painterResource(R.drawable.mars_background),
+                        title = stringResource(R.string.mars_rovers),
+                        modifier = cardModifier,
+                        onClick = {
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToMarsRoversFragment())
+                        }
+                    ),
+                    NavigationCardData(
+                        painter = painterResource(R.drawable.danger_asteroid1),
+                        title = stringResource(R.string.asteroid_radar),
+                        modifier = cardModifier,
+                        onClick = {
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToAsteroidRadarFragment())
+                        }
+                    ),
+                    NavigationCardData(
+                        painter = painterResource(R.drawable.danger_asteroid1),
+                        title = stringResource(R.string.asteroid_radar),
+                        modifier = cardModifier,
+                        onClick = {
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToAsteroidRadarFragment())
+                        }
+                    ),
+                    NavigationCardData(
+                        painter = painterResource(R.drawable.danger_asteroid1),
+                        title = stringResource(R.string.asteroid_radar),
+                        modifier = cardModifier,
+                        onClick = {
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToAsteroidRadarFragment())
+                        }
+                    )
                 )
-                NavigationCard(
-                    painter = painterResource(R.drawable.pack2279),
-                    title = stringResource(R.string.blogs),
-                    description = "Потом переделаю",
-                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                    onClick = {
-                        onNavCardClick(HomeFragmentDirections.actionHomeFragmentToSocialMediaFragment())
+                Row(modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        navDataList.take(3).forEach {
+                            NavigationCard(data = it)
+                        }
                     }
-                )
-                NavigationCard(
-                    painter = painterResource(R.drawable.mars_background),
-                    title = stringResource(R.string.mars_rovers),
-                    description = "",
-                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                    onClick = {
-                        onNavCardClick(HomeFragmentDirections.actionHomeFragmentToMarsRoversFragment())
+                    Column(modifier = Modifier.weight(1f)) {
+                        navDataList.takeLast(3).forEach {
+                            NavigationCard(data = it)
+                        }
                     }
-                )
-                NavigationCard(
-                    painter = painterResource(R.drawable.danger_asteroid1),
-                    title = stringResource(R.string.asteroid_radar),
-                    description = "",
-                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                    onClick = {
-                        onNavCardClick(HomeFragmentDirections.actionHomeFragmentToMarsRoversFragment())
-                    }
-                )
+                }
             }
         }
     }

@@ -252,6 +252,10 @@
             <action
                 android:id="@+id/action_socialMediaFragment_to_commentsFragment"
                 app:destination="@id/commentsFragment" />
+            <argument
+                android:name="index"
+                app:argType="integer"
+                android:defaultValue="0" />
         </fragment>
         <fragment
             android:id="@+id/commentsFragment"
