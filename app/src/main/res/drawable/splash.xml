@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<baseLayer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/very_dark_blue" />
     <item
         android:width="375dp"
         android:height="102dp"
         android:drawable="@drawable/splash_img"
         android:gravity="center" />
-</baseLayer-list>
+</layer-list>
