@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.myitschool.nasa_bootcamp.data.model.*
@@ -39,29 +38,53 @@ class NetworkRepositoryImpl @Inject constructor(
     ): Resource<Nothing> {
         try {
             if (item.content::class.java == ArticleModel::class.java) {
-                firebaseRepository.pushLike(
+                val result = firebaseRepository.pushLike(
                     "ArticleModel",
                     (item.content as ArticleModel).id.toInt()
-                )!!
+                )
+                if (result.status == Status.ERROR) {
+                    return Resource.error(result.message.toString(), null)
+                }
             } else {
-                firebaseRepository.pushLike("UserPost", (item.content as ArticleModel).id.toInt())!!
+                val result = firebaseRepository.pushLike(
+                    "UserPost",
+                    (item.content as ArticleModel).id.toInt()
+                )
+                if (result.status == Status.ERROR) {
+                    return Resource.error(result.message.toString(), null)
+                }
             }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             return Resource.error(e.message.toString(), null)
         }
         return Resource.success(null)
     }
 
-    override suspend fun pressedLikeOnComment(item: ContentWithLikesAndComments<out Any>, comment: Comment): Resource<Nothing> {
-        try{
+    override suspend fun pressedLikeOnComment(
+        item: ContentWithLikesAndComments<out Any>,
+        comment: Comment
+    ): Resource<Nothing> {
+        try {
             if (item.content::class.java == ArticleModel::class.java) {
-                firebaseRepository.pushLikeForComment("ArticleModel", (item.content as ArticleModel).id.toInt(), comment.id)
+                val result = firebaseRepository.pushLikeForComment(
+                    "ArticleModel",
+                    (item.content as ArticleModel).id.toInt(),
+                    comment.id
+                )
+                if (result.status == Status.ERROR) {
+                    return Resource.error(result.message.toString(), null)
+                }
             } else {
-                firebaseRepository.pushLikeForComment("UserPost", (item.content as ArticleModel).id.toInt(), comment.id)
+                val result = firebaseRepository.pushLikeForComment(
+                    "UserPost",
+                    (item.content as ArticleModel).id.toInt(),
+                    comment.id
+                )
+                if (result.status == Status.ERROR) {
+                    return Resource.error(result.message.toString(), null)
+                }
             }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             return Resource.error(e.message.toString(), null)
         }
         return Resource.success(null)
@@ -74,9 +97,15 @@ class NetworkRepositoryImpl @Inject constructor(
         parentComment: Comment?
     ): Resource<Nothing> {
         if (_class == ArticleModel::class.java) {
-            firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
+            val result = firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
+            if (result.status == Status.ERROR) {
+                return Resource.error(result.message.toString(), null)
+            }
         } else {
-            firebaseRepository.pushComment("UserPost", id.toInt(), message)
+            val result = firebaseRepository.pushComment("UserPost", id.toInt(), message)
+            if (result.status == Status.ERROR) {
+                return Resource.error(result.message.toString(), null)
+            }
         }
         return Resource.success(null)
     }
