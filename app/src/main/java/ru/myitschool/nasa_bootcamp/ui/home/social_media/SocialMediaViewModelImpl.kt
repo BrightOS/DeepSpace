@@ -70,8 +70,8 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     }
 
     override fun getCurrentUser() = currentUser
-    override fun createPost(post: String, text: String, bitmap: Bitmap?) {
-        TODO("Not yet implemented")
+    override fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+        return networkRepository.createPost(title, postItems)
     }
 
 }

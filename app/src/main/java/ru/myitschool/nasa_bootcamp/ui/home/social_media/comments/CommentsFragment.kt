@@ -1,6 +1,7 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media.comments
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -27,7 +26,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.android.material.composethemeadapter.MdcTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -207,17 +205,21 @@ fun ArticleContent(articleModel: ArticleModel) {
 @Composable
 fun PostContent(postModel: PostModel) {
     Column {
-        if (postModel.imageUrl != null)
-            Image(
-                painter = rememberImagePainter(postModel.imageUrl),
-                contentScale = ContentScale.Crop,
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-            )
         Text(text = postModel.title, style = MaterialTheme.typography.h5)
-        Text(text = postModel.text, modifier = Modifier.padding(vertical = 12.dp))
+        postModel.postItems.forEach {
+            if (Patterns.WEB_URL.matcher(it).matches()) {
+                Image(
+                    painter = rememberImagePainter(it),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                )
+            } else {
+                Text(text = it, modifier = Modifier.padding(vertical = 12.dp))
+            }
+        }
         Text(text = getDateFromUnixTimestamp(postModel.date))
     }
 }

@@ -114,6 +114,10 @@ class NetworkRepositoryImpl @Inject constructor(
         return firebaseRepository.getUser(uid)
     }
 
+    override fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+        return Resource.error("TO DO", null)
+    }
+
     override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()
 }
 

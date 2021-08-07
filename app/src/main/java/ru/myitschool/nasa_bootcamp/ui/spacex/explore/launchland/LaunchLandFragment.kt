@@ -62,7 +62,7 @@ class LaunchLandFragment : Fragment() {
         })
 
         launchLandViewModel.getLaunchList()
-            .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            .observe(viewLifecycleOwner, {
                 launchAdapter =
                     LaunchAdapter(
                         requireContext(),
