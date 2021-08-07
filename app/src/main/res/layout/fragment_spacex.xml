@@ -74,11 +74,15 @@
 
     <ProgressBar
         android:id="@+id/load_progressbar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:theme="@style/Theme.AppCompat.Light"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="@dimen/progress_bar_len"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:visibility="visible" />
+        android:layout_margin="2dp"
+        android:indeterminate="true"
+        android:visibility="invisible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/launches_recycle"
