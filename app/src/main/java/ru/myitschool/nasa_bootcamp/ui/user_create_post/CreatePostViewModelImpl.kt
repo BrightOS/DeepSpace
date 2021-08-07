@@ -16,7 +16,7 @@ class CreatePostViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository
 ) : ViewModel(), CreatePostViewModel {
 
-    override suspend fun createPost(post: Post, postId: String): LiveData<Data<out String>> {
+    override suspend fun createPost(post: Post, postId: String): Data <String> {
         return repository.createPost(post, postId)
     }
 

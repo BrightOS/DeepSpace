@@ -45,7 +45,7 @@ class MFirebaseUser() : ViewModel() {
         }
     }
 
-    suspend fun getUserAvatar(): LiveData<Data<out Bitmap>> {
+    suspend fun getUserAvatar(): Data<Bitmap> {
         val storageRef = storage.getReference("user_data/${authenticator.currentUser?.uid}")
         return downloadFirebaseImage(storageRef)
     }
