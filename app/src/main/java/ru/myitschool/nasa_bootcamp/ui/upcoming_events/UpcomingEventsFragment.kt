@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentUpcomingEventsBinding
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
@@ -40,6 +41,7 @@ class UpcomingEventsFragment : Fragment() {
         launchesViewModel.getViewModelScope().launch {
             launchesViewModel.getUpcomingLaunches()
         }
+        activity?.main_loading?.startLoadingAnimation()
 
         launchesViewModel.getUpcomingList().observe(viewLifecycleOwner) {
 
@@ -50,6 +52,7 @@ class UpcomingEventsFragment : Fragment() {
                 )
 
             binding.recylcerUpcoming.adapter = upcomingEventsAdapter
+            activity?.main_loading?.stopLoadingAnimation()
         }
 
         DimensionsUtil.dpToPx(requireContext(), 10).let {
