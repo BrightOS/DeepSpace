@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.myitschool.nasa_bootcamp.data.model.*
@@ -31,7 +30,7 @@ class NetworkRepositoryImpl @Inject constructor(
 
     override suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>> {
         //val allPosts = firebaseRepository.getAllPosts()
-        return Resource.error("TO DO", null)
+        return Resource.success(listOf())
     }
 
     override suspend fun pressedLikeOnItem(
@@ -46,22 +45,31 @@ class NetworkRepositoryImpl @Inject constructor(
             } else {
                 firebaseRepository.pushLike("UserPost", (item.content as ArticleModel).id.toInt())!!
             }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             return Resource.error(e.message.toString(), null)
         }
         return Resource.success(null)
     }
 
-    override suspend fun pressedLikeOnComment(item: ContentWithLikesAndComments<out Any>, comment: Comment): Resource<Nothing> {
-        try{
+    override suspend fun pressedLikeOnComment(
+        item: ContentWithLikesAndComments<out Any>,
+        comment: Comment
+    ): Resource<Nothing> {
+        try {
             if (item.content::class.java == ArticleModel::class.java) {
-                firebaseRepository.pushLikeForComment("ArticleModel", (item.content as ArticleModel).id.toInt(), comment.id)
+                firebaseRepository.pushLikeForComment(
+                    "ArticleModel",
+                    (item.content as ArticleModel).id.toInt(),
+                    comment.id
+                )
             } else {
-                firebaseRepository.pushLikeForComment("UserPost", (item.content as ArticleModel).id.toInt(), comment.id)
+                firebaseRepository.pushLikeForComment(
+                    "UserPost",
+                    (item.content as ArticleModel).id.toInt(),
+                    comment.id
+                )
             }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             return Resource.error(e.message.toString(), null)
         }
         return Resource.success(null)
@@ -83,6 +91,10 @@ class NetworkRepositoryImpl @Inject constructor(
 
     override suspend fun getUser(uid: String): UserModel? {
         return firebaseRepository.getUser(uid)
+    }
+
+    override fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+        return Resource.error("TO DO", null)
     }
 
     override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()

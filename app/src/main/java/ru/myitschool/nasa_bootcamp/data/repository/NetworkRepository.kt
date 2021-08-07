@@ -20,4 +20,5 @@ interface NetworkRepository {
         parentComment: Comment? = null
     ): Resource<Nothing>
     suspend fun getUser(uid: String): UserModel?
+    fun createPost(title: String, postItems: List<Any>): Resource<Nothing>
 }
