@@ -52,22 +52,23 @@ fun loadImage(context: Context, url: String?, view: ImageView) {
         .into(view)
 }
 
-suspend fun downloadFirebaseImage(storageRef: StorageReference): LiveData<Data<out Bitmap>> {
-    val returnData = MutableLiveData<Data<out Bitmap>>()
+suspend fun downloadFirebaseImage(storageRef: StorageReference): Data<Bitmap> {
     try {
         var tempLocalFile: File? = null
-        kotlin.runCatching {
+        runCatching {
             tempLocalFile = File.createTempFile("Images", "bmp")
         }
+
+        var image: Data<Bitmap> = Data.Loading
         storageRef.getFile(tempLocalFile!!).addOnSuccessListener {
-            returnData.postValue(Data.Ok(BitmapFactory.decodeFile(tempLocalFile!!.absolutePath)))
+            image = Data.Ok(BitmapFactory.decodeFile(tempLocalFile!!.absolutePath))
         }.addOnFailureListener {
-            returnData.postValue(Data.Error(it.message.toString()))
+            image = Data.Error(it.message.toString())
         }.await()
+        return image
     } catch (e: Exception) {
-        returnData.postValue(Data.Error(e.message.toString()))
+        return Data.Error(e.message.toString())
     }
-    return returnData
 }
 
 fun convertDateFromUnix(date: Long): String {

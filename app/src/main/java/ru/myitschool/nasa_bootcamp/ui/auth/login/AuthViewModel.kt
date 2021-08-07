@@ -17,7 +17,7 @@ interface AuthViewModel {
      * если вход с неправильными данными, пароль или почта то должен вернуться Data.Error с
      * message = Constants.wrongCredits
      */
-    suspend fun authenticateUser(context: Context, email: String, password: String): LiveData<Data<out FirebaseUser>>
+    suspend fun authenticateUser(context: Context, email: String, password: String): Data<FirebaseUser>
     fun signOutUser(context: Context): LiveData<Data<out String>>
     fun getViewModelScope(): CoroutineScope
 }
