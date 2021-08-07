@@ -1,6 +1,8 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 
+import ru.myitschool.nasa_bootcamp.utils.DEGREES_TO_RADIANS
 import ru.myitschool.nasa_bootcamp.utils.OBLIQUITY
+import ru.myitschool.nasa_bootcamp.utils.RADIANS_TO_DEGREES
 import java.util.*
 import kotlin.math.*
 
@@ -69,12 +71,8 @@ class HeliocentricCoords(
         return HeliocentricCoords(
             radius,
             x,
-            y * cos(OBLIQUITY) - z * sin(
-                OBLIQUITY
-            ),
-            y * sin(OBLIQUITY) + z * cos(
-                OBLIQUITY
-            )
+            y * cos(OBLIQUITY) - z * sin(OBLIQUITY),
+            y * sin(OBLIQUITY) + z * cos(OBLIQUITY)
         )
     }
 
@@ -94,12 +92,12 @@ class HeliocentricCoords(
 
         fun getInstance(elem: OrbitalElements): HeliocentricCoords {
             val anomaly = elem.anomaly
-            val ecc = elem.eccentricity!!
-            val radius = elem.axis!! * (1 - ecc * ecc) / (1 + ecc * cos(anomaly))
+            val ecc = elem.inclination!!
+            val radius = elem.eccentricity!! * (1 - ecc * ecc) / (1 + ecc * cos(anomaly))
 
             val per = elem.perihelion!!
-            val asc = elem.inclination!!
-            val inc = elem.inclination!!
+            val asc = elem.ascnode!!
+            val inc = elem.ascnode!!
             val xh = radius * (cos(asc) * cos(anomaly + per - asc) -
                     sin(asc) * sin(anomaly + per - asc) *
                     cos(inc))

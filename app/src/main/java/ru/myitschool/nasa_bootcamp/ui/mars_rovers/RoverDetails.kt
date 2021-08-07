@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_rover_details.*
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidDetailsBinding
+
 import ru.myitschool.nasa_bootcamp.databinding.FragmentRoverDetailsBinding
 
 

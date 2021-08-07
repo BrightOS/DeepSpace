@@ -4,6 +4,7 @@ import android.graphics.Color
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.lookbeyond.Math.*
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.LineRes
+import ru.myitschool.nasa_bootcamp.utils.LINES_WIDTH_FACTOR
 import javax.microedition.khronos.opengles.GL10
 import kotlin.math.PI
 import kotlin.math.tan
@@ -36,7 +37,7 @@ class LineTexture(layer: Int, textureModule: TextureModule?) :
         ib.reset(numIndices)
 
         val fovyInRadians = 60 * PI / 180.0
-        val sizeFactor = tan(fovyInRadians * 0.5) / 480
+        val sizeFactor = tan(fovyInRadians * 0.5) / LINES_WIDTH_FACTOR
 
         var vertexIndex: Short = 0
         for (l in lines) {

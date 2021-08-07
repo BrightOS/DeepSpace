@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.accompanist.insets.rememberImeNestedScrollConnection
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -136,11 +137,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     override suspend fun downloadImage(
         postId: String,
         imageId: String
-    ): LiveData<Data<out Bitmap>> {
+    ): Data<Bitmap> {
         val storageRef = storage.getReference("posts/$postId/$imageId")
         return downloadFirebaseImage(storageRef)
     }
-
 
     // USER CUSTOM POST CREATION:
 
@@ -152,8 +152,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         for (value in postItems) {
             if (value::class.java == String::class.java) {
                 fbPostItems.add(value as String)
-            }
-            else {
+            } else {
                 val baos = ByteArrayOutputStream()
                 (value as Bitmap).compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val byte = baos.toByteArray()
@@ -169,6 +168,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         reference.child("postItems").setValue(fbPostItems)
         return Resource.success(null)
     }
+
+
+
+    // USER CUSTOM POST CREATION:
 
     override fun uploadImage(
         postId: String,
@@ -246,8 +249,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         comment: String
-    ): LiveData<Data<out String>> {
-        val returnData = MutableLiveData<Data<out String>>()
+    ): Data<String> {
         if (authenticator.uid != null) {
             try {
                 val subCommentId = getLastSubCommentId(source, postId, fatherCommentId) + 1
@@ -260,22 +262,21 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .child(fatherCommentId.toString()).child("subComments")
                     .child(subCommentId.toString())
                     .setValue(subCommentObject).await()
-                returnData.postValue(Data.Ok("Ok"))
+                return Data.Ok("Ok")
             } catch (e: Exception) {
-                returnData.postValue(Data.Error(e.message.toString()))
+                return Data.Error(e.message.toString())
             }
         } else {
-            returnData.postValue(Data.Error("User is not authenticated."))
+            return Data.Error("User is not authenticated.")
         }
-        return returnData
     }
 
     override suspend fun deleteComment(
         source: String,
         postId: Int,
         commentId: Long
-    ): LiveData<Data<out String>> {
-        val returnData = MutableLiveData<Data<out String>>()
+    ): Data<String> {
+
         if (authenticator.uid != null && authenticator.uid == getCommentAuthor(
                 source,
                 postId,
@@ -286,14 +287,13 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                 dbInstance.getReference("posts").child(source).child(postId.toString())
                     .child("comments")
                     .child(commentId.toString()).removeValue().await()
-                returnData.postValue(Data.Ok("Ok"))
+                return Data.Ok("Ok")
             } catch (e: Exception) {
-                returnData.postValue(Data.Error("Comment doesn't exist"))
+                return Data.Error("Comment doesn't exist")
             }
         } else {
-            returnData.postValue(Data.Error("User is not authenticated or he is not author of the comment"))
+            return Data.Error("User is not authenticated or he is not author of the comment")
         }
-        return returnData
     }
 
     override suspend fun deleteSubComment(
@@ -301,8 +301,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ): LiveData<Data<out String>> {
-        val returnData = MutableLiveData<Data<out String>>()
+    ): Data<String> {
+
         if (authenticator.uid != null && authenticator.uid == getSubCommentAuthor(
                 source,
                 postId,
@@ -315,14 +315,13 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .child("comments")
                     .child(fatherCommentId.toString()).child("subComments")
                     .child(subCommentId.toString()).removeValue().await()
-                returnData.postValue(Data.Ok("Ok"))
+                return  (Data.Ok("Ok"))
             } catch (e: java.lang.Exception) {
-                returnData.postValue(Data.Error("SubComment doesn't exist"))
+                return (Data.Error("SubComment doesn't exist"))
             }
         } else {
-            returnData.postValue(Data.Error("User is not authenticated or he is not author of the SubComment"))
+           return (Data.Error("User is not authenticated or he is not author of the SubComment"))
         }
-        return returnData
     }
 
     override suspend fun pushLike(source: String, postId: Int): Resource<Nothing> {
@@ -370,8 +369,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ): LiveData<Data<out String>> {
-        val returnData = MutableLiveData<Data<out String>>()
+    ): Data<String> {
         if (authenticator.uid != null && !checkIfHasSubCommentLike(
                 source,
                 postId,
@@ -384,14 +382,13 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .child(fatherCommentId.toString()).child("subComments")
                     .child(subCommentId.toString()).child("likes").child(authenticator.uid!!)
                     .setValue(authenticator.uid).await()
-                returnData.postValue(Data.Ok("Ok"))
+                return (Data.Ok("Ok"))
             } catch (e: Exception) {
-                returnData.postValue(Data.Error(e.message.toString()))
+                return (Data.Error(e.message.toString()))
             }
         } else {
-            returnData.postValue(Data.Error("User is not authenticated or already has a like"))
+            return (Data.Error("User is not authenticated or already has a like"))
         }
-        return returnData
     }
 
     override suspend fun deleteLike(source: String, postId: Int): Resource<Nothing> {
@@ -435,8 +432,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ): LiveData<Data<out String>> {
-        val returnData = MutableLiveData<Data<out String>>()
+    ): Data<String> {
         if (authenticator.uid != null && checkIfHasSubCommentLike(
                 source,
                 postId,
@@ -450,22 +446,21 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .child(subCommentId.toString()).child("likes").child(authenticator.uid!!)
                     .removeValue()
                     .await()
-                returnData.postValue(Data.Ok("Ok"))
+                return (Data.Ok("Ok"))
             } catch (e: Exception) {
-                returnData.postValue(Data.Error(e.message.toString()))
+               return (Data.Error(e.message.toString()))
             }
         } else {
-            returnData.postValue(Data.Error("User is not authenticated or he didn't`t like this subComment"))
+            return (Data.Error("User is not authenticated or he didn't`t like this subComment"))
         }
-        return returnData
     }
 
     override suspend fun authenticateUser(
         context: Context,
         email: String,
         password: String
-    ): LiveData<Data<out FirebaseUser>> {
-        val returnData: MutableLiveData<Data<out FirebaseUser>> = MutableLiveData()
+    ): Data<FirebaseUser> {
+
         try {
             val user = authenticator.signInWithEmailAndPassword(email, password).await()
             val userInfo = getUser(user.user!!.uid)
@@ -477,11 +472,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             sharedPreferences.putString(sharedPreferencesId, user.user!!.uid)
             sharedPreferences.apply()
 
-            returnData.postValue(Data.Ok(user?.user!!))
+            return (Data.Ok(user?.user!!))
         } catch (e: Exception) {
-            returnData.postValue(Data.Error(e.message.toString()))
+            return (Data.Error(e.message.toString()))
         }
-        return returnData
     }
 
     override fun signOutUser(context: Context): LiveData<Data<out String>> {
@@ -503,8 +497,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         email: String,
         password: String,
         imagePath: Uri?
-    ): LiveData<Data<out FirebaseUser>> {
-        val returnData: MutableLiveData<Data<out FirebaseUser>> = MutableLiveData()
+    ): Data<FirebaseUser> {
         try {
             val user = authenticator.createUserWithEmailAndPassword(email, password).await()
             if (user != null) {
@@ -524,14 +517,14 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                 sharedPreferences.putString(sharedPreferencesId, user.user!!.uid)
                 sharedPreferences.apply()
 
-                returnData.postValue(Data.Ok(user.user!!))
+                return (Data.Ok(user.user!!))
             } else {
-                returnData.postValue(Data.Error("Unknown error happened."))
+                return(Data.Error("Unknown error happened."))
             }
         } catch (e: java.lang.Exception) {
-            returnData.postValue(Data.Error(e.message!!))
+            return(Data.Error(e.message!!))
         }
-        return returnData
+
     }
 
     override suspend fun getUser(uid: String): UserModel? {

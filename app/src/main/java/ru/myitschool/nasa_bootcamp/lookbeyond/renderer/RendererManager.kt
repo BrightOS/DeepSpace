@@ -39,12 +39,12 @@ abstract class RendererManager(val layer: Int, private val mTextureModule: Textu
 
     companion object {
 
-        private var sIndex = 0
+        private var _index = 0
     }
 
     init {
         synchronized(RendererManager::class.java) {
-            index = sIndex++
+            index = _index++
         }
     }
 }

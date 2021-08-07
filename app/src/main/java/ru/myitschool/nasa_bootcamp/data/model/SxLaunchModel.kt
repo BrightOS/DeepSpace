@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.*
 
 data class SxLaunchModel(
-    val launch_date_unix: Int,
+    val launch_date_unix: Long,
     val flight_number: Int,
     val mission_name: String,
     val launch_year: Int,

@@ -82,7 +82,7 @@ class NotificationCentre {
     }
 
     private fun parseDate(date: String): Long {
-        return SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale("ru", "RU")).parse(date)!!.time
+        return SimpleDateFormat("MMMM d. yyyy. hh:mm", Locale.US).parse(date)!!.time
     }
 
     private fun saveNotification(context: Context, notification: NotificationModel) {

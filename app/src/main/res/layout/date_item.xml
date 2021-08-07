@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/time"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawableStart="@drawable/ic_calendar"
+    android:drawablePadding="10dp"
+    android:background="#0D131F"
+    android:elevation="0dp"
+    android:drawableTint="@android:color/white"
+    android:fontFamily="@font/inter_bold"
+    android:paddingVertical="12dp"
+    android:paddingHorizontal="15dp"
+    android:text="July 2nd. 2015"
+    android:textColor="@android:color/white"
+    android:textSize="21sp"
+    android:drawableEnd="@drawable/ic_edit_square"/>

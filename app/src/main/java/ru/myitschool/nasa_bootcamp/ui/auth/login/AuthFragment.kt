@@ -11,11 +11,16 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
@@ -35,6 +40,7 @@ class AuthFragment : Fragment() {
         val transition =
             TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         sharedElementEnterTransition = transition
+
         super.onCreate(savedInstanceState)
     }
 
@@ -58,7 +64,6 @@ class AuthFragment : Fragment() {
         }
 
         binding.buttonLogin.setOnClickListener {
-            binding.textWrongCredits.visibility = View.GONE
             if (!loading) {
                 val userName = binding.textName.text.toString()
                 val password = binding.textPassword.text.toString()
@@ -72,43 +77,40 @@ class AuthFragment : Fragment() {
                     }
                 } else {
                     loading = true
-                    binding.progressBar.visibility = View.VISIBLE
+                    (activity as MainActivity).apply {
+                        main_loading.startLoadingAnimation()
+                        hideKeyboard()
+                    }
 
-                    viewModel.getViewModelScope().launch {
-                        viewModel.authenticateUser(requireContext(), userName, password).observe(viewLifecycleOwner) {
-                            binding.progressBar.visibility = View.GONE
-                            loading = false
-                            when (it) {
-                                is Data.Ok -> {
-                                    onSuccessLogin()
-                                }
-                                is Data.Error -> {
-                                    showError(it.message)
-                                }
-                            }
+                    lifecycleScope.launchWhenStarted {
+                        when (val it = viewModel.authenticateUser(requireContext(), userName, password)) {
+                            is Data.Ok -> onSuccessLogin()
+                            is Data.Error ->
+                                (activity as MainActivity).main_loading.showError(it.message)
                         }
                     }
                 }
             }
         }
 
-        binding.buttonReg.setOnClickListener {
+        binding.createAccount.setOnClickListener {
             findNavController().navigate(AuthFragmentDirections.reg())
         }
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun onSuccessLogin() {
-        (activity as MainActivity).changeHeader()
-        findNavController().navigate(R.id.success_login)
-    }
+        (activity as MainActivity).apply {
+            main_loading.stopLoadingAnimation(true)
+            changeHeader()
+            hideKeyboard()
+        }
 
-    private fun showError(error: String) {
-        if (error == wrongCredits) {
-            binding.textWrongCredits.visibility = View.VISIBLE
-            return
-        } else {
-            Toast.makeText(requireContext(), "unknown error: $error", Toast.LENGTH_SHORT).show()
+        GlobalScope.launch {
+            delay(1000)
+            MainScope().launch {
+                findNavController().navigate(R.id.success_login)
+            }
         }
     }
 

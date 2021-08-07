@@ -1,8 +1,9 @@
 package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
+import android.provider.Settings
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import ru.myitschool.nasa_bootcamp.data.model.AsteroidModel
 import ru.myitschool.nasa_bootcamp.data.repository.NasaRepository
 import javax.inject.Inject
@@ -19,11 +20,13 @@ class AsteroidRadarViewModelImpl @Inject constructor(
         MutableLiveData<ArrayList<AsteroidModel>>()
 
 
+    @DelicateCoroutinesApi
     override suspend fun getAsteroidList() {
-        val response = repository.getAsteroids(getTodayDateFormatted(), getPlusSevenDaysDateFormatted())
+        val response =
+            repository.getAsteroids(getTodayDateFormatted(), getPlusSevenDaysDateFormatted())
         list = parseAsteroidsJsonResult(response.body()!!.near_earth_objects)
 
-        listOfAsteroids.value = list
+        listOfAsteroids.postValue(list)
     }
 
     override fun getAsteroidListViewModel(): MutableLiveData<ArrayList<AsteroidModel>> {

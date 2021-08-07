@@ -37,7 +37,6 @@ class DragonsFragment : Fragment() {
         binding.dragonsRecycle.layoutManager = GridLayoutManager(context, 1)
 
         loadImage(requireContext(), DRAGONS_GIF, binding.dragonImage)
-        loadImage(requireContext(), STARS_ANIMATED_BACKGROUND, binding.backgroundDragon)
 
         dragonsViewModel.getViewModelScope().launch {
             dragonsViewModel.getDragons()

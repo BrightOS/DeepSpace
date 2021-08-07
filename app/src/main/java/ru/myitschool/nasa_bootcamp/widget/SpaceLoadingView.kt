@@ -138,7 +138,7 @@ class SpaceLoadingView constructor(
                         TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
                     }
 
-                    rootView.visibility = View.GONE
+                    loading_root.visibility = View.GONE
                 }
             }
         }

@@ -9,7 +9,7 @@ import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.LineRes
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 
-interface Layer {
+interface BaseLayer {
     fun init()
     fun renderIt(threadRun: RendererThreadRun)
 }
@@ -21,7 +21,7 @@ enum class ClassType {
     NO
 }
 
-abstract class AbstractLayer(protected val resources: Resources) : Layer {
+abstract class BaseLayerImpl(protected val resources: Resources) : BaseLayer {
     private val renderMapLock = ReentrantLock()
     private val renderMap = HashMap<ClassType, RendererRunner.RenderManager>()
     private var renderer: RendererThreadRun? = null

@@ -8,21 +8,21 @@ import java.util.*
 
 
 class LayerManager(resources : Resources, model: AbstractPointing){
-    private val layers: MutableList<Layer> = ArrayList()
-     fun addLayer(layer: Layer) {
-        layers.add(layer)
+    private val baseLayers: MutableList<BaseLayer> = ArrayList()
+     fun addLayer(baseLayer: BaseLayer) {
+        baseLayers.add(baseLayer)
     }
 
     init {
-        layers.add(PlanetsLayer(model, resources))
-        layers.add(LatLongGrid(resources, 24, 9))
-         for (layer in layers) {
+        baseLayers.add(PlanetsBaseLayerImpl(model, resources))
+        baseLayers.add(LatLongGrid(resources, 24, 9))
+         for (layer in baseLayers) {
             layer.init()
         }
     }
 
     fun renderLayouts(renderer: RendererThreadRun?) {
-        for (layer in layers) {
+        for (layer in baseLayers) {
             layer.renderIt(renderer!!)
         }
     }

@@ -22,7 +22,7 @@ class RegViewModelImpl @Inject constructor(
         email: String,
         password: String,
         imagePath: Uri?
-    ): LiveData<Data<out FirebaseUser>> {
+    ): Data<FirebaseUser> {
         return repository.createUser(context, userName, email, password, imagePath)
     }
 

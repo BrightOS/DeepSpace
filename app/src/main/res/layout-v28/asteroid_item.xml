@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/asteroidCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/eight_margin"
+    android:layout_marginEnd="@dimen/eight_margin"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+    android:elevation="0dp"
+    app:cardBackgroundColor="@color/transparent_gray"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="120dp"
+    android:outlineAmbientShadowColor="@color/green"
+    android:outlineSpotShadowColor="@color/red"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/asteroid_title"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/asteroid_name"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/asteroid_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/asteroid_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_extrabold"
+            android:text="Asteroid 1"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@id/friendly_icon"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/asteroid_title" />
+
+        <ImageView
+            android:id="@+id/friendly_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_tick_square"
+            app:layout_constraintBottom_toBottomOf="@id/asteroid_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/asteroid_title"
+            app:tint="@color/green" />
+
+        <TextView
+            android:id="@+id/distance_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Distance from earth:"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/asteroid_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="999 meters"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/distance_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/danger_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Is it dangerous?"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/distance" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/danger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="It's friendly! :)"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/danger_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/diameter_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Estimated diameter:"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/danger" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/diameter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="12.2 - 14.3 meters"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/diameter_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

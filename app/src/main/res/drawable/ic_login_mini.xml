@@ -6,6 +6,5 @@
         android:gravity="center"
         android:bottom="6dp"
         android:top="6dp"
-        android:end="6dp"
-        />
+        android:end="6dp" />
 </layer-list>
