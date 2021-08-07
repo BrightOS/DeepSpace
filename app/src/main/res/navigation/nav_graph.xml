@@ -198,11 +198,6 @@
             app:destination="@id/socialMediaNavGraph" />
     </fragment>
     <fragment
-        android:id="@+id/asteroidDetails"
-        android:name="ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidDetailsFragment"
-        android:label="fragment_asteroid_details"
-        tools:layout="@layout/fragment_asteroid_details" />
-    <fragment
         android:id="@+id/roverDetails"
         android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.RoverDetails"
         android:label="fragment_rover_details"
