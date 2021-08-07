@@ -89,5 +89,6 @@
     <string name="title">Title</string>
     <string name="company_info">Company info</string>
     <string name="company_spacex">Company : SpaceX</string>
+    <string name="text">Text</string>
 
 </resources>
