@@ -4,9 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionManager
+import com.bumptech.glide.Glide
+import com.google.android.material.transition.MaterialSharedAxis
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import ru.myitschool.nasa_bootcamp.databinding.RoverItemBinding
@@ -26,6 +30,14 @@ class RoverRecyclerAdapter internal constructor(
         fun onRoverClick(roverModel: RoverModel, position: Int)
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoverViewHolder {
         return RoverViewHolder(
             RoverItemBinding.inflate(
@@ -41,26 +53,51 @@ class RoverRecyclerAdapter internal constructor(
         val roverModel: RoverModel = roverModels[position]
         loadImage(context, roverModel.img_src, holder.binding.recycleRoverItemImg)
 
-        val onRoverClickListener = object : OnRoverClickListener {
-            override fun onRoverClick(roverModel: RoverModel, position: Int) {
-                val bundle = Bundle();
-                Log.d("NAME_TAG", "Name is ${roverModel.rover.name}")
-                bundle.putString("name", roverModel.rover.name)
-                bundle.putString("landing_date", roverModel.rover.landing_date)
-                bundle.putString("launch_date", roverModel.rover.launch_date)
-                bundle.putString("status", roverModel.rover.status)
-                bundle.putString("camera", roverModel.camera.fullname)
+        Glide.with(holder.itemView)
+            .load(roverModel.img_src)
+            .into(holder.binding.recycleRoverItemImg)
 
-                navController.navigate(R.id.roverDetails, bundle)
+        holder.binding.infoLayout.setOnClickListener {
+            val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+            holder.binding.cardRovers.let {
+                TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
+            }
+
+            holder.binding.infoLayout.visibility = View.GONE
+            holder.binding.infoButton.visibility = View.VISIBLE
+            holder.binding.wallpaperButton.visibility = View.VISIBLE
+        }
+
+        holder.binding.infoButton.setOnClickListener {
+            if (holder.binding.infoLayout.visibility == View.GONE) {
+                val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+                holder.binding.cardRovers.let {
+                    TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
+                }
+
+                holder.binding.infoLayout.visibility = View.VISIBLE
+                holder.binding.infoButton.visibility = View.GONE
+                holder.binding.wallpaperButton.visibility = View.GONE
             }
         }
 
-        holder.itemView.setOnClickListener {
-            onRoverClickListener.onRoverClick(
-                roverModel,
-                position
+        holder.binding.wallpaperButton.setOnClickListener {
+            navController.navigate(
+                MarsRoversFragmentDirections.actionMarsRoversFragmentToReviewFragment(
+                    roverModel.img_src
+                )
             )
         }
+
+        holder.binding.roverName.text = roverModel.rover.name
+        holder.binding.landingDate.text = roverModel.rover.landing_date
+        holder.binding.launchingDate.text = roverModel.rover.launch_date
+        holder.binding.status.text = roverModel.rover.status
+        holder.binding.camera.text =
+            if (roverModel.camera.fullname != null)
+                roverModel.camera.fullname
+            else
+                roverModel.camera.name
     }
 
     override fun getItemCount(): Int {

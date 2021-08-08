@@ -4,18 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="15dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="3dp"
-        android:src="@drawable/ic_arrow_left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@android:color/white" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/starmanGif"
         android:layout_width="0dp"
@@ -26,23 +14,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="3dp"
+        android:src="@drawable/ic_arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/historyCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:outlineAmbientShadowColor="@color/upcoming_blue"
+        android:outlineSpotShadowColor="@color/upcoming_blue"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:cardBackgroundColor="@color/transparent_gray"
         app:cardCornerRadius="20dp"
-        app:cardElevation="150dp"
+        app:cardElevation="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/starmanGif">
+        app:layout_constraintTop_toBottomOf="@id/starmanGif"
+        app:layout_constraintBottom_toTopOf="@id/roadsterCard"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_blue_button_color"
             android:orientation="vertical"
             android:padding="15dp">
 
@@ -68,22 +73,25 @@
         android:id="@+id/roadsterCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:outlineAmbientShadowColor="@color/upcoming_blue"
+        android:outlineSpotShadowColor="@color/upcoming_blue"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:cardBackgroundColor="@color/transparent_gray"
         app:cardCornerRadius="20dp"
-        app:cardElevation="150dp"
+        app:cardElevation="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/historyCard">
+        app:layout_constraintTop_toBottomOf="@id/historyCard"
+        app:layout_constraintBottom_toTopOf="@id/dragonsCard">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_blue_button_color"
             android:orientation="vertical"
             android:padding="15dp">
 
@@ -111,22 +119,25 @@
         android:id="@+id/dragonsCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:outlineAmbientShadowColor="@color/upcoming_blue"
+        android:outlineSpotShadowColor="@color/upcoming_blue"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:cardBackgroundColor="@color/transparent_gray"
         app:cardCornerRadius="20dp"
-        app:cardElevation="150dp"
+        app:cardElevation="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/roadsterCard">
+        app:layout_constraintTop_toBottomOf="@id/roadsterCard"
+        app:layout_constraintBottom_toTopOf="@id/capsulesCard">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_blue_button_color"
             android:orientation="vertical"
             android:padding="15dp">
 
@@ -153,22 +164,25 @@
         android:id="@+id/capsulesCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:outlineAmbientShadowColor="@color/upcoming_blue"
+        android:outlineSpotShadowColor="@color/upcoming_blue"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:cardBackgroundColor="@color/transparent_gray"
         app:cardCornerRadius="20dp"
-        app:cardElevation="150dp"
+        app:cardElevation="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dragonsCard">
+        app:layout_constraintTop_toBottomOf="@id/dragonsCard"
+        app:layout_constraintBottom_toTopOf="@id/coresCard">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_blue_button_color"
             android:orientation="vertical"
             android:padding="15dp">
 
@@ -196,22 +210,25 @@
         android:id="@+id/coresCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:outlineAmbientShadowColor="@color/upcoming_blue"
+        android:outlineSpotShadowColor="@color/upcoming_blue"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:cardBackgroundColor="@color/transparent_gray"
         app:cardCornerRadius="20dp"
-        app:cardElevation="150dp"
+        app:cardElevation="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/capsulesCard">
+        app:layout_constraintTop_toBottomOf="@id/capsulesCard"
+        app:layout_constraintBottom_toTopOf="@id/launchCard">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_blue_button_color"
             android:orientation="vertical"
             android:padding="15dp">
 
@@ -238,14 +255,17 @@
         android:id="@+id/launchCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:outlineAmbientShadowColor="@color/upcoming_blue"
+        android:outlineSpotShadowColor="@color/upcoming_blue"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:cardBackgroundColor="@color/transparent_gray"
         app:cardCornerRadius="20dp"
-        app:cardElevation="150dp"
+        app:cardElevation="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/coresCard">
@@ -253,7 +273,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_blue_button_color"
             android:orientation="vertical"
             android:padding="15dp">
 
