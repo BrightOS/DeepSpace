@@ -201,7 +201,7 @@ fun HomeScreen(
                         title = stringResource(R.string.space_nav),
                         modifier = cardModifier,
                         onClick = {
-                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToSpaceNavigatorActivity())
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToWaitingFragment())
                         }
                     ),
                     NavigationCardData(
