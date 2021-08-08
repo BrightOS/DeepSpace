@@ -19,9 +19,9 @@ interface FirebaseRepository {
     suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
     suspend fun getAllPosts(): Data<out ArrayList<Post>>
     suspend fun downloadImage(postId: String, imageId: String):Data<Bitmap>
-    fun createPost(title: String, postItems: List<Any>): Resource<Nothing>
+    suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing>
     fun uploadImage(postId: String, imageId: Int,  imagePath: Uri) : LiveData<Data<out String>>
-    fun getLastPostId(): String?
+    suspend fun getLastPostId(): String?
     suspend fun pushComment(source: String, postId: Int, comment: String): Resource<Nothing>
     suspend fun pushSubComment(source: String, postId: Int, fatherCommentId: Long, comment: String): Data<String>
     suspend fun deleteComment(source: String, postId: Int, commentId: Long): Data<String>

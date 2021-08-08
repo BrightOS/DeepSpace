@@ -104,22 +104,22 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         val comments = mutableListOf<Comment>()
         dbInstance.getReference("posts").child("UserPosts").child(postId.toString())
             .child("comments").get().await().children.forEach {
-            val text = it.child("comment").getValue(String::class.java)!!
-            val id = it.child("id").getValue(Long::class.java)!!
-            val date = it.child("date").getValue(Long::class.java)!!
-            val userDto = it.child("userId").getValue(UserDto::class.java)!!
-            val user = UserModel(userDto.name, userDto.avatarUrl!!.toUri(), userDto.id)
-            val likes = mutableListOf<UserModel>()
+                val text = it.child("comment").getValue(String::class.java)!!
+                val id = it.child("id").getValue(Long::class.java)!!
+                val date = it.child("date").getValue(Long::class.java)!!
+                val userDto = it.child("userId").getValue(UserDto::class.java)!!
+                val user = UserModel(userDto.name, userDto.avatarUrl!!.toUri(), userDto.id)
+                val likes = mutableListOf<UserModel>()
 
-            it.child("likes").children.forEach { like ->
-                val _userDto = like.getValue(UserDto::class.java)!!
-                val _user = UserModel(_userDto.name, _userDto.avatarUrl!!.toUri(), _userDto.id)
-                likes.add(_user)
+                it.child("likes").children.forEach { like ->
+                    val _userDto = like.getValue(UserDto::class.java)!!
+                    val _user = UserModel(_userDto.name, _userDto.avatarUrl!!.toUri(), _userDto.id)
+                    likes.add(_user)
+                }
+
+                val comment = Comment(id, text, likes, listOf(), user, date)
+                comments.add(comment)
             }
-
-            val comment = Comment(id, text, likes, listOf(), user, date)
-            comments.add(comment)
-        }
         return comments
     }
 
@@ -127,10 +127,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         val likes = mutableListOf<UserModel>()
         dbInstance.getReference("posts").child("UserPosts").child(postId.toString()).child("likes")
             .get().await().children.forEach {
-            val userDto = it.getValue(UserDto::class.java)!!
-            val user = UserModel(userDto.name, userDto.avatarUrl!!.toUri(), userDto.id)
-            likes.add(user)
-        }
+                val userDto = it.getValue(UserDto::class.java)!!
+                val user = UserModel(userDto.name, userDto.avatarUrl!!.toUri(), userDto.id)
+                likes.add(user)
+            }
         return likes
     }
 
@@ -144,9 +144,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     // USER CUSTOM POST CREATION:
 
-    override fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
-        val reference = dbInstance.getReference("user_posts")
+    override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
         val postId = getLastPostId()
+        var photoCount = 1
+        val reference = dbInstance.getReference("user_posts").child(postId.toString())
         reference.child("title").setValue(title)
         val fbPostItems = mutableListOf<String>()
         for (value in postItems) {
@@ -156,19 +157,19 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                 val baos = ByteArrayOutputStream()
                 (value as Bitmap).compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val byte = baos.toByteArray()
-                storage.getReference("posts/$postId").putBytes(byte)
-                val url = storage.getReferenceFromUrl("posts/$postId").downloadUrl
+                storage.getReference("posts/$postId/${photoCount.toString()}").putBytes(byte).await()
+                val url = storage.getReference("posts/$postId/${photoCount.toString()}").downloadUrl.await()
+                photoCount++
                 fbPostItems.add(url.toString())
             }
         }
         val user = getCurrentUser()!!
         val userDto = UserDto(user.name, user.avatarUrl.toString(), user.id)
-        reference.child("author").setValue(userDto)
-        reference.child("date").setValue(Date().time)
-        reference.child("postItems").setValue(fbPostItems)
+        reference.child("author").setValue(userDto).await()
+        reference.child("date").setValue(Date().time).await()
+        reference.child("postItems").setValue(fbPostItems).await()
         return Resource.success(null)
     }
-
 
 
     // USER CUSTOM POST CREATION:
@@ -192,24 +193,13 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         return returnData
     }
 
-    override fun getLastPostId(): String? {
-        var returnData: String? = null
-        dbInstance.getReference("user_posts").child("UserPosts").limitToLast(1)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    returnData = try {
-                        val count = snapshot.children.last().key!!.toLong() + 1
-                        count.toString()
-                    } catch (e: NoSuchElementException) {
-                        "0"
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-
-            })
+    override suspend fun getLastPostId(): String {
+        var returnData: String = "0"
+        try {
+            returnData = (dbInstance.getReference("user_posts").get()
+                .await().children.last().key?.toLong()!! + 1).toString()
+        }
+        catch (e: Exception) {}
         return returnData
     }
 
@@ -315,12 +305,12 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .child("comments")
                     .child(fatherCommentId.toString()).child("subComments")
                     .child(subCommentId.toString()).removeValue().await()
-                return  (Data.Ok("Ok"))
+                return (Data.Ok("Ok"))
             } catch (e: java.lang.Exception) {
                 return (Data.Error("SubComment doesn't exist"))
             }
         } else {
-           return (Data.Error("User is not authenticated or he is not author of the SubComment"))
+            return (Data.Error("User is not authenticated or he is not author of the SubComment"))
         }
     }
 
@@ -448,7 +438,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .await()
                 return (Data.Ok("Ok"))
             } catch (e: Exception) {
-               return (Data.Error(e.message.toString()))
+                return (Data.Error(e.message.toString()))
             }
         } else {
             return (Data.Error("User is not authenticated or he didn't`t like this subComment"))
@@ -519,10 +509,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
                 return (Data.Ok(user.user!!))
             } else {
-                return(Data.Error("Unknown error happened."))
+                return (Data.Error("Unknown error happened."))
             }
         } catch (e: java.lang.Exception) {
-            return(Data.Error(e.message!!))
+            return (Data.Error(e.message!!))
         }
 
     }
@@ -600,7 +590,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                                 it.child("userId").child("id").getValue(String::class.java)!!
                             val author = UserModel(authorUsername, authorUrl, authorId)
 
-                            val date = it.child("date").getValue(Long::class.java)!! / 1000
+                            val date = it.child("date").getValue(Long::class.java)!!
                             comments.add(
                                 Comment(id!!, text!!, commentLikes, subComments, author, date)
                             )

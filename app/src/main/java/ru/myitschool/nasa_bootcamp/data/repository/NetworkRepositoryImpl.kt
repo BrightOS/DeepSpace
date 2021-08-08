@@ -113,7 +113,7 @@ class NetworkRepositoryImpl @Inject constructor(
         return firebaseRepository.getUser(uid)
     }
 
-    override fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+    override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
         firebaseRepository.createPost(title, postItems)
         return Resource.error("TO DO", null)
     }
