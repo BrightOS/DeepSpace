@@ -61,9 +61,7 @@ open class MainRender(res: Resources?) : GLSurfaceView.Renderer {
     }
 
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
-        gl.glEnable(GL10.GL_DITHER)
-
-        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+        gl.glClearColor(0.0f, 0.2f, 0.5f, 0.0f)
         gl.glEnable(GL10.GL_CULL_FACE)
         gl.glShadeModel(GL10.GL_SMOOTH)
         gl.glDisable(GL10.GL_DEPTH_TEST)
