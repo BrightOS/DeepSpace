@@ -29,7 +29,7 @@ import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 fun CommentItem(
     comment: Comment,
     currentUser: UserModel?,
-    onLikeClick: () -> LiveData<Resource<Nothing>>,
+    onLikeClick: (Comment) -> LiveData<Resource<Nothing>>,
     onCommentClick: (Comment) -> Unit,
     onDeleteComment: (Comment) -> Unit,
     modifier: Modifier = Modifier,
@@ -72,7 +72,7 @@ fun CommentItem(
                         )
                     }
                 }
-                LikeButton(list = comment.likes, currentUser = currentUser, onClick = onLikeClick)
+                LikeButton(list = comment.likes, currentUser = currentUser, onClick = { onLikeClick(comment) })
             }
             Text(
                 fontSize = 16.sp,
@@ -86,7 +86,7 @@ fun CommentItem(
                 CommentItem(
                     comment = subComment,
                     currentUser = currentUser,
-                    onLikeClick = onLikeClick,
+                    onLikeClick = { onLikeClick(subComment) },
                     onDeleteComment = { onDeleteComment(subComment) },
                     onCommentClick = { onCommentClick(subComment) },
                     modifier = Modifier.padding(start = 32.dp),
