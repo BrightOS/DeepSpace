@@ -4,36 +4,28 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.accompanist.insets.rememberImeNestedScrollConnection
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import ru.myitschool.nasa_bootcamp.MainActivity
-import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
-import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.CommentDto
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.SubCommentDto
+import ru.myitschool.nasa_bootcamp.data.dto.firebase.UserDto
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.*
-import javax.inject.Inject
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class FirebaseRepositoryImpl(val appContext: Context) :
@@ -368,25 +360,28 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         source: String,
         postId: Int,
         commentId: Long
-    ): Data<String> {
+    ): Resource<Nothing> {
 
-        if (authenticator.uid != null && authenticator.uid == getCommentAuthor(
-                source,
-                postId,
-                commentId
-            )
-        ) {
-            try {
-                dbInstance.getReference("posts").child(source).child(postId.toString())
-                    .child("comments")
-                    .child(commentId.toString()).removeValue().await()
-                return Data.Ok("Ok")
-            } catch (e: Exception) {
-                return Data.Error("Comment doesn't exist")
-            }
-        } else {
-            return Data.Error("User is not authenticated or he is not author of the comment")
+//        if (authenticator.uid != null && authenticator.uid == getCommentAuthor(
+//                source,
+//                postId,
+//                commentId
+//            )
+//        ) {
+        try {
+            dbInstance.getReference("posts").child(source).child(postId.toString())
+                .child("comments")
+                .child(commentId.toString()).removeValue().await()
+            return Resource.success(null)
+        } catch (e: Exception) {
+            return Resource.error("Comment doesn't exist", null)
         }
+//        } else {
+//            return Resource.error(
+//                "User is not authenticated or he is not author of the comment",
+//                null
+//            )
+//        }
     }
 
     override suspend fun deleteSubComment(
@@ -394,27 +389,30 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ): Data<String> {
+    ): Resource<Nothing> {
 
-        if (authenticator.uid != null && authenticator.uid == getSubCommentAuthor(
-                source,
-                postId,
-                fatherCommentId,
-                subCommentId
-            )
-        ) {
+//        if (authenticator.uid != null && authenticator.uid == getSubCommentAuthor(
+//                source,
+//                postId,
+//                fatherCommentId,
+//                subCommentId
+//            )
+//        ) {
             try {
                 dbInstance.getReference("posts").child(source).child(postId.toString())
                     .child("comments")
                     .child(fatherCommentId.toString()).child("subComments")
                     .child(subCommentId.toString()).removeValue().await()
-                return (Data.Ok("Ok"))
+                return Resource.success(null)
             } catch (e: java.lang.Exception) {
-                return (Data.Error("SubComment doesn't exist"))
+                return Resource.error("SubComment doesn't exist", null)
             }
-        } else {
-            return (Data.Error("User is not authenticated or he is not author of the SubComment"))
-        }
+//        } else {
+//            return Resource.error(
+//                "User is not authenticated or he is not author of the SubComment",
+//                null
+//            )
+//        }
     }
 
     override suspend fun pushLike(source: String, postId: Int): Resource<Nothing> {
