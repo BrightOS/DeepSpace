@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:background="@android:color/white"
             android:gravity="top"
             android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,13 +35,13 @@
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:minHeight="128dp"
                 app:collapsedTitleTextAppearance="@style/CollapsedSpaceAppBar"
                 app:contentScrim="@android:color/white"
                 app:expandedTitleGravity="center"
                 app:expandedTitleMarginTop="16dp"
                 app:expandedTitleTextAppearance="@style/ExpandedSpaceAppBar"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                app:title="Cores"
                 app:titleEnabled="true">
 
                 <androidx.appcompat.widget.Toolbar
@@ -58,6 +57,7 @@
                     app:theme="@style/ActionBar" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tool_bar_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"

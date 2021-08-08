@@ -1,12 +1,14 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
-import ru.myitschool.nasa_bootcamp.databinding.LaunchPadTemBinding
+import ru.myitschool.nasa_bootcamp.databinding.LaunchPadItemBinding
+import ru.myitschool.nasa_bootcamp.utils.capitalize
 import java.util.ArrayList
 
 class LaunchAdapter internal constructor(
@@ -21,7 +23,7 @@ class LaunchAdapter internal constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchHolder {
         return LaunchHolder(
-            LaunchPadTemBinding.inflate(
+            LaunchPadItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -33,17 +35,18 @@ class LaunchAdapter internal constructor(
         fun onLaunchPadClick(launchModel: LaunchPadModel, position: Int)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: LaunchHolder, position: Int) {
         val launchModel: LaunchPadModel = launchModels[position]
 
         holder.binding.nameLaunchPad.text = launchModel.name
-        holder.binding.attemptedLaunches.text =
-            "Attempted launches : ${launchModel.attempted_launches}"
-        holder.binding.vehiclesLaunched.text = "Vehicles launched: ${launchModel.vehicles_launched}"
-        holder.binding.locationLaunchPad.text = "Located : ${launchModel.site_name_long}"
-        holder.binding.successfulLaunches.text =
-            "Successful launches : ${launchModel.successful_launches}"
-        holder.binding.descriptionLand.text = "${launchModel.details}"
+        holder.binding.attempedSuccessfulLaunches.text =
+            "${launchModel.attempted_launches} / ${launchModel.successful_launches}"
+
+        holder.binding.vehiclesLaunched.text = "${launchModel.vehicles_launched}"
+        holder.binding.locationLaunchPad.text = launchModel.site_name_long
+        holder.binding.descriptionLand.text = launchModel.details
+        holder.binding.statusLaunchPad.text = capitalize(launchModel.status)
 
         val onLaunchPadClickListener = object : OnLaunchPadClickListener {
             override fun onLaunchPadClick(launchModel: LaunchPadModel, position: Int) {
@@ -58,12 +61,12 @@ class LaunchAdapter internal constructor(
             }
         }
 
-        holder.itemView.setOnClickListener({
+        holder.itemView.setOnClickListener {
             onLaunchPadClickListener.onLaunchPadClick(
                 launchModels.get(position),
                 position
             )
-        })
+        }
     }
 
     override fun getItemCount(): Int {

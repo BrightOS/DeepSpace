@@ -27,8 +27,6 @@
         android:background="@drawable/circle"
         android:clickable="true"
         android:focusable="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="32dp"
         android:src="@drawable/ic_screen_rotation"
         android:text="@string/sensors"
         android:visibility="visible"

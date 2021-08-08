@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_marsRoversFragment_to_roverDetails"
             app:destination="@id/roverDetails" />
+        <action
+            android:id="@+id/action_marsRoversFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/spaceXFragment"
@@ -171,6 +174,14 @@
             android:id="@+id/action_to_land_map"
             app:destination="@id/mapActivity" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.ReviewFragment"
+        android:label="ReviewFragment">
+        <argument
+            android:name="url"
+            app:argType="string" />
     </fragment>
 
     <fragment

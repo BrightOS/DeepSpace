@@ -25,8 +25,8 @@
     <string name="dragons">Dragons</string>
     <string name="what_is_spacex">What is SpaceX?</string>
     <string name="learn_about_company">Learn about company</string>
-    <string name="launch_pads">Launch pads</string>
-    <string name="land_pads">Land pads</string>
+    <string name="launch_pads">Launching pads</string>
+    <string name="land_pads">Landing pads</string>
 
 
     <string name="email_or_username">E-Mail</string>

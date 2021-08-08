@@ -29,7 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:background="@android:color/white"
             android:gravity="top"
             android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
             app:layout_constraintTop_toTopOf="parent"
@@ -37,25 +36,22 @@
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:minHeight="120dp"
-                app:collapsedTitleGravity="bottom"
+                android:layout_height="200dp"
                 app:collapsedTitleTextAppearance="@style/CollapsedSpaceAppBar"
                 app:contentScrim="@android:color/white"
                 app:expandedTitleGravity="center"
-
                 app:expandedTitleMarginTop="16dp"
                 app:expandedTitleTextAppearance="@style/ExpandedSpaceAppBar"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-
+                app:title="Capsules list"
                 app:titleEnabled="true">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/tool_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="top"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="48dp"
                     android:background="@android:color/transparent"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -63,6 +59,7 @@
                     app:theme="@style/ActionBar" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tool_bar_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"

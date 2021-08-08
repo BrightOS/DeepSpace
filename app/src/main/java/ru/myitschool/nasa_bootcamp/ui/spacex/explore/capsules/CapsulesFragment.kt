@@ -15,6 +15,7 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCapsulesBinding
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCoresBinding
 import ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores.CoresAdapter
+import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
 import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.loadImage
@@ -36,6 +37,16 @@ class CapsulesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCapsulesBinding.inflate(inflater, container, false)
+
+        DimensionsUtil.dpToPx(requireContext(), 5).let {
+            DimensionsUtil.setMargins(
+                binding.toolBar,
+                it,
+                DimensionsUtil.getStatusBarHeight(resources) + it,
+                it,
+                it
+            )
+        }
 
         capsulesViewModel.getViewModelScope().launch {
             capsulesViewModel.getCapsules()
