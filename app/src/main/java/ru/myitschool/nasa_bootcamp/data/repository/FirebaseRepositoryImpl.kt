@@ -94,9 +94,14 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                 userPostCommentsAndLikesListener(liveData, postModel.id)
                 returnData.add(liveData)
             }
-            returnData.sortByDescending { it.value!!.content.date }
+            try {
+                returnData.sortByDescending { it.value?.content?.date }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             return Resource.success(returnData)
         } catch (e: Exception) {
+            e.printStackTrace()
             return Resource.error(e.message.toString(), null)
         }
     }
