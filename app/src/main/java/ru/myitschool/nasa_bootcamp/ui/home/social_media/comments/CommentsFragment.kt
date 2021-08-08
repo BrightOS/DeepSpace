@@ -37,13 +37,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
+import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
 import ru.myitschool.nasa_bootcamp.data.model.PostModel
+import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModelImpl
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.CommentItem
+import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.LikeButton
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
+import ru.myitschool.nasa_bootcamp.utils.parseNewsDate
 
 @AndroidEntryPoint
 class CommentsFragment : Fragment() {
@@ -119,7 +123,13 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
         Column {
             LazyColumn(modifier = Modifier.weight(1f)) {
                 item {
-                    ArticleContent(articleModel = article!!.content)
+                    ArticleContent(item = article!!, currentUser = currentUser, onLikeClick = {
+                        val liveData = MutableLiveData(Resource.loading(null))
+                        viewModel.getViewModelScope().launch {
+                            liveData.postValue(viewModel.pressedLikeOnItem(article!!))
+                        }
+                        liveData
+                    })
                     Divider(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -169,7 +179,7 @@ fun BottomTextField(
     val lifecycleOwner = LocalLifecycleOwner.current
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
-    var isButtonEnabled by remember { mutableStateOf(true)}
+    var isButtonEnabled by remember { mutableStateOf(true) }
     var messageTextField by remember { mutableStateOf("") }
     Card(modifier = modifier) {
         Row(
@@ -185,6 +195,7 @@ fun BottomTextField(
                     .padding(8.dp)
             )
             IconButton(
+                enabled = isButtonEnabled,
                 onClick = {
                     focusManager.clearFocus()
                     val liveData = onClick(messageTextField)
@@ -218,7 +229,11 @@ fun BottomTextField(
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-fun ArticleContent(articleModel: ArticleModel) {
+fun ArticleContent(
+    item: ContentWithLikesAndComments<ArticleModel>,
+    currentUser: UserModel?,
+    onLikeClick: () -> LiveData<Resource<Nothing>>
+) {
     val annotatedText = buildAnnotatedString {
         withStyle(
             style = SpanStyle(
@@ -229,7 +244,7 @@ fun ArticleContent(articleModel: ArticleModel) {
         ) {
             withAnnotation(
                 tag = "URL",
-                annotation = articleModel.url
+                annotation = item.content.url
             ) {
                 append("Read in source")
             }
@@ -237,7 +252,7 @@ fun ArticleContent(articleModel: ArticleModel) {
     }
     Column {
         Image(
-            painter = rememberImagePainter(articleModel.imageUrl),
+            painter = rememberImagePainter(item.content.imageUrl),
             contentScale = ContentScale.Crop,
             contentDescription = "",
             modifier = Modifier
@@ -245,10 +260,13 @@ fun ArticleContent(articleModel: ArticleModel) {
                 .height(200.dp)
         )
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = articleModel.title, style = MaterialTheme.typography.h4)
-            Text(text = articleModel.summary, modifier = Modifier.padding(vertical = 8.dp))
-            Text(text = articleModel.publishedAt)
-            TextWithLinks(annotatedText = annotatedText)
+            Text(text = item.content.title, style = MaterialTheme.typography.h4)
+            Text(text = item.content.summary, modifier = Modifier.padding(vertical = 8.dp))
+            Text(text = parseNewsDate(item.content.publishedAt))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                TextWithLinks(annotatedText = annotatedText, modifier = Modifier.weight(1f))
+                LikeButton(list = item.likes, currentUser = currentUser, onClick = onLikeClick)
+            }
         }
     }
 }

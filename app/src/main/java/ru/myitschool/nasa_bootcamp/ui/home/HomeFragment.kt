@@ -166,17 +166,18 @@ fun HomeScreen(
                         title = stringResource(R.string.spacex_card_title),
                         modifier = cardModifier,
                         onClick = {
-                            val action = HomeFragmentDirections.actionHomeFragmentToSpaceXFragment()
-                            action.arguments.putInt("index", 2)
-                            onNavCardClick(action)
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToSpaceXFragment())
                         }
                     ),
                     NavigationCardData(
-                        painter = painterResource(R.drawable.pack2279),
-                        title = stringResource(R.string.blogs),
+                        painter = painterResource(R.drawable.blogs),
+                        title = stringResource(R.string.blogs_and_news),
                         modifier = cardModifier,
                         onClick = {
-                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToSocialMediaFragment())
+                            val action =
+                                HomeFragmentDirections.actionHomeFragmentToSocialMediaFragment()
+                            action.arguments.putInt("index", 2)
+                            onNavCardClick(action)
                         }
                     ),
                     NavigationCardData(
@@ -188,19 +189,19 @@ fun HomeScreen(
                         }
                     ),
                     NavigationCardData(
-                        painter = painterResource(R.drawable.danger_asteroid1),
-                        title = stringResource(R.string.asteroid_radar),
+                        painter = painterResource(R.drawable.starlink),
+                        title = stringResource(R.string.upcoming_events),
                         modifier = cardModifier,
                         onClick = {
-                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToAsteroidRadarFragment())
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToUpcomingEventsFragment())
                         }
                     ),
                     NavigationCardData(
-                        painter = painterResource(R.drawable.danger_asteroid1),
-                        title = stringResource(R.string.asteroid_radar),
+                        painter = painterResource(R.drawable.venus_background),
+                        title = stringResource(R.string.space_nav),
                         modifier = cardModifier,
                         onClick = {
-                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToAsteroidRadarFragment())
+                            onNavCardClick(HomeFragmentDirections.actionHomeFragmentToSpaceNavigatorActivity())
                         }
                     ),
                     NavigationCardData(
@@ -219,6 +220,7 @@ fun HomeScreen(
                         }
                     }
                     Column(modifier = Modifier.weight(1f)) {
+//                        Spacer(modifier = Modifier.height(48.dp))
                         navDataList.takeLast(3).forEach {
                             NavigationCard(data = it)
                         }

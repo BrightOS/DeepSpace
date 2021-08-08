@@ -78,8 +78,8 @@
     </style>
 
     <style name="TextAppearance.App.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="fontFamily">@font/inter_semibold</item>
-        <item name="android:fontFamily">@font/inter_semibold</item>
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
     </style>
     <style name="TextAppearance.App.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">@font/inter_extrabold</item>

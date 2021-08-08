@@ -22,6 +22,7 @@ import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaFragmentDirec
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.Feed
 import ru.myitschool.nasa_bootcamp.utils.Resource
+import ru.myitschool.nasa_bootcamp.utils.parseNewsDate
 
 @Composable
 fun NewsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
@@ -72,7 +73,7 @@ fun NewsItem(item: ArticleModel) {
             modifier = Modifier.padding(horizontal = 8.dp)
         )
         Text(
-            text = item.publishedAt,
+            text = parseNewsDate(item.publishedAt),
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
         )
     }

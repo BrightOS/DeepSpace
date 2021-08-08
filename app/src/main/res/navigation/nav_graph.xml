@@ -189,6 +189,12 @@
         <action
             android:id="@+id/action_homeFragment_to_socialMediaFragment"
             app:destination="@id/socialMediaNavGraph" />
+        <action
+            android:id="@+id/action_homeFragment_to_upcomingEventsFragment"
+            app:destination="@id/upcomingEventsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_spaceNavigatorActivity"
+            app:destination="@id/spaceNavigatorActivity" />
     </fragment>
     <fragment
         android:id="@+id/roverDetails"

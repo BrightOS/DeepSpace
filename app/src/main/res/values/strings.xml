@@ -94,4 +94,5 @@
     <string name="asteroid_name">Asteroid name:</string>
     <string name="user_posts">User posts</string>
     <string name="blogs">Blogs</string>
+    <string name="blogs_and_news"><![CDATA[Blogs & News]]></string>
 </resources>
