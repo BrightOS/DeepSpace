@@ -58,7 +58,7 @@ class SpaceXLaunchAdapter :
 
         var expanded = false
 
-        val requestListener = object : RequestListener<Drawable> {
+        private val requestListener = object : RequestListener<Drawable> {
             override fun onLoadFailed(
                 e: GlideException?,
                 model: Any,
@@ -175,6 +175,7 @@ class SpaceXLaunchAdapter :
             )
 
             if (launchModel.links != null) {
+                Log.i("debug","not null links");
                 if (launchModel.links.mission_patch != null)
                     loadImage(
                         binding.recycleItemImg.context,
@@ -189,6 +190,7 @@ class SpaceXLaunchAdapter :
                     requestListener
                 )
             } else {
+                Log.i("debug","null links");
                 loadImage(
                     binding.recycleItemImg.context,
                     "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
