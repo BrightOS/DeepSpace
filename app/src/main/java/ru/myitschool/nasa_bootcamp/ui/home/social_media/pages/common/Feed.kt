@@ -123,7 +123,9 @@ fun <T> ItemWithLikesAndComments(
                             contentDescription = "comments"
                         )
                     }
-                    Text(text = item.comments.size.toString())
+                    var numberOfComments: Int = item.comments.size
+                    item.comments.forEach { numberOfComments += it.subComments.size }
+                    Text(text = numberOfComments.toString())
                     LikeButton(
                         list = item.likes,
                         currentUser = currentUser,
