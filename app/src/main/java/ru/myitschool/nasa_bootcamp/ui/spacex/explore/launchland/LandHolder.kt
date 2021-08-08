@@ -6,5 +6,4 @@ import ru.myitschool.nasa_bootcamp.databinding.LandPadItemBinding
 
 class LandHolder (
     val binding: LandPadItemBinding,
-    private val context: Context
 ) : RecyclerView.ViewHolder(binding.root)
