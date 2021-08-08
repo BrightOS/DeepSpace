@@ -47,6 +47,7 @@ import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 
 @Composable
 fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
+    val lifecycleOwner = LocalLifecycleOwner.current
     val listResource by viewModel.getBlogs().observeAsState(Resource.success(listOf()))
     val action = SocialMediaFragmentDirections.actionSocialMediaFragmentToCommentsFragment()
     val currentUser by viewModel.getCurrentUser().observeAsState()
@@ -79,6 +80,12 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
                 viewModel.getViewModelScope().launch {
                     liveData.postValue(viewModel.createPost(title, postItems))
                 }
+                liveData.observe(lifecycleOwner) {
+                    if (it.status == Status.SUCCESS)
+                        viewModel.getViewModelScope().launch {
+                            viewModel.loadBlogs()
+                        }
+                }
                 liveData
             }
         },
@@ -110,7 +117,11 @@ fun BlogItemContent(item: PostModel) {
         )
         Text(
             text = getDateFromUnixTimestamp(item.date),
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+            modifier = Modifier.padding(8.dp)
+        )
+        Text(
+            text = stringResource(R.string.create_by_space_colon) + item.author.name,
+            modifier = Modifier.padding(8.dp, 0.dp, 8.dp, 4.dp)
         )
     }
 }
@@ -215,6 +226,15 @@ fun BlogCreatePost(
                         Icon(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_image_2),
                             "choose photo"
+                        )
+                    }
+                    IconButton(
+                        onClick = { postItems = postItems.dropLast(1) },
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_paper_negative),
+                            "remove last element"
                         )
                     }
                 }
