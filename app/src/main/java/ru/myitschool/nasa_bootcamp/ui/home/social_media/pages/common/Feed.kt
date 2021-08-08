@@ -32,6 +32,7 @@ fun <T> Feed(
     headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Nothing>>,
     onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Nothing>>,
+    onDeleteComment: (Comment, ContentWithLikesAndComments<T>) -> Unit,
     onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
 ) {
     Box {
@@ -50,7 +51,8 @@ fun <T> Feed(
                             onLikeButtonClick = { onLikeButtonClick(content!!) },
                             onCommentButtonClick = { onItemClick(item) },
                             onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
-                            onClick = { onItemClick(item) }
+                            onClick = { onItemClick(item) },
+                            onDeleteComment = { onDeleteComment(it, content!!) }
                         )
                 }
                 item {
@@ -80,6 +82,7 @@ fun <T> ItemWithLikesAndComments(
     onLikeInCommentClick: (Comment) -> LiveData<Resource<Nothing>>,
     onLikeButtonClick: () -> LiveData<Resource<Nothing>>,
     onCommentButtonClick: () -> Unit,
+    onDeleteComment: (Comment) -> Unit,
     onClick: () -> Unit
 ) {
     Card(
@@ -101,7 +104,8 @@ fun <T> ItemWithLikesAndComments(
                     onLikeClick = { onLikeInCommentClick(bestComment) },
                     onCommentClick = { onClick() },
                     maxLines = 5,
-                    showSubComments = false
+                    showSubComments = false,
+                    onDeleteComment = { onDeleteComment(it) }
                 )
             Box(
                 modifier = Modifier

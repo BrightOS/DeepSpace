@@ -117,6 +117,9 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                         onCommentClick = {
                             selectedComment = it
                             focusRequester.requestFocus()
+                        },
+                        onDeleteComment = { comment ->
+                            viewModel.getViewModelScope().launch { viewModel.deleteComment(comment, post!!) }
                         }
                     )
                 }
@@ -182,6 +185,9 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                         onCommentClick = { comment ->
                             selectedComment = comment
                             focusRequester.requestFocus()
+                        },
+                        onDeleteComment = { comment ->
+                            viewModel.getViewModelScope().launch { viewModel.deleteComment(comment, article!!) }
                         }
                     )
                 }
@@ -268,6 +274,7 @@ fun BottomTextField(
                                     Status.SUCCESS -> {
                                         isButtonEnabled = true
                                         messageTextField = ""
+                                        clearSelectedUser()
                                     }
                                     Status.ERROR -> {
                                         isButtonEnabled = true

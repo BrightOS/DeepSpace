@@ -21,8 +21,8 @@ interface FirebaseRepository {
     suspend fun getLastPostId(): String?
     suspend fun pushComment(source: String, postId: Int, comment: String): Resource<Nothing>
     suspend fun pushSubComment(source: String, postId: Int, fatherCommentId: Long, comment: String): Resource<Nothing>
-    suspend fun deleteComment(source: String, postId: Int, commentId: Long): Data<String>
-    suspend fun deleteSubComment(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): Data<String>
+    suspend fun deleteComment(source: String, postId: Int, commentId: Long): Resource<Nothing>
+    suspend fun deleteSubComment(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): Resource<Nothing>
     suspend fun pushLike(source: String, postId: Int): Resource<Nothing>
     suspend fun pushLikeForComment(source: String, postId: Int, commentId: Long): Resource<Nothing>
     suspend fun pushLikeForSubComment(source: String, postId: Int, fatherCommentId: Long, subCommentId: Long): Resource<Nothing>

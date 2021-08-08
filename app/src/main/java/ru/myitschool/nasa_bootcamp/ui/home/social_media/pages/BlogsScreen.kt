@@ -81,6 +81,9 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
                 }
                 liveData
             }
+        },
+        onDeleteComment = { comment, item ->
+            viewModel.getViewModelScope().launch { viewModel.deleteComment(comment, item) }
         }
     )
 }

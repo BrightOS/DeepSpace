@@ -21,4 +21,5 @@ interface NetworkRepository {
     ): Resource<Nothing>
     suspend fun getUser(uid: String): UserModel?
     suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing>
+    suspend fun deleteComment(comment: Comment, item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
 }

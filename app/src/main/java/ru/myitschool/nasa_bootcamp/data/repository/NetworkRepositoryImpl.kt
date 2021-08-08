@@ -177,6 +177,30 @@ class NetworkRepositoryImpl @Inject constructor(
         return Resource.success(null)
     }
 
+    override suspend fun deleteComment(
+        comment: Comment,
+        item: ContentWithLikesAndComments<out Any>
+    ): Resource<Nothing> {
+        val source =
+            if (item.content is ArticleModel) "ArticleModel"
+            else "UserPost"
+        val postId = when (item.content) {
+            is ArticleModel -> item.content.id
+            is PostModel -> item.content.id
+            else -> throw ClassCastException("Couldn't cast item to ArticleModel or PostModel")
+        }
+        return if (comment is SubComment) firebaseRepository.deleteSubComment(
+            source = source,
+            postId = postId.toInt(),
+            subCommentId = comment.id,
+            fatherCommentId = comment.parentComment.id
+        ) else firebaseRepository.deleteComment(
+            source = source,
+            postId = postId.toInt(),
+            commentId = comment.id
+        )
+    }
+
     override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()
 }
 
