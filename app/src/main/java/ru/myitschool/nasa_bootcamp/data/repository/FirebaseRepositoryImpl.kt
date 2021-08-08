@@ -470,11 +470,13 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             )
         ) {
             return try {
+                val user = getCurrentUser()!!
+                val userDto = UserDto(user.name, user.avatarUrl.toString(), user.id)
                 dbInstance.getReference("posts").child(source).child(postId.toString())
                     .child("comments")
                     .child(fatherCommentId.toString()).child("subComments")
                     .child(subCommentId.toString()).child("likes").child(authenticator.uid!!)
-                    .setValue(authenticator.uid).await()
+                    .setValue(userDto).await()
                 Resource.success(null)
             } catch (e: Exception) {
                 Resource.error(e.message.toString(), null)
