@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.compose.ui.graphics.Color
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -68,10 +69,13 @@ class SpaceXFragment : Fragment() {
                     (activity as MainActivity).main_loading?.stopLoadingAnimation()
                 }
                 is Data.Error -> {
-
+                    if (data.message == "noInternet"){
+                        Toast.makeText(requireContext(),"no internet connection",Toast.LENGTH_SHORT).show()
+                    }
                 }
                 is Data.Local -> {
                     spaceXLaunchAdapter.submitList(data.data)
+                    (activity as MainActivity).main_loading?.stopLoadingAnimation()
                 }
                 Data.Loading -> {
 
