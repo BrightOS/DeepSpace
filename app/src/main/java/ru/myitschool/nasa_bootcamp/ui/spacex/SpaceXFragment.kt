@@ -16,18 +16,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_asteroid_radar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.xml.sax.ErrorHandler
+import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
-import ru.myitschool.nasa_bootcamp.utils.Data
-import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
-import ru.myitschool.nasa_bootcamp.utils.Status
-import ru.myitschool.nasa_bootcamp.utils.loadImage
+import ru.myitschool.nasa_bootcamp.utils.*
 import kotlin.system.measureTimeMillis
 
 @AndroidEntryPoint
@@ -47,15 +46,26 @@ class SpaceXFragment : Fragment() {
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
         spaceXLaunchAdapter = SpaceXLaunchAdapter()
         binding.launchesRecycle.adapter = spaceXLaunchAdapter
-        binding.launchesRecycle.adapter = spaceXLaunchAdapter
         binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
+        binding.launchesRecycle.setHasFixedSize(false)
+
+
+        DimensionsUtil.dpToPx(requireContext(), 5).let {
+            DimensionsUtil.setMargins(
+                binding.toolBar,
+                it,
+                DimensionsUtil.getStatusBarHeight(resources) + it,
+                it,
+                it
+            )
+        }
 
 
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
             when (data) {
                 is Data.Ok -> {
                     spaceXLaunchAdapter.submitList(data.data)
-                    binding.loadProgressbar.visibility = View.GONE
+                    (activity as MainActivity).main_loading?.stopLoadingAnimation()
                 }
                 is Data.Error -> {
 
@@ -80,7 +90,7 @@ class SpaceXFragment : Fragment() {
                     PorterDuff.Mode.SRC_ATOP
                 );
             } else if ((error == Status.LOADING)) {
-                binding.loadProgressbar.visibility = View.VISIBLE
+                (activity as MainActivity).main_loading?.startLoadingAnimation()
                 binding.launchesRecycle.visibility = View.GONE
                 //binding.errorIcon.visibility = View.GONE
                 binding.explore.getBackground().setColorFilter(
@@ -131,5 +141,10 @@ class SpaceXFragment : Fragment() {
 
         return binding.root
 
+    }
+
+    override fun onPause() {
+        (activity as MainActivity).main_loading?.stopLoadingAnimation()
+        super.onPause()
     }
 }
