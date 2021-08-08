@@ -14,6 +14,7 @@ import ru.myitschool.nasa_bootcamp.databinding.FragmentMarsRoversBinding
 import ru.myitschool.nasa_bootcamp.databinding.FragmentRoadsterBinding
 import ru.myitschool.nasa_bootcamp.utils.*
 import ru.myitschool.nasa_bootcamp.utils.TESLA_ROADSTER_ORBIT
+import java.util.*
 
 @AndroidEntryPoint
 class RoadsterFragment : Fragment() {
@@ -44,22 +45,33 @@ class RoadsterFragment : Fragment() {
         roadsterViewModel.getRoadsterModel()
             .observe(viewLifecycleOwner, {
                 binding.earthDistanceRoadster.text =
-                    "Distance from Earth(km): ${roadsterViewModel.getRoadsterModel().value!!.earth_distance_km}"
+                    "${roadsterViewModel.getRoadsterModel().value!!.earth_distance_km}"
                 binding.marsDistanceRoadster.text =
-                    "Distance from Mars(km): ${roadsterViewModel.getRoadsterModel().value!!.mars_distance_km}"
-                binding.launchDateRoadster.text =
-                    "Launch date: ${convertDateFromUnix(roadsterViewModel.getRoadsterModel().value!!.launch_date_unix)}"
+                    "${roadsterViewModel.getRoadsterModel().value!!.mars_distance_km}"
                 binding.launchMassKgRoadster.text =
-                    "Launch mass(kg): ${roadsterViewModel.getRoadsterModel().value!!.launch_mass_kg}"
+                    "${roadsterViewModel.getRoadsterModel().value!!.launch_mass_kg}"
                 binding.longitudeRoadster.text =
-                    "Longtitude: ${roadsterViewModel.getRoadsterModel().value!!.longitude}"
+                    "${roadsterViewModel.getRoadsterModel().value!!.longitude}"
                 binding.nameRoadster.text =
-                    "${roadsterViewModel.getRoadsterModel().value!!.name}"
+                    roadsterViewModel.getRoadsterModel().value!!.name
                 binding.orbitTypeRoadster.text =
-                    "Orbit type : ${roadsterViewModel.getRoadsterModel().value!!.orbit_type}"
+                    roadsterViewModel.getRoadsterModel().value!!.orbit_type
                 binding.detailsRoadster.text =
-                    "${roadsterViewModel.getRoadsterModel().value!!.details}"
+                    roadsterViewModel.getRoadsterModel().value!!.details
+
+                val finalString = convertDateFromUnix(roadsterViewModel.getRoadsterModel().value?.launch_date_unix!!)
+
+                val calendar = GregorianCalendar()
+                calendar.time = Date(roadsterViewModel.getRoadsterModel().value!!.launch_date_unix * 1000L)
+
+                binding.launchDateRoadster.text = finalString.addSubstringAtIndex(
+                    getDayOfMonthSuffix(
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                    ),
+                    finalString.indexOf('.')
+                )
             })
+
 
         return binding.root
     }

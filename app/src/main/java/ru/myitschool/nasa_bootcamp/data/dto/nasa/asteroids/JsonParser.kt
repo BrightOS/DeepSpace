@@ -87,6 +87,29 @@ fun getTodayDateFormatted(): String {
     return dateFormat.format(currentTime)
 }
 
+fun getTimeFormatted(time: Long) : String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    return dateFormat.format(time)
+}
+
+fun getPlusNDaysTimeFormatted(time: Long, n: Int) : String {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = time
+    val currentTime = calendar.time
+    calendar.add(Calendar.DAY_OF_YEAR, n - 1)
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    return dateFormat.format(currentTime)
+}
+
+fun getPlusNDaysTimeFormatted(time: String, n: Int) : String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    val calendar = Calendar.getInstance()
+    calendar.time = dateFormat.parse(time)
+    val currentTime = calendar.time
+    calendar.add(Calendar.DAY_OF_YEAR, n - 1)
+    return dateFormat.format(currentTime)
+}
+
 fun getPlusSevenDaysDateFormatted(): String {
     val calendar = Calendar.getInstance()
     calendar.add(Calendar.DAY_OF_YEAR, 7)

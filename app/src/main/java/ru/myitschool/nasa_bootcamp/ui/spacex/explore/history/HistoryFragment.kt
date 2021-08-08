@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentHistoryBinding
 import ru.myitschool.nasa_bootcamp.ui.spacex.SpaceXViewModelImpl
 import ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.LandAdapter
+import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment() {
@@ -33,6 +34,17 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
+
+
+        DimensionsUtil.dpToPx(requireContext(), 5).let {
+            DimensionsUtil.setMargins(
+                binding.toolBar,
+                it,
+                DimensionsUtil.getStatusBarHeight(resources) + it,
+                it,
+                it
+            )
+        }
 
 
         binding.historyRecycle.setHasFixedSize(true)

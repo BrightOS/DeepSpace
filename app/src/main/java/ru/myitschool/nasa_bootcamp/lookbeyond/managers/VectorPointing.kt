@@ -87,13 +87,14 @@ class VectorPointing :
     private fun getPointing() {
         getNorthCoords(false)
         getNorthFromSensors()
+
         val transform: Matrix3D =
             matrixMultiply(magneticMatrix, phoneMatrix)
 
-        val viewInSpaceSpace: Vector3D =
-            matrixVectorMultiply(transform, Vector3D(0.0, 0.0, -1.0))
+        val viewInSpaceSpace: Vector3D = matrixVectorMultiply(transform, Vector3D(0.0, 0.0, -1.0))
 
         val screenUpInSpaceSpace: Vector3D = matrixVectorMultiply(transform, screenPhoneCoords)
+
         pointingM.updateLookDir(viewInSpaceSpace)
         pointingM.updatePerpendicular(screenUpInSpaceSpace)
     }
@@ -117,10 +118,9 @@ class VectorPointing :
         eastCoords = vectorCross(northCoords, southCoords)
 
         val rotationMatrix: Matrix3D = calculateRotationMatrix(0.0)
-        val magneticNorthCelestial: Vector3D = matrixVectorMultiply(
-            rotationMatrix,
-            northCoords
-        )
+
+        val magneticNorthCelestial: Vector3D = matrixVectorMultiply(rotationMatrix, northCoords)
+
         val magneticEastCelestial: Vector3D = vectorCross(magneticNorthCelestial, southCoords)
         magneticMatrix = Matrix3D(
             magneticNorthCelestial,
@@ -153,10 +153,10 @@ class VectorPointing :
             )
         } else {
 
-            val down = acceleration.copy()
+            val down = acceleration
             down!!.normalize()
 
-            val magneticFieldToNorth = magneticField.copy()
+            val magneticFieldToNorth = magneticField
             magneticFieldToNorth!!.scale(-1.0)
             magneticFieldToNorth.normalize()
 
@@ -168,7 +168,6 @@ class VectorPointing :
             upPhone = scaleVector(down, -1.0)
             magneticEastPhone = vectorCross(magneticNorthPhone, upPhone)
         }
-
 
         phoneMatrix = Matrix3D(magneticNorthPhone, upPhone, magneticEastPhone)
     }

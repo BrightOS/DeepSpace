@@ -6,9 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="@color/transparent_blue"
+    app:cardBackgroundColor="@color/transparent_gray"
+    android:outlineSpotShadowColor="@color/upcoming_blue"
+    android:outlineAmbientShadowColor="@color/upcoming_blue"
     app:cardCornerRadius="20dp"
-    app:cardElevation="150dp">
+    app:cardElevation="175dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

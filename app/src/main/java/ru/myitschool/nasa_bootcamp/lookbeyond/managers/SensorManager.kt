@@ -8,7 +8,7 @@ import android.hardware.SensorManager
 
 class SensorManager internal
 constructor(private val manager: SensorManager) :
-     Manager, SensorEventListener {
+    Manager, SensorEventListener {
     private val rotationSensor: Sensor
 
     override fun start() {
@@ -33,7 +33,7 @@ constructor(private val manager: SensorManager) :
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-     }
+    }
 
     init {
         rotationSensor = manager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)

@@ -40,27 +40,27 @@ class InfoFragment : Fragment() {
 
         infoViewModel.getInfoLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             binding.addressInfo.text =
-                "Address: ${infoViewModel.getInfoLiveData().value!!.headquarters.address}"
-            binding.founderInfo.text = "Founder : ${infoViewModel.getInfoLiveData().value!!.founder}"
-            binding.foundedInfo.text = "Founded : ${infoViewModel.getInfoLiveData().value!!.founded}"
+                infoViewModel.getInfoLiveData().value!!.headquarters.address
+            binding.founderInfo.text = infoViewModel.getInfoLiveData().value!!.founder
+            binding.foundedInfo.text = "${infoViewModel.getInfoLiveData().value!!.founded}"
             binding.summaryInfo.text = infoViewModel.getInfoLiveData().value!!.summary
-            binding.ceoInfo.text = "CEO : ${infoViewModel.getInfoLiveData().value!!.ceo}"
-            binding.cooInfo.text = "COO : ${infoViewModel.getInfoLiveData().value!!.coo}"
-            binding.ctoInfo.text = "CTO : ${infoViewModel.getInfoLiveData().value!!.cto}"
+            binding.ceoInfo.text = infoViewModel.getInfoLiveData().value!!.ceo
+            binding.cooInfo.text = infoViewModel.getInfoLiveData().value!!.coo
+            binding.ctoInfo.text = infoViewModel.getInfoLiveData().value!!.cto
             binding.cityInfo.text =
-                "City : ${infoViewModel.getInfoLiveData().value!!.headquarters.city}"
+                infoViewModel.getInfoLiveData().value!!.headquarters.city
             binding.ctoPropulsionInfo.text =
-                "CTO propulsion : ${infoViewModel.getInfoLiveData().value!!.cto}"
+                infoViewModel.getInfoLiveData().value!!.cto
             binding.launchSitesInfo.text =
-                "Launch sites : ${infoViewModel.getInfoLiveData().value!!.launch_sites}"
+                "${infoViewModel.getInfoLiveData().value!!.launch_sites}"
             binding.vehiclesInfo.text =
-                "Vehicles : ${infoViewModel.getInfoLiveData().value!!.vehicles}"
+                "${infoViewModel.getInfoLiveData().value!!.vehicles}"
             binding.valuationInfo.text =
-                "Valuation : ${infoViewModel.getInfoLiveData().value!!.valuation}"
+                "${infoViewModel.getInfoLiveData().value!!.valuation}"
             binding.stateInfo.text =
-                "State : ${infoViewModel.getInfoLiveData().value!!.headquarters.state}"
+                infoViewModel.getInfoLiveData().value!!.headquarters.state
             binding.employeesInfo.text =
-                "Employees : ${infoViewModel.getInfoLiveData().value!!.employees}"
+                "${infoViewModel.getInfoLiveData().value!!.employees}"
         })
 
         val animation = animateIt {
@@ -80,10 +80,10 @@ class InfoFragment : Fragment() {
         })
 
         val navController = findNavController()
-        binding.layHistory.historyGo.setOnClickListener(View.OnClickListener {
+        binding.layHistory.historyGo.setOnClickListener {
             val action = InfoFragmentDirections.actionHistoryFragmentToHistoryFragment2()
             navController.navigate(action)
-        })
+        }
 
         return binding.root
     }

@@ -38,7 +38,7 @@
         android:id="@+id/scroll_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="8dp">
+        android:paddingHorizontal="10dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/lin_lay_info"
@@ -54,134 +54,298 @@
                 android:id="@+id/title_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/company_info"
                 android:textAlignment="center"
                 android:background="@drawable/my_boarder"
+                android:fontFamily="@font/inter_extrabold"
+                android:text="@string/company_info"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
                 android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Company name:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/name_info_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/company_spacex"
+                android:fontFamily="@font/inter_semibold"
+                android:text="SpaceX"
+                android:textColor="#E1E1E1"
                 android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Founder:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/founder_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="Founder : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="Elon Musk" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Founded:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/founded_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="Founded : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="2002" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Employees:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/employees_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="Employees : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="7 000" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Vehicles:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/vehicles_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="Vehicles : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Launch sites:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/launch_sites_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="Launch sites : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Chief Executive Officer:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/ceo_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="CEO : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="Elon Musk" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Chief Technology Officer:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/cto_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="CTO : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="Elon Musk" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Chief Operating Officer:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/coo_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="COO : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="Gwynne Shotwell" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="CTO propulsion:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/cto_propulsion_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="CTO propulsion : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="Elon Musk" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Valuation:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/valuation_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="Valuation : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="275 000 000 000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Summary:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/summary_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="Summary : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="Summary..." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Address:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/address_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="Address : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="Rocket Road" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="City:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/city_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="City : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="Hawthorne" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="State:" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/state_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                tools:text="State : "
-                android:textSize="18sp" />
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="#E1E1E1"
+                android:textSize="18sp"
+                android:text="California" />
 
             <include
                 android:id="@+id/lay_history"
