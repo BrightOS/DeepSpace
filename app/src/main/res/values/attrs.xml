@@ -7,10 +7,12 @@
     <declare-styleable name="SpaceButton">
         <attr name="text" format="string" />
         <attr name="textAllCaps" format="boolean" />
+        <attr name="textColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="SpaceLoadingView">
         <attr name="errorText" format="string" />
         <attr name="checkEnabled" format="boolean" />
+        <attr name="showByDefault" format="boolean" />
     </declare-styleable>
 </resources>

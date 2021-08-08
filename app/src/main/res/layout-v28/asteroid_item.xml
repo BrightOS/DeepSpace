@@ -10,7 +10,7 @@
     android:layout_marginTop="8dp"
     android:elevation="0dp"
     app:cardBackgroundColor="@color/transparent_gray"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="20dp"
     app:cardElevation="120dp"
     android:outlineAmbientShadowColor="@color/green"
     android:outlineSpotShadowColor="@color/red"
