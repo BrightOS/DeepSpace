@@ -20,7 +20,7 @@ class NetworkRepositoryImpl @Inject constructor(
         for (article in news.data.orEmpty()) {
             val data = MutableLiveData<ContentWithLikesAndComments<ArticleModel>>()
             data.postValue(ContentWithLikesAndComments(article, listOf(), listOf()))
-            firebaseRepository.articleModelEventListener(data)
+            firebaseRepository.articleModelEventListener(data, article.id)
             newsList.add(data)
         }
         return Resource.success(
@@ -29,8 +29,11 @@ class NetworkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>> {
-        //val allPosts = firebaseRepository.getAllPosts()
-        return Resource.error("TO DO", null)
+        val result = firebaseRepository.getAllPostsRawData()
+        if (result.status == Status.ERROR) {
+            return Resource.error(result.message.toString(), null)
+        }
+        return Resource.success(result.data)
     }
 
     override suspend fun pressedLikeOnItem(
@@ -48,7 +51,7 @@ class NetworkRepositoryImpl @Inject constructor(
             } else {
                 val result = firebaseRepository.pushLike(
                     "UserPost",
-                    (item.content as ArticleModel).id.toInt()
+                    (item.content as PostModel).id.toInt()
                 )
                 if (result.status == Status.ERROR) {
                     return Resource.error(result.message.toString(), null)
@@ -77,7 +80,7 @@ class NetworkRepositoryImpl @Inject constructor(
             } else {
                 val result = firebaseRepository.pushLikeForComment(
                     "UserPost",
-                    (item.content as ArticleModel).id.toInt(),
+                    (item.content as PostModel).id.toInt(),
                     comment.id
                 )
                 if (result.status == Status.ERROR) {
@@ -114,8 +117,12 @@ class NetworkRepositoryImpl @Inject constructor(
         return firebaseRepository.getUser(uid)
     }
 
-    override fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
-        return Resource.error("TO DO", null)
+    override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+        val result = firebaseRepository.createPost(title, postItems)
+        if (result.status == Status.ERROR) {
+            return Resource.error(result.message.toString(), null)
+        }
+        return Resource.success(null)
     }
 
     override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()

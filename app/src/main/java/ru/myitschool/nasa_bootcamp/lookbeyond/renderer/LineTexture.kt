@@ -58,22 +58,22 @@ class LineTexture(layer: Int, textureModule: TextureModule?) :
 
                 // Нижний левый угол
                 vb.point(sumNormalToOpposite(p1, v))
-                cb.intBuffer!!.put(Color.WHITE)
+                cb.intBuffer!!.put(R.color.blue_900)
                 tb.addTexCoords(0f, 1f)
 
                 //Верзний левый угол
                 vb.point(sum(p1, v))
-                cb.intBuffer!!.put(Color.WHITE)
+                cb.intBuffer!!.put(R.color.blue_900)
                 tb.addTexCoords(0f, 0f)
 
                 //Левый нижний угол
                 vb.point(sumNormalToOpposite(p2, v))
-                cb.intBuffer!!.put(Color.WHITE)
+                cb.intBuffer!!.put(R.color.blue_900)
                 tb.addTexCoords(1f, 1f)
 
                 // Верхний левый угол
                 vb.point(sum(p2, v))
-                cb.intBuffer!!.put(Color.WHITE)
+                cb.intBuffer!!.put(R.color.blue_900)
                 tb.addTexCoords(1f, 0f)
 
 

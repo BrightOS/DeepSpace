@@ -9,6 +9,7 @@
     android:layout_marginStart="@dimen/eight_margin"
     android:layout_marginTop="16dp"
     android:layout_marginEnd="@dimen/eight_margin"
+    android:outlineSpotShadowColor="@color/green"
     app:cardBackgroundColor="@color/transparent_gray"
     app:cardCornerRadius="20dp"
     app:cardElevation="150dp"
@@ -46,9 +47,9 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/load_card"
+                android:backgroundTint="@android:color/transparent"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:backgroundTint="@android:color/transparent"
                 android:elevation="0dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
@@ -63,6 +64,7 @@
                     android:layout_height="match_parent"
                     app:showByDefault="true" />
             </com.google.android.material.card.MaterialCardView>
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mission_name"

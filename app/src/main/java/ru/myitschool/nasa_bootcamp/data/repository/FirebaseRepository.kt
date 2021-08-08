@@ -16,13 +16,12 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 interface FirebaseRepository {
-    suspend fun getAllPostsRawData(): ContentWithLikesAndComments<PostModel>
-    suspend fun getAllPosts(): Data<ArrayList<Post>>
-    suspend fun downloadImage(postId: String, imageId: String): Data<Bitmap>
-    suspend fun getAdditionalData(postId: String): Data<ArrayList<PostView>>
-    suspend fun createPost(post: Post, postId: String): Data<String>
-    fun uploadImage(postId: String, imageId: Int,  imagePath: Uri) : LiveData<Data<String>>
-    fun getLastPostId():  LiveData<Data<String>>
+    suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
+    suspend fun getAllPosts(): Data<out ArrayList<Post>>
+    suspend fun downloadImage(postId: String, imageId: String):Data<Bitmap>
+    suspend fun createPost(title: String, postItems: List<Any>): Resource<MutableLiveData<ContentWithLikesAndComments<PostModel>>>
+    fun uploadImage(postId: String, imageId: Int,  imagePath: Uri) : LiveData<Data<out String>>
+    suspend fun getLastPostId(): String?
     suspend fun pushComment(source: String, postId: Int, comment: String): Resource<Nothing>
     suspend fun pushSubComment(source: String, postId: Int, fatherCommentId: Long, comment: String): Data<String>
     suspend fun deleteComment(source: String, postId: Int, commentId: Long): Data<String>
@@ -38,5 +37,5 @@ interface FirebaseRepository {
     suspend fun createUser(context: Context, userName: String, email: String, password: String, imagePath: Uri?): Data<FirebaseUser>
     suspend fun getUser(uid: String): UserModel?
     fun getCurrentUser(): UserModel?
-    fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>)
+    fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>, postId: Long)
 }

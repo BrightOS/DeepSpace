@@ -1,55 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rocket_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="10dp"
     android:orientation="vertical">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView"
             android:layout_width="80dp"
-            android:layout_height="450dp"
-            android:layout_margin="3dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@id/characteristics_list"
             android:layout_weight="1"
             android:paddingTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:scaleType="fitCenter"
             android:src="@drawable/falcon_img" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/characteristics_list"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:layout_marginStart="5dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/appCompatImageView">
+            app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:gravity="start"
                 android:text="@string/rocket"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp" />
+                android:fontFamily="@font/inter_extrabold"
+                android:textColor="@android:color/white"
+                android:textSize="22sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/rocket_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 tools:text="Rocket name : Falcon 1" />
@@ -58,6 +56,7 @@
                 android:id="@+id/rocket_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 tools:text="Rocket type : Merlin A" />
@@ -65,16 +64,17 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_extrabold"
                 android:text="@string/first_stage"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp" />
+                android:textSize="22sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/flight_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 tools:text="Flight number : 1" />
@@ -83,6 +83,7 @@
                 android:id="@+id/core_serial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 tools:text="Core serial : Merlin1A" />
@@ -91,6 +92,7 @@
                 android:id="@+id/reused_core"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 tools:text="Reused? : No, not yet" />
@@ -99,11 +101,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
                 android:text="@string/second_stage"
+                android:fontFamily="@font/inter_extrabold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp" />
+                android:textSize="22sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/block"
@@ -111,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
+                android:fontFamily="@font/inter_regular"
                 tools:text="Blocks: 1" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -119,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
+                android:fontFamily="@font/inter_regular"
                 tools:text="Payload : FalconSAT-2" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -127,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
+                android:fontFamily="@font/inter_regular"
                 tools:text="Payload type : Satellite" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -135,6 +140,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
+                android:fontFamily="@font/inter_regular"
                 tools:text="Payload mass : 20 kg" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -143,6 +149,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
+                android:fontFamily="@font/inter_regular"
                 tools:text="Country : United States" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -151,12 +158,14 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
+                android:fontFamily="@font/inter_regular"
                 tools:text="Manufacturer : SSTL" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/ref_system"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 tools:text="Reference system : geocentric" />
@@ -165,17 +174,17 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_extrabold"
                 android:text="@string/fairings"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp" />
+                android:textSize="22sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/reused_fairings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:fontFamily="@font/inter_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 tools:text="Reused?: Not, not yet" />
@@ -186,19 +195,19 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
+                android:fontFamily="@font/inter_regular"
                 tools:text="Tried to recover?: Yes" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/recovered"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
-                tools:text="Recovered?: No " />
+                tools:text="Recovered?: No" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -126,11 +126,11 @@ class MainActivity : AppCompatActivity() {
                     }
                     is Data.Error -> {
                         navHeaderMainBinding.userAvatar.setImageBitmap(null)
-                        navHeaderMainBinding.userAvatar.foreground =
-                            getDrawable(R.drawable.ic_photo_mini)
+                        navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_photo_mini)
                     }
                 }
             }
+
             navHeaderMainBinding.signIn.text = getString(R.string.sign_out)
             navHeaderMainBinding.signIn.setOnClickListener {
                 mFirebaseUser.signOutUser(this)

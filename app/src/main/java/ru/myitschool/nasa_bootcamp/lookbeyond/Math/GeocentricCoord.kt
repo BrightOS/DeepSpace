@@ -98,6 +98,7 @@ class HeliocentricCoords(
             val per = elem.perihelion!!
             val asc = elem.ascnode!!
             val inc = elem.ascnode!!
+
             val xh = radius * (cos(asc) * cos(anomaly + per - asc) -
                     sin(asc) * sin(anomaly + per - asc) *
                     cos(inc))

@@ -25,9 +25,11 @@ class ViewAllPostViewModelImpl @Inject constructor(
         return repository.downloadImage(postId, imageId)
     }
 
+    /*
     override suspend fun getAdditionalData(postId: String): Data<ArrayList<PostView>> {
         return  repository.getAdditionalData(postId)
     }
+     */
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope
 }

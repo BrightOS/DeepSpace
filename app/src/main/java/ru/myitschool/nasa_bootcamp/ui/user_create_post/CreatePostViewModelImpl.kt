@@ -16,9 +16,11 @@ class CreatePostViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository
 ) : ViewModel(), CreatePostViewModel {
 
+   /*
     override suspend fun createPost(post: Post, postId: String): Data <String> {
         return repository.createPost(post, postId)
     }
+    */
 
     override fun uploadImage(
         postId: String,
@@ -28,9 +30,11 @@ class CreatePostViewModelImpl @Inject constructor(
         return repository.uploadImage(postId, imageId, imagePath)
     }
 
+    /*
     override fun getLastPostId(): LiveData<Data<out String>> {
         return repository.getLastPostId()
     }
+     */
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope
 }
