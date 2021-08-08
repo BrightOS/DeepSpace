@@ -2,26 +2,25 @@ package ru.myitschool.nasa_bootcamp.ui.spacex
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionManager
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import org.xml.sax.ErrorHandler
+import com.google.android.material.transition.MaterialSharedAxis
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
-import ru.myitschool.nasa_bootcamp.utils.LAUNCH_LOGOS_GIF
-import ru.myitschool.nasa_bootcamp.utils.Status
-import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
-import ru.myitschool.nasa_bootcamp.utils.loadImage
+import ru.myitschool.nasa_bootcamp.utils.*
+import java.util.*
 
 class SpaceXLaunchAdapter :
     ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
@@ -52,13 +51,21 @@ class SpaceXLaunchAdapter :
         )
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     class ViewHolder(private val binding: LaunchItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val context = binding.root.context
 
         var expanded = false
 
-        val requestListener = object : RequestListener<Drawable> {
+        private val requestListener = object : RequestListener<Drawable> {
             override fun onLoadFailed(
                 e: GlideException?,
                 model: Any,
@@ -76,7 +83,7 @@ class SpaceXLaunchAdapter :
                 isFirstResource: Boolean
             ): Boolean {
                 binding.loadProgressbar.visibility = View.GONE
-                binding.layoutLaunchSpacex.visibility = View.VISIBLE
+                binding.loadCard.visibility = View.GONE
                 return false
             }
         }
@@ -98,10 +105,26 @@ class SpaceXLaunchAdapter :
         fun bind(launchModel: SxLaunchModel) {
 
 
+            binding.loadProgressbar.visibility = View.VISIBLE
+
+
             binding.missionName.text = launchModel.mission_name
             binding.missionYear.text = convertDateFromUnix(launchModel.launch_date_unix)
             binding.details.text = launchModel.details
             binding.launchSite.text = launchModel.launch_site.site_name_long
+
+
+            val finalString = convertDateFromUnix(launchModel.launch_date_unix)
+
+            val calendar = GregorianCalendar()
+            calendar.time = Date(launchModel.launch_date_unix * 1000L)
+
+            binding.missionYear.text = finalString.addSubstringAtIndex(
+                getDayOfMonthSuffix(
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                ),
+                finalString.indexOf('.')
+            )
 
 
             binding.characteristicsLaunch.rocketName.text =
@@ -175,6 +198,7 @@ class SpaceXLaunchAdapter :
             )
 
             if (launchModel.links != null) {
+                Log.i("debug","not null links");
                 if (launchModel.links.mission_patch != null)
                     loadImage(
                         binding.recycleItemImg.context,
@@ -189,6 +213,7 @@ class SpaceXLaunchAdapter :
                     requestListener
                 )
             } else {
+                Log.i("debug","null links");
                 loadImage(
                     binding.recycleItemImg.context,
                     "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
@@ -198,10 +223,24 @@ class SpaceXLaunchAdapter :
             }
             if (launchModel.launch_success) {
                 binding.status.setText("Status: success")
-                binding.status.setTextColor(context.getColor(R.color.green))
+
+                context.getColor(R.color.green).let {
+                    binding.status.setTextColor(it)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        binding.cardLaunch.outlineSpotShadowColor = it
+                        binding.cardLaunch.outlineAmbientShadowColor = it
+                    }
+                }
             } else {
                 binding.status.setText("Status: failed")
-                binding.status.setTextColor(context.getColor(R.color.red))
+
+                context.getColor(R.color.red).let {
+                    binding.status.setTextColor(it)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        binding.cardLaunch.outlineSpotShadowColor = it
+                        binding.cardLaunch.outlineAmbientShadowColor = it
+                    }
+                }
             }
         }
     }

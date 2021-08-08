@@ -6,29 +6,29 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature
         android:name="android.hardware.location.gps"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.sensor.compass"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.faketouch"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.faketouch.multitouch.distinct"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.touchscreen"
-        android:required="false"/>
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.touchscreen.multitouch.distinct"
-        android:required="false"/>
+        android:required="false" />
 
     <application
         android:name=".App"
@@ -38,6 +38,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NASA_Bootcamp">
+        <activity
+            android:name=".ui.spacex.explore.launchland.MapActivity"
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -48,31 +51,22 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"
-                    />
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".lookbeyond.activities.SpaceNavigatorActivity"
-            android:screenOrientation="portrait"
-            >
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".lookbeyond.activities.SensorsActivity"
-            android:screenOrientation="portrait"
-            >
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
 
         <receiver android:name=".utils.NotificationCentre$NotificationReceiver" />
     </application>

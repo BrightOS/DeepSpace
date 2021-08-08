@@ -7,6 +7,8 @@ import android.util.TypedValue
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.layout_space_button.view.*
 import ru.myitschool.nasa_bootcamp.R
@@ -48,6 +50,7 @@ class SpaceButton constructor(
             button_text?.text = typedArray.getString(R.styleable.SpaceButton_text)
             button_text?.isAllCaps =
                 typedArray.getBoolean(R.styleable.SpaceButton_textAllCaps, false)
+            button_text?.setTextColor(typedArray.getColor(R.styleable.SpaceButton_textColor, Color.White.toArgb()))
 
             typedArray.recycle()
         }

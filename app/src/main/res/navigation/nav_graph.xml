@@ -168,8 +168,8 @@
         android:label="fragment_launch_land"
         tools:layout="@layout/fragment_launch_land">
         <action
-            android:id="@+id/action_launchLandFragment_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+            android:id="@+id/action_to_land_map"
+            app:destination="@id/mapActivity" />
 
     </fragment>
 
@@ -189,38 +189,18 @@
         <action
             android:id="@+id/action_homeFragment_to_socialMediaFragment"
             app:destination="@id/socialMediaNavGraph" />
+        <action
+            android:id="@+id/action_homeFragment_to_upcomingEventsFragment"
+            app:destination="@id/upcomingEventsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_spaceNavigatorActivity"
+            app:destination="@id/spaceNavigatorActivity" />
     </fragment>
     <fragment
         android:id="@+id/roverDetails"
         android:name="ru.myitschool.nasa_bootcamp.ui.mars_rovers.RoverDetails"
         android:label="fragment_rover_details"
         tools:layout="@layout/fragment_rover_details" />
-
-    <fragment
-        android:id="@+id/mapsFragment"
-        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.MapsFragment"
-        android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps">
-
-        <argument
-            android:name="longitude"
-            android:defaultValue="0"
-            app:argType="float" />
-        <argument
-            android:name="latitude"
-            android:defaultValue="0"
-            app:argType="float" />
-        <argument
-            android:name="name"
-            android:defaultValue="none"
-            app:argType="string" />
-
-        <argument
-            android:name="details"
-            android:defaultValue="none"
-            app:argType="string" />
-
-    </fragment>
 
     <fragment
         android:id="@+id/userPost"
@@ -252,6 +232,10 @@
             <action
                 android:id="@+id/action_socialMediaFragment_to_commentsFragment"
                 app:destination="@id/commentsFragment" />
+            <argument
+                android:name="index"
+                app:argType="integer"
+                android:defaultValue="0" />
         </fragment>
         <fragment
             android:id="@+id/commentsFragment"
@@ -267,5 +251,28 @@
             android:id="@+id/action_waitingFragment_to_spaceNavigatorActivity"
             app:destination="@id/spaceNavigatorActivity" />
     </fragment>
+    <activity
+        android:id="@+id/mapActivity"
+        android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.MapActivity"
+        android:label="activity_map"
+        tools:layout="@layout/activity_map" >
+        <argument
+            android:name="longitude"
+            android:defaultValue="0"
+            app:argType="float" />
+        <argument
+            android:name="latitude"
+            android:defaultValue="0"
+            app:argType="float" />
+        <argument
+            android:name="name"
+            android:defaultValue="none"
+            app:argType="string" />
+
+        <argument
+            android:name="details"
+            android:defaultValue="none"
+            app:argType="string" />
+    </activity>
 
 </navigation>

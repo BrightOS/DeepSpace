@@ -70,7 +70,7 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     }
 
     override fun getCurrentUser() = currentUser
-    override fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+    override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
         return networkRepository.createPost(title, postItems)
     }
 

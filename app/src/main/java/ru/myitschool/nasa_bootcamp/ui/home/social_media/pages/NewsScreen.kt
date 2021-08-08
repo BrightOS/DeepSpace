@@ -13,6 +13,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaFragmentDirec
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.Feed
 import ru.myitschool.nasa_bootcamp.utils.Resource
+import ru.myitschool.nasa_bootcamp.utils.parseNewsDate
 
 @Composable
 fun NewsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
@@ -31,14 +33,22 @@ fun NewsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
         onRetryButtonClick = { viewModel.getViewModelScope().launch { viewModel.loadNews() } },
         itemContent = { item: ArticleModel -> NewsItem(item) },
         onLikeButtonClick = {
-            viewModel.getViewModelScope().launch { viewModel.pressedLikeOnItem(it) }
+            val liveData = MutableLiveData(Resource.loading(null))
+            viewModel.getViewModelScope().launch {
+                liveData.postValue(viewModel.pressedLikeOnItem(it))
+            }
+            liveData
         },
         onItemClick = {
             viewModel.setSelectedArticle(it)
             navController.navigate(action)
         },
         onLikeInCommentClick = { item, comment ->
-            viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(item, comment) }
+            val liveData = MutableLiveData(Resource.loading(null))
+            viewModel.getViewModelScope().launch {
+                liveData.postValue(viewModel.pressedLikeOnComment(item, comment))
+            }
+            liveData
         },
         listResource = listResource,
         currentUser = currentUser
@@ -63,7 +73,7 @@ fun NewsItem(item: ArticleModel) {
             modifier = Modifier.padding(horizontal = 8.dp)
         )
         Text(
-            text = item.publishedAt,
+            text = parseNewsDate(item.publishedAt),
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
         )
     }

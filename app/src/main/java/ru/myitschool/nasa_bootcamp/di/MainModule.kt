@@ -31,26 +31,20 @@ object MainModule {
     fun checkInternetConnection(): Boolean {
         return try {
             val inAddress: InetAddress = InetAddress.getByName("http://google.com")
-            if (inAddress.equals("")) {
-                false
-            } else {
-                true
-            }
+            !inAddress.equals("")
         } catch (e: java.lang.Exception) {
             false
         }
     }
 
-    private val interceptor = object : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            if (!checkInternetConnection()) {
-                throw NoConnectivityException()
-                // Throwing our custom exception 'NoConnectivityException'
-            }
-
-            val builder = chain.request().newBuilder()
-            return chain.proceed(builder.build())
+    private val interceptor = Interceptor { chain ->
+        if (!checkInternetConnection()) {
+            throw NoConnectivityException()
+            // Throwing our custom exception 'NoConnectivityException'
         }
+
+        val builder = chain.request().newBuilder()
+        chain.proceed(builder.build())
     }
 
     @Provides

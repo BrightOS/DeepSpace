@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Patterns
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateContentSize
@@ -25,9 +26,13 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
@@ -37,6 +42,7 @@ import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaFragmentDirec
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.Feed
 import ru.myitschool.nasa_bootcamp.utils.Resource
+import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 
 @Composable
@@ -48,20 +54,33 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
         onRetryButtonClick = { viewModel.getViewModelScope().launch { viewModel.loadBlogs() } },
         itemContent = { item: PostModel -> BlogItemContent(item) },
         onLikeButtonClick = {
-            viewModel.getViewModelScope().launch { viewModel.pressedLikeOnItem(it) }
+            val liveData = MutableLiveData(Resource.loading(null))
+            viewModel.getViewModelScope().launch {
+                liveData.postValue(viewModel.pressedLikeOnItem(it))
+            }
+            liveData
         },
         onItemClick = {
             viewModel.setSelectedPost(it)
             navController.navigate(action)
         },
         onLikeInCommentClick = { item, comment ->
-            viewModel.getViewModelScope().launch { viewModel.pressedLikeOnComment(item, comment) }
+            val liveData = MutableLiveData(Resource.loading(null))
+            viewModel.getViewModelScope().launch {
+                liveData.postValue(viewModel.pressedLikeOnComment(item, comment))
+            }
+            liveData
         },
         listResource = listResource,
         currentUser = currentUser,
         headerContent = {
-            BlogCreatePost(
-                onSendButton = { title, postItems -> viewModel.createPost(title, postItems) })
+            BlogCreatePost { title, postItems ->
+                val liveData = MutableLiveData(Resource.loading(null))
+                viewModel.getViewModelScope().launch {
+                    liveData.postValue(viewModel.createPost(title, postItems))
+                }
+                liveData
+            }
         }
     )
 }
@@ -93,9 +112,11 @@ fun BlogItemContent(item: PostModel) {
 
 @Composable
 fun BlogCreatePost(
-    onSendButton: (String, List<Any>) -> Unit
+    onSendButton: (String, List<Any>) -> LiveData<Resource<Nothing>>
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     var title by remember { mutableStateOf("") }
     var postItems by remember { mutableStateOf<List<Any>>(listOf()) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -194,7 +215,20 @@ fun BlogCreatePost(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Button(
                 onClick = {
-                    onSendButton(title, postItems)
+                    focusManager.clearFocus()
+                    val liveData = onSendButton(title, postItems)
+                    liveData.observe(lifecycleOwner) {
+                        when (it.status) {
+                            Status.SUCCESS -> postItems = listOf()
+                            Status.ERROR -> Toast.makeText(
+                                context,
+                                "Failed to create post",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            else -> {
+                            }
+                        }
+                    }
                 },
                 shape = RoundedCornerShape(16.dp),
 //                colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray),
