@@ -159,7 +159,7 @@ fun HomeScreen(
                 val cardModifier =
                     Modifier
                         .aspectRatio(1f)
-                        .padding(8.dp)
+                        .padding(6.dp)
                 val navDataList = listOf(
                     NavigationCardData(
                         painter = painterResource(R.drawable.space_x_background3),
