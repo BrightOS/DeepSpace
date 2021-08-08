@@ -16,17 +16,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
 import coil.compose.rememberImagePainter
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.UserModel
+import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 
 @Composable
 fun CommentItem(
     comment: Comment,
     currentUser: UserModel?,
-    onLikeClick: () -> Unit,
+    onLikeClick: () -> LiveData<Resource<Nothing>>,
     onCommentClick: () -> Unit,
     modifier: Modifier = Modifier,
     maxLines: Int = Int.MAX_VALUE

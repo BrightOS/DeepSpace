@@ -67,7 +67,6 @@
     <string name="spacex_card_description">Information about launches, space capsules, how it all started and even more.</string>
     <string name="loading_error_message">An error occurred while loading the content, please check the network connection</string>
     <string name="retry">Retry</string>
-    <string name="blogs">Blogs</string>
     <string name="click_on_the_image_hint">Click on the image to view description</string>
     <string name="news">News</string>
     <string name="profile">Profile</string>
@@ -93,4 +92,7 @@
     <string name="company_spacex">Company : SpaceX</string>
     <string name="text">Text</string>
     <string name="asteroid_name">Asteroid name:</string>
+    <string name="user_posts">User posts</string>
+    <string name="blogs">Blogs</string>
+    <string name="blogs_and_news"><![CDATA[Blogs & News]]></string>
 </resources>

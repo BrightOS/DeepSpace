@@ -30,8 +30,8 @@ fun <T> Feed(
     onRetryButtonClick: () -> Unit,
     itemContent: @Composable (T) -> Unit,
     headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
-    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> Unit,
-    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> Unit,
+    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Nothing>>,
+    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Nothing>>,
     onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
 ) {
     Box {
@@ -75,8 +75,8 @@ fun <T> ItemWithLikesAndComments(
     item: ContentWithLikesAndComments<T>,
     currentUser: UserModel?,
     itemContent: @Composable (T) -> Unit,
-    onLikeInCommentClick: (Comment) -> Unit,
-    onLikeButtonClick: () -> Unit,
+    onLikeInCommentClick: (Comment) -> LiveData<Resource<Nothing>>,
+    onLikeButtonClick: () -> LiveData<Resource<Nothing>>,
     onCommentButtonClick: () -> Unit,
     onClick: () -> Unit
 ) {

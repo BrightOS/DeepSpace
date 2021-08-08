@@ -4,9 +4,9 @@
         <item
             android:id="@+id/homeFragment"
             android:title="@string/home" />
-       <!-- <item
-            android:id="@+id/nasaFragment"
-            android:title="@string/nasa" />-->
+        <item
+            android:id="@+id/socialMediaNavGraph"
+            android:title="@string/blogs_and_news" />
         <item
             android:id="@+id/asteroidRadarFragment"
             android:title="@string/asteroid_radar" />
@@ -24,15 +24,6 @@
         <item
             android:id="@+id/upcomingEventsFragment"
             android:title="@string/upcoming_events" />
-
-        <item
-            android:id="@+id/createPostFragment"
-            android:title="@string/create_your_own_post"/>
-
-
-        <item
-            android:id="@+id/allUserPostFragment"
-            android:title="User posts"/>
     </group>
 
     <group android:id="@+id/menu_bottom">

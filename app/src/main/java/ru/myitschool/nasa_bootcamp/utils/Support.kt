@@ -80,16 +80,19 @@ fun convertDateFromUnix(date: Long): String {
     val calendar = GregorianCalendar()
     calendar.time = date
 
-    return finalString.addSubstringAtIndex(
-        getDayOfMonthSuffix(
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ),
-        finalString.indexOf('.')
-    )
+    return finalString
 }
 
 fun getDateFromUnixTimestamp(time: Long): String =
-    SimpleDateFormat.getDateTimeInstance().format(Date(time * 1000))
+    SimpleDateFormat.getDateTimeInstance().format(Date(time))
+
+fun parseNewsDate(input: String): String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.US)
+    val date = dateFormat.parse(input)
+    return if (date != null)
+        getDateFromUnixTimestamp(date.time)
+    else "Unknown date"
+}
 
 fun TextInputEditText.checkForErrors(inputLayout: TextInputLayout) {
     doOnTextChanged { text, start, before, count ->
