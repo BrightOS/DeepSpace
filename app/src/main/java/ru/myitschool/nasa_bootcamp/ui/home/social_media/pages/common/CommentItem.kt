@@ -4,21 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LiveData
 import coil.compose.rememberImagePainter
-import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.utils.Resource
@@ -29,13 +25,14 @@ fun CommentItem(
     comment: Comment,
     currentUser: UserModel?,
     onLikeClick: () -> LiveData<Resource<Nothing>>,
-    onCommentClick: () -> Unit,
+    onCommentClick: (Comment) -> Unit,
     modifier: Modifier = Modifier,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
+    showSubComments: Boolean = true
 ) {
     Column {
         Column(modifier = modifier
-            .clickable { onCommentClick() }
+            .clickable { onCommentClick(comment) }
             .fillMaxWidth()
             .padding(8.dp)) {
             Row(
@@ -70,14 +67,15 @@ fun CommentItem(
                 maxLines = maxLines
             )
         }
-        comment.subComments.forEach {
-            CommentItem(
-                comment = it,
-                currentUser,
-                onLikeClick,
-                onCommentClick,
-                modifier = Modifier.padding(start = 32.dp)
-            )
-        }
+        if (showSubComments)
+            comment.subComments.forEach { subComment ->
+                CommentItem(
+                    comment = subComment,
+                    currentUser,
+                    onLikeClick,
+                    { onCommentClick(subComment) },
+                    modifier = Modifier.padding(start = 32.dp)
+                )
+            }
     }
 }

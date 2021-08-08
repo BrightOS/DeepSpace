@@ -18,7 +18,7 @@ enum class Planet(
     Uranus(R.drawable.uranus),
     Saturn(R.drawable.saturn),
     Mercury(R.drawable.mercury),
-    Venus(R.drawable.venus_background),
+    Venus(R.drawable.venus),
     Mars(R.drawable.mars),
     Sun(R.drawable.sun),
     Moon(R.drawable.moon),

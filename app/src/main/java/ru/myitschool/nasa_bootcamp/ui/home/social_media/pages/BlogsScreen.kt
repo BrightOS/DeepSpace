@@ -88,7 +88,9 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
 @Composable
 fun BlogItemContent(item: PostModel) {
     Column {
-        if (Patterns.WEB_URL.matcher(item.postItems.first()).matches())
+        if (item.postItems.isNotEmpty()
+            && Patterns.WEB_URL.matcher(item.postItems.first()).matches()
+        )
             Image(
                 painter = rememberImagePainter(item.postItems.first()),
                 contentScale = ContentScale.Crop,
@@ -101,7 +103,7 @@ fun BlogItemContent(item: PostModel) {
         Text(
             text = item.title,
             style = MaterialTheme.typography.h5,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(8.dp)
         )
         Text(
             text = getDateFromUnixTimestamp(item.date),
@@ -114,6 +116,7 @@ fun BlogItemContent(item: PostModel) {
 fun BlogCreatePost(
     onSendButton: (String, List<Any>) -> LiveData<Resource<Nothing>>
 ) {
+    var isExpanded by remember { mutableStateOf(false) }
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -145,15 +148,6 @@ fun BlogCreatePost(
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 16.dp)
     ) {
-        TextField(
-            value = title,
-            singleLine = true,
-            label = { Text(stringResource(R.string.title)) },
-            onValueChange = { title = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-        )
         Column(
             modifier = Modifier.animateContentSize(
                 animationSpec = tween(
@@ -162,73 +156,89 @@ fun BlogCreatePost(
                 )
             )
         ) {
-            postItems.forEachIndexed { index, item ->
-                when (item) {
-                    is String -> TextField(
-                        value = item,
-                        maxLines = 5,
-                        label = { Text(stringResource(R.string.text)) },
-                        onValueChange = {
-                            val newList = postItems.toMutableList()
-                            newList[index] = it
-                            postItems = newList
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                    )
-                    is Bitmap -> Image(
-                        bitmap = item.asImageBitmap(),
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(160.dp)
-                            .padding(horizontal = 16.dp, vertical = 16.dp)
-                    )
+            if (isExpanded) {
+                TextField(
+                    value = title,
+                    singleLine = true,
+                    label = { Text(stringResource(R.string.title)) },
+                    onValueChange = { title = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+                postItems.forEachIndexed { index, item ->
+                    when (item) {
+                        is String -> TextField(
+                            value = item,
+                            maxLines = 5,
+                            label = { Text(stringResource(R.string.text)) },
+                            onValueChange = {
+                                val newList = postItems.toMutableList()
+                                newList[index] = it
+                                postItems = newList
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                        )
+                        is Bitmap -> Image(
+                            bitmap = item.asImageBitmap(),
+                            contentScale = ContentScale.Crop,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(160.dp)
+                                .padding(horizontal = 16.dp, vertical = 16.dp)
+                        )
+                    }
                 }
-            }
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            IconButton(
-                onClick = { postItems = postItems.plus("") },
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_paper_plus),
-                    "add text"
-                )
-            }
-            IconButton(
-                onClick = { launcher.launch("image/*") },
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
-            ) {
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_image_2),
-                    "choose photo"
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    IconButton(
+                        onClick = { postItems = postItems.plus("") },
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_paper_plus),
+                            "add text"
+                        )
+                    }
+                    IconButton(
+                        onClick = { launcher.launch("image/*") },
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_image_2),
+                            "choose photo"
+                        )
+                    }
+                }
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Button(
                 onClick = {
-                    focusManager.clearFocus()
-                    val liveData = onSendButton(title, postItems)
-                    liveData.observe(lifecycleOwner) {
-                        when (it.status) {
-                            Status.SUCCESS -> postItems = listOf()
-                            Status.ERROR -> Toast.makeText(
-                                context,
-                                "Failed to create post",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            else -> {
+                    if (isExpanded) {
+                        focusManager.clearFocus()
+                        val liveData = onSendButton(title, postItems)
+                        liveData.observe(lifecycleOwner) {
+                            when (it.status) {
+                                Status.SUCCESS -> {
+                                    postItems = listOf()
+                                    isExpanded = false
+                                }
+                                Status.ERROR -> Toast.makeText(
+                                    context,
+                                    "Failed to create post",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                else -> {
+                                }
                             }
                         }
-                    }
+                    } else isExpanded = true
                 },
                 shape = RoundedCornerShape(16.dp),
 //                colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray),
@@ -239,12 +249,19 @@ fun BlogCreatePost(
                 Text(stringResource(R.string.create_post))
             }
             IconButton(onClick = {
-                postItems = listOf()
-                title = ""
+                if (isExpanded) {
+                    postItems = listOf()
+                    title = ""
+                    isExpanded = false
+                } else isExpanded = true
             }, modifier = Modifier.padding(end = 16.dp)) {
-                Icon(
-                    Icons.Filled.Close,
-                    contentDescription = "close"
+                if (isExpanded)
+                    Icon(
+                        Icons.Filled.Close,
+                        contentDescription = "close"
+                    ) else Icon(
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_edit_square),
+                    contentDescription = null
                 )
             }
         }

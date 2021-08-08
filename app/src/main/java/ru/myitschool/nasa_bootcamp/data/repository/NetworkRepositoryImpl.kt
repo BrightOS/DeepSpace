@@ -168,6 +168,8 @@ class NetworkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+        if (postItems.isEmpty())
+            return Resource.error("Post without aby data", null)
         val result = firebaseRepository.createPost(title, postItems)
         if (result.status == Status.ERROR) {
             return Resource.error(result.message.toString(), null)

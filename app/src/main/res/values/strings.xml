@@ -99,4 +99,6 @@
     <string name="developers">Developers: </string>
 
     <string name="copiedToClipboard">%1$s email copied to clipboard</string>
+    <string name="create_by_space_colon">"Created by: "</string>
+    <string name="reply_to">"reply to "</string>
 </resources>
