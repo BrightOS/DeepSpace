@@ -19,9 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
@@ -36,12 +36,12 @@ import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.BlogsScreen
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.NewsScreen
-import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.ProfileScreen
 
 @AndroidEntryPoint
 class SocialMediaFragment : Fragment() {
+    val args: SocialMediaFragmentArgs by navArgs()
     val viewModel: SocialMediaViewModel
-            by navGraphViewModels<SocialMediaViewModelImpl>(R.id.socialMediaNavGraph) {defaultViewModelProviderFactory}
+            by navGraphViewModels<SocialMediaViewModelImpl>(R.id.socialMediaNavGraph) { defaultViewModelProviderFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +58,7 @@ class SocialMediaFragment : Fragment() {
                 MdcTheme {
                     ProvideWindowInsets {
                         SocialMediaScreen(
+                            args = args,
                             viewModel = viewModel,
                             navController = findNavController()
                         )
@@ -71,15 +72,15 @@ class SocialMediaFragment : Fragment() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun SocialMediaScreen(
+    args: SocialMediaFragmentArgs,
     viewModel: SocialMediaViewModel,
     navController: NavController
 ) {
     val tabs = listOf(
         TabItem.News(viewModel, navController),
-        TabItem.Blogs(viewModel, navController),
-        TabItem.Profile(viewModel, navController)
+        TabItem.Blogs(viewModel, navController)
     )
-    val pagerState = rememberPagerState(tabs.size)
+    val pagerState = rememberPagerState(tabs.size, initialPage = args.index)
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
             Spacer(modifier = Modifier.statusBarsPadding())
@@ -143,10 +144,4 @@ sealed class TabItem(
 
     class Blogs(viewModel: SocialMediaViewModel, navController: NavController) :
         TabItem(R.drawable.ic_chat, R.string.blogs, { BlogsScreen(viewModel, navController) })
-
-    class Profile(viewModel: SocialMediaViewModel, navController: NavController) :
-        TabItem(
-            R.drawable.ic_profile,
-            R.string.profile,
-            { ProfileScreen(viewModel, navController) })
 }

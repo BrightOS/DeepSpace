@@ -1,8 +1,11 @@
 package ru.myitschool.nasa_bootcamp.ui.about
 
+import android.R.attr
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,6 +25,15 @@ import ru.myitschool.nasa_bootcamp.utils.ANIMATED_DEEP_SPACE
 import ru.myitschool.nasa_bootcamp.utils.NotificationCentre
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 import ru.myitschool.nasa_bootcamp.utils.loadImageCircle
+import android.R.attr.label
+
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+
+import androidx.core.content.ContextCompat.getSystemService
+import ru.myitschool.nasa_bootcamp.R
 
 
 @AndroidEntryPoint
@@ -37,38 +49,96 @@ class AboutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // println(isNetworkAvailable(context))
+        //println(isNetworkAvailable(context))
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
 
         loadImageCircle(requireContext(), ANIMATED_DEEP_SPACE, binding.logoGif)
 
+        binding.YanaGit.setOnClickListener {
+            copyToClipBoard(yanaMail, binding.YanaGladkikh.text.toString())
+        }
+        binding.YanaVk.setOnClickListener {
+            openLink(yanaVk)
+        }
+        binding.YanaGit.setOnClickListener {
+            openLink(yanaGit)
+        }
+
+        binding.DenisVk.setOnClickListener {
+            openLink(denisVk)
+        }
+        binding.DenisMail.setOnClickListener {
+            copyToClipBoard(denisMail, binding.DenisBarov.text.toString() )
+        }
+        binding.DenisGit.setOnClickListener {
+            openLink(denisGit)
+        }
+
+        binding.vladVk.setOnClickListener {
+            openLink(vladVk)
+        }
+        binding.vladGit.setOnClickListener {
+            openLink(vladGit)
+        }
+        binding.vladMail.setOnClickListener {
+            copyToClipBoard(vladMail, binding.VladimirKrylov.text.toString())
+        }
+
+        binding.samuilVk.setOnClickListener {
+            openLink(samuilVk)
+        }
+        binding.samuilGit.setOnClickListener {
+            openLink(samuilGit)
+        }
+        binding.samuilMail.setOnClickListener {
+            copyToClipBoard(samuilMail,binding.samuilNalisin.text.toString())
+        }
+
+        binding.danilVk.setOnClickListener {
+            openLink(danilVk)
+        }
+        binding.danilGit.setOnClickListener {
+            openLink(danilGit)
+        }
+        binding.danilMail.setOnClickListener {
+            copyToClipBoard(danilMail,binding.danilkhairulin.text.toString())
+        }
+
+
+
         return binding.root
     }
 
-    private fun isNetworkAvailable(context: Context?): Boolean {
-        if (context == null) return false
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-            if (capabilities != null) {
-                when {
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                        return true
-                    }
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                        return true
-                    }
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                        return true
-                    }
-                }
-            }
-        } else {
-            val activeNetworkInfo = connectivityManager.activeNetworkInfo
-            if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
-                return true
-            }
-        }
-        return false
+    private fun openLink(link: String){
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        startActivity(browserIntent)
+    }
+    private fun copyToClipBoard(text: String, name: String){
+        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("email", text)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(requireContext(),getString(R.string.copiedToClipboard,name),Toast.LENGTH_SHORT).show();
+    }
+
+    companion object Links{
+        const val yanaVk = "https://vk.com/yanaglad12"
+        const val yanaMail = "monsterglad12@gmail.com"
+        const val yanaGit = "https://github.com/YanaGlad"
+
+        const val denisVk = "https://vk.com/brightos"
+        const val denisMail = "dbarov3@gmail.com"
+        const val denisGit = "https://github.com/BrightOS"
+
+        const val vladVk = "https://vk.com/krylov800"
+        const val vladMail = "abubakirov04@mail.ru"
+        const val vladGit = "https://github.com/ThreadJava800"
+
+        const val samuilVk = "https://vk.com/korefu"
+        const val samuilMail = "semviel22@gmail.com"
+        const val samuilGit = "https://github.com/korefu"
+
+        const val danilVk = "https://vk.com/ytowka137"
+        const val danilMail = "donil.0304@yandex.ru"
+        const val danilGit = "https://github.com/ytowka"
     }
 }

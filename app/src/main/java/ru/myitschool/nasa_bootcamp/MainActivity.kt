@@ -126,8 +126,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     is Data.Error -> {
                         navHeaderMainBinding.userAvatar.setImageBitmap(null)
-                        navHeaderMainBinding.userAvatar.foreground =
-                            getDrawable(R.drawable.ic_photo_mini)
+                        navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_photo_mini)
                     }
                 }
             }
@@ -138,7 +137,6 @@ class MainActivity : AppCompatActivity() {
                 changeHeader()
             }
         } else {
-            binding.navView.menu.findItem(R.id.createPostFragment).isEnabled = false
             //binding.navView.menu.findItem(R.id.createPostFragment).isVisible = false
             navHeaderMainBinding.userAvatar.setImageBitmap(null)
             navHeaderMainBinding.userAvatar.foreground = getDrawable(R.drawable.ic_login_mini)
