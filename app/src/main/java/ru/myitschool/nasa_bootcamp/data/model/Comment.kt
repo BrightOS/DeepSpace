@@ -6,7 +6,7 @@ open class Comment(
     val id: Long,
     val text: String,
     val likes: List<UserModel>,
-    val subComments: List<SubComment>,
+    var subComments: List<SubComment>,
     val author: UserModel,
     val date: Long
 ) {
