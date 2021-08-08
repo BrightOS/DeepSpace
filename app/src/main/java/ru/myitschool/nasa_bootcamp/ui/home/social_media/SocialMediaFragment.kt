@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -82,36 +81,34 @@ fun SocialMediaScreen(
 ) {
     val tabs = listOf(
         TabItem.News(viewModel, navController),
-        TabItem.Blogs(viewModel, navController)
+        TabItem.Blogs(viewModel, navController),
+//        TabItem.Profile(viewModel, navController)
     )
     val pagerState = rememberPagerState(tabs.size, initialPage = args.index)
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column {
-            Spacer(modifier = Modifier.statusBarsPadding())
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(
-                    onClick = { navController.navigateUp() },
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    Icon(Icons.Filled.ArrowBack, "")
-                }
-                Text(
-                    style = MaterialTheme.typography.h5,
-                    text = stringResource(tabs[pagerState.currentPage].titleId)
-                )
+    Column {
+        Spacer(modifier = Modifier.statusBarsPadding())
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            IconButton(
+                onClick = { navController.navigateUp() },
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Icon(Icons.Filled.ArrowBack, "")
             }
-            HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
-                tabs[page].content()
-            }
+            Text(
+                style = MaterialTheme.typography.h5,
+                text = stringResource(tabs[pagerState.currentPage].titleId)
+            )
         }
         Tabs(
             tabs = tabs,
             pagerState = pagerState,
             modifier = Modifier
-                .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .height(52.dp)
         )
+        HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
+            tabs[page].content()
+        }
     }
 }
 
@@ -119,21 +116,19 @@ fun SocialMediaScreen(
 @Composable
 fun Tabs(tabs: List<TabItem>, pagerState: PagerState, modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
-    Card(shape = RoundedCornerShape(32.dp), modifier = modifier) {
-        TabRow(selectedTabIndex = pagerState.currentPage) {
-            tabs.forEachIndexed { index, tab ->
-                Tab(
-                    selected = index == pagerState.currentPage,
-                    onClick = {
-                        scope.launch { pagerState.animateScrollToPage(index) }
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(tab.iconId),
-                            contentDescription = null
-                        )
-                    })
-            }
+    TabRow(selectedTabIndex = pagerState.currentPage) {
+        tabs.forEachIndexed { index, tab ->
+            Tab(
+                selected = index == pagerState.currentPage,
+                onClick = {
+                    scope.launch { pagerState.animateScrollToPage(index) }
+                },
+                icon = {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(tab.iconId),
+                        contentDescription = null
+                    )
+                })
         }
     }
 }
@@ -148,4 +143,7 @@ sealed class TabItem(
 
     class Blogs(viewModel: SocialMediaViewModel, navController: NavController) :
         TabItem(R.drawable.ic_chat, R.string.blogs, { BlogsScreen(viewModel, navController) })
+
+//    class Profile(viewModel: SocialMediaViewModel, navController: NavController) :
+//        TabItem(R.drawable.ic_profile, R.string.profile, { ProfileScreen(viewModel, navController) })
 }
