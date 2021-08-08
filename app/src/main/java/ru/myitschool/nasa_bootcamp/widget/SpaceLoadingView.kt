@@ -44,6 +44,18 @@ class SpaceLoadingView constructor(
             }
             showCheckIcon = typedArray.getBoolean(R.styleable.SpaceLoadingView_checkEnabled, false)
 
+            if (typedArray.getBoolean(R.styleable.SpaceLoadingView_showByDefault, false)) {
+                prepareLoadingView()
+                loading_progress_bar.visibility = View.VISIBLE
+                loading_root.visibility = View.VISIBLE
+                GlobalScope.launch {
+                    delay(200)
+                    MainScope().launch {
+                        loading_progress_bar.indeterminateMode = true
+                    }
+                }
+            }
+
             typedArray.recycle()
         }
     }

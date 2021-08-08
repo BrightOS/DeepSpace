@@ -13,5 +13,6 @@
     <declare-styleable name="SpaceLoadingView">
         <attr name="errorText" format="string" />
         <attr name="checkEnabled" format="boolean" />
+        <attr name="showByDefault" format="boolean" />
     </declare-styleable>
 </resources>
