@@ -104,6 +104,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
             BottomTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
+                currentUser = currentUser,
                 onClick = {
                     val liveData = MutableLiveData(Resource.loading(null))
                     viewModel.getViewModelScope().launch {
@@ -154,6 +155,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
             BottomTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
+                currentUser = currentUser,
                 onClick = {
                     val liveData = MutableLiveData(Resource.loading(null))
                     viewModel.getViewModelScope().launch {
@@ -174,6 +176,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
 @Composable
 fun BottomTextField(
     modifier: Modifier = Modifier,
+    currentUser: UserModel?,
     onClick: (String) -> LiveData<Resource<Nothing>>
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -198,23 +201,31 @@ fun BottomTextField(
                 enabled = isButtonEnabled,
                 onClick = {
                     focusManager.clearFocus()
-                    val liveData = onClick(messageTextField)
-                    liveData.observe(lifecycleOwner) {
-                        isButtonEnabled = false
-                        when (it.status) {
-                            Status.SUCCESS -> {
-                                isButtonEnabled = true
-                                messageTextField = ""
-                            }
-                            Status.ERROR -> {
-                                isButtonEnabled = true
-                                Toast.makeText(
-                                    context,
-                                    "Failed to send a comment",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            else -> {
+                    if (currentUser == null) {
+                        Toast.makeText(
+                            context,
+                            "You need to log in",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        val liveData = onClick(messageTextField)
+                        liveData.observe(lifecycleOwner) {
+                            isButtonEnabled = false
+                            when (it.status) {
+                                Status.SUCCESS -> {
+                                    isButtonEnabled = true
+                                    messageTextField = ""
+                                }
+                                Status.ERROR -> {
+                                    isButtonEnabled = true
+                                    Toast.makeText(
+                                        context,
+                                        "Failed to send a comment",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                else -> {
+                                }
                             }
                         }
                     }

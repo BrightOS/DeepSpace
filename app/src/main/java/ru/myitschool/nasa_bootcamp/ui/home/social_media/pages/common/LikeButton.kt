@@ -26,17 +26,24 @@ fun LikeButton(
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    Log.d("HELP ME", "LikeButton: ${currentUser?.name}")
     Row(verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = {
-            val liveData = onClick()
-            liveData.observe(lifecycleOwner) {
-                if (it.status == Status.ERROR)
-                    Toast.makeText(
-                        context,
-                        "Failed to leave a like",
-                        Toast.LENGTH_SHORT
-                    ).show()
+            if (currentUser == null) {
+                Toast.makeText(
+                    context,
+                    "You need to log in",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val liveData = onClick()
+                liveData.observe(lifecycleOwner) {
+                    if (it.status == Status.ERROR)
+                        Toast.makeText(
+                            context,
+                            "Failed to leave a like",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                }
             }
         }, modifier = modifier) {
             Icon(
