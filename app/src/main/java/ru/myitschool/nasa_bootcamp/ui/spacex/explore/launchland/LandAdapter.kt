@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 import ru.myitschool.nasa_bootcamp.databinding.LandPadItemBinding
+import ru.myitschool.nasa_bootcamp.utils.capitalize
 import java.util.ArrayList
 
 class LandAdapter internal constructor(
@@ -26,7 +27,7 @@ class LandAdapter internal constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LandHolder {
-        return LandHolder(LandPadItemBinding.inflate(LayoutInflater.from(parent.context)))
+        return LandHolder(LandPadItemBinding.inflate(LayoutInflater.from(parent.context)), context)
     }
 
     override fun onBindViewHolder(holder: LandHolder, position: Int) {
@@ -34,13 +35,12 @@ class LandAdapter internal constructor(
 
         holder.binding.nameLand.text = landPadModel.full_name
         holder.binding.locationLand.text =
-            "Located in ${landPadModel.location.name}, ${landPadModel.location.region} "
-        holder.binding.attemptedLandings.text =
-            "Attempted landings : ${landPadModel.attempted_landings}"
-        holder.binding.statusLand.text = "Status : ${landPadModel.status}"
-        holder.binding.landingTypeLand.text = "Landing type : ${landPadModel.landing_type}"
-        holder.binding.successfulLandings.text =
-            "Successful landings : ${landPadModel.successful_landings}"
+            "${landPadModel.location.name}, ${landPadModel.location.region}"
+        holder.binding.attempedSuccessfulLand.text =
+            "${landPadModel.attempted_landings} / ${landPadModel.successful_landings}"
+        holder.binding.statusLand.text = capitalize(landPadModel.status)
+        holder.binding.landingTypeLand.text = landPadModel.landing_type
+        holder.binding.descriptionLand.text = landPadModel.details
         holder.binding.descriptionLand.text = "${landPadModel.details}"
 
         holder.itemView.setOnClickListener {

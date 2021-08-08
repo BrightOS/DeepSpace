@@ -117,7 +117,7 @@
 
     <!-- DatePicker theme -->
 
-    <style name="DatePicker" parent="Theme.NASA_Bootcamp">
+    <style name="DatePicker">
         <item name="shapeAppearanceMediumComponent">@style/DatePicker.MediumComponent</item>
         <item name="android:fontFamily">@font/inter_semibold</item>
     </style>

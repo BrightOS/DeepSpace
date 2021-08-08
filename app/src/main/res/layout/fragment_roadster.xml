@@ -1,130 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        tools:background="@android:color/black">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/starman_tesla" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/name_roadster"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:background="@android:color/black">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/my_boarder"
+            android:fontFamily="@font/inter_extrabold"
+            android:text="Name"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:layout_margin="5dp"
-                android:src="@drawable/starman_tesla" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/launch_date_roadster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawableStart="@drawable/ic_time_circle"
+            android:drawablePadding="5dp"
+            android:drawableTint="#E1E1E1"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Lauched: 20/12/2021 9:35"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#E1E1E1"
+            android:textSize="18sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/name_roadster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                android:background="@drawable/my_boarder"
-                android:textStyle="bold"
-                tools:text="Name" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Launch mass (Kg):"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/launch_date_roadster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:textSize="18sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:gravity="end"
-                tools:text="Lauched: 20/12/2021 9:35" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/launch_mass_kg_roadster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="1350"
+            android:textColor="#E1E1E1"
+            android:textSize="18sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/launch_mass_kg_roadster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_marginHorizontal="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="18sp"
-                tools:text="Launch mass (Kg) : " />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Orbit type:"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/orbit_type_roadster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="18sp"
-                android:layout_margin="8dp"
-                tools:text="Orbit type : " />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/orbit_type_roadster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Orbit type"
+            android:textColor="#E1E1E1"
+            android:textSize="18sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/longitude_roadster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="18sp"
-                android:layout_margin="8dp"
-                tools:text="Longtitude : " />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Longtitude:"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/longitude_roadster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Longtitude : "
+            android:textColor="#E1E1E1"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Distance from the Earth:"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/earth_distance_roadster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Distance from the Earth : "
+            android:textColor="#E1E1E1"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Distance from the Mars:"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/earth_distance_roadster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="18sp"
-                android:layout_margin="8dp"
-                tools:text="Distance from the Earth : " />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mars_distance_roadster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Distance from the Mars : "
+            android:textColor="#E1E1E1"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Details:"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/mars_distance_roadster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:layout_margin="8dp"
-                android:textSize="18sp"
-                tools:text="Distance from the Mars : " />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/details_roadster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Details : "
+            android:textColor="#E1E1E1"
+            android:textSize="18sp" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/roadster_orbit_gif"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            tools:src="@drawable/space_x_background" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/details_roadster"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="18sp"
-                android:layout_margin="8dp"
-                tools:text="Details : " />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/roadster_gif"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            tools:src="@drawable/space_x_background" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/roadster_orbit_gif"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:src="@drawable/space_x_background" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/roadster_gif2"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            tools:src="@drawable/space_x_background" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/roadster_gif"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:src="@drawable/space_x_background" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/roadster_gif2"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:src="@drawable/space_x_background" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/roadster_gif3"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:src="@drawable/space_x_background" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.core.widget.NestedScrollView>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/roadster_gif3"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            tools:src="@drawable/space_x_background" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.core.widget.NestedScrollView>

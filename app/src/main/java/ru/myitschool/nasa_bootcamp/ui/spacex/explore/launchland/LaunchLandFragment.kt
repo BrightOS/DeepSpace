@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentLaunchLandBinding
 import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
 import ru.myitschool.nasa_bootcamp.utils.loadImage
@@ -77,13 +78,15 @@ class LaunchLandFragment : Fragment() {
                     )
             })
 
-        binding.mapLandButton.setOnClickListener(View.OnClickListener {
+        binding.mapLandButton.setOnClickListener {
             binding.launchLandRecycler.adapter = landAdapter
-        })
+            binding.title.text = getString(R.string.land_pads)
+        }
 
-        binding.mapLaunchButton.setOnClickListener(View.OnClickListener {
+        binding.mapLaunchButton.setOnClickListener {
             binding.launchLandRecycler.adapter = launchAdapter
-        })
+            binding.title.text = getString(R.string.launch_pads)
+        }
 
 
         return binding.root

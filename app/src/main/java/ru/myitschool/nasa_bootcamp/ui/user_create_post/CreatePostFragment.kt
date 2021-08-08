@@ -98,6 +98,7 @@ class CreatePostFragment : Fragment() {
     private fun pushPost() {
         val post = Post()
         post.title = binding.postTitle.text.toString()  // TODO: check if not null
+        /*
         viewModel.getLastPostId().observe(viewLifecycleOwner) { id ->
             when (id) {
                 is Data.Ok -> {
@@ -155,5 +156,6 @@ class CreatePostFragment : Fragment() {
                 }
             }
         }
+         */
     }
 }

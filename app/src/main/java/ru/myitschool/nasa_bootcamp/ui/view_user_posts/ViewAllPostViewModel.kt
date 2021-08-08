@@ -10,6 +10,6 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 interface ViewAllPostViewModel {
     suspend fun getAllPosts(): Data<out ArrayList<Post>>
     suspend fun downloadImage(postId: String, imageId: String): Data<Bitmap>
-    suspend fun getAdditionalData(postId: String): Data<ArrayList<PostView>>
+    // suspend fun getAdditionalData(postId: String): Data<ArrayList<PostView>>
     fun getViewModelScope(): CoroutineScope
 }

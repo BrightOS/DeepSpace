@@ -2,11 +2,13 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_cores"
+    android:id="@+id/card_capsules"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="@color/transparent_blue"
+    android:outlineAmbientShadowColor="@color/upcoming_blue"
+    android:outlineSpotShadowColor="@color/upcoming_blue"
+    app:cardBackgroundColor="@color/transparent_gray"
     app:cardCornerRadius="20dp"
     app:cardElevation="150dp">
 
@@ -17,26 +19,26 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/core_item_serial_title"
+            android:id="@+id/capsule_item_serial_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
-            tools:text="Core:" />
+            tools:text="Capsule:" />
 
         <TextView
-            android:id="@+id/core_item_serial"
+            android:id="@+id/capsule_item_serial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extrabold"
             android:textColor="@color/white"
             android:textSize="24sp"
-            tools:text="Merlin1A" />
+            tools:text="C101" />
 
         <TextView
-            android:id="@+id/original_launch_date"
+            android:id="@+id/capsule_launch_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -51,7 +53,7 @@
             android:drawableTint="@android:color/white"/>
 
         <TextView
-            android:id="@+id/core_item_missions_title"
+            android:id="@+id/capsule_type_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -59,10 +61,10 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
-            tools:text="Mission:" />
+            tools:text="Type:" />
 
         <TextView
-            android:id="@+id/core_item_missions"
+            android:id="@+id/capsule_type_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -71,10 +73,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="FalconSat" />
+            tools:text="Dragon 1.0" />
 
         <TextView
-            android:id="@+id/core_item_water_landing_title"
+            android:id="@+id/capsule_item_missions_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -82,10 +84,10 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
-            tools:text="Landed on water?:" />
+            tools:text="Mission:" />
 
         <TextView
-            android:id="@+id/core_item_water_landing"
+            android:id="@+id/capsule_item_missions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -94,10 +96,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="No." />
+            tools:text="COTS 1" />
 
         <TextView
-            android:id="@+id/core_item_status_title"
+            android:id="@+id/capsule_item_status_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -108,7 +110,7 @@
             tools:text="Status:" />
 
         <TextView
-            android:id="@+id/core_item_status"
+            android:id="@+id/capsule_item_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -117,10 +119,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="lost" />
+            tools:text="retired" />
 
         <TextView
-            android:id="@+id/core_item_blocks_title"
+            android:id="@+id/capsule_item_landings_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -128,10 +130,10 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
-            tools:text="Blocks:" />
+            tools:text="Number of landings:" />
 
         <TextView
-            android:id="@+id/core_item_blocks"
+            android:id="@+id/capsule_item_landings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -140,30 +142,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="none" />
-
-        <TextView
-            android:id="@+id/core_item_reused_count_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/inter_regular"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Reused:" />
-
-        <TextView
-            android:id="@+id/core_item_reuse_count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:textColor="#E1E1E1"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="0 times" />
+            tools:text="3" />
 
         <View
             android:id="@+id/separator"
@@ -174,7 +153,7 @@
             android:backgroundTint="#E1E1E1" />
 
         <TextView
-            android:id="@+id/core_item_description"
+            android:id="@+id/capsule_item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

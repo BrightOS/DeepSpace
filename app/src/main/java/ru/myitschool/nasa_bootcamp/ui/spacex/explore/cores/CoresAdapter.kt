@@ -2,6 +2,7 @@ package ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.CoreModel
@@ -10,8 +11,11 @@ import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import ru.myitschool.nasa_bootcamp.databinding.CoreItemBinding
 import ru.myitschool.nasa_bootcamp.databinding.DragonItemBinding
 import ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons.DragonsViewHolder
+import ru.myitschool.nasa_bootcamp.utils.addSubstringAtIndex
+import ru.myitschool.nasa_bootcamp.utils.capitalize
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
-import java.util.ArrayList
+import ru.myitschool.nasa_bootcamp.utils.getDayOfMonthSuffix
+import java.util.*
 
 class CoresAdapter internal constructor(
     context: Context,
@@ -41,23 +45,52 @@ class CoresAdapter internal constructor(
         val coreModel: CoreModel = coreModels[position]
 
         holder.binding.coreItemBlocks.text = if (coreModel.block != null)
-            "Blocks : ${coreModel.block}"
-        else "Blocks : none"
+            "${coreModel.block}"
+        else "None"
 
-        holder.binding.coreItemSerial.text = "Core : ${coreModel.core_serial}"
-        holder.binding.coreItemMissions.text = "Mission : ${coreModel.missions[0].name}"
-        holder.binding.coreItemReuseCount.text = "Reused : ${coreModel.reuse_count} times}"
+        holder.binding.coreItemSerialTitle.text = "Core:"
+        holder.binding.coreItemMissionsTitle.text = "Mission:"
+        holder.binding.coreItemWaterLandingTitle.text = "Landed on water?"
+        holder.binding.coreItemStatusTitle.text = "Status:"
+        holder.binding.coreItemBlocksTitle.text = "Blocks:"
+        holder.binding.coreItemReusedCountTitle.text = "Reused:"
+
+        holder.binding.coreItemSerial.text = coreModel.core_serial
+        holder.binding.coreItemMissions.text = coreModel.missions[0].name
+        coreModel.reuse_count.let {
+            if (it == 1)
+                holder.binding.coreItemReuseCount.text = "${coreModel.reuse_count} time"
+            else
+                holder.binding.coreItemReuseCount.text = "${coreModel.reuse_count} times"
+        }
 
         if (coreModel.status != null)
-            holder.binding.coreItemStatus.text = "Status : ${coreModel.status}"
+            holder.binding.coreItemStatus.text = capitalize(coreModel.status)
 
         if (coreModel.details != null)
             holder.binding.coreItemDescription.text = "${coreModel.details}"
+        else {
+            holder.binding.coreItemDescription.visibility = View.GONE
+            holder.binding.separator.visibility = View.GONE
+        }
 
         holder.binding.coreItemWaterLanding.text =
-            "Landed on water? : ${if (coreModel.water_landing) "Yes" else "No"}"
-        holder.binding.originalLaunchDate.text =
-            "Date : ${convertDateFromUnix(coreModel.original_launch_unix)}"
+            if (coreModel.water_landing)
+                "Yes"
+            else
+                "No"
+
+        val finalString = convertDateFromUnix(coreModel.original_launch_unix)
+
+        val calendar = GregorianCalendar()
+        calendar.time = Date(coreModel.original_launch_unix * 1000L)
+
+        holder.binding.originalLaunchDate.text = finalString.addSubstringAtIndex(
+            getDayOfMonthSuffix(
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ),
+            finalString.indexOf('.')
+        )
 
         val onCoreClickListener = object : onCoreClickListener {
             override fun onCoreClick(coreModel: CoreModel, position: Int) {

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentMarsRoversBinding
+import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 
 @AndroidEntryPoint
 class MarsRoversFragment : Fragment() {
@@ -36,6 +37,16 @@ class MarsRoversFragment : Fragment() {
     ): View {
         _binding = FragmentMarsRoversBinding.inflate(inflater, container, false)
 
+        DimensionsUtil.dpToPx(requireContext(), 5).let {
+            DimensionsUtil.setMargins(
+                binding.toolBar,
+                it,
+                DimensionsUtil.getStatusBarHeight(resources) + it,
+                it,
+                it
+            )
+        }
+
         viewModel.getViewModelScope().launch {
             viewModel.loadRoverPhotos()
         }
@@ -47,8 +58,15 @@ class MarsRoversFragment : Fragment() {
         viewModel.getRoverModelsLiveData().observe(viewLifecycleOwner, {
             Log.d("GOT IT", "Doing... ${viewModel.getRoverModelsLiveData().value!![0].rover.name}")
 
+            val list =viewModel.getRoverModelsLiveData().value!!
+            list.shuffle()
+
             roverRecyclerAdapter =
-                RoverRecyclerAdapter(requireContext(), viewModel.getRoverModelsLiveData().value!!, navController)
+                RoverRecyclerAdapter(
+                    requireContext(),
+                    list,
+                    navController
+                )
 
             binding.roversRecycle.adapter = roverRecyclerAdapter
         })

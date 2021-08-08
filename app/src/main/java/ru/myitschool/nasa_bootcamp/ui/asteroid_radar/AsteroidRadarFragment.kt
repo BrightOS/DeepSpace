@@ -1,6 +1,7 @@
 package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +16,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.epoxy.stickyheader.StickyHeaderLinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.transition.platform.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_asteroid_radar.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidRadarBinding
-import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
-import ru.myitschool.nasa_bootcamp.utils.getColorFromAttributes
+import ru.myitschool.nasa_bootcamp.utils.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -33,6 +38,8 @@ class AsteroidRadarFragment : Fragment() {
 
     private lateinit var asteroidController: AsteroidEpoxyController
     private val binding get() = _binding!!
+
+    private var currentTime = getTodayDateFormatted()
 
     override fun onCreateView(
         inflater: LayoutInflater,

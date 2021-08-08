@@ -6,9 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="@color/transparent_blue"
+    android:outlineSpotShadowColor="@color/upcoming_blue"
+    app:cardBackgroundColor="@color/transparent_gray"
+    android:outlineAmbientShadowColor="@color/upcoming_blue"
     app:cardCornerRadius="20dp"
-    app:cardElevation="150dp">
+    app:cardElevation="175dp">
+
+    <TextView
+        android:id="@+id/location_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:text="Click to view the area"
+        android:textColor="#E1E1E1"
+        android:alpha="0.5"
+        android:textSize="12sp"
+        android:textAlignment="textEnd"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        android:textStyle="bold" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -17,52 +33,52 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/core_item_serial_title"
+            android:id="@+id/name_land_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
+            android:text="Name:"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Core:" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/core_item_serial"
+            android:id="@+id/name_land"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extrabold"
             android:textColor="@color/white"
             android:textSize="24sp"
-            tools:text="Merlin1A" />
+            tools:text="VAFB SLC 3W" />
 
         <TextView
-            android:id="@+id/original_launch_date"
+            android:id="@+id/location_land"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="5dp"
+            android:drawableTint="@android:color/white"
             android:fontFamily="@font/inter_semibold"
+            android:text="Vandenberg Air Force Base Space Launch Complex 3W"
             android:textColor="#E1E1E1"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="December 12th. 2021. 20:20"
-            android:drawableStart="@drawable/ic_time_circle"
-            android:drawablePadding="5dp"
-            android:drawableTint="@android:color/white"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/core_item_missions_title"
+            android:id="@+id/landing_type_land_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
+            android:text="Landing type:"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Mission:" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/core_item_missions"
+            android:id="@+id/landing_type_land"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -71,21 +87,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="FalconSat" />
+            tools:text="RTLS" />
 
         <TextView
-            android:id="@+id/core_item_water_landing_title"
+            android:id="@+id/status_land_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_regular"
+            android:text="Status:"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Landed on water?:" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/core_item_water_landing"
+            android:id="@+id/status_land"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -94,76 +110,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="No." />
+            tools:text="Active" />
 
         <TextView
-            android:id="@+id/core_item_status_title"
+            android:id="@+id/attemped_successful_land_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_regular"
+            android:text="Attempted/Successful landings:"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Status:" />
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/core_item_status"
+            android:id="@+id/attemped_successful_land"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:textColor="#E1E1E1"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="lost" />
-
-        <TextView
-            android:id="@+id/core_item_blocks_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/inter_regular"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Blocks:" />
-
-        <TextView
-            android:id="@+id/core_item_blocks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:textColor="#E1E1E1"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="none" />
-
-        <TextView
-            android:id="@+id/core_item_reused_count_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/inter_regular"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="Reused:" />
-
-        <TextView
-            android:id="@+id/core_item_reuse_count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_semibold"
-            android:textColor="#E1E1E1"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="0 times" />
+            tools:text="61 / 59" />
 
         <View
             android:id="@+id/separator"
@@ -174,7 +144,7 @@
             android:backgroundTint="#E1E1E1" />
 
         <TextView
-            android:id="@+id/core_item_description"
+            android:id="@+id/description_land"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -185,5 +155,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Details................" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ru.myitschool.nasa_bootcamp.widget.SpaceLoadingView
+        android:id="@+id/land_pad_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </com.google.android.material.card.MaterialCardView>
