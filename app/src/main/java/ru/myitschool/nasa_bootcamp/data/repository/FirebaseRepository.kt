@@ -19,7 +19,7 @@ interface FirebaseRepository {
     suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
     suspend fun getAllPosts(): Data<out ArrayList<Post>>
     suspend fun downloadImage(postId: String, imageId: String):Data<Bitmap>
-    suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing>
+    suspend fun createPost(title: String, postItems: List<Any>): Resource<MutableLiveData<ContentWithLikesAndComments<PostModel>>>
     fun uploadImage(postId: String, imageId: Int,  imagePath: Uri) : LiveData<Data<out String>>
     suspend fun getLastPostId(): String?
     suspend fun pushComment(source: String, postId: Int, comment: String): Resource<Nothing>
@@ -37,5 +37,5 @@ interface FirebaseRepository {
     suspend fun createUser(context: Context, userName: String, email: String, password: String, imagePath: Uri?): Data<FirebaseUser>
     suspend fun getUser(uid: String): UserModel?
     fun getCurrentUser(): UserModel?
-    fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>)
+    fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>, postId: Long)
 }

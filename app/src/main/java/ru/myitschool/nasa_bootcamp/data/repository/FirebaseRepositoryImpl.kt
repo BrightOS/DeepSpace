@@ -4,16 +4,15 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.accompanist.insets.rememberImeNestedScrollConnection
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.data.model.*
@@ -71,33 +71,105 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     override suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>> {
         val returnData = mutableListOf<MutableLiveData<ContentWithLikesAndComments<PostModel>>>()
-        dbInstance.getReference("user_posts").get().await().children.forEach {
-            val _username = it.child("author").child("name").getValue(String::class.java)!!
-            val _url = it.child("author").child("avatarUrl").getValue(String::class.java)!!.toUri()
-            val _id = it.child("author").child("id").getValue(String::class.java)!!
-            val author = UserModel(_username, _url, _id)
+        try {
+            dbInstance.getReference("user_posts").get().await().children.forEach {
+                val _username = it.child("author").child("name").getValue(String::class.java)!!
+                val _url =
+                    it.child("author").child("avatarUrl").getValue(String::class.java)!!.toUri()
+                val _id = it.child("author").child("id").getValue(String::class.java)!!
+                val author = UserModel(_username, _url, _id)
 
-            val data = mutableListOf<String>()
-            it.child("postItems").children.forEach { _data ->
-                data.add(_data.getValue(String::class.java)!!)
+                val data = mutableListOf<String>()
+                it.child("postItems").children.forEach { _data ->
+                    data.add(_data.getValue(String::class.java)!!)
+                }
+
+                val date = it.child("date").getValue(Long::class.java)!!
+
+                val id = it.key!!.toLong()
+
+                val title = it.child("title").getValue(String::class.java)!!
+
+                val postModel = PostModel(id, title, date, data, author)
+                val comments = getAllUserPostComments(id.toInt())
+                val likes = getAllUserPostLikes(id.toInt())
+
+                val liveData = MutableLiveData<ContentWithLikesAndComments<PostModel>>()
+                liveData.postValue(ContentWithLikesAndComments(postModel, likes, comments))
+                userPostCommentsAndLikesListener(liveData, postModel.id)
+                returnData.add(liveData)
             }
-
-            val date = it.child("date").getValue(Long::class.java)!! / 1000
-
-            val id = it.child("id").getValue(Long::class.java)!!
-
-            val title = it.child("title").getValue(String::class.java)!!
-
-            val postModel = PostModel(id, title, date, data, author)
-            val comments = getAllUserPostComments(id.toInt())
-            val likes = getAllUserPostLikes(id.toInt())
-
-            val liveData = MutableLiveData<ContentWithLikesAndComments<PostModel>>()
-            liveData.postValue(ContentWithLikesAndComments(postModel, likes, comments))
-            // listener add
-            returnData.add(liveData)
+            return Resource.success(returnData)
+        } catch (e: Exception) {
+            return Resource.error(e.message.toString(), null)
         }
-        return Resource.success(returnData)
+    }
+
+    private fun userPostCommentsAndLikesListener(
+        postModel: MutableLiveData<ContentWithLikesAndComments<PostModel>>,
+        postId: Long
+    ) {
+        try {
+            dbInstance.getReference("posts").child("UserPost")
+                .child(postId.toString())
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val comments: MutableList<Comment> = mutableListOf()
+                        val likes: MutableList<UserModel> = mutableListOf()
+
+                        snapshot.child("comments").children.forEach {
+                            val id = it.child("id").getValue(Long::class.java)
+                            val text = it.child("comment").getValue(String::class.java)
+                            val commentLikes = mutableListOf<UserModel>()
+                            it.child("likes").children.forEach { like ->
+                                val _username = like.child("name").getValue(String::class.java)!!
+                                val _url =
+                                    like.child("avatarUrl").getValue(String::class.java)!!.toUri()
+                                val _id = like.child("id").getValue(String::class.java)!!
+                                commentLikes.add(UserModel(_username, _url, _id))
+                            }
+
+                            val subComments = mutableListOf<SubComment>()
+
+                            val authorUsername =
+                                it.child("userId").child("name").getValue(String::class.java)!!
+                            val authorUrl =
+                                it.child("userId").child("avatarUrl")
+                                    .getValue(String::class.java)!!
+                                    .toUri()
+                            val authorId =
+                                it.child("userId").child("id").getValue(String::class.java)!!
+                            val author = UserModel(authorUsername, authorUrl, authorId)
+
+                            val date = it.child("date").getValue(Long::class.java)!!
+                            comments.add(
+                                Comment(id!!, text!!, commentLikes, subComments, author, date)
+                            )
+                        }
+
+                        snapshot.child("likes").children.forEach {
+                            val _name = it.child("name").getValue(String::class.java)!!
+                            val _url = it.child("avatarUrl").getValue(String::class.java)!!.toUri()
+                            val _id = it.child("id").getValue(String::class.java)!!
+                            likes.add(UserModel(_name, _url, _id))
+                        }
+
+                        postModel.postValue(
+                            ContentWithLikesAndComments(
+                                postModel.value!!.content,
+                                likes,
+                                comments
+                            )
+                        )
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.d("Firebase error posts", error.message.toString())
+                    }
+                })
+        } catch (e: Exception) {
+            Log.d("Firebase error posts catch", e.message.toString())
+        }
     }
 
     private suspend fun getAllUserPostComments(postId: Int): List<Comment> {
@@ -144,31 +216,54 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     // USER CUSTOM POST CREATION:
 
-    override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
-        val postId = getLastPostId()
-        var photoCount = 1
-        val reference = dbInstance.getReference("user_posts").child(postId.toString())
-        reference.child("title").setValue(title)
-        val fbPostItems = mutableListOf<String>()
-        for (value in postItems) {
-            if (value::class.java == String::class.java) {
-                fbPostItems.add(value as String)
-            } else {
-                val baos = ByteArrayOutputStream()
-                (value as Bitmap).compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                val byte = baos.toByteArray()
-                storage.getReference("posts/$postId/${photoCount.toString()}").putBytes(byte).await()
-                val url = storage.getReference("posts/$postId/${photoCount.toString()}").downloadUrl.await()
-                photoCount++
-                fbPostItems.add(url.toString())
+    override suspend fun createPost(
+        title: String,
+        postItems: List<Any>
+    ): Resource<MutableLiveData<ContentWithLikesAndComments<PostModel>>> {
+        try {
+            val postId = getLastPostId()
+            var photoCount = 1
+            val reference = dbInstance.getReference("user_posts").child(postId.toString())
+            reference.child("title").setValue(title)
+            val fbPostItems = mutableListOf<String>()
+            for (value in postItems) {
+                if (value::class.java == String::class.java) {
+                    fbPostItems.add(value as String)
+                } else {
+                    val baos = ByteArrayOutputStream()
+                    (value as Bitmap).compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val byte = baos.toByteArray()
+                    storage.getReference("posts/$postId/${photoCount.toString()}").putBytes(byte)
+                        .await()
+                    val url =
+                        storage.getReference("posts/$postId/${photoCount.toString()}").downloadUrl.await()
+                    photoCount++
+                    fbPostItems.add(url.toString())
+                }
             }
+            val user = getCurrentUser()!!
+            val userDto = UserDto(user.name, user.avatarUrl.toString(), user.id)
+            reference.child("author").setValue(userDto).await()
+            val date = Date().time
+            reference.child("date").setValue(date).await()
+            reference.child("postItems").setValue(fbPostItems).await()
+
+            val post = ContentWithLikesAndComments<PostModel>(
+                PostModel(
+                    postId.toLong(),
+                    title,
+                    date,
+                    fbPostItems,
+                    user
+                ), listOf(), listOf()
+            )
+            val liveData = MutableLiveData<ContentWithLikesAndComments<PostModel>>()
+            liveData.postValue(post)
+            userPostCommentsAndLikesListener(liveData, postId.toLong())
+            return Resource.success(liveData)
+        } catch (e: Exception) {
+            return Resource.error(e.message.toString(), null)
         }
-        val user = getCurrentUser()!!
-        val userDto = UserDto(user.name, user.avatarUrl.toString(), user.id)
-        reference.child("author").setValue(userDto).await()
-        reference.child("date").setValue(Date().time).await()
-        reference.child("postItems").setValue(fbPostItems).await()
-        return Resource.success(null)
     }
 
 
@@ -198,8 +293,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         try {
             returnData = (dbInstance.getReference("user_posts").get()
                 .await().children.last().key?.toLong()!! + 1).toString()
+        } catch (e: Exception) {
         }
-        catch (e: Exception) {}
         return returnData
     }
 
@@ -325,6 +420,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .setValue(userObject).await()
                 Resource.success(null)
             } catch (e: Exception) {
+                e.printStackTrace()
                 Resource.error(e.message.toString(), null)
             }
         } else {
@@ -549,11 +645,14 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         return null
     }
 
-    override fun articleModelEventListener(articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>) {
+    override fun articleModelEventListener(
+        articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>,
+        postId: Long
+    ) {
         val dbInstance = FirebaseDatabase.getInstance()
         try {
             dbInstance.getReference("posts").child("ArticleModel")
-                .child(articleModel.value!!.content.id.toString()).child("id")
+                .child(postId.toString()).child("id")
                 .setValue(articleModel.value!!.content.id.toString())
         } catch (e: Exception) {
             // value has already been set
@@ -578,8 +677,6 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                                 commentLikes.add(UserModel(_username, _url, _id))
                             }
 
-                            val subComments = mutableListOf<SubComment>()
-
                             val authorUsername =
                                 it.child("userId").child("name").getValue(String::class.java)!!
                             val authorUrl =
@@ -591,6 +688,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                             val author = UserModel(authorUsername, authorUrl, authorId)
 
                             val date = it.child("date").getValue(Long::class.java)!!
+                            // val subComments =  MutableList<SubComment>(1) { SubComment(1, Comment(id!!, text!!, commentLikes, listOf(), author, date), "Test", listOf(), getCurrentUser()!!, Date().time) }
+                            val subComments = listOf<SubComment>()
                             comments.add(
                                 Comment(id!!, text!!, commentLikes, subComments, author, date)
                             )
@@ -617,12 +716,14 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     }
                 })
         } catch (e: Exception) {
-            // listener already exists
+            Log.d("Firebase Error catch", e.message.toString())
         }
     }
 
     private suspend fun convertUrlToUser() {
-        dbInstance.getReference("posts").child("ArticleModel").get().await().children.forEach {
+        dbInstance.getReference("posts")
+            .child("Articl                        //println(error.message)eModel").get()
+            .await().children.forEach {
             try {
                 it.ref.child("comments").get().await().children.forEach { com ->
                     val id = com.child("userId").value as String
