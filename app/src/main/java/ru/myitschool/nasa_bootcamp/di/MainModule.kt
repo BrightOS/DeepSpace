@@ -125,6 +125,7 @@ object MainModule {
     @Provides
     @Singleton
     fun getUpcomingEventsApi(@Named("UPCOMING") retrofit: Retrofit): UpcomingEventsApi {
+
         return retrofit.create(UpcomingEventsApi::class.java)
     }
 
