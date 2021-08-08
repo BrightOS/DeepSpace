@@ -48,13 +48,21 @@ class LaunchLandFragment : Fragment() {
 
         val navController = findNavController()
 
-        launchLandViewModel.getLandList().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        launchLandViewModel.getLandList().observe(viewLifecycleOwner, {
             landAdapter =
                 LandAdapter(
                     requireContext(),
-                    launchLandViewModel.getLandList().value!!,
-                    navController
-                )
+                    launchLandViewModel.getLandList().value!!
+                ) {
+                    val action =
+                        LaunchLandFragmentDirections.actionToLandMap(
+                            it.location.longitude.toFloat(),
+                            it.location.latitude.toFloat(),
+                            it.full_name,
+                            it.details
+                        )
+                    navController.navigate(action)
+                }
             binding.launchLandRecycler.adapter = landAdapter
 
         })

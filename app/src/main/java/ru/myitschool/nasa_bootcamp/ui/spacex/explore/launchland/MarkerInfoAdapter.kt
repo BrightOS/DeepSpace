@@ -14,7 +14,7 @@ class MarkerInfoAdapter(private val context: Context) : GoogleMap.InfoWindowAdap
     }
 
     override fun getInfoContents(marker: Marker): View? {
-        val zone = marker.tag as? NameDetails ?: return null
+        val zone = marker.tag as? MapActivity.NameDetails ?: return null
         val binding = MarkerInfoBinding.inflate(LayoutInflater.from(context))
 
         binding.placeName.text = zone.name

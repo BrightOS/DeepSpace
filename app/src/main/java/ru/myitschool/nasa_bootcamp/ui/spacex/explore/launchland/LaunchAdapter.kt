@@ -47,7 +47,7 @@ class LaunchAdapter internal constructor(
 
         val onLaunchPadClickListener = object : OnLaunchPadClickListener {
             override fun onLaunchPadClick(launchModel: LaunchPadModel, position: Int) {
-                val action = LaunchLandFragmentDirections.actionLaunchLandFragmentToMapsFragment(
+                val action = LaunchLandFragmentDirections.actionToLandMap(
                     launchModel.location.longitude.toFloat(),
                     launchModel.location.latitude.toFloat(),
                     launchModel.name,

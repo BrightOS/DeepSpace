@@ -15,7 +15,7 @@ import java.util.ArrayList
 class LandAdapter internal constructor(
     context: Context,
     landModels: ArrayList<LandPadModel>,
-    val navController: NavController
+    val onLandClicked: (landModel: LandPadModel) -> Unit
 ) :
     RecyclerView.Adapter<LandHolder>() {
     var context: Context
@@ -26,19 +26,11 @@ class LandAdapter internal constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LandHolder {
-        return LandHolder(
-            LandPadItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ),
-            context
-        )
+        return LandHolder(LandPadItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: LandHolder, position: Int) {
         val landPadModel: LandPadModel = landModels[position]
-
 
         holder.binding.nameLand.text = landPadModel.full_name
         holder.binding.locationLand.text =
@@ -51,24 +43,9 @@ class LandAdapter internal constructor(
             "Successful landings : ${landPadModel.successful_landings}"
         holder.binding.descriptionLand.text = "${landPadModel.details}"
 
-        val onLandClickListener = object : LandAdapter.OnLandPadClickListener {
-            override fun onLandPadClick(landModel: LandPadModel, position: Int) {
-                val action = LaunchLandFragmentDirections.actionLaunchLandFragmentToMapsFragment(
-                    landModel.location.longitude.toFloat(),
-                    landModel.location.latitude.toFloat(),
-                    landModel.full_name,
-                    landModel.details
-                )
-                navController.navigate(action)
-            }
+        holder.itemView.setOnClickListener {
+            onLandClicked(landModels[position])
         }
-
-        holder.itemView.setOnClickListener({
-            onLandClickListener.onLandPadClick(
-                landModels.get(position),
-                position
-            )
-        })
 
 
     }
