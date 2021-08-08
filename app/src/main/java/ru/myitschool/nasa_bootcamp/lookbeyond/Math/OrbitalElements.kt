@@ -67,23 +67,23 @@ class OrbitalElements(// Mean distance
 
     companion object {
 
-        private const val EPSILON = 1.0e-5f
+        private const val EPSILON = 1.0e-6f
 
         //Вычислить true nomaly из mean anomaly
+        //Уравнение Кеплера
         private fun calculateTrueAnomaly(meanAnomaly: Double, e: Double): Double {
 
-            var _yv = meanAnomaly + e * sin(meanAnomaly) * (1.0 + e * cos(meanAnomaly))
-            var e1: Double
+            var M = meanAnomaly + e * sin(meanAnomaly) * (1.0 + e * cos(meanAnomaly))
+            var E: Double
 
             do {
-                e1 = _yv
-                _yv = e1 - (e1 - e * sin(e1) - meanAnomaly) / (1.0 - e * cos(e1))
+                E = M
+                M = E - (E - e * sin(E)) / (1.0 - e * cos(E))
 
-            } while (abs(_yv - e1) > EPSILON)
+            } while (abs(M - E) > EPSILON)
 
              val v = 2f * atan(
-                sqrt((1 + e) / (1 - e))
-                        * tan(0.5f * _yv)
+                sqrt((1 + e) / (1 - e)) * tan(0.5f * M)
             )
             return modPart(v)
         }
