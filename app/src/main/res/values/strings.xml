@@ -106,4 +106,6 @@
     <string name="text_for_feedback">Describe the complaint</string>
     <string name="button_text_for_feedback">Send feedback</string>
     <string name="feedback_sent">Your feedback was sent! You will be replied by email </string>
+    <string name="create_by_space_colon">"Created by: "</string>
+    <string name="reply_to">"reply to "</string>
 </resources>

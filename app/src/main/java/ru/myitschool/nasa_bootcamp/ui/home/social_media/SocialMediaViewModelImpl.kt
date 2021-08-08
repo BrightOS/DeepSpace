@@ -26,10 +26,12 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     override fun getNews() = articles
 
     override suspend fun loadBlogs() {
+        blogs.postValue(Resource.loading(blogs.value?.data))
         blogs.postValue(networkRepository.getBlogPosts())
     }
 
     override suspend fun loadNews() {
+        articles.postValue(Resource.loading(articles.value?.data))
         articles.postValue(networkRepository.getNews())
     }
 
@@ -39,11 +41,13 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
 
     override fun getViewModelScope() = viewModelScope
     override fun setSelectedPost(post: LiveData<ContentWithLikesAndComments<PostModel>>?) {
+        selectedArticle = null
         selectedPost = post
     }
 
     override fun getSelectedPost() = selectedPost
     override fun setSelectedArticle(article: LiveData<ContentWithLikesAndComments<ArticleModel>>?) {
+        selectedPost = null
         selectedArticle = article
     }
 

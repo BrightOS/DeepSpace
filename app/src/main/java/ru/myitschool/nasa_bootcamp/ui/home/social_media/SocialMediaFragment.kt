@@ -43,16 +43,20 @@ class SocialMediaFragment : Fragment() {
     val viewModel: SocialMediaViewModel
             by navGraphViewModels<SocialMediaViewModelImpl>(R.id.socialMediaNavGraph) { defaultViewModelProviderFactory }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreate(savedInstanceState: Bundle?) {
         viewModel.getViewModelScope().launch(Dispatchers.IO) {
             viewModel.loadNews()
             viewModel.loadBlogs()
             viewModel.loadCurrentUser()
         }
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return ComposeView(requireContext()).apply {
             setContent {
                 MdcTheme {

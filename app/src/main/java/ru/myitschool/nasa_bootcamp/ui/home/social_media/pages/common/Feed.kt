@@ -35,38 +35,40 @@ fun <T> Feed(
     onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
 ) {
     Box {
-        when (listResource.status) {
-            Status.SUCCESS -> {
-                LazyColumn(Modifier.fillMaxSize()) {
-                    item {
-                        headerContent()
-                    }
-                    items(listResource.data!!) { item ->
-                        val content by item.observeAsState()
-                        if (content != null)
-                            ItemWithLikesAndComments(
-                                item = content!!,
-                                itemContent = itemContent,
-                                currentUser = currentUser,
-                                onLikeButtonClick = { onLikeButtonClick(content!!) },
-                                onCommentButtonClick = { onItemClick(item) },
-                                onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
-                                onClick = { onItemClick(item) }
-                            )
-                    }
-                    item {
-                        Spacer(modifier = Modifier.fillMaxWidth().height(52.dp))
-                    }
+        if (listResource.data != null) {
+            LazyColumn(Modifier.fillMaxSize()) {
+                item {
+                    headerContent()
+                }
+                items(listResource.data) { item ->
+                    val content by item.observeAsState()
+                    if (content != null)
+                        ItemWithLikesAndComments(
+                            item = content!!,
+                            itemContent = itemContent,
+                            currentUser = currentUser,
+                            onLikeButtonClick = { onLikeButtonClick(content!!) },
+                            onCommentButtonClick = { onItemClick(item) },
+                            onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
+                            onClick = { onItemClick(item) }
+                        )
+                }
+                item {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp)
+                    )
                 }
             }
-
-            Status.LOADING -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-
-            Status.ERROR -> ErrorMessage(
+        }
+        if (listResource.status == Status.LOADING)
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        if (listResource.status == Status.ERROR)
+            ErrorMessage(
                 onClick = onRetryButtonClick,
                 modifier = Modifier.align(Alignment.Center)
             )
-        }
     }
 }
 
@@ -95,10 +97,11 @@ fun <T> ItemWithLikesAndComments(
             if (bestComment != null)
                 CommentItem(
                     comment = bestComment,
-                    currentUser,
-                    { onLikeInCommentClick(bestComment) },
-                    { onClick() },
-                    maxLines = 5
+                    currentUser = currentUser,
+                    onLikeClick = { onLikeInCommentClick(bestComment) },
+                    onCommentClick = { onClick() },
+                    maxLines = 5,
+                    showSubComments = false
                 )
             Box(
                 modifier = Modifier
