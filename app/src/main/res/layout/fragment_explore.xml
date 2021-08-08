@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/back"
         android:layout_width="40dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/circle"
-        android:elevation="10dp"
-        android:paddingVertical="8dp"
-        android:paddingEnd="4dp"
-        android:backgroundTint="@color/transparent_gray"
-        android:src="@drawable/ic_arrow_back"
-        app:layout_constraintBottom_toBottomOf="@+id/starmanGif"
-
-        app:layout_constraintDimensionRatio="1:1"
+        android:layout_height="40dp"
+        android:layout_margin="15dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="3dp"
+        android:src="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/starmanGif"
@@ -35,378 +26,253 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/historyCard"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:cardBackgroundColor="@color/transparent_gray"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="150dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/starmanGif">
+        app:layout_constraintTop_toBottomOf="@id/starmanGif">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/default_blue_button_color"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/historyCard"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                app:cardBackgroundColor="#00717171"
-                app:cardCornerRadius="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:fontFamily="@font/inter_extrabold"
+                android:text="@string/what_is_spacex"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:background="@color/default_blue_button_color"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/what_is_spacex"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/learn_about_company"
-                        android:textColor="@color/white_subtitle_color" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <ImageButton
-                android:id="@+id/historyButton"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/arrow_right_circle" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/roadsterCard"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                app:cardBackgroundColor="#00717171"
-                app:cardCornerRadius="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/learn_about_company"
+                android:textColor="@color/white_subtitle_color" />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/default_blue_button_color"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:orientation="vertical">
+    </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tesla_roadster"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/roadsterCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:cardBackgroundColor="@color/transparent_gray"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/historyCard">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/where_is_starman"
-                        android:textColor="@color/white_subtitle_color" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <ImageButton
-                android:id="@+id/roadsterButton"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/arrow_right_circle" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/default_blue_button_color"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/dragonsCard"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                app:cardBackgroundColor="#00717171"
-                app:cardCornerRadius="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:fontFamily="@font/inter_extrabold"
+                android:text="@string/tesla_roadster"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/default_blue_button_color"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/where_is_starman"
+                android:textColor="@color/white_subtitle_color" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dragons"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dragon_space_capsules"
-                        android:textColor="@color/white_subtitle_color" />
+    </com.google.android.material.card.MaterialCardView>
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/dragonsCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:cardBackgroundColor="@color/transparent_gray"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roadsterCard">
 
-            <ImageButton
-                android:id="@+id/dragonsButton"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/arrow_right_circle" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/default_blue_button_color"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/capsulesCard"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                app:cardBackgroundColor="#00717171"
-                app:cardCornerRadius="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:fontFamily="@font/inter_extrabold"
+                android:text="@string/dragons"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/default_blue_button_color"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/dragon_space_capsules"
+                android:textColor="@color/white_subtitle_color" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/capsules_list"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/all_spacex_capsules_list"
-                        android:textColor="@color/white_subtitle_color" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/capsulesCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:cardBackgroundColor="@color/transparent_gray"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dragonsCard">
 
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <ImageButton
-                android:id="@+id/capsulesButton"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/arrow_right_circle" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/default_blue_button_color"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/coresCard"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                app:cardBackgroundColor="#00717171"
-                app:cardCornerRadius="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:fontFamily="@font/inter_extrabold"
+                android:text="@string/capsules_list"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/default_blue_button_color"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/all_spacex_capsules_list"
+                android:textColor="@color/white_subtitle_color" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+        </LinearLayout>
 
-                        android:text="@string/cores"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+    </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/coresCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:cardBackgroundColor="@color/transparent_gray"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/capsulesCard">
 
-                        android:text="@string/cores_used_in_spacex_aircrafts"
-                        android:textColor="@color/white_subtitle_color" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <ImageButton
-                android:id="@+id/coresButton"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/arrow_right_circle" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/default_blue_button_color"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/launchCard"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="8dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                app:cardBackgroundColor="#00717171"
-                app:cardCornerRadius="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:fontFamily="@font/inter_extrabold"
+                android:text="@string/cores"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/default_blue_button_color"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="8dp"
-                    android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/cores_used_in_spacex_aircrafts"
+                android:textColor="@color/white_subtitle_color" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/launching_and_landing_pads"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/where_does_spacex_aircrafts_land_on"
-                        android:textColor="@color/white_subtitle_color" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/launchCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:cardBackgroundColor="@color/transparent_gray"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/coresCard">
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/default_blue_button_color"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <ImageButton
-                android:id="@+id/launchesButton"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="12dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/arrow_right_circle" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_extrabold"
+                android:text="@string/launching_and_landing_pads"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/where_does_spacex_aircrafts_land_on"
+                android:textColor="@color/white_subtitle_color" />
 
-    </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

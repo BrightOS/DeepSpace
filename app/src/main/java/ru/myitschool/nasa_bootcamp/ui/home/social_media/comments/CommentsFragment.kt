@@ -112,7 +112,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel) {
                             viewModel.sendMessage(
                                 message = it,
                                 id = post!!.content.id,
-                                _class = ArticleModel::class.java
+                                _class = PostModel::class.java
                             )
                         )
                     }

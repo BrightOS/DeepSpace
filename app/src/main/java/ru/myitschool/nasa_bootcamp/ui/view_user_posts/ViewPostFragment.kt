@@ -51,6 +51,7 @@ class ViewPostFragment : Fragment() {
         binding.fbPostCreated.text = dateCreated
 
         lifecycleScope.launchWhenStarted {
+            /*
             when(val it = viewModel.getAdditionalData(id!!)) {
                 is Data.Ok -> {
                     adapter = ViewPostAdapter(requireContext(), it.data, id!!, viewModel, viewLifecycleOwner)
@@ -62,6 +63,7 @@ class ViewPostFragment : Fragment() {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                 }
             }
+             */
         }
         return binding.root
     }

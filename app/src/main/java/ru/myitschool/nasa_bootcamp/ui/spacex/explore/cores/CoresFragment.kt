@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_info.*
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCoresBinding
 import ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons.DragonsAdapter
+import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.STARMAN_GIF_LINK
 import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
 import ru.myitschool.nasa_bootcamp.utils.loadImage
@@ -34,6 +35,16 @@ class CoresFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCoresBinding.inflate(inflater, container, false)
+
+        DimensionsUtil.dpToPx(requireContext(), 5).let {
+            DimensionsUtil.setMargins(
+                binding.toolBar,
+                it,
+                DimensionsUtil.getStatusBarHeight(resources) + it,
+                it,
+                it
+            )
+        }
 
         binding.coresRecycle.setHasFixedSize(true)
         binding.coresRecycle.layoutManager = GridLayoutManager(context, 1)

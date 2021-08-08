@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_explore.*
 import ru.myitschool.nasa_bootcamp.databinding.FragmentExploreBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
+import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.SPACEX_LOGO_GIF
 import ru.myitschool.nasa_bootcamp.utils.STARMAN_GIF_LINK
 import ru.myitschool.nasa_bootcamp.utils.loadImage
@@ -40,6 +41,16 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
+
+        DimensionsUtil.dpToPx(requireContext(), 15).let {
+            DimensionsUtil.setMargins(
+                binding.back,
+                it,
+                DimensionsUtil.getStatusBarHeight(resources) + it,
+                it,
+                it
+            )
+        }
 
         binding.historyCard.setOnClickListener {
             val action = ExploreFragmentDirections.actionExploreFragmentToHistoryFragment()

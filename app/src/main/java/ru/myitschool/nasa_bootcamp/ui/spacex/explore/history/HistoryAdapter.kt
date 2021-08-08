@@ -7,14 +7,16 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.HistoryModel
 import ru.myitschool.nasa_bootcamp.databinding.HistoryItemBinding
+import ru.myitschool.nasa_bootcamp.utils.addSubstringAtIndex
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
-import java.util.ArrayList
+import ru.myitschool.nasa_bootcamp.utils.getDayOfMonthSuffix
+import java.util.*
 
 class HistoryAdapter internal constructor(
     context: Context,
     landModels: ArrayList<HistoryModel>,
 
-) :
+    ) :
     RecyclerView.Adapter<HistoryViewHolder>() {
     var context: Context
     var historyModels: ArrayList<HistoryModel>
@@ -34,8 +36,19 @@ class HistoryAdapter internal constructor(
         val historyModel: HistoryModel = historyModels[position]
 
         holder.binding.detailsHistory.text = historyModel.details
-        holder.binding.eventDateHistory.text = "Date : ${convertDateFromUnix(historyModel.event_date_utc)}"
-        holder.binding.historyArticleItem.text= historyModel.title
+        holder.binding.historyArticleItem.text = historyModel.title
+
+        val finalString = convertDateFromUnix(historyModel.event_date_utc)
+
+        val calendar = GregorianCalendar()
+        calendar.time = Date(historyModel.event_date_utc * 1000L)
+
+        holder.binding.eventDateHistory.text = finalString.addSubstringAtIndex(
+            getDayOfMonthSuffix(
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ),
+            finalString.indexOf('.')
+        )
 
     }
 

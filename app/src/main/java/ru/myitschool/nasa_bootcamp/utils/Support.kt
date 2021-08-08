@@ -9,8 +9,6 @@ import android.util.TypedValue
 import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestListener
@@ -22,6 +20,8 @@ import kotlinx.coroutines.tasks.await
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 fun loadImage(
     context: Context,
@@ -50,6 +50,20 @@ fun loadImage(context: Context, url: String?, view: ImageView) {
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(view)
+}
+
+fun capitalize(capString: String): String {
+    val capBuffer = StringBuffer()
+    val capMatcher: Matcher =
+        Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(capString)
+    while (capMatcher.find()) {
+        capMatcher.appendReplacement(
+            capBuffer,
+            capMatcher.group(1).uppercase(Locale.getDefault()) + capMatcher.group(2)
+                .lowercase(Locale.getDefault())
+        )
+    }
+    return capMatcher.appendTail(capBuffer).toString()
 }
 
 suspend fun downloadFirebaseImage(storageRef: StorageReference): Data<Bitmap> {

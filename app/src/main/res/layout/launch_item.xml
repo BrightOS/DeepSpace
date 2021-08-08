@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardLaunch"
@@ -10,9 +9,9 @@
     android:layout_marginStart="@dimen/eight_margin"
     android:layout_marginTop="16dp"
     android:layout_marginEnd="@dimen/eight_margin"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="10dp"
-    app:cardBackgroundColor="@color/transparent_blue"
+    app:cardBackgroundColor="@color/transparent_gray"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="150dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -29,45 +28,67 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/recycle_item_img"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="12dp"
-                 android:scaleType="fitCenter"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/mission_year"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/load_card"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:backgroundTint="@android:color/transparent"
+                android:elevation="0dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/recycle_item_img"
+                app:layout_constraintEnd_toEndOf="@id/recycle_item_img"
+                app:layout_constraintStart_toStartOf="@id/recycle_item_img"
+                app:layout_constraintTop_toTopOf="@id/recycle_item_img">
+
+                <ru.myitschool.nasa_bootcamp.widget.SpaceLoadingView
+                    android:id="@+id/load_progressbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:showByDefault="true" />
+            </com.google.android.material.card.MaterialCardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mission_name"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inter_extrabold"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/mission_year"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/recycle_item_img"
+                app:layout_constraintTop_toTopOf="@id/recycle_item_img"
+                app:layout_constraintVertical_chainStyle="packed"
                 tools:text="Falcon 9 Test Flight" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/mission_year"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inter_semibold"
                 android:textColor="#E1E1E1"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/launch_site"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
                 app:layout_constraintTop_toBottomOf="@+id/mission_name"
@@ -76,11 +97,14 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/launch_site"
-                android:layout_width="200dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:lines="2"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/inter_regular"
+                android:maxLines="2"
                 android:textColor="#E1E1E1"
-                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/status"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.529"
                 app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
@@ -89,43 +113,20 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/status"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/inter_semibold"
+                android:textAlignment="textEnd"
                 android:textColor="@color/white_subtitle_color"
                 android:textSize="13sp"
                 android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/recycle_item_img"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.887"
                 app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
                 app:layout_constraintTop_toBottomOf="@+id/launch_site"
                 tools:text="Status : fail" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/invisible_padd"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white_subtitle_color"
-                android:textSize="13sp"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/status"
-                tools:visibility="visible" />
-
-            <ProgressBar
-                android:id="@+id/load_progressbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:indeterminate="true"
-                android:paddingBottom="?actionBarSize"
-                android:theme="@style/Theme.AppCompat.Light"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -134,8 +135,11 @@
             android:id="@+id/details"
             android:layout_width="match_parent"
             android:layout_height="0.01dp"
+            android:layout_marginHorizontal="10dp"
+            android:fontFamily="@font/inter_regular"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/rocket_root"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -145,12 +149,10 @@
             layout="@layout/rocket_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/details"
-            tools:visibility="visible" />
+            app:layout_constraintTop_toBottomOf="@+id/details" />
 
 
     </androidx.constraintlayout.motion.widget.MotionLayout>

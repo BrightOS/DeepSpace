@@ -11,6 +11,7 @@ class LayerManager(resources : Resources, model: AbstractPointing){
     private val baseLayers: MutableList<BaseLayer> = ArrayList()
      fun addLayer(baseLayer: BaseLayer) {
         baseLayers.add(baseLayer)
+
     }
 
     init {
