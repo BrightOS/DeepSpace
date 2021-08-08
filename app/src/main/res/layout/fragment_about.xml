@@ -22,6 +22,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+
             android:id="@+id/logo_gif"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -100,10 +101,13 @@
 
                 <TextView
                     android:id="@+id/YanaGladkikh"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
                     android:text="Yana Gladkikh"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -165,10 +169,13 @@
 
                 <TextView
                     android:id="@+id/DenisBarov"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
                     android:text="Denis Barov"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -230,11 +237,14 @@
 
                 <TextView
                     android:id="@+id/VladimirKrylov"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/inter_regular"
-                    android:text="Vladimir Krylov"
+                    android:text="Vladimir Abubakirov"
+                    android:gravity="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -297,10 +307,13 @@
 
                 <TextView
                     android:id="@+id/samuilNalisin"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
                     android:text="Samuil Nalisin"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -364,10 +377,13 @@
 
                 <TextView
                     android:id="@+id/danilkhairulin"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
                     android:text="Danil Khairulin"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:layout_constraintEnd_toEndOf="parent"
