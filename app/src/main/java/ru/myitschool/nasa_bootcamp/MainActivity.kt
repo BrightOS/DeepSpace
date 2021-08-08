@@ -130,6 +130,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+
             navHeaderMainBinding.signIn.text = getString(R.string.sign_out)
             navHeaderMainBinding.signIn.setOnClickListener {
                 mFirebaseUser.signOutUser(this)
