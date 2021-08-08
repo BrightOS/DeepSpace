@@ -31,6 +31,10 @@
         <item name="background">@android:color/transparent</item>
         <item name="android:colorBackground">@android:color/transparent</item>
         <item name="android:textCursorDrawable">@null</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.App.Headline6</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.App.Headline5</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.App.Headline4</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.AppCompat.Body1</item>
 
 
         <item name="materialCalendarTheme">@style/DatePicker</item>
