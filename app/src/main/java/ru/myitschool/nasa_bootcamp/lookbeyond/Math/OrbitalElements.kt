@@ -15,24 +15,24 @@ class OrbitalElements(// Mean distance
 ) {
 
     constructor(// Mean distance
-        _inclination: Double, // Eccentricity of orbit
-        _eccentricity: Double, // Inclination of orbit
+        _eccentricity: Double, // Eccentricity of orbit
+        _inclination: Double, // Inclination of orbit
         _ascnode: Double, // Longitude of ascending node
         _longitude: Double, // Longitude of perihelion
         _perihelion: Double, // Mean longitude
         _meanLongitude: Double,
         _trueAnomaly2 : Double
-    ) : this(_inclination,_eccentricity,_ascnode,_longitude,_perihelion,_meanLongitude){
-        inclination = _inclination
+    ) : this(_eccentricity,_inclination,_ascnode,_longitude,_perihelion,_meanLongitude){
         eccentricity = _eccentricity
+        inclination = _inclination
         ascnode = _ascnode
         longitude = _longitude
         perihelion = _perihelion
         trueAnomaly2 = _trueAnomaly2
     }
 
-    var inclination: Double? = null
     var eccentricity: Double? = null
+    var inclination: Double? = null
     var ascnode: Double? = null
     var longitude: Double? = null
     var perihelion: Double? = null
@@ -40,8 +40,8 @@ class OrbitalElements(// Mean distance
     var trueAnomaly2 : Double? = null
 
     init {
-        inclination = _eccentricity
-        eccentricity = _inclination
+        eccentricity = _eccentricity
+        inclination = _inclination
         ascnode = _ascnode
         longitude = _longitude
         perihelion = _perihelion
@@ -49,19 +49,19 @@ class OrbitalElements(// Mean distance
     }
 
     private val E =
-        meanAnomaly!! + eccentricity!! * (180 / Math.PI) * Math.sin(meanAnomaly!!.toDouble()) * (1.0 + eccentricity!! * Math.cos(
+        meanAnomaly!! + inclination!! * (180 / Math.PI) * Math.sin(meanAnomaly!!.toDouble()) * (1.0 + inclination!! * Math.cos(
             meanAnomaly!!.toDouble()
         ))
     //or  E = M + e * sin(M) * ( 1.0 + e * cos(M) ) in radians
 
-    private val xv = cos(E) - eccentricity!!
-    private val yv = sqrt(1.0 - eccentricity!! * eccentricity!!) * Math.sin(E)
+    private val xv = cos(E) - inclination!!
+    private val yv = sqrt(1.0 - inclination!! * inclination!!) * Math.sin(E)
 
     val v = atan2(yv, xv)
 
     val anomaly: Double
         get() = if(trueAnomaly2==null)
-            calculateTrueAnomaly(meanAnomaly!! - perihelion!!, eccentricity!!)
+            calculateTrueAnomaly(meanAnomaly!! - perihelion!!, inclination!!)
         else trueAnomaly2!!
 
 
@@ -72,19 +72,18 @@ class OrbitalElements(// Mean distance
         //Вычислить true nomaly из mean anomaly
         private fun calculateTrueAnomaly(meanAnomaly: Double, e: Double): Double {
 
-            var M = meanAnomaly + e * sin(meanAnomaly) * (1.0 + e * cos(meanAnomaly))
-            var E: Double
+            var E = meanAnomaly + e * sin(meanAnomaly) * (1.0 + e * cos(meanAnomaly))
+            var M: Double
 
             do {
-                E = M
-                M = E - (E - e * sin(E) + meanAnomaly) / (1.0 - e * cos(E))
+                M = E
+                E = M - (M - e * sin(M) - meanAnomaly) / (1.0 - e * cos(M))
 
-            } while (abs(M - E) > EPSILON)
+            } while (abs(E - M) > EPSILON)
 
-             val v = 2f * atan(
-                sqrt((1 + e) / (1 - e)) * tan(0.5f * M)
+             val v = 2f * atan(sqrt((1 + e) / (1 - e)) * tan(0.5f * E)
             )
-            return -modPart(v)
+            return modPart(v)
         }
     }
 }
