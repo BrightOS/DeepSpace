@@ -56,7 +56,7 @@ class CapsulesFragment : Fragment() {
         binding.capsulesRecycler.layoutManager = GridLayoutManager(context, 1)
 
         capsulesViewModel.getCapsulesList()
-            .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            .observe(viewLifecycleOwner, {
                 capsulesAdapter =
                     CapsulesAdapter(
                         requireContext(),
