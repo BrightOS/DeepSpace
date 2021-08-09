@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import ru.myitschool.nasa_bootcamp.data.repository.NasaRepository
 import ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidRadarViewModel
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,20 +23,24 @@ class MarsRoversViewModelImpl @Inject constructor(
     var list: ArrayList<RoverModel> = arrayListOf()
 
     override suspend fun loadRoverPhotos() {
-        val response = repository.getRoverPhotos()
+        try {
+            val response = repository.getRoverPhotos()
 
-        if (response.isSuccessful) {
-            if (response.body() != null) {
-                for (r in response.body()!!.photos) {
-                    list.add(r.createRoverModel())
+            if (response.isSuccessful) {
+                if (response.body() != null) {
+                    for (r in response.body()!!.photos) {
+                        list.add(r.createRoverModel())
+                    }
                 }
             }
-        }
-      //  list.reverse()
-        roverModels.value =  list
+            //  list.reverse()
+            roverModels.value = list
 
-        for (r in roverModels.value!!)
-            Log.d("CHTO", "" + r.id + " " + r.img_src)
+            for (r in roverModels.value!!)
+                Log.d("CHTO", "" + r.id + " " + r.img_src)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun getRoverModelsLiveData(): MutableLiveData<ArrayList<RoverModel>> {
