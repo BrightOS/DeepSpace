@@ -52,7 +52,6 @@ class OrbitalElements(// Mean distance
         meanAnomaly!! + inclination!! * (180 / Math.PI) * Math.sin(meanAnomaly!!.toDouble()) * (1.0 + inclination!! * Math.cos(
             meanAnomaly!!.toDouble()
         ))
-    //or  E = M + e * sin(M) * ( 1.0 + e * cos(M) ) in radians
 
     private val xv = cos(E) - inclination!!
     private val yv = sqrt(1.0 - inclination!! * inclination!!) * Math.sin(E)
@@ -67,21 +66,21 @@ class OrbitalElements(// Mean distance
 
     companion object {
 
-        private const val EPSILON = 1.0e-5f
+        private const val EPSILON = 1.0e-6f
 
         //Вычислить true nomaly из mean anomaly
-        private fun calculateTrueAnomaly(meanAnomaly: Double, e: Double): Double {
+        private fun calculateTrueAnomaly(meanAnomaly: Double, ecc: Double): Double {
 
-            var E = meanAnomaly + e * sin(meanAnomaly) * (1.0 + e * cos(meanAnomaly))
+            var E = meanAnomaly + ecc * sin(meanAnomaly) * (1.0 + ecc * cos(meanAnomaly))
             var M: Double
 
             do {
                 M = E
-                E = M - (M - e * sin(M) - meanAnomaly) / (1.0 - e * cos(M))
+                E = M - (M - ecc * sin(M) + meanAnomaly) / (1.0 - ecc * cos(M))
 
             } while (abs(E - M) > EPSILON)
 
-             val v = 2f * atan(sqrt((1 + e) / (1 - e)) * tan(0.5f * E)
+             val v = 2f * atan(sqrt((1 + ecc) / (1 - ecc)) * tan(0.5f * E)
             )
             return modPart(v)
         }
