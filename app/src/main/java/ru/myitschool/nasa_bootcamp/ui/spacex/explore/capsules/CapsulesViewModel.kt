@@ -12,5 +12,4 @@ interface CapsulesViewModel {
     fun getViewModelScope(): CoroutineScope
     fun getCapsulesList(): MutableLiveData<ArrayList<CapsuleModel>>
     fun getStatus(): MutableLiveData<Status>
-
 }
