@@ -8,7 +8,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.myitschool.nasa_bootcamp.data.api.NasaApi
@@ -153,8 +152,8 @@ object MainModule {
     fun getNetworkRepository(
         firebaseRepository: FirebaseRepository,
         newsRepository: NewsRepository
-    ): NetworkRepository {
-        return NetworkRepositoryImpl(firebaseRepository, newsRepository)
+    ): SocialMediaRepository {
+        return SocialMediaRepositoryImpl(firebaseRepository, newsRepository)
     }
 
     @Provides

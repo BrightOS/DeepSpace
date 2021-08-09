@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -25,13 +26,19 @@ import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.parseNewsDate
 
 @Composable
-fun NewsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
+fun NewsScreen(
+    viewModel: SocialMediaViewModel,
+    navController: NavController
+) {
+    val lifecycleOwner = LocalLifecycleOwner.current
     val listResource by viewModel.getNews().observeAsState(Resource.success(listOf()))
     val action = SocialMediaFragmentDirections.actionSocialMediaFragmentToCommentsFragment()
     val currentUser by viewModel.getCurrentUser().observeAsState()
     Feed(
         onRetryButtonClick = { viewModel.getViewModelScope().launch { viewModel.loadNews() } },
-        itemContent = { item: ArticleModel -> NewsItem(item) },
+        itemContent = { item: ArticleModel ->
+            NewsItem(item)
+        },
         onLikeButtonClick = {
             val liveData = MutableLiveData(Resource.loading(null))
             viewModel.getViewModelScope().launch {

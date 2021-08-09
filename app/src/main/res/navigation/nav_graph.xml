@@ -52,16 +52,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/createPostFragment"
-        android:name="ru.myitschool.nasa_bootcamp.ui.user_create_post.CreatePostFragment"
-        android:label="CreatePostFragment" />
-
-    <fragment
-        android:id="@+id/allUserPostFragment"
-        android:name="ru.myitschool.nasa_bootcamp.ui.view_user_posts.ViewAllPostFragment"
-        android:label="user_posts" />
-
-    <fragment
         android:id="@+id/exploreFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragment"
         android:label="ExploreFragment">
@@ -217,11 +207,6 @@
         android:label="fragment_rover_details"
         tools:layout="@layout/fragment_rover_details" />
 
-    <fragment
-        android:id="@+id/userPost"
-        android:name="ru.myitschool.nasa_bootcamp.ui.view_user_posts.ViewPostFragment"
-        android:label="fragment_user_post"
-        tools:layout="@layout/fragment_view_post" />
     <fragment
         android:id="@+id/historyFragment2"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.HistoryFragment"

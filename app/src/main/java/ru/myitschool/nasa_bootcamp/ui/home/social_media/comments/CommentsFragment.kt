@@ -1,6 +1,7 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media.comments
 
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -34,10 +34,11 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.android.material.composethemeadapter.MdcTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -47,6 +48,7 @@ import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModelImpl
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.CommentItem
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.LikeButton
+import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.ToolBar
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
@@ -67,7 +69,7 @@ class CommentsFragment : Fragment() {
             setContent {
                 MdcTheme {
                     ProvideWindowInsets {
-                        CommentsScreen(viewModel)
+                        CommentsScreen(viewModel, findNavController())
                     }
                 }
             }
@@ -76,146 +78,94 @@ class CommentsFragment : Fragment() {
 }
 
 @Composable
-fun CommentsScreen(viewModel: SocialMediaViewModel) {
+fun CommentsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
     val focusRequester = remember { FocusRequester() }
     var selectedComment: Comment? by remember { mutableStateOf(null) }
     val currentUser by viewModel.getCurrentUser().observeAsState()
-    if (viewModel.getSelectedPost() != null) {
-        val post by viewModel.getSelectedPost()!!.observeAsState()
-        Column {
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                item {
-                    PostContent(postModel = post!!.content, likeButton = {
-                        LikeButton(
-                            list = post!!.likes,
-                            currentUser = currentUser,
-                            onClick = {
-                                val liveData = MutableLiveData(Resource.loading(null))
-                                viewModel.getViewModelScope().launch {
-                                    liveData.postValue(viewModel.pressedLikeOnItem(post!!))
-                                }
-                                liveData
-                            }
-                        )
-                    })
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
-                    )
+    val article by viewModel.getSelectedArticle()?.observeAsState()
+        ?: remember { mutableStateOf(null) }
+    val post by viewModel.getSelectedPost()?.observeAsState()
+        ?: remember { mutableStateOf(null) }
+    val likeButton: @Composable () -> Unit = {
+        LikeButton(
+            list = article?.likes ?: post!!.likes,
+            currentUser = currentUser,
+            onClick = {
+                Log.d("HELP", "CommentsScreen: ${article ?: post!!}")
+                val liveData = MutableLiveData(Resource.loading(null))
+                viewModel.getViewModelScope().launch {
+                    liveData.postValue(viewModel.pressedLikeOnItem(article ?: post!!))
                 }
-                items(post!!.comments) {
-                    CommentItem(
-                        comment = it,
-                        currentUser = currentUser,
-                        onLikeClick = {
-                            val liveData = MutableLiveData(Resource.loading(null))
-                            viewModel.getViewModelScope().launch {
-                                liveData.postValue(viewModel.pressedLikeOnComment(post!!, it))
-                            }
-                            liveData
-                        },
-                        onCommentClick = {
-                            selectedComment = it
-                            focusRequester.requestFocus()
-                        },
-                        onDeleteComment = { comment ->
-                            viewModel.getViewModelScope().launch { viewModel.deleteComment(comment, post!!) }
-                        }
-                    )
-                }
+                liveData
+            })
+    }
+    Column {
+        LazyColumn(modifier = Modifier.weight(1f)) {
+            item {
+                if (post != null)
+                    PostContent(
+                        postModel = post!!.content,
+                        likeButton = likeButton,
+                        toolbar = { ToolBar(navController = navController, title = it) })
+                else ArticleContent(
+                    item = article!!,
+                    likeButton = likeButton,
+                    toolbar = { ToolBar(navController = navController, title = it) })
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+                )
             }
-            BottomTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                currentUser = currentUser,
-                selectedComment = selectedComment,
-                focusRequester = focusRequester,
-                clearSelectedUser = { selectedComment = null },
-                onClick = { text, selectedComment ->
-                    val liveData = MutableLiveData(Resource.loading(null))
-                    viewModel.getViewModelScope().launch {
-                        liveData.postValue(
-                            viewModel.sendMessage(
-                                message = text,
-                                parentComment = selectedComment,
-                                id = post!!.content.id,
-                                _class = PostModel::class.java
+            items(article?.comments ?: post!!.comments) {
+                CommentItem(
+                    comment = it,
+                    currentUser = currentUser,
+                    onLikeClick = {
+                        val liveData = MutableLiveData(Resource.loading(null))
+                        viewModel.getViewModelScope().launch {
+                            liveData.postValue(
+                                viewModel.pressedLikeOnComment(
+                                    article ?: post!!,
+                                    it
+                                )
                             )
-                        )
-                    }
-                    liveData
-                },
-            )
-        }
-    } else if (viewModel.getSelectedArticle() != null) {
-        val article by viewModel.getSelectedArticle()!!.observeAsState()
-        Column {
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                item {
-                    ArticleContent(item = article!!, likeButton = {
-                        LikeButton(
-                            list = article!!.likes,
-                            currentUser = currentUser,
-                            onClick = {
-                                val liveData = MutableLiveData(Resource.loading(null))
-                                viewModel.getViewModelScope().launch {
-                                    liveData.postValue(viewModel.pressedLikeOnItem(article!!))
-                                }
-                                liveData
-                            }
-                        )
-                    })
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
-                    )
-                }
-                items(article!!.comments) {
-                    CommentItem(
-                        comment = it,
-                        currentUser = currentUser,
-                        onLikeClick = {
-                            val liveData = MutableLiveData(Resource.loading(null))
-                            viewModel.getViewModelScope().launch {
-                                liveData.postValue(viewModel.pressedLikeOnComment(article!!, it))
-                            }
-                            liveData
-                        },
-                        onCommentClick = { comment ->
-                            selectedComment = comment
-                            focusRequester.requestFocus()
-                        },
-                        onDeleteComment = { comment ->
-                            viewModel.getViewModelScope().launch { viewModel.deleteComment(comment, article!!) }
                         }
+                        liveData
+                    },
+                    onCommentClick = {
+                        selectedComment = it
+                        focusRequester.requestFocus()
+                    },
+                    onDeleteComment = { comment ->
+                        viewModel.getViewModelScope()
+                            .launch { viewModel.deleteComment(comment, article ?: post!!) }
+                    }
+                )
+            }
+        }
+        BottomTextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            currentUser = currentUser,
+            selectedComment = selectedComment,
+            focusRequester = focusRequester,
+            clearSelectedUser = { selectedComment = null },
+            onClick = { text, selectedComment ->
+                val liveData = MutableLiveData(Resource.loading(null))
+                viewModel.getViewModelScope().launch {
+                    liveData.postValue(
+                        viewModel.sendMessage(
+                            message = text,
+                            parentComment = selectedComment,
+                            id = if (article != null) article!!.content.id else post!!.content.id,
+                            _class = if (article != null) ArticleModel::class.java else PostModel::class.java
+                        )
                     )
                 }
-            }
-            BottomTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                currentUser = currentUser,
-                selectedComment = selectedComment,
-                focusRequester = focusRequester,
-                clearSelectedUser = { selectedComment = null },
-                onClick = { text, selectedComment ->
-                    val liveData = MutableLiveData(Resource.loading(null))
-                    viewModel.getViewModelScope().launch {
-                        liveData.postValue(
-                            viewModel.sendMessage(
-                                message = text,
-                                parentComment = selectedComment,
-                                id = article!!.content.id,
-                                _class = ArticleModel::class.java
-                            )
-                        )
-                    }
-                    liveData
-                },
-            )
-        }
+                liveData
+            },
+        )
     }
 }
 
@@ -304,7 +254,8 @@ fun BottomTextField(
 @Composable
 fun ArticleContent(
     item: ContentWithLikesAndComments<ArticleModel>,
-    likeButton: @Composable () -> Unit
+    likeButton: @Composable () -> Unit,
+    toolbar: @Composable (String) -> Unit
 ) {
     val annotatedText = buildAnnotatedString {
         withStyle(
@@ -323,6 +274,7 @@ fun ArticleContent(
         }
     }
     Column {
+        toolbar(stringResource(R.string.article))
         Image(
             painter = rememberImagePainter(item.content.imageUrl),
             contentScale = ContentScale.Crop,
@@ -344,9 +296,13 @@ fun ArticleContent(
 }
 
 @Composable
-fun PostContent(postModel: PostModel, likeButton: @Composable () -> Unit) {
+fun PostContent(
+    postModel: PostModel,
+    likeButton: @Composable () -> Unit,
+    toolbar: @Composable (String) -> Unit
+) {
     Column {
-        Spacer(modifier = Modifier.statusBarsPadding())
+        toolbar(stringResource(R.string.post))
         Text(
             text = postModel.title,
             style = MaterialTheme.typography.h4,

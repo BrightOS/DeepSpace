@@ -35,6 +35,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.PostModel
@@ -83,6 +84,7 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
                 liveData.observe(lifecycleOwner) {
                     if (it.status == Status.SUCCESS)
                         viewModel.getViewModelScope().launch {
+                            delay(1000)
                             viewModel.loadBlogs()
                         }
                 }

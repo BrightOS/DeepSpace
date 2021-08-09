@@ -108,4 +108,6 @@
     <string name="feedback_sent">Your feedback was sent! You will be replied by email </string>
     <string name="create_by_space_colon">"Created by: "</string>
     <string name="reply_to">"reply to "</string>
+    <string name="article">Article</string>
+    <string name="post">Post</string>
 </resources>

@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:fontFamily="@font/inter_bold"
         android:textSize="24sp"
-        android:text="Landing pads"
+        android:text="@string/launch_pads"
         android:textColor="@android:color/white"
         android:paddingHorizontal="20dp"
         android:paddingVertical="5dp"/>

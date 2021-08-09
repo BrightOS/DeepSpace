@@ -15,18 +15,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:liftOnScroll="false">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:minHeight="128dp"
-                app:collapsedTitleTextAppearance="@style/CollapsedSpaceAppBar"
-                app:contentScrim="@android:color/white"
-                app:expandedTitleGravity="center"
-                app:expandedTitleMarginTop="16dp"
-                app:expandedTitleTextAppearance="@style/ExpandedSpaceAppBar"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:title="Mars Rover Photos"
-                app:titleEnabled="true">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:minHeight="128dp"
+            app:collapsedTitleTextAppearance="@style/CollapsedSpaceAppBar"
+            app:contentScrim="@android:color/white"
+            app:expandedTitleGravity="center"
+            app:expandedTitleMarginTop="16dp"
+            app:expandedTitleTextAppearance="@style/ExpandedSpaceAppBar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:title="Mars Rover Photos"
+            app:titleEnabled="true">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tool_bar"
