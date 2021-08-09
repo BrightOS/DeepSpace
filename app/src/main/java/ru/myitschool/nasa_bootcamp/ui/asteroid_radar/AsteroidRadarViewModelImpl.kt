@@ -22,11 +22,15 @@ class AsteroidRadarViewModelImpl @Inject constructor(
 
     @DelicateCoroutinesApi
     override suspend fun getAsteroidList() {
-        val response =
-            repository.getAsteroids(getTodayDateFormatted(), getPlusSevenDaysDateFormatted())
-        list = parseAsteroidsJsonResult(response.body()!!.near_earth_objects)
+        try {
+            val response =
+                repository.getAsteroids(getTodayDateFormatted(), getPlusSevenDaysDateFormatted())
+            list = parseAsteroidsJsonResult(response.body()!!.near_earth_objects)
 
-        listOfAsteroids.postValue(list)
+            listOfAsteroids.postValue(list)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun getAsteroidListViewModel(): MutableLiveData<ArrayList<AsteroidModel>> {

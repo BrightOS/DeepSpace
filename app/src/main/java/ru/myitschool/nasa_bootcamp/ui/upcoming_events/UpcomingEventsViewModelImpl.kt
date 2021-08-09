@@ -10,6 +10,7 @@ import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
 import ru.myitschool.nasa_bootcamp.data.repository.UpcomingRepository
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,13 +19,14 @@ class UpcomingEventsViewModelImpl @Inject constructor(
 ) : ViewModel(), UpcomingEventsViewModel {
 
     private var upcomingList: MutableLiveData<ArrayList<UpcomingLaunchModel>> =
-        MutableLiveData<ArrayList<UpcomingLaunchModel>>()
+        MutableLiveData<ArrayList<UpcomingLaunchModel>>(arrayListOf())
 
     private var list: ArrayList<UpcomingLaunchModel> = arrayListOf()
 
     override fun getUpcomingList(): MutableLiveData<ArrayList<UpcomingLaunchModel>> = upcomingList
 
     override suspend fun getUpcomingLaunches() {
+        try {
         val response = repository.getUpcomingLaunches()
 
         for (launch in response.body()!!) {
@@ -38,6 +40,9 @@ class UpcomingEventsViewModelImpl @Inject constructor(
         }
 
         upcomingList.value = list
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope
