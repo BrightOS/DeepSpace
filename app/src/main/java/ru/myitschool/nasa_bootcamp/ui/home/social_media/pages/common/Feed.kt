@@ -55,13 +55,6 @@ fun <T> Feed(
                             onDeleteComment = { onDeleteComment(it, content!!) }
                         )
                 }
-                item {
-                    Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(52.dp)
-                    )
-                }
             }
         }
         if (listResource.status == Status.LOADING)

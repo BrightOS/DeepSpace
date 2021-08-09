@@ -62,7 +62,7 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
             liveData
         },
         onItemClick = {
-            viewModel.setSelectedPost(it)
+            viewModel.setSelectedPost(it.value)
             navController.navigate(action)
         },
         onLikeInCommentClick = { item, comment ->
