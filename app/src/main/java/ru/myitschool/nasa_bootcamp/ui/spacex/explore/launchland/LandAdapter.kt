@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
+import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 import ru.myitschool.nasa_bootcamp.databinding.LandPadItemBinding
 import ru.myitschool.nasa_bootcamp.utils.capitalize
 import java.util.ArrayList
@@ -16,7 +17,7 @@ import java.util.ArrayList
 class LandAdapter internal constructor(
     context: Context,
     landModels: ArrayList<LandPadModel>,
-    val onLandClicked: (landModel: LandPadModel) -> Unit
+    val navController: NavController
 ) :
     RecyclerView.Adapter<LandHolder>() {
     var context: Context
@@ -41,12 +42,27 @@ class LandAdapter internal constructor(
         holder.binding.statusLand.text = capitalize(landPadModel.status)
         holder.binding.landingTypeLand.text = landPadModel.landing_type
         holder.binding.descriptionLand.text = landPadModel.details
-        holder.binding.descriptionLand.text = "${landPadModel.details}"
+        holder.binding.descriptionLand.text = landPadModel.details
 
-        holder.itemView.setOnClickListener {
-            onLandClicked(landModels[position])
+        val onLandPadClickListener = object : OnLandPadClickListener {
+            override fun onLandPadClick(landModel: LandPadModel, position: Int) {
+                val action = LaunchLandFragmentDirections.actionToLandMap(
+                    landModel.location.longitude.toFloat(),
+                    landModel.location.latitude.toFloat(),
+                    landModel.full_name,
+                    landModel.details
+                )
+
+                navController.navigate(action)
+            }
         }
 
+        holder.itemView.setOnClickListener {
+            onLandPadClickListener.onLandPadClick(
+                landModels.get(position),
+                position
+            )
+        }
 
     }
 

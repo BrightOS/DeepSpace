@@ -111,4 +111,9 @@ class AsteroidRadarFragment : Fragment() {
 
         return binding.root
     }
+
+    override fun onPause() {
+        activity?.main_loading?.stopLoadingAnimation()
+        super.onPause()
+    }
 }

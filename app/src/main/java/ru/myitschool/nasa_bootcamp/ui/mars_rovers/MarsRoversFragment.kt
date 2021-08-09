@@ -13,7 +13,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
+import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.databinding.FragmentMarsRoversBinding
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 
@@ -47,6 +49,8 @@ class MarsRoversFragment : Fragment() {
             )
         }
 
+        (activity as MainActivity).main_loading?.startLoadingAnimation()
+
         viewModel.getViewModelScope().launch {
             viewModel.loadRoverPhotos()
         }
@@ -60,6 +64,8 @@ class MarsRoversFragment : Fragment() {
 
             val list =viewModel.getRoverModelsLiveData().value!!
             list.shuffle()
+
+            (activity as MainActivity).main_loading?.stopLoadingAnimation()
 
             roverRecyclerAdapter =
                 RoverRecyclerAdapter(

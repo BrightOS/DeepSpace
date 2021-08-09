@@ -18,8 +18,8 @@
         android:id="@+id/back"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginVertical="5dp"
         android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="5dp"
         android:background="?selectableItemBackgroundBorderless"
         android:padding="3dp"
         android:src="@drawable/ic_arrow_left"
@@ -27,271 +27,284 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@android:color/white" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/historyCard"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:layout_marginHorizontal="10dp"
-        android:outlineAmbientShadowColor="@color/upcoming_blue"
-        android:outlineSpotShadowColor="@color/upcoming_blue"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        app:cardBackgroundColor="@color/transparent_gray"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/starmanGif"
-        app:layout_constraintBottom_toTopOf="@id/roadsterCard"
-        app:layout_constraintVertical_chainStyle="packed">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_extrabold"
-                android:text="@string/what_is_spacex"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/learn_about_company"
-                android:textColor="@color/white_subtitle_color" />
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/roadsterCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:outlineAmbientShadowColor="@color/upcoming_blue"
-        android:outlineSpotShadowColor="@color/upcoming_blue"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        app:cardBackgroundColor="@color/transparent_gray"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/historyCard"
-        app:layout_constraintBottom_toTopOf="@id/dragonsCard">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_extrabold"
-                android:text="@string/tesla_roadster"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/where_is_starman"
-                android:textColor="@color/white_subtitle_color" />
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/dragonsCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:outlineAmbientShadowColor="@color/upcoming_blue"
-        android:outlineSpotShadowColor="@color/upcoming_blue"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        app:cardBackgroundColor="@color/transparent_gray"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/roadsterCard"
-        app:layout_constraintBottom_toTopOf="@id/capsulesCard">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_extrabold"
-                android:text="@string/dragons"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/dragon_space_capsules"
-                android:textColor="@color/white_subtitle_color" />
-
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/capsulesCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:outlineAmbientShadowColor="@color/upcoming_blue"
-        android:outlineSpotShadowColor="@color/upcoming_blue"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        app:cardBackgroundColor="@color/transparent_gray"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dragonsCard"
-        app:layout_constraintBottom_toTopOf="@id/coresCard">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_extrabold"
-                android:text="@string/capsules_list"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/all_spacex_capsules_list"
-                android:textColor="@color/white_subtitle_color" />
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/coresCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:outlineAmbientShadowColor="@color/upcoming_blue"
-        android:outlineSpotShadowColor="@color/upcoming_blue"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        app:cardBackgroundColor="@color/transparent_gray"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/capsulesCard"
-        app:layout_constraintBottom_toTopOf="@id/launchCard">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_extrabold"
-                android:text="@string/cores"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/cores_used_in_spacex_aircrafts"
-                android:textColor="@color/white_subtitle_color" />
-
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/launchCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:outlineAmbientShadowColor="@color/upcoming_blue"
-        android:outlineSpotShadowColor="@color/upcoming_blue"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        app:cardBackgroundColor="@color/transparent_gray"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="100dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/coresCard">
+        app:layout_constraintTop_toBottomOf="@id/starmanGif">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_height="match_parent">
 
-            <TextView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/historyCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_extrabold"
-                android:text="@string/launching_and_landing_pads"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:outlineAmbientShadowColor="@color/upcoming_blue"
+                android:outlineSpotShadowColor="@color/upcoming_blue"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="@color/transparent_gray"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="100dp"
+                app:layout_constraintBottom_toTopOf="@id/roadsterCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed">
 
-            <TextView
-                android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:text="@string/what_is_spacex"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/learn_about_company"
+                        android:textColor="@color/white_subtitle_color" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/roadsterCard"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/where_does_spacex_aircrafts_land_on"
-                android:textColor="@color/white_subtitle_color" />
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:outlineAmbientShadowColor="@color/upcoming_blue"
+                android:outlineSpotShadowColor="@color/upcoming_blue"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="@color/transparent_gray"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="100dp"
+                app:layout_constraintBottom_toTopOf="@id/dragonsCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/historyCard">
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:text="@string/tesla_roadster"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/where_is_starman"
+                        android:textColor="@color/white_subtitle_color" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/dragonsCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:outlineAmbientShadowColor="@color/upcoming_blue"
+                android:outlineSpotShadowColor="@color/upcoming_blue"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="@color/transparent_gray"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="100dp"
+                app:layout_constraintBottom_toTopOf="@id/capsulesCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/roadsterCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:text="@string/dragons"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/dragon_space_capsules"
+                        android:textColor="@color/white_subtitle_color" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/capsulesCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:outlineAmbientShadowColor="@color/upcoming_blue"
+                android:outlineSpotShadowColor="@color/upcoming_blue"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="@color/transparent_gray"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="100dp"
+                app:layout_constraintBottom_toTopOf="@id/coresCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dragonsCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:text="@string/capsules_list"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/all_spacex_capsules_list"
+                        android:textColor="@color/white_subtitle_color" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/coresCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:outlineAmbientShadowColor="@color/upcoming_blue"
+                android:outlineSpotShadowColor="@color/upcoming_blue"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="@color/transparent_gray"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="100dp"
+                app:layout_constraintBottom_toTopOf="@id/launchCard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/capsulesCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:text="@string/cores"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/cores_used_in_spacex_aircrafts"
+                        android:textColor="@color/white_subtitle_color" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/launchCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="250dp"
+                android:outlineAmbientShadowColor="@color/upcoming_blue"
+                android:outlineSpotShadowColor="@color/upcoming_blue"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:cardBackgroundColor="@color/transparent_gray"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/coresCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:text="@string/launching_and_landing_pads"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:text="@string/where_does_spacex_aircrafts_land_on"
+                        android:textColor="@color/white_subtitle_color" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentLaunchLandBinding
+import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
+import ru.myitschool.nasa_bootcamp.utils.MarginItemDecoration
 import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
@@ -53,18 +55,9 @@ class LaunchLandFragment : Fragment() {
             landAdapter =
                 LandAdapter(
                     requireContext(),
-                    launchLandViewModel.getLandList().value!!
-                ) {
-                    val action =
-                        LaunchLandFragmentDirections.actionToLandMap(
-                            it.location.longitude.toFloat(),
-                            it.location.latitude.toFloat(),
-                            it.full_name,
-                            it.details
-                        )
-                    navController.navigate(action)
-                }
-
+                    launchLandViewModel.getLandList().value!!,
+                    navController
+                )
         })
 
         launchLandViewModel.getLaunchList()
@@ -75,9 +68,13 @@ class LaunchLandFragment : Fragment() {
                         launchLandViewModel.getLaunchList().value!!,
                         navController
                     )
-                binding.launchLandRecycler.adapter = launchAdapter
 
+                binding.launchLandRecycler.adapter = launchAdapter
             })
+
+        binding.launchLandRecycler.addItemDecoration(
+            MarginItemDecoration(DimensionsUtil.dpToPx(requireContext(), 10))
+        )
 
         binding.mapLandButton.setOnClickListener {
             binding.launchLandRecycler.adapter = landAdapter

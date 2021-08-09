@@ -4,10 +4,8 @@
     android:id="@+id/asteroidCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/eight_margin"
-    android:layout_marginEnd="@dimen/eight_margin"
-    android:layout_marginBottom="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="8dp"
     android:elevation="0dp"
     app:cardBackgroundColor="@color/transparent_gray"
     app:cardCornerRadius="15dp"
@@ -26,13 +24,13 @@
         <TextView
             android:id="@+id/asteroid_title"
             android:layout_width="0dp"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
             android:text="@string/asteroid_name"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/asteroid_name"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
