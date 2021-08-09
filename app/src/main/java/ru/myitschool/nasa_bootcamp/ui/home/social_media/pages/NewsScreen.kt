@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -29,6 +30,7 @@ fun NewsScreen(
     viewModel: SocialMediaViewModel,
     navController: NavController
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
     val listResource by viewModel.getNews().observeAsState(Resource.success(listOf()))
     val action = SocialMediaFragmentDirections.actionSocialMediaFragmentToCommentsFragment()
     val currentUser by viewModel.getCurrentUser().observeAsState()
@@ -45,7 +47,7 @@ fun NewsScreen(
             liveData
         },
         onItemClick = {
-            viewModel.setSelectedArticle(it.value)
+            viewModel.setSelectedArticle(it)
             navController.navigate(action)
         },
         onLikeInCommentClick = { item, comment ->
