@@ -81,8 +81,7 @@ fun SocialMediaScreen(
 ) {
     val tabs = listOf(
         TabItem.News(viewModel, navController),
-        TabItem.Blogs(viewModel, navController),
-//        TabItem.Profile(viewModel, navController)
+        TabItem.Blogs(viewModel, navController)
     )
     val pagerState = rememberPagerState(tabs.size, initialPage = args.index)
     Column {
@@ -104,7 +103,6 @@ fun SocialMediaScreen(
             pagerState = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(52.dp)
         )
         HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize()) { page ->
             tabs[page].content()
@@ -143,7 +141,4 @@ sealed class TabItem(
 
     class Blogs(viewModel: SocialMediaViewModel, navController: NavController) :
         TabItem(R.drawable.ic_chat, R.string.blogs, { BlogsScreen(viewModel, navController) })
-
-//    class Profile(viewModel: SocialMediaViewModel, navController: NavController) :
-//        TabItem(R.drawable.ic_profile, R.string.profile, { ProfileScreen(viewModel, navController) })
 }

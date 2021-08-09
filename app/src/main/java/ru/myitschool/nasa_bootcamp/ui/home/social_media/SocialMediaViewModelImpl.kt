@@ -6,19 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.myitschool.nasa_bootcamp.data.model.*
-import ru.myitschool.nasa_bootcamp.data.repository.NetworkRepository
+import ru.myitschool.nasa_bootcamp.data.repository.SocialMediaRepository
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import javax.inject.Inject
 
 @HiltViewModel
-class SocialMediaViewModelImpl @Inject constructor(private val networkRepository: NetworkRepository) :
+class SocialMediaViewModelImpl @Inject constructor(private val networkRepository: SocialMediaRepository) :
     SocialMediaViewModel, ViewModel() {
     private val blogs =
         MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>>()
     private val articles =
         MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>()
-    private var selectedPost: LiveData<ContentWithLikesAndComments<PostModel>>? = null
-    private var selectedArticle: LiveData<ContentWithLikesAndComments<ArticleModel>>? = null
+    private var selectedPost = MutableLiveData<ContentWithLikesAndComments<PostModel>?>()
+    private var selectedArticle =  MutableLiveData<ContentWithLikesAndComments<ArticleModel>?>()
     private val currentUser = MutableLiveData<UserModel?>(null)
 
     override fun getBlogs() = blogs
@@ -39,15 +39,15 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     }
 
     override fun getViewModelScope() = viewModelScope
-    override fun setSelectedPost(post: LiveData<ContentWithLikesAndComments<PostModel>>?) {
-        selectedArticle = null
-        selectedPost = post
+    override fun setSelectedPost(post: ContentWithLikesAndComments<PostModel>?) {
+        selectedArticle.postValue(null)
+        selectedPost.postValue(post)
     }
 
     override fun getSelectedPost() = selectedPost
-    override fun setSelectedArticle(article: LiveData<ContentWithLikesAndComments<ArticleModel>>?) {
-        selectedPost = null
-        selectedArticle = article
+    override fun setSelectedArticle(article: ContentWithLikesAndComments<ArticleModel>?) {
+        selectedPost.postValue(null)
+        selectedArticle.postValue(article)
     }
 
     override fun getSelectedArticle() = selectedArticle
