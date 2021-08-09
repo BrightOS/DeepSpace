@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ru.myitschool.nasa_bootcamp.data.model.*
-import ru.myitschool.nasa_bootcamp.data.repository.NetworkRepository
+import ru.myitschool.nasa_bootcamp.data.repository.SocialMediaRepository
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import javax.inject.Inject
 
 @HiltViewModel
-class SocialMediaViewModelImpl @Inject constructor(private val networkRepository: NetworkRepository) :
+class SocialMediaViewModelImpl @Inject constructor(private val networkRepository: SocialMediaRepository) :
     SocialMediaViewModel, ViewModel() {
     private val blogs =
         MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>>()

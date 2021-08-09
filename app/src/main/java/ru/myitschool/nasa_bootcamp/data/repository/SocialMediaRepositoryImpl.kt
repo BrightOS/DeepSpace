@@ -7,10 +7,10 @@ import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
 import javax.inject.Inject
 
-class NetworkRepositoryImpl @Inject constructor(
+class SocialMediaRepositoryImpl @Inject constructor(
     private val firebaseRepository: FirebaseRepository,
     private val newsRepository: NewsRepository
-) : NetworkRepository {
+) : SocialMediaRepository {
     override suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>> {
         val newsList = mutableListOf<LiveData<ContentWithLikesAndComments<ArticleModel>>>()
         val news = newsRepository.getNews()
