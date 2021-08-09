@@ -5,7 +5,6 @@
     android:id="@+id/card_launch_pads"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
     app:cardBackgroundColor="@color/transparent_blue"
     app:cardCornerRadius="20dp"
     app:cardElevation="150dp">

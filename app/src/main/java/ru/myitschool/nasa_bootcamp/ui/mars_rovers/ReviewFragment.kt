@@ -41,27 +41,6 @@ import kotlin.properties.Delegates
 class ReviewFragment : Fragment(R.layout.fragment_review) {
     val args: ReviewFragmentArgs by navArgs()
     var systemUI by Delegates.notNull<Int>()
-
-    override fun onPause() {
-        val t = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        if (t != Configuration.UI_MODE_NIGHT_YES) {
-            requireActivity().window.decorView.let {
-                it.systemUiVisibility =
-                    it.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            }
-        }
-        super.onPause()
-    }
-
-    override fun onResume() {
-        requireActivity().window.decorView.let {
-            systemUI = it.systemUiVisibility
-            it.systemUiVisibility =
-                it.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-        }
-        super.onResume()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
