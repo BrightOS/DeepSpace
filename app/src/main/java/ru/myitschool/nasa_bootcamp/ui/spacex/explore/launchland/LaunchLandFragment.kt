@@ -64,7 +64,6 @@ class LaunchLandFragment : Fragment() {
                         )
                     navController.navigate(action)
                 }
-            binding.launchLandRecycler.adapter = landAdapter
 
         })
 
@@ -76,6 +75,8 @@ class LaunchLandFragment : Fragment() {
                         launchLandViewModel.getLaunchList().value!!,
                         navController
                     )
+                binding.launchLandRecycler.adapter = launchAdapter
+
             })
 
         binding.mapLandButton.setOnClickListener {

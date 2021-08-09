@@ -67,7 +67,7 @@ class OrbitalElements(// Mean distance
 
     companion object {
 
-        private const val EPSILON = 1.0e-6f
+        private const val EPSILON = 1.0e-5f
 
         //Вычислить true nomaly из mean anomaly
         private fun calculateTrueAnomaly(meanAnomaly: Double, e: Double): Double {
