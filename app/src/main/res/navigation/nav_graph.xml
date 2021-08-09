@@ -218,11 +218,6 @@
         tools:layout="@layout/fragment_rover_details" />
 
     <fragment
-        android:id="@+id/userPost"
-        android:name="ru.myitschool.nasa_bootcamp.ui.view_user_posts.ViewPostFragment"
-        android:label="fragment_user_post"
-        tools:layout="@layout/fragment_view_post" />
-    <fragment
         android:id="@+id/historyFragment2"
         android:name="ru.myitschool.nasa_bootcamp.ui.spacex.explore.history.HistoryFragment"
         android:label="fragment_history"

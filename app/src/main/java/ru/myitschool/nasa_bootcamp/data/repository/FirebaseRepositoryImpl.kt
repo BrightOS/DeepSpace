@@ -64,7 +64,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     override suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>> {
         val returnData = mutableListOf<MutableLiveData<ContentWithLikesAndComments<PostModel>>>()
         try {
-            dbInstance.getReference("user_posts").get().await().children.forEach {
+            dbInstance.getReference("user_posts").orderByChild("date").get()
+                .await().children.forEach {
                 val _username = it.child("author").child("name").getValue(String::class.java)!!
                 val _url =
                     it.child("author").child("avatarUrl").getValue(String::class.java)!!.toUri()
@@ -86,19 +87,12 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                 val comments = getAllUserPostComments(id.toInt())
                 val likes = getAllUserPostLikes(id.toInt())
 
-                println(comments)
-                println(likes)
-
                 val liveData = MutableLiveData<ContentWithLikesAndComments<PostModel>>()
                 liveData.postValue(ContentWithLikesAndComments(postModel, likes, comments))
                 userPostCommentsAndLikesListener(liveData, postModel.id)
                 returnData.add(liveData)
             }
-            try {
-                returnData.sortByDescending { it.value?.content?.date }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            returnData.reverse()
             return Resource.success(returnData)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -366,27 +360,14 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         commentId: Long
     ): Resource<Nothing> {
-
-//        if (authenticator.uid != null && authenticator.uid == getCommentAuthor(
-//                source,
-//                postId,
-//                commentId
-//            )
-//        ) {
-        try {
+        return try {
             dbInstance.getReference("posts").child(source).child(postId.toString())
                 .child("comments")
                 .child(commentId.toString()).removeValue().await()
-            return Resource.success(null)
+            Resource.success(null)
         } catch (e: Exception) {
-            return Resource.error("Comment doesn't exist", null)
+            Resource.error("Comment doesn't exist", null)
         }
-//        } else {
-//            return Resource.error(
-//                "User is not authenticated or he is not author of the comment",
-//                null
-//            )
-//        }
     }
 
     override suspend fun deleteSubComment(
@@ -395,29 +376,15 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         fatherCommentId: Long,
         subCommentId: Long
     ): Resource<Nothing> {
-
-//        if (authenticator.uid != null && authenticator.uid == getSubCommentAuthor(
-//                source,
-//                postId,
-//                fatherCommentId,
-//                subCommentId
-//            )
-//        ) {
-            try {
-                dbInstance.getReference("posts").child(source).child(postId.toString())
-                    .child("comments")
-                    .child(fatherCommentId.toString()).child("subComments")
-                    .child(subCommentId.toString()).removeValue().await()
-                return Resource.success(null)
-            } catch (e: java.lang.Exception) {
-                return Resource.error("SubComment doesn't exist", null)
-            }
-//        } else {
-//            return Resource.error(
-//                "User is not authenticated or he is not author of the SubComment",
-//                null
-//            )
-//        }
+        return try {
+            dbInstance.getReference("posts").child(source).child(postId.toString())
+                .child("comments")
+                .child(fatherCommentId.toString()).child("subComments")
+                .child(subCommentId.toString()).removeValue().await()
+            Resource.success(null)
+        } catch (e: java.lang.Exception) {
+            Resource.error("SubComment doesn't exist", null)
+        }
     }
 
     override suspend fun pushLike(source: String, postId: Int): Resource<Nothing> {
@@ -559,8 +526,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         email: String,
         password: String
     ): Data<FirebaseUser> {
-
-        try {
+        return try {
             val user = authenticator.signInWithEmailAndPassword(email, password).await()
             val userInfo = getUser(user.user!!.uid)
 
@@ -571,9 +537,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             sharedPreferences.putString(sharedPreferencesId, user.user!!.uid)
             sharedPreferences.apply()
 
-            return (Data.Ok(user?.user!!))
+            (Data.Ok(user?.user!!))
         } catch (e: Exception) {
-            return (Data.Error(e.message.toString()))
+            (Data.Error(e.message.toString()))
         }
     }
 
@@ -782,24 +748,6 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         return likes
     }
 
-    private suspend fun convertUrlToUser() {
-        dbInstance.getReference("posts")
-            .child("Articl                        //println(error.message)eModel").get()
-            .await().children.forEach {
-                try {
-                    it.ref.child("comments").get().await().children.forEach { com ->
-                        val id = com.child("userId").value as String
-                        val user = getUser(id)!!
-                        val userObject = UserDto(user.name, user.avatarUrl.toString(), user.id)
-                        com.ref.removeValue()
-                        com.ref.setValue(userObject)
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-    }
-
     private suspend fun getUsernameById(uid: String): String =
         try {
             dbInstance.getReference("user_data").child(uid).child("username").get().await()
@@ -848,14 +796,18 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             .hasChild(authenticator.uid!!)
     }
 
-    suspend fun checkIfHasCommentLike(source: String, postId: Int, commentId: Long): Boolean {
+    private suspend fun checkIfHasCommentLike(
+        source: String,
+        postId: Int,
+        commentId: Long
+    ): Boolean {
         return dbInstance.getReference("posts").child(source).child(postId.toString())
             .child("comments")
             .child(commentId.toString()).child("likes").get().await()
             .hasChild(authenticator.uid!!)
     }
 
-    suspend fun checkIfHasSubCommentLike(
+    private suspend fun checkIfHasSubCommentLike(
         source: String,
         postId: Int,
         fatherCommentId: Long,
@@ -866,23 +818,5 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             .child(fatherCommentId.toString()).child("subComments").child(subCommentId.toString())
             .child("likes").get().await()
             .hasChild(authenticator.uid!!)
-    }
-
-    private suspend fun getCommentAuthor(source: String, postId: Int, commentId: Long): String? {
-        return dbInstance.getReference("posts").child(source).child(postId.toString())
-            .child("comments")
-            .child(commentId.toString()).child("userId").get().await().getValue(String::class.java)
-    }
-
-    private suspend fun getSubCommentAuthor(
-        source: String,
-        postId: Int,
-        fatherCommentId: Long,
-        subCommentId: Long
-    ): String? {
-        return dbInstance.getReference("posts").child(source).child(postId.toString())
-            .child("comments")
-            .child(fatherCommentId.toString()).child("subComments").child(subCommentId.toString())
-            .child("userId").get().await().getValue(String::class.java)
     }
 }
