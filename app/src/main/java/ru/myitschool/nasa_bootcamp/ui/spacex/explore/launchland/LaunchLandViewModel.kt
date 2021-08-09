@@ -5,6 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.model.HistoryModel
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
+import ru.myitschool.nasa_bootcamp.utils.Status
 
 interface LaunchLandViewModel {
     suspend fun getLaunchPads()
@@ -12,4 +13,6 @@ interface LaunchLandViewModel {
     fun getViewModelScope(): CoroutineScope
     fun getLandList(): MutableLiveData<ArrayList<LandPadModel>>
     fun getLaunchList(): MutableLiveData<ArrayList<LaunchPadModel>>
+    fun getStatus(): MutableLiveData<Status>
+
 }

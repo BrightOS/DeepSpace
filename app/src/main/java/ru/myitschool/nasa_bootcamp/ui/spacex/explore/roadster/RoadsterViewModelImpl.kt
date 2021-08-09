@@ -9,6 +9,7 @@ import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 import ru.myitschool.nasa_bootcamp.data.model.RoadsterModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
 import ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.LaunchLandViewModel
+import ru.myitschool.nasa_bootcamp.utils.Status
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,17 +18,29 @@ class RoadsterViewModelImpl @Inject constructor(
 ) : ViewModel(), RoadsterViewModel {
 
     var roadsterModell: MutableLiveData<RoadsterModel> = MutableLiveData<RoadsterModel>()
-    
+    private val status: MutableLiveData<Status> = MutableLiveData<Status>()
+
     override suspend fun getRoadsterInfo() {
+        status.value = Status.LOADING
         val response = repository.getRoadster()
 
-        roadsterModell.value = response.body()!!.createRoadsterModel()
+        if (response.isSuccessful) {
+            status.value = Status.SUCCESS
+            roadsterModell.value = response.body()!!.createRoadsterModel()
+        } else {
+            status.value = Status.ERROR
+
+        }
     }
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope
 
     override fun getRoadsterModel(): MutableLiveData<RoadsterModel> {
         return roadsterModell
+    }
+
+    override fun getStatus(): MutableLiveData<Status> {
+        return status
     }
 
 
