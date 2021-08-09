@@ -45,7 +45,11 @@
     <fragment
         android:id="@+id/contactFragment"
         android:name="ru.myitschool.nasa_bootcamp.ui.contact.ContactFragment"
-        android:label="ContactFragment" />
+        android:label="ContactFragment" >
+        <action
+            android:id="@+id/contactToMain"
+            app:destination="@id/homeFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/createPostFragment"
@@ -204,8 +208,8 @@
             android:id="@+id/action_homeFragment_to_upcomingEventsFragment"
             app:destination="@id/upcomingEventsFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_spaceNavigatorActivity"
-            app:destination="@id/spaceNavigatorActivity" />
+            android:id="@+id/action_homeFragment_to_waitingFragment"
+            app:destination="@id/waitingFragment" />
     </fragment>
     <fragment
         android:id="@+id/roverDetails"

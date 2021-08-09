@@ -13,6 +13,7 @@ import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
 import ru.myitschool.nasa_bootcamp.data.room.LaunchesDao
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Status
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,19 +35,23 @@ class SpaceXViewModelImpl @Inject constructor(
             }
         }
         viewModelScope.launch(Dispatchers.Default) {
-            val response = repository.getSpaceXLaunches()
+            try {
+                val response = repository.getSpaceXLaunches()
 
-            if (response.isSuccessful) {
-                if (response.body() != null) {
-                    val launches = response.body()!!
-                    val sxLaunches = launches.map { launch -> launch.createLaunchModel() }.asReversed()
-                    liveData.postValue(Data.Ok(sxLaunches))
-                    errorHandler.postValue(Status.SUCCESS)
-                    Log.i("vm_debug","retrofit got")
-                    //launchesDao.insertAllLaunches(launches)
-                    Log.i("vm_debug","launches saved")
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        val launches = response.body()!!
+                        val sxLaunches = launches.map { launch -> launch.createLaunchModel() }.asReversed()
+                        liveData.postValue(Data.Ok(sxLaunches))
+                        errorHandler.postValue(Status.SUCCESS)
+                        Log.i("vm_debug","retrofit got")
+                        //launchesDao.insertAllLaunches(launches)
+                        Log.i("vm_debug","launches saved")
 
+                    }
                 }
+            }catch (e: Exception){
+                liveData.postValue(Data.Error("noInternet"));
             }
         }
         return liveData

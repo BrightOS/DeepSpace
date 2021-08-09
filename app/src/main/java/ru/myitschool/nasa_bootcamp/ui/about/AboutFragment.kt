@@ -54,7 +54,7 @@ class AboutFragment : Fragment() {
 
         loadImageCircle(requireContext(), ANIMATED_DEEP_SPACE, binding.logoGif)
 
-        binding.YanaGit.setOnClickListener {
+        binding.YanaMail.setOnClickListener {
             copyToClipBoard(yanaMail, binding.YanaGladkikh.text.toString())
         }
         binding.YanaVk.setOnClickListener {

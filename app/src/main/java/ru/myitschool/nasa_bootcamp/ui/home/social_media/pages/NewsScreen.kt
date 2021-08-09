@@ -51,7 +51,10 @@ fun NewsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
             liveData
         },
         listResource = listResource,
-        currentUser = currentUser
+        currentUser = currentUser,
+        onDeleteComment = { comment, item ->
+            viewModel.getViewModelScope().launch { viewModel.deleteComment(comment, item) }
+        }
     )
 }
 

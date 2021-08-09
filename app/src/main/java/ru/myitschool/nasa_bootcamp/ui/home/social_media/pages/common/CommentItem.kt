@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,14 +29,16 @@ import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 fun CommentItem(
     comment: Comment,
     currentUser: UserModel?,
-    onLikeClick: () -> LiveData<Resource<Nothing>>,
-    onCommentClick: () -> Unit,
+    onLikeClick: (Comment) -> LiveData<Resource<Nothing>>,
+    onCommentClick: (Comment) -> Unit,
+    onDeleteComment: (Comment) -> Unit,
     modifier: Modifier = Modifier,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
+    showSubComments: Boolean = true
 ) {
     Column {
         Column(modifier = modifier
-            .clickable { onCommentClick() }
+            .clickable { onCommentClick(comment) }
             .fillMaxWidth()
             .padding(8.dp)) {
             Row(
@@ -61,7 +64,15 @@ fun CommentItem(
                         text = getDateFromUnixTimestamp(comment.date)
                     )
                 }
-                LikeButton(list = comment.likes, currentUser = currentUser, onClick = onLikeClick)
+                if (currentUser != null && currentUser.id == comment.author.id) {
+                    IconButton(onClick = { onDeleteComment(comment) }) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_delete),
+                            contentDescription = "delete comment"
+                        )
+                    }
+                }
+                LikeButton(list = comment.likes, currentUser = currentUser, onClick = { onLikeClick(comment) })
             }
             Text(
                 fontSize = 16.sp,
@@ -70,14 +81,16 @@ fun CommentItem(
                 maxLines = maxLines
             )
         }
-        comment.subComments.forEach {
-            CommentItem(
-                comment = it,
-                currentUser,
-                onLikeClick,
-                onCommentClick,
-                modifier = Modifier.padding(start = 32.dp)
-            )
-        }
+        if (showSubComments)
+            comment.subComments.forEach { subComment ->
+                CommentItem(
+                    comment = subComment,
+                    currentUser = currentUser,
+                    onLikeClick = { onLikeClick(subComment) },
+                    onDeleteComment = { onDeleteComment(subComment) },
+                    onCommentClick = { onCommentClick(subComment) },
+                    modifier = Modifier.padding(start = 32.dp),
+                )
+            }
     }
 }

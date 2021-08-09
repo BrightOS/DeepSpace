@@ -32,41 +32,45 @@ fun <T> Feed(
     headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
     onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Nothing>>,
     onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Nothing>>,
+    onDeleteComment: (Comment, ContentWithLikesAndComments<T>) -> Unit,
     onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
 ) {
     Box {
-        when (listResource.status) {
-            Status.SUCCESS -> {
-                LazyColumn(Modifier.fillMaxSize()) {
-                    item {
-                        headerContent()
-                    }
-                    items(listResource.data!!) { item ->
-                        val content by item.observeAsState()
-                        if (content != null)
-                            ItemWithLikesAndComments(
-                                item = content!!,
-                                itemContent = itemContent,
-                                currentUser = currentUser,
-                                onLikeButtonClick = { onLikeButtonClick(content!!) },
-                                onCommentButtonClick = { onItemClick(item) },
-                                onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
-                                onClick = { onItemClick(item) }
-                            )
-                    }
-                    item {
-                        Spacer(modifier = Modifier.fillMaxWidth().height(52.dp))
-                    }
+        if (listResource.data != null) {
+            LazyColumn(Modifier.fillMaxSize()) {
+                item {
+                    headerContent()
+                }
+                items(listResource.data) { item ->
+                    val content by item.observeAsState()
+                    if (content != null)
+                        ItemWithLikesAndComments(
+                            item = content!!,
+                            itemContent = itemContent,
+                            currentUser = currentUser,
+                            onLikeButtonClick = { onLikeButtonClick(content!!) },
+                            onCommentButtonClick = { onItemClick(item) },
+                            onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
+                            onClick = { onItemClick(item) },
+                            onDeleteComment = { onDeleteComment(it, content!!) }
+                        )
+                }
+                item {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp)
+                    )
                 }
             }
-
-            Status.LOADING -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-
-            Status.ERROR -> ErrorMessage(
+        }
+        if (listResource.status == Status.LOADING)
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        if (listResource.status == Status.ERROR)
+            ErrorMessage(
                 onClick = onRetryButtonClick,
                 modifier = Modifier.align(Alignment.Center)
             )
-        }
     }
 }
 
@@ -78,6 +82,7 @@ fun <T> ItemWithLikesAndComments(
     onLikeInCommentClick: (Comment) -> LiveData<Resource<Nothing>>,
     onLikeButtonClick: () -> LiveData<Resource<Nothing>>,
     onCommentButtonClick: () -> Unit,
+    onDeleteComment: (Comment) -> Unit,
     onClick: () -> Unit
 ) {
     Card(
@@ -95,10 +100,12 @@ fun <T> ItemWithLikesAndComments(
             if (bestComment != null)
                 CommentItem(
                     comment = bestComment,
-                    currentUser,
-                    { onLikeInCommentClick(bestComment) },
-                    { onClick() },
-                    maxLines = 5
+                    currentUser = currentUser,
+                    onLikeClick = { onLikeInCommentClick(bestComment) },
+                    onCommentClick = { onClick() },
+                    maxLines = 5,
+                    showSubComments = false,
+                    onDeleteComment = { onDeleteComment(it) }
                 )
             Box(
                 modifier = Modifier
@@ -116,7 +123,9 @@ fun <T> ItemWithLikesAndComments(
                             contentDescription = "comments"
                         )
                     }
-                    Text(text = item.comments.size.toString())
+                    var numberOfComments: Int = item.comments.size
+                    item.comments.forEach { numberOfComments += it.subComments.size }
+                    Text(text = numberOfComments.toString())
                     LikeButton(
                         list = item.likes,
                         currentUser = currentUser,
