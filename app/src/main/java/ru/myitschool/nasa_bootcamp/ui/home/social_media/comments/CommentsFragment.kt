@@ -1,6 +1,7 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media.comments
 
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -81,13 +82,16 @@ fun CommentsScreen(viewModel: SocialMediaViewModel, navController: NavController
     val focusRequester = remember { FocusRequester() }
     var selectedComment: Comment? by remember { mutableStateOf(null) }
     val currentUser by viewModel.getCurrentUser().observeAsState()
-    val article by viewModel.getSelectedArticle().observeAsState()
-    val post by viewModel.getSelectedPost().observeAsState()
+    val article by viewModel.getSelectedArticle()?.observeAsState()
+        ?: remember { mutableStateOf(null) }
+    val post by viewModel.getSelectedPost()?.observeAsState()
+        ?: remember { mutableStateOf(null) }
     val likeButton: @Composable () -> Unit = {
         LikeButton(
             list = article?.likes ?: post!!.likes,
             currentUser = currentUser,
             onClick = {
+                Log.d("HELP", "CommentsScreen: ${article ?: post!!}")
                 val liveData = MutableLiveData(Resource.loading(null))
                 viewModel.getViewModelScope().launch {
                     liveData.postValue(viewModel.pressedLikeOnItem(article ?: post!!))
