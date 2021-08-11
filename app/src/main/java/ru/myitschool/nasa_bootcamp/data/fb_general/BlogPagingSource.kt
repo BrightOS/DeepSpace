@@ -24,11 +24,11 @@ class BlogPagingSource(private val firebaseRepository: FirebaseRepository) :
                 params.key ?: FirebaseDatabase.getInstance().getReference("user_posts")
                     .orderByKey().limitToLast(10).get()
                     .await()
-            val lastVisibleContent = currentPage.children.last().key.toString()
+            val lastVisibleContent = currentPage.children.first().key.toString()
             val nextPage =
-                FirebaseDatabase.getInstance().getReference("user_posts").orderByKey().endAt(lastVisibleContent).get()
+                FirebaseDatabase.getInstance().getReference("user_posts").orderByKey().endBefore(lastVisibleContent).limitToLast(10).get()
                     .await()
-            val postsResource = firebaseRepository.getPostsFromDataSnapshot(nextPage)
+            val postsResource = firebaseRepository.getPostsFromDataSnapshot(currentPage)
             if (postsResource.status == Status.SUCCESS)
                 LoadResult.Page(
                     data = postsResource.data!!,
