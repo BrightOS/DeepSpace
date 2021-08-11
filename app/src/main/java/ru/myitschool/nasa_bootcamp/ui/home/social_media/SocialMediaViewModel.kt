@@ -10,7 +10,6 @@ import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 interface SocialMediaViewModel {
-//    fun getBlogs(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>>
     fun getNews(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>
     suspend fun loadNews()
     suspend fun loadCurrentUser()

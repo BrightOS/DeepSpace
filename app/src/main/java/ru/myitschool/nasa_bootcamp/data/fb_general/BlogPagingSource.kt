@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.data.fb_general
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -10,8 +9,8 @@ import kotlinx.coroutines.tasks.await
 import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
 import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
+import ru.myitschool.nasa_bootcamp.utils.BLOG_PAGE_SIZE
 import ru.myitschool.nasa_bootcamp.utils.Status
-import javax.inject.Inject
 
 class BlogPagingSource(private val firebaseRepository: FirebaseRepository) :
     PagingSource<DataSnapshot, LiveData<ContentWithLikesAndComments<PostModel>>>() {
@@ -19,15 +18,17 @@ class BlogPagingSource(private val firebaseRepository: FirebaseRepository) :
     override suspend fun load(params: LoadParams<DataSnapshot>):
             LoadResult<DataSnapshot, LiveData<ContentWithLikesAndComments<PostModel>>> {
         return try {
-            Log.d("HELP", "load: ${params.key}")
             val currentPage =
                 params.key ?: FirebaseDatabase.getInstance().getReference("user_posts")
-                    .orderByKey().limitToLast(10).get()
+                    .orderByKey().limitToLast(BLOG_PAGE_SIZE).get()
                     .await()
             val lastVisibleContent = currentPage.children.first().key.toString()
-            val nextPage =
-                FirebaseDatabase.getInstance().getReference("user_posts").orderByKey().endBefore(lastVisibleContent).limitToLast(10).get()
+            var nextPage =
+                FirebaseDatabase.getInstance().getReference("user_posts").orderByKey()
+                    .endBefore(lastVisibleContent).limitToLast(BLOG_PAGE_SIZE).get()
                     .await()
+            if (nextPage.value == null)
+                nextPage = null
             val postsResource = firebaseRepository.getPostsFromDataSnapshot(currentPage)
             if (postsResource.status == Status.SUCCESS)
                 LoadResult.Page(

@@ -35,6 +35,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.PostModel
@@ -72,19 +73,20 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
         },
         pagerFlow = viewModel.getBlogs(),
         currentUser = currentUser,
-        headerContent = {
+        headerContent = { lazyItems ->
             BlogCreatePost { title, postItems ->
                 val liveData = MutableLiveData(Resource.loading(null))
                 viewModel.getViewModelScope().launch {
                     liveData.postValue(viewModel.createPost(title, postItems))
+                    liveData.postValue(Resource.success(null))
                 }
-//                liveData.observe(lifecycleOwner) {
-//                    if (it.status == Status.SUCCESS)
-//                        viewModel.getViewModelScope().launch {
-//                            delay(1000)
-//                            viewModel.loadBlogs()
-//                        }
-//                }
+                liveData.observe(lifecycleOwner) {
+                    if (it.status == Status.SUCCESS)
+                        viewModel.getViewModelScope().launch {
+                            delay(1000)
+                            lazyItems.refresh()
+                        }
+                }
                 liveData
             }
         },
