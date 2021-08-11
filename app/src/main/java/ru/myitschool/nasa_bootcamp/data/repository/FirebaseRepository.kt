@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.Post
 import ru.myitschool.nasa_bootcamp.data.dto.firebase.PostView
 import ru.myitschool.nasa_bootcamp.data.model.*
@@ -13,6 +14,7 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 interface FirebaseRepository {
+    suspend fun getPostsFromDataSnapshot(snapshot: DataSnapshot): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
     suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
     suspend fun getAllPosts(): Data<out ArrayList<Post>>
     suspend fun downloadImage(postId: String, imageId: String):Data<Bitmap>

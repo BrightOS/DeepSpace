@@ -2,6 +2,9 @@ package ru.myitschool.nasa_bootcamp.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import ru.myitschool.nasa_bootcamp.data.fb_general.BlogPagingSource
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
@@ -38,6 +41,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
         return Resource.success(result.data)
     }
 
+    override fun getBlogPagingSource() = BlogPagingSource(firebaseRepository)
     override suspend fun pressedLikeOnItem(
         item: ContentWithLikesAndComments<out Any>
     ): Resource<Nothing> {
@@ -203,4 +207,3 @@ class SocialMediaRepositoryImpl @Inject constructor(
 
     override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()
 }
-

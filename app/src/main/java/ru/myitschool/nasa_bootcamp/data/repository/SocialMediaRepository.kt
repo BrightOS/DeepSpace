@@ -1,12 +1,14 @@
 package ru.myitschool.nasa_bootcamp.data.repository
 
 import androidx.lifecycle.LiveData
+import ru.myitschool.nasa_bootcamp.data.fb_general.BlogPagingSource
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 interface SocialMediaRepository {
     suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>
     suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>
+    fun getBlogPagingSource(): BlogPagingSource
     suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
     suspend fun getCurrentUser(): UserModel?
     suspend fun pressedLikeOnComment(

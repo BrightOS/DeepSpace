@@ -45,7 +45,6 @@ class SocialMediaFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel.getViewModelScope().launch(Dispatchers.IO) {
             viewModel.loadNews()
-            viewModel.loadBlogs()
             viewModel.loadCurrentUser()
         }
         super.onCreate(savedInstanceState)

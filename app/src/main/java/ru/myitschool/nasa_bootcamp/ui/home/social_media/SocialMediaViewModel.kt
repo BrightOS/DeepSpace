@@ -1,14 +1,16 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import com.google.firebase.database.DataSnapshot
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
 interface SocialMediaViewModel {
-    fun getBlogs(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>>
     fun getNews(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>
-    suspend fun loadBlogs()
     suspend fun loadNews()
     suspend fun loadCurrentUser()
     fun getViewModelScope(): CoroutineScope
@@ -39,4 +41,5 @@ interface SocialMediaViewModel {
 //    suspend fun getLikesByItemId(id: Long, _class: Class<*>): List<UserModel>
 //    suspend fun getLikesByCommentId(id: Long): List<UserModel>
 //    suspend fun getCommentById(id: Long): LiveData<Comment>
+    fun getBlogs():  Flow<PagingData<LiveData<ContentWithLikesAndComments<PostModel>>>>
 }

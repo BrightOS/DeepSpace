@@ -39,3 +39,5 @@ const val DEGREE_180 = 180.0
 const val DEGREE_360 = 360.0
 const val DEC_LINES_COUNT = 36
 const val RA_LINES_COUNT = 2
+
+const val BLOG_PAGE_SIZE = 20

@@ -4,30 +4,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ru.myitschool.nasa_bootcamp.data.fb_general.BlogPagingSource
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.data.repository.SocialMediaRepository
+import ru.myitschool.nasa_bootcamp.utils.BLOG_PAGE_SIZE
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class SocialMediaViewModelImpl @Inject constructor(private val networkRepository: SocialMediaRepository) :
     SocialMediaViewModel, ViewModel() {
-    private val blogs =
-        MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>>()
+    private val blogsFlow = Pager(PagingConfig(pageSize = BLOG_PAGE_SIZE)) {
+        networkRepository.getBlogPagingSource()
+    }.flow.cachedIn(getViewModelScope())
     private val articles =
         MutableLiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>()
     private var selectedPost: LiveData<ContentWithLikesAndComments<PostModel>>? = null
     private var selectedArticle: LiveData<ContentWithLikesAndComments<ArticleModel>>? = null
     private val currentUser = MutableLiveData<UserModel?>(null)
 
-    override fun getBlogs() = blogs
+    override fun getBlogs() = blogsFlow
     override fun getNews() = articles
 
-    override suspend fun loadBlogs() {
-        blogs.postValue(Resource.loading(blogs.value?.data))
-        blogs.postValue(networkRepository.getBlogPosts())
-    }
 
     override suspend fun loadNews() {
         articles.postValue(Resource.loading(articles.value?.data))

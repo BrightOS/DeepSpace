@@ -15,6 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
+import kotlinx.coroutines.flow.Flow
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
@@ -64,6 +70,93 @@ fun <T> Feed(
                 onClick = onRetryButtonClick,
                 modifier = Modifier.align(Alignment.Center)
             )
+    }
+}
+
+@Composable
+fun <T> FeedWithPager(
+    pagerFlow: Flow<PagingData<LiveData<ContentWithLikesAndComments<T>>>>,
+    currentUser: UserModel?,
+    itemContent: @Composable (T) -> Unit,
+    headerContent: @Composable
+    LazyItemScope.(LazyPagingItems<LiveData<ContentWithLikesAndComments<T>>>)
+    -> Unit = { Spacer(Modifier) },
+    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Nothing>>,
+    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Nothing>>,
+    onDeleteComment: (Comment, ContentWithLikesAndComments<T>) -> Unit,
+    onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
+) {
+    val lazyItems = pagerFlow.collectAsLazyPagingItems()
+    Box {
+        LazyColumn(Modifier.fillMaxSize()) {
+            item {
+                headerContent(lazyItems)
+            }
+            items(lazyItems) { item ->
+                if (item != null) {
+                    val content by item.observeAsState()
+                    if (content != null)
+                        ItemWithLikesAndComments(
+                            item = content!!,
+                            itemContent = itemContent,
+                            currentUser = currentUser,
+                            onLikeButtonClick = { onLikeButtonClick(content!!) },
+                            onCommentButtonClick = { onItemClick(item) },
+                            onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
+                            onClick = { onItemClick(item) },
+                            onDeleteComment = { onDeleteComment(it, content!!) }
+                        )
+                }
+            }
+            lazyItems.apply {
+                when {
+                    loadState.refresh is LoadState.Loading -> {
+                        item {
+                            Box(modifier = Modifier.fillMaxSize()) {
+                                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                            }
+                        }
+                    }
+                    loadState.refresh is LoadState.Error -> {
+                        item {
+                            Box(modifier = Modifier.fillMaxSize()) {
+                                ErrorMessage(
+                                    onClick = { retry() }, modifier = Modifier
+                                        .padding(16.dp)
+                                        .align(
+                                            Alignment.Center
+                                        )
+                                )
+                            }
+                        }
+                    }
+                    loadState.append is LoadState.Loading -> {
+                        item {
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .padding(16.dp)
+                                        .align(
+                                            Alignment.Center
+                                        )
+                                )
+                            }
+                        }
+                    }
+                    loadState.append is LoadState.Error -> {
+                        item {
+                            ErrorMessage(
+                                onClick = { retry() }, modifier = Modifier
+                                    .padding(16.dp)
+                                    .align(
+                                        Alignment.Center
+                                    )
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

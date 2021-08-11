@@ -41,7 +41,7 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaFragmentDirections
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
-import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.Feed
+import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.FeedWithPager
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
@@ -49,11 +49,9 @@ import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 @Composable
 fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
     val lifecycleOwner = LocalLifecycleOwner.current
-    val listResource by viewModel.getBlogs().observeAsState(Resource.success(listOf()))
     val action = SocialMediaFragmentDirections.actionSocialMediaFragmentToCommentsFragment()
     val currentUser by viewModel.getCurrentUser().observeAsState()
-    Feed(
-        onRetryButtonClick = { viewModel.getViewModelScope().launch { viewModel.loadBlogs() } },
+    FeedWithPager(
         itemContent = { item: PostModel -> BlogItemContent(item) },
         onLikeButtonClick = {
             val liveData = MutableLiveData(Resource.loading(null))
@@ -73,19 +71,20 @@ fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
             }
             liveData
         },
-        listResource = listResource,
+        pagerFlow = viewModel.getBlogs(),
         currentUser = currentUser,
-        headerContent = {
+        headerContent = { lazyItems ->
             BlogCreatePost { title, postItems ->
                 val liveData = MutableLiveData(Resource.loading(null))
                 viewModel.getViewModelScope().launch {
                     liveData.postValue(viewModel.createPost(title, postItems))
+                    liveData.postValue(Resource.success(null))
                 }
                 liveData.observe(lifecycleOwner) {
                     if (it.status == Status.SUCCESS)
                         viewModel.getViewModelScope().launch {
                             delay(1000)
-                            viewModel.loadBlogs()
+                            lazyItems.refresh()
                         }
                 }
                 liveData
