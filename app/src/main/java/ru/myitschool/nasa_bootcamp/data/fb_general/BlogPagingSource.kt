@@ -22,15 +22,13 @@ class BlogPagingSource(private val firebaseRepository: FirebaseRepository) :
             Log.d("HELP", "load: ${params.key}")
             val currentPage =
                 params.key ?: FirebaseDatabase.getInstance().getReference("user_posts")
-                    .orderByChild("date").limitToLast(10).get()
+                    .orderByKey().limitToLast(10).get()
                     .await()
-//            val lastVisibleContent = currentPage.children.last().value.toString()
+            val lastVisibleContent = currentPage.children.last().key.toString()
             val nextPage =
-                FirebaseDatabase.getInstance().getReference("user_posts").orderByChild("date")
-//                    .startAfter(lastVisibleContent)
-                    .limitToLast(10).get()
+                FirebaseDatabase.getInstance().getReference("user_posts").orderByKey().endAt(lastVisibleContent).get()
                     .await()
-            val postsResource = firebaseRepository.getPostsFromDataSnapshot(currentPage)
+            val postsResource = firebaseRepository.getPostsFromDataSnapshot(nextPage)
             if (postsResource.status == Status.SUCCESS)
                 LoadResult.Page(
                     data = postsResource.data!!,
