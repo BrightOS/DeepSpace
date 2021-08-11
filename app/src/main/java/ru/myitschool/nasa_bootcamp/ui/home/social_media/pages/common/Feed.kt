@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
+import androidx.paging.compose.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -15,9 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.Comment
 import ru.myitschool.nasa_bootcamp.data.model.ContentWithLikesAndComments
+import ru.myitschool.nasa_bootcamp.data.model.PostModel
 import ru.myitschool.nasa_bootcamp.data.model.UserModel
 import ru.myitschool.nasa_bootcamp.ui.home.components.ErrorMessage
 import ru.myitschool.nasa_bootcamp.utils.Resource
@@ -64,6 +69,43 @@ fun <T> Feed(
                 onClick = onRetryButtonClick,
                 modifier = Modifier.align(Alignment.Center)
             )
+    }
+}
+
+@Composable
+fun <T> FeedWithPager(
+    pagerFlow: Flow<PagingData<LiveData<ContentWithLikesAndComments<T>>>>,
+    currentUser: UserModel?,
+    itemContent: @Composable (T) -> Unit,
+    headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
+    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Nothing>>,
+    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Nothing>>,
+    onDeleteComment: (Comment, ContentWithLikesAndComments<T>) -> Unit,
+    onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
+) {
+    val listResource = pagerFlow.collectAsLazyPagingItems()
+    Box {
+        LazyColumn(Modifier.fillMaxSize()) {
+            item {
+                headerContent()
+            }
+            items(listResource) { item ->
+                if (item != null) {
+                    val content by item.observeAsState()
+                    if (content != null)
+                        ItemWithLikesAndComments(
+                            item = content!!,
+                            itemContent = itemContent,
+                            currentUser = currentUser,
+                            onLikeButtonClick = { onLikeButtonClick(content!!) },
+                            onCommentButtonClick = { onItemClick(item) },
+                            onLikeInCommentClick = { onLikeInCommentClick(content!!, it) },
+                            onClick = { onItemClick(item) },
+                            onDeleteComment = { onDeleteComment(it, content!!) }
+                        )
+                }
+            }
+        }
     }
 }
 

@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -22,9 +24,11 @@ import ru.myitschool.nasa_bootcamp.data.dto.firebase.UserDto
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.Resource
+import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.downloadFirebaseImage
 import java.io.ByteArrayOutputStream
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
@@ -61,11 +65,11 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>> {
+    override suspend fun getPostsFromDataSnapshot(snapshot: DataSnapshot):
+            Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>> {
         val returnData = mutableListOf<MutableLiveData<ContentWithLikesAndComments<PostModel>>>()
         try {
-            dbInstance.getReference("user_posts").orderByChild("date").get()
-                .await().children.forEach {
+            snapshot.children.forEach {
                 val _username = it.child("author").child("name").getValue(String::class.java)!!
                 val _url =
                     it.child("author").child("avatarUrl").getValue(String::class.java)!!.toUri()
@@ -98,6 +102,14 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             e.printStackTrace()
             return Resource.error(e.message.toString(), null)
         }
+    }
+
+    override suspend fun getAllPostsRawData():
+            Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>> {
+        return getPostsFromDataSnapshot(
+            dbInstance.getReference("user_posts")
+                .orderByChild("date").get().await()
+        )
     }
 
     private fun userPostCommentsAndLikesListener(
