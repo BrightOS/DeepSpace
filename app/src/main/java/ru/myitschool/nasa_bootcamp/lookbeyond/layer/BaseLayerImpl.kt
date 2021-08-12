@@ -51,10 +51,10 @@ abstract class BaseLayerImpl(protected val resources: Resources) : BaseLayer {
         }
         renderMapLock.lock()
         try {
-            val atomic = renderer!!.createQueue()
-            setSources(lineRes, ClassType.LINE, atomic)
-            setSources(imageRes, ClassType.IMAGE, atomic)
-            renderer!!.queueRender(atomic)
+            val run = renderer!!.createQueue()
+            setSources(lineRes, ClassType.LINE, run)
+            setSources(imageRes, ClassType.IMAGE, run)
+            renderer!!.queueRender(run)
         } finally {
             renderMapLock.unlock()
         }

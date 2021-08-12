@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
+import ru.myitschool.nasa_bootcamp.utils.Status
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +19,7 @@ class LaunchLandViewModelImpl @Inject constructor(
 
     var landModels: MutableLiveData<ArrayList<LandPadModel>> = MutableLiveData<ArrayList<LandPadModel>>()
     var listLand: ArrayList<LandPadModel> = arrayListOf()
-
+    private var status: MutableLiveData<Status> = MutableLiveData<Status>()
     var launchModels: MutableLiveData<ArrayList<LaunchPadModel>> = MutableLiveData<ArrayList<LaunchPadModel>>()
     var listLaunch: ArrayList<LaunchPadModel> = arrayListOf()
 
@@ -34,13 +35,22 @@ class LaunchLandViewModelImpl @Inject constructor(
     }
 
     override suspend fun getLandPads() {
+        status.value = Status.LOADING
         val response = repository.getLandPads()
 
-        for (land in response.body()!!) {
-            listLand.add(land.createLandPadModel())
-            Log.d("LAND_TAG", "Name: ${land.createLandPadModel().full_name} Lat: ${land.createLandPadModel().location.latitude} Lan : ${land.createLandPadModel().location.longitude}")
+        if(response.isSuccessful) {
+            status.value = Status.SUCCESS
+            for (land in response.body()!!) {
+                listLand.add(land.createLandPadModel())
+                Log.d(
+                    "LAND_TAG",
+                    "Name: ${land.createLandPadModel().full_name} Lat: ${land.createLandPadModel().location.latitude} Lan : ${land.createLandPadModel().location.longitude}"
+                )
+            }
+            landModels.value = listLand
+        }else{
+            status.value = Status.ERROR
         }
-        landModels.value = listLand
     }
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope
@@ -48,6 +58,10 @@ class LaunchLandViewModelImpl @Inject constructor(
     override fun getLandList(): MutableLiveData<ArrayList<LandPadModel>>  = landModels
 
     override fun getLaunchList(): MutableLiveData<ArrayList<LaunchPadModel>> = launchModels
+
+    override fun getStatus(): MutableLiveData<Status> {
+        return status
+    }
 
 
 }

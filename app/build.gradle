@@ -169,6 +169,7 @@ dependencies {
     // Insets for Compose
     implementation "com.google.accompanist:accompanist-insets:0.16.1"
     implementation 'com.google.protobuf:protobuf-javalite:3.14.0'
+
     // Pager for Compose
     implementation "com.google.accompanist:accompanist-pager:0.16.1"
     implementation 'io.sentry:sentry-android:5.0.1'
@@ -177,18 +178,3 @@ dependencies {
 
 }
 
-protobuf {
-    protoc {
-        artifact = 'com.google.protobuf:protoc:3.13.0'
-    }
-
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                java {
-                    option "lite"
-                }
-            }
-        }
-    }
-}
