@@ -9,6 +9,6 @@ import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.utils.Data
 
 interface RegViewModel {
-    suspend fun createUser(context: Context, userName: String, email: String, password: String, imagePath: Uri?): Data<out FirebaseUser>
+    suspend fun createUser(context: Context, userName: String, email: String, password: String, imagePath: Uri?): Data<FirebaseUser>
     fun getViewModelScope(): CoroutineScope
 }

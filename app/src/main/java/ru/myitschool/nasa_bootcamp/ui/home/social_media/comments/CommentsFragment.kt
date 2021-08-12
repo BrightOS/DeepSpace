@@ -47,7 +47,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.*
-import ru.myitschool.nasa_bootcamp.ui.home.components.clearFocusOnKeyboardDismiss
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModel
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.SocialMediaViewModelImpl
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.common.CommentItem
@@ -235,7 +234,7 @@ fun BottomTextField(
                     modifier = Modifier
                         .weight(1f, true)
                         .focusRequester(focusRequester)
-                        .clearFocusOnKeyboardDismiss()
+//                        .clearFocusOnKeyboardDismiss()
                 )
                 IconButton(
                     enabled = isButtonEnabled,

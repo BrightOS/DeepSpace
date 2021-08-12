@@ -49,8 +49,6 @@ open class Vector3D(var x: Double, var y: Double, var z: Double) {
 
     override fun equals(other: Any?): Boolean {
         if (other !is Vector3D) return false
-        val other = other
-
         return other.x == x && other.y == y && other.z == z
     }
 

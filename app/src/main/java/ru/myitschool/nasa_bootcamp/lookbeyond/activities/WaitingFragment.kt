@@ -16,10 +16,7 @@ import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkPermission
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentWaitingBinding
@@ -37,6 +34,7 @@ class WaitingFragment : Fragment() {
 
     }
 
+    @DelicateCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,6 +77,7 @@ class WaitingFragment : Fragment() {
         binding.waitingLoading.startLoadingAnimation()
     }
 
+    @DelicateCoroutinesApi
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

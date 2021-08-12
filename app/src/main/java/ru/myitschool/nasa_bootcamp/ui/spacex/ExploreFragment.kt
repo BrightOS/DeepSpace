@@ -1,21 +1,14 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import androidx.core.view.ViewCompat.animate
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.fragment_explore.*
 import ru.myitschool.nasa_bootcamp.databinding.FragmentExploreBinding
-import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.SPACEX_LOGO_GIF
-import ru.myitschool.nasa_bootcamp.utils.STARMAN_GIF_LINK
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
 
