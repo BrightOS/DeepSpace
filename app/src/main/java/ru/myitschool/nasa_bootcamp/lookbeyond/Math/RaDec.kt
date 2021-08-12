@@ -36,7 +36,7 @@ class RaDec(
         val xv = cos(E) - eccentricity!!
         val yv = sqrt(1.0 - eccentricity!! * eccentricity!!) * Math.sin(E)
 
-        val v = atan2(yv, xv)
+//        val v = atan2(yv, xv)
 
         trueAnomaly = trueAnomaly((meanAnomaly!! - perihelion!!), eccentricity!!)
     }

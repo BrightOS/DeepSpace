@@ -187,7 +187,7 @@ class SpaceAnimation {
 
         this.nextAnim = pleaseAnim
 
-        withEndAction { PleaseAnim@ this.nextAnim?.startThen() }
+        withEndAction { this.nextAnim?.startThen() }
 
         return pleaseAnim
     }

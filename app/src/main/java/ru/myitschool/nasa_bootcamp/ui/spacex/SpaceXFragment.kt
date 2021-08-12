@@ -8,27 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.ui.graphics.Color
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_asteroid_radar.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.xml.sax.ErrorHandler
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.*
-import kotlin.system.measureTimeMillis
 
 @AndroidEntryPoint
 class SpaceXFragment : Fragment() {
@@ -66,7 +55,7 @@ class SpaceXFragment : Fragment() {
             when (data) {
                 is Data.Ok -> {
                     spaceXLaunchAdapter.submitList(data.data)
-                    (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                    (activity as MainActivity).getMainLoading().stopLoadingAnimation()
                 }
                 is Data.Error -> {
                     if (data.message == "noInternet"){
@@ -75,7 +64,7 @@ class SpaceXFragment : Fragment() {
                 }
                 is Data.Local -> {
                     spaceXLaunchAdapter.submitList(data.data)
-                    (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                    (activity as MainActivity).getMainLoading().stopLoadingAnimation()
                 }
                 Data.Loading -> {
 
@@ -94,7 +83,7 @@ class SpaceXFragment : Fragment() {
                     PorterDuff.Mode.SRC_ATOP
                 );
             } else if ((error == Status.LOADING)) {
-                (activity as MainActivity).main_loading?.startLoadingAnimation()
+                (activity as MainActivity).getMainLoading().startLoadingAnimation()
                 binding.launchesRecycle.visibility = View.GONE
                 //binding.errorIcon.visibility = View.GONE
                 binding.explore.getBackground().setColorFilter(
@@ -148,7 +137,7 @@ class SpaceXFragment : Fragment() {
     }
 
     override fun onPause() {
-        (activity as MainActivity).main_loading?.stopLoadingAnimation()
+        (activity as MainActivity).getMainLoading().stopLoadingAnimation()
         super.onPause()
     }
 }

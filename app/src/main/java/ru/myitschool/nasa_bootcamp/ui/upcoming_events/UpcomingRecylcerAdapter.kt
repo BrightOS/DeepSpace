@@ -80,7 +80,7 @@ class UpcomingRecylcerAdapter internal constructor(
                     isEnabledNotification = true
                     associatedNotification = notification
 
-                    context.resources.getColor(R.color.green).let {
+                    ContextCompat.getColor(context, R.color.green).let {
                         enableNotificationButton.setCardBackgroundColor(
                             ColorStateList.valueOf(it)
                         )
@@ -105,7 +105,7 @@ class UpcomingRecylcerAdapter internal constructor(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         animateShadow(
                             cardLaunch.outlineSpotShadowColor,
-                            context.resources.getColor(
+                            ContextCompat.getColor(context,
                                 R.color.upcoming_blue
                             ),
                             holder.binding.cardLaunch
@@ -127,7 +127,7 @@ class UpcomingRecylcerAdapter internal constructor(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         animateShadow(
                             cardLaunch.outlineSpotShadowColor,
-                            context.resources.getColor(
+                            ContextCompat.getColor(context,
                                 R.color.green
                             ),
                             holder.binding.cardLaunch
@@ -135,7 +135,7 @@ class UpcomingRecylcerAdapter internal constructor(
                     }
                     animateButton(
                         enableNotificationButton.cardBackgroundColor.defaultColor,
-                        context.resources.getColor(
+                        ContextCompat.getColor(context,
                             R.color.green
                         ),
                         holder.binding

@@ -3,17 +3,17 @@ package ru.myitschool.nasa_bootcamp
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.inputmethod.InputMethodManager
-
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -23,17 +23,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.layout_loading.*
-import kotlinx.android.synthetic.main.layout_loading.view.*
-import kotlinx.android.synthetic.main.nav_header_main.view.*
-import kotlinx.coroutines.*
 import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.databinding.ActivityMainBinding
 import ru.myitschool.nasa_bootcamp.databinding.NavHeaderMainBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import java.io.IOException
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -75,10 +71,12 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    fun getMainLoading() = binding.mainLoading
+
 
     // enable close drawer on back pressed
     override fun onBackPressed() {
-        main_loading.stopLoadingAnimation(false)
+        binding.mainLoading.stopLoadingAnimation(false)
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         else
@@ -87,11 +85,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun setImage(data: Intent?) {
         try {
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data?.data)
+            val bitmap = if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images.Media.getBitmap(contentResolver, data?.data)
+            } else {
+                val source = ImageDecoder.createSource(contentResolver, data?.data!!)
+                ImageDecoder.decodeBitmap(source)
+            }
             navHeaderMainBinding.userAvatar.setImageBitmap(bitmap)
             val user = FirebaseAuth.getInstance()
             if (data?.data != null) {
-                FirebaseStorage.getInstance().getReference("user_data/${user.uid}").putFile(data.data!!)
+                FirebaseStorage.getInstance().getReference("user_data/${user.uid}")
+                    .putFile(data.data!!)
             }
         } catch (e: IOException) {
             Toast.makeText(

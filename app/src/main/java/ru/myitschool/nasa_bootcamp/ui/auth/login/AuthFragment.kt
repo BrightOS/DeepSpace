@@ -15,9 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -78,7 +75,7 @@ class AuthFragment : Fragment() {
                 } else {
                     loading = true
                     (activity as MainActivity).apply {
-                        main_loading.startLoadingAnimation()
+                        (activity as MainActivity).getMainLoading().startLoadingAnimation()
                         hideKeyboard()
                     }
 
@@ -86,7 +83,7 @@ class AuthFragment : Fragment() {
                         when (val it = viewModel.authenticateUser(requireContext(), userName, password)) {
                             is Data.Ok -> onSuccessLogin()
                             is Data.Error ->
-                                (activity as MainActivity).main_loading.showError(it.message)
+                                (activity as MainActivity).getMainLoading().showError(it.message)
                         }
                     }
                 }
@@ -101,7 +98,7 @@ class AuthFragment : Fragment() {
 
     private fun onSuccessLogin() {
         (activity as MainActivity).apply {
-            main_loading.stopLoadingAnimation(true)
+            getMainLoading().stopLoadingAnimation(true)
             changeHeader()
             hideKeyboard()
         }

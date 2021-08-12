@@ -14,7 +14,7 @@ object TimeMachine {
     // JD = 367 * Y - INT(7 * (Y + INT((M + 9)/12))/4) + INT(275 * M / 9 + D + 1721013.5 + UT/24
     fun julianDay(date: Date?): Double {
         val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
-        cal.time = date
+        cal.time = date ?: Date(1)
         val hour = (cal[Calendar.HOUR_OF_DAY] 
                 + cal[Calendar.MINUTE] / 60.0 + cal[Calendar.SECOND] / 3600.0)
         val year = cal[Calendar.YEAR]
