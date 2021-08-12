@@ -6,12 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
 import ru.myitschool.nasa_bootcamp.data.room.LaunchesDao
 import ru.myitschool.nasa_bootcamp.utils.Data
+import ru.myitschool.nasa_bootcamp.utils.EasyTimer
 import ru.myitschool.nasa_bootcamp.utils.Status
 import java.lang.Exception
 import javax.inject.Inject
@@ -25,13 +27,28 @@ class SpaceXViewModelImpl @Inject constructor(
     private var errorHandler: MutableLiveData<Status> = MutableLiveData<Status>(Status.LOADING)
     private val liveData = MutableLiveData<Data<List<SxLaunchModel>>>(Data.Loading)
 
+    override suspend fun reconnectToSpaceX() {
+        val response = repository.getSpaceXLaunches()
+        if (response.body() != null) {
+            val launches = response.body()!!
+            val sxLaunches = launches.map { launch -> launch.createLaunchModel() }.asReversed()
+            liveData.postValue(Data.Ok(sxLaunches))
+            errorHandler.postValue(Status.SUCCESS)
+            Log.i("vm_debug", "retrofit got")
+            //launchesDao.insertAllLaunches(launches)
+            Log.i("vm_debug", "launches saved")
+
+        }
+    }
+
     override fun getSpaceXLaunches(): LiveData<Data<List<SxLaunchModel>>> {
-       viewModelScope.launch(Dispatchers.IO) {
-            val launches = launchesDao.getAllLaunches().map { launch -> launch.createLaunchModel() }.asReversed()
-            if(liveData.value !is Data.Ok){
+        viewModelScope.launch(Dispatchers.IO) {
+            val launches = launchesDao.getAllLaunches().map { launch -> launch.createLaunchModel() }
+                .asReversed()
+            if (liveData.value !is Data.Ok) {
                 liveData.postValue(Data.Local(launches))
                 errorHandler.postValue(Status.SUCCESS)
-                Log.i("vm_debug","room got")
+                Log.i("vm_debug", "room got")
             }
         }
         viewModelScope.launch(Dispatchers.Default) {
@@ -41,16 +58,17 @@ class SpaceXViewModelImpl @Inject constructor(
                 if (response.isSuccessful) {
                     if (response.body() != null) {
                         val launches = response.body()!!
-                        val sxLaunches = launches.map { launch -> launch.createLaunchModel() }.asReversed()
+                        val sxLaunches =
+                            launches.map { launch -> launch.createLaunchModel() }.asReversed()
                         liveData.postValue(Data.Ok(sxLaunches))
                         errorHandler.postValue(Status.SUCCESS)
-                        Log.i("vm_debug","retrofit got")
+                        Log.i("vm_debug", "retrofit got")
                         //launchesDao.insertAllLaunches(launches)
-                        Log.i("vm_debug","launches saved")
+                        Log.i("vm_debug", "launches saved")
 
                     }
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 liveData.postValue(Data.Error("noInternet"));
             }
         }
@@ -60,5 +78,7 @@ class SpaceXViewModelImpl @Inject constructor(
     override fun getErrorHandler(): MutableLiveData<Status> {
         return errorHandler
     }
+
+    override fun getViewModelScope(): CoroutineScope = viewModelScope
 
 }
