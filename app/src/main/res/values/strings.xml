@@ -110,4 +110,9 @@
     <string name="reply_to">"reply to "</string>
     <string name="article">Article</string>
     <string name="post">Post</string>
+    <string name="yana_gladkikh">Yana Gladkikh</string>
+    <string name="denis_barov">Denis Barov</string>
+    <string name="vladimir_abubakirov">Vladimir Abubakirov</string>
+    <string name="samuil_nalisin">Samuil Nalisin</string>
+    <string name="danil_khairulin">Danil Khairulin</string>
 </resources>

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+ <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -98,6 +105,7 @@
         android:indeterminate="true"
         android:visibility="invisible" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/launches_recycle"
         android:layout_width="match_parent"
@@ -105,4 +113,35 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/launch_item" />
 
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/no_internet"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_offline"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ru.myitschool.nasa_bootcamp.widget.SpaceButton
+        android:id="@+id/reconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        app:backgroundTint="@color/enabled_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/no_internet"
+        app:text="Reconnect"
+        android:visibility="gone"
+        app:textAllCaps="true"
+        app:textColor="#D1D1D1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

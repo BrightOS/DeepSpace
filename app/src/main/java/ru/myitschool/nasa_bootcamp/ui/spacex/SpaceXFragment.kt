@@ -65,11 +65,17 @@ class SpaceXFragment : Fragment() {
         launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
             when (data) {
                 is Data.Ok -> {
+                    binding.noInternet.visibility = View.GONE
+                    binding.reconnect.visibility = View.GONE
+
                     spaceXLaunchAdapter.submitList(data.data)
                     (activity as MainActivity).main_loading?.stopLoadingAnimation()
                 }
                 is Data.Error -> {
                     if (data.message == "noInternet"){
+                        binding.noInternet.visibility = View.VISIBLE
+                        binding.reconnect.visibility = View.VISIBLE
+
                         Toast.makeText(requireContext(),"no internet connection",Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -87,26 +93,29 @@ class SpaceXFragment : Fragment() {
         launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
             if (error == Status.ERROR) {
                 Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
+                binding.noInternet.visibility = View.VISIBLE
+                binding.reconnect.visibility = View.VISIBLE
+
                 binding.launchesRecycle.visibility = View.GONE
-                //binding.errorIcon.visibility = View.VISIBLE
                 binding.explore.getBackground().setColorFilter(
                     resources.getColor(R.color.disabled_button),
                     PorterDuff.Mode.SRC_ATOP
-                );
+                )
             } else if ((error == Status.LOADING)) {
                 (activity as MainActivity).main_loading?.startLoadingAnimation()
                 binding.launchesRecycle.visibility = View.GONE
-                //binding.errorIcon.visibility = View.GONE
                 binding.explore.getBackground().setColorFilter(
                     resources.getColor(R.color.disabled_button),
                     PorterDuff.Mode.SRC_ATOP
-                );
+                )
             } else {
+                binding.noInternet.visibility = View.GONE
+                binding.reconnect.visibility = View.GONE
                 binding.launchesRecycle.visibility = View.VISIBLE
                  binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button),
                     PorterDuff.Mode.SRC_ATOP
-                );
-            }
+                )
+             }
 
             val animation = animateIt {
                 animate(binding.spaceXLogo) animateTo {
