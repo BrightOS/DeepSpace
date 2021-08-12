@@ -68,7 +68,7 @@ class SensorFragment : Fragment(), SensorEventListener {
 
     private fun onResumeSensors() {
         accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        val nosensorColor = resources.getColor(R.color.none)
+        val nosensorColor = ContextCompat.getColor(requireContext(), R.color.none)
 
         if (accelSensor == null) {
             binding.accelerometer.setTextColor(nosensorColor)
@@ -155,19 +155,19 @@ class SensorFragment : Fragment(), SensorEventListener {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE ->
                     view.setTextColor(
-                        resources.getColor(R.color.vaerybad)
+                        ContextCompat.getColor(requireContext(), R.color.vaerybad)
                     )
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> view.setTextColor(
-                    resources.getColor(R.color.bad)
+                    ContextCompat.getColor(requireContext(), R.color.bad)
                 )
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> view.setTextColor(
-                    resources.getColor(R.color.norm)
+                    ContextCompat.getColor(requireContext(), R.color.norm)
                 )
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> view.setTextColor(
-                    resources.getColor(R.color.great)
+                    ContextCompat.getColor(requireContext(), R.color.great)
                 )
                 SensorManager.SENSOR_STATUS_NO_CONTACT -> view.setTextColor(
-                    resources.getColor(R.color.vaerybad)
+                    ContextCompat.getColor(requireContext(), R.color.vaerybad)
                 )
             }
         }
