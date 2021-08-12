@@ -4,8 +4,6 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#FFFFFF</item>
         <item name="toolbarStyle">@style/custom_toolbar</item>
-
-
     </style>
 
     <style name="SpaceTextView" parent="@style/Widget.AppCompat.TextView">

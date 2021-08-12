@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -13,6 +15,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+ 
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.date_item.*
+import kotlinx.android.synthetic.main.fragment_asteroid_radar.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.xml.sax.ErrorHandler
+ 
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
@@ -39,7 +49,6 @@ class SpaceXFragment : Fragment() {
         binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
         binding.launchesRecycle.setHasFixedSize(false)
 
-
         DimensionsUtil.dpToPx(requireContext(), 5).let {
             DimensionsUtil.setMargins(
                 binding.toolBar,
@@ -50,87 +59,93 @@ class SpaceXFragment : Fragment() {
             )
         }
 
+ 
+        fun observeSpaceXLaunchers() {
+            launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
+                when (data) {
+                    is Data.Ok -> {
+                        binding.noInternet.visibility = GONE
+                        binding.reconnect.visibility = GONE
+                        binding.reconnectProgressBar.visibility = GONE
+                        binding.loadProgressbar.visibility = GONE
+                        binding.textNoInternet.visibility = GONE
 
-        launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
-            when (data) {
-                is Data.Ok -> {
-                    spaceXLaunchAdapter.submitList(data.data)
-                    (activity as MainActivity).getMainLoading().stopLoadingAnimation()
-                }
-                is Data.Error -> {
-                    if (data.message == "noInternet"){
-                        Toast.makeText(requireContext(),"no internet connection",Toast.LENGTH_SHORT).show()
+                        spaceXLaunchAdapter.submitList(data.data)
+                        (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                    }
+                    is Data.Error -> {
+                        if (data.message == "noInternet") {
+                            (activity as MainActivity).main_loading?.stopLoadingAnimation()
+
+                            binding.noInternet.visibility = VISIBLE
+                            binding.reconnect.visibility = VISIBLE
+                            binding.reconnectProgressBar.visibility = GONE
+                            binding.loadProgressbar.visibility = GONE
+                            binding.textNoInternet.visibility = VISIBLE
+
+
+                            Toast.makeText(
+                                requireContext(),
+                                "no internet connection",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                    is Data.Local -> {
+                        spaceXLaunchAdapter.submitList(data.data)
+                        (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                    }
+                    Data.Loading -> {
+ 
+
                     }
                 }
-                is Data.Local -> {
-                    spaceXLaunchAdapter.submitList(data.data)
-                    (activity as MainActivity).getMainLoading().stopLoadingAnimation()
-                }
-                Data.Loading -> {
-
-                }
             }
+        }
+        observeSpaceXLaunchers()
 
+ 
+        binding.reconnect.setOnClickListener {
+            binding.reconnectProgressBar.visibility = VISIBLE
+ 
+
+            observeSpaceXLaunchers()
         }
 
-        launchesViewModel.getErrorHandler().observe(viewLifecycleOwner) { error ->
-            if (error == Status.ERROR) {
-                Log.d("LAUNCH_NOT_LOADED_TAG", "No internet connection")
-                binding.launchesRecycle.visibility = View.GONE
-                //binding.errorIcon.visibility = View.VISIBLE
-                binding.explore.getBackground().setColorFilter(
-                    resources.getColor(R.color.disabled_button),
-                    PorterDuff.Mode.SRC_ATOP
-                );
-            } else if ((error == Status.LOADING)) {
-                (activity as MainActivity).getMainLoading().startLoadingAnimation()
-                binding.launchesRecycle.visibility = View.GONE
-                //binding.errorIcon.visibility = View.GONE
-                binding.explore.getBackground().setColorFilter(
-                    resources.getColor(R.color.disabled_button),
-                    PorterDuff.Mode.SRC_ATOP
-                );
-            } else {
-                binding.launchesRecycle.visibility = View.VISIBLE
-                 binding.explore.getBackground().setColorFilter(resources.getColor(R.color.enabled_button),
-                    PorterDuff.Mode.SRC_ATOP
-                );
+        val animation = animateIt {
+            animate(binding.spaceXLogo) animateTo {
+                topOfItsParent(marginDp = 35f)
+                leftOfItsParent(marginDp = 10f)
+                scale(0.8f, 0.8f)
             }
 
-            val animation = animateIt {
-                animate(binding.spaceXLogo) animateTo {
-                    topOfItsParent(marginDp = 35f)
-                    leftOfItsParent(marginDp = 10f)
-                    scale(0.8f, 0.8f)
-                }
 
-
-                animate(binding.explore) animateTo {
-                    rightOfItsParent(marginDp = 20f)
-                    sameCenterVerticalAs(binding.spaceXLogo)
-                }
-
-                animate(binding.background) animateTo {
-                    height(
-                        resources.getDimensionPixelOffset(R.dimen.height),
-                        horizontalGravity = Gravity.LEFT, verticalGravity = Gravity.TOP
-                    )
-                }
+            animate(binding.explore) animateTo {
+                rightOfItsParent(marginDp = 20f)
+                sameCenterVerticalAs(binding.spaceXLogo)
             }
 
-            binding.launchesRecycle.setOnScrollChangeListener { v, _, scrollY, _, _ ->
-                val percent = scrollY * 1f
-                animation.setPercent(percent)
+            animate(binding.background) animateTo {
+                height(
+                    resources.getDimensionPixelOffset(R.dimen.height),
+                    horizontalGravity = Gravity.LEFT, verticalGravity = Gravity.TOP
+                )
             }
-
-            val navController = findNavController()
-
-            binding.explore.setOnClickListener {
-                val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
-                navController.navigate(action)
-            }
-
         }
+
+        binding.launchesRecycle.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            val percent = scrollY * 1f
+            animation.setPercent(percent)
+        }
+
+        val navController = findNavController()
+
+        binding.explore.setOnClickListener {
+            val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
+            navController.navigate(action)
+        }
+
+
 
         return binding.root
 
