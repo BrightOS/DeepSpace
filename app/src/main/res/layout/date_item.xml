@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/time"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,6 +12,6 @@
     android:fontFamily="@font/inter_bold"
     android:paddingHorizontal="15dp"
     android:paddingVertical="12dp"
-    android:text="July 2nd. 2015"
+    tools:text="July 2nd. 2015"
     android:textColor="@android:color/white"
     android:textSize="21sp" />

@@ -34,6 +34,8 @@ import kotlin.collections.ArrayList
 
 class FirebaseRepositoryImpl(val appContext: Context) :
     FirebaseRepository {
+
+
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private val dbInstance = FirebaseDatabase.getInstance()

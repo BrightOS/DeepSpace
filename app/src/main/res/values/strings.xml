@@ -116,4 +116,5 @@
     <string name="samuil_nalisin">Samuil Nalisin</string>
     <string name="danil_khairulin">Danil Khairulin</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="unexpected_error">Произошла непредвиденная ошибка.</string>
 </resources>
