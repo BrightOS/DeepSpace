@@ -16,10 +16,10 @@ import ru.myitschool.nasa_bootcamp.utils.Resource
 interface FirebaseRepository {
     suspend fun getPostsFromDataSnapshot(snapshot: DataSnapshot): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
     suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
-    suspend fun getAllPosts(): Data<out ArrayList<Post>>
+    suspend fun getAllPosts(): Data<ArrayList<Post>>
     suspend fun downloadImage(postId: String, imageId: String):Data<Bitmap>
     suspend fun createPost(title: String, postItems: List<Any>): Resource<MutableLiveData<ContentWithLikesAndComments<PostModel>>>
-    fun uploadImage(postId: String, imageId: Int,  imagePath: Uri) : LiveData<Data<out String>>
+    fun uploadImage(postId: String, imageId: Int,  imagePath: Uri) : LiveData<Data<String>>
     suspend fun getLastPostId(): String?
     suspend fun pushComment(source: String, postId: Int, comment: String): Resource<Nothing>
     suspend fun pushSubComment(source: String, postId: Int, fatherCommentId: Long, comment: String): Resource<Nothing>

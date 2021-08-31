@@ -10,28 +10,24 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.compose.ui.graphics.Color
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+ 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.date_item.*
 import kotlinx.android.synthetic.main.fragment_asteroid_radar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.xml.sax.ErrorHandler
+ 
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.FragmentSpacexBinding
 import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.*
-import kotlin.system.measureTimeMillis
 
 @AndroidEntryPoint
 class SpaceXFragment : Fragment() {
@@ -63,6 +59,7 @@ class SpaceXFragment : Fragment() {
             )
         }
 
+ 
         fun observeSpaceXLaunchers() {
             launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
                 when (data) {
@@ -99,6 +96,7 @@ class SpaceXFragment : Fragment() {
                         (activity as MainActivity).main_loading?.stopLoadingAnimation()
                     }
                     Data.Loading -> {
+ 
 
                     }
                 }
@@ -106,8 +104,10 @@ class SpaceXFragment : Fragment() {
         }
         observeSpaceXLaunchers()
 
+ 
         binding.reconnect.setOnClickListener {
             binding.reconnectProgressBar.visibility = VISIBLE
+ 
 
             observeSpaceXLaunchers()
         }
@@ -152,7 +152,7 @@ class SpaceXFragment : Fragment() {
     }
 
     override fun onPause() {
-        (activity as MainActivity).main_loading?.stopLoadingAnimation()
+        (activity as MainActivity).getMainLoading().stopLoadingAnimation()
         super.onPause()
     }
 }
