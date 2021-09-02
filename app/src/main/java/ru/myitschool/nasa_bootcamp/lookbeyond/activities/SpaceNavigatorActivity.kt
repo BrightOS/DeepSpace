@@ -75,10 +75,10 @@ class SpaceNavigatorActivity : AppCompatActivity() {
         _binding = SpaceNavigatorBinding.inflate(layoutInflater)
 
 
-//        viewModel.isLoaded.observe(this) {
-//            //   Log.d("LOAD", "LOAEDDD")
-//            // binding.loadProgressbar.visibility = View.GONE
-//        }
+        viewModel.isLoaded.observe(this) {
+            //   Log.d("LOAD", "LOAEDDD")
+            // binding.loadProgressbar.visibility = View.GONE
+        }
 
         controller = Managers(
             SensorManager(

@@ -104,7 +104,7 @@ fun getPlusNDaysTimeFormatted(time: Long, n: Int) : String {
 fun getPlusNDaysTimeFormatted(time: String, n: Int) : String {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     val calendar = Calendar.getInstance()
-    calendar.time = dateFormat.parse(time) ?: Date(1)
+    calendar.time = dateFormat.parse(time)
     val currentTime = calendar.time
     calendar.add(Calendar.DAY_OF_YEAR, n - 1)
     return dateFormat.format(currentTime)

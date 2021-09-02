@@ -8,9 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_info.*
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCoresBinding
+import ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons.DragonsAdapter
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
+import ru.myitschool.nasa_bootcamp.utils.STARMAN_GIF_LINK
+import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
+import ru.myitschool.nasa_bootcamp.utils.loadImage
 
 @AndroidEntryPoint
 class CoresFragment : Fragment() {
