@@ -2,42 +2,40 @@ package ru.myitschool.nasa_bootcamp.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.android.synthetic.main.layout_loading.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.databinding.LayoutLoadingBinding
 
 class SpaceLoadingView constructor(
     private val cont: Context,
     private val attrs: AttributeSet?
 ) :
     ConstraintLayout(cont, attrs) {
-    private val binding: LayoutLoadingBinding =
-        LayoutLoadingBinding.inflate(LayoutInflater.from(cont), this)
 
     var errorText: CharSequence?
         set(value) {
-            binding.errorText.text = value
+            error_text?.text = value
         }
-        get() = binding.errorText.text
+        get() = error_text?.text
 
     var showCheckIcon: Boolean = false
 
     init {
+        View.inflate(context, R.layout.layout_loading, this)
 
         attrs?.let {
             val typedArray = context.obtainStyledAttributes(it, R.styleable.SpaceLoadingView)
 
             typedArray.getString(R.styleable.SpaceLoadingView_errorText)?.let {
-                binding.errorText.text =
+                error_text?.text =
                     if (it.length > 0)
                         it
                     else
@@ -48,12 +46,12 @@ class SpaceLoadingView constructor(
 
             if (typedArray.getBoolean(R.styleable.SpaceLoadingView_showByDefault, false)) {
                 prepareLoadingView()
-                binding.loadingProgressBar.visibility = View.VISIBLE
-                binding.loadingRoot.visibility = View.VISIBLE
+                loading_progress_bar.visibility = View.VISIBLE
+                loading_root.visibility = View.VISIBLE
                 GlobalScope.launch {
                     delay(200)
                     MainScope().launch {
-                        binding.loadingProgressBar.indeterminateMode = true
+                        loading_progress_bar.indeterminateMode = true
                     }
                 }
             }
@@ -65,14 +63,14 @@ class SpaceLoadingView constructor(
     fun startLoadingAnimation() {
         MainScope().launch {
             prepareLoadingView()
-            binding.loadingProgressBar.visibility = View.VISIBLE
+            loading_progress_bar.visibility = View.VISIBLE
 
             val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, false)
             rootView?.let {
                 TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
             }
 
-            binding.loadingRoot.visibility = View.VISIBLE
+            loading_root.visibility = View.VISIBLE
         }
     }
 
@@ -82,12 +80,12 @@ class SpaceLoadingView constructor(
         MainScope().launch {
             if (showCheckIcon) {
                 var sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
-                binding.loadingRoot.let {
+                loading_root?.let {
                     TransitionManager.beginDelayedTransition(it, sharedAxis)
                 }
 
-                binding.loadingProgressBar.visibility = View.GONE
-                binding.donePic.visibility = View.VISIBLE
+                loading_progress_bar.visibility = View.GONE
+                done_pic.visibility = View.VISIBLE
 
                 GlobalScope.launch {
                     delay(1000)
@@ -97,7 +95,7 @@ class SpaceLoadingView constructor(
                             TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
                         }
 
-                        binding.loadingRoot.visibility = View.GONE
+                        loading_root.visibility = View.GONE
                     }
                 }
             } else {
@@ -106,7 +104,7 @@ class SpaceLoadingView constructor(
                     TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
                 }
 
-                binding.loadingRoot.visibility = View.GONE
+                loading_root.visibility = View.GONE
             }
         }
     }
@@ -117,13 +115,13 @@ class SpaceLoadingView constructor(
         MainScope().launch {
             var sharedAxis: MaterialSharedAxis
 
-            binding.errorText.text = errorText
+            error_text.text = errorText
 
-            if (binding.loadingRoot.visibility == View.GONE) {
+            if (loading_root.visibility == View.GONE) {
                 prepareLoadingView()
 
-                binding.errorPic.visibility = View.VISIBLE
-                binding.errorText.visibility = View.VISIBLE
+                error_pic.visibility = View.VISIBLE
+                error_text.visibility = View.VISIBLE
 
                 sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
 
@@ -131,17 +129,17 @@ class SpaceLoadingView constructor(
                     TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
                 }
 
-                binding.loadingRoot.visibility = View.VISIBLE
+                loading_root.visibility = View.VISIBLE
             } else {
 
                 sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
-                binding.loadingRoot.let {
+                loading_root?.let {
                     TransitionManager.beginDelayedTransition(it, sharedAxis)
                 }
 
-                binding.loadingProgressBar.visibility = View.GONE
-                binding.errorPic.visibility = View.VISIBLE
-                binding.errorText.visibility = View.VISIBLE
+                loading_progress_bar.visibility = View.GONE
+                error_pic.visibility = View.VISIBLE
+                error_text.visibility = View.VISIBLE
             }
 
             GlobalScope.launch {
@@ -152,16 +150,16 @@ class SpaceLoadingView constructor(
                         TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
                     }
 
-                    binding.loadingRoot.visibility = View.GONE
+                    loading_root.visibility = View.GONE
                 }
             }
         }
     }
 
     private fun prepareLoadingView() {
-        binding.loadingProgressBar.visibility = View.GONE
-        binding.errorPic.visibility = View.GONE
-        binding.errorText.visibility = View.GONE
-        binding.donePic.visibility = View.GONE
+        loading_progress_bar.visibility = View.GONE
+        error_pic.visibility = View.GONE
+        error_text.visibility = View.GONE
+        done_pic.visibility = View.GONE
     }
 }

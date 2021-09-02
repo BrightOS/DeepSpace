@@ -6,13 +6,11 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -41,7 +39,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.android.material.composethemeadapter.MdcTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -62,15 +59,6 @@ class CommentsFragment : Fragment() {
     val viewModel: SocialMediaViewModel
             by navGraphViewModels<SocialMediaViewModelImpl>(R.id.socialMediaNavGraph) { defaultViewModelProviderFactory }
 
-    override fun onResume() {
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        super.onResume()
-    }
-
-    override fun onPause() {
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        super.onPause()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,7 +68,7 @@ class CommentsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 MdcTheme {
-                    ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
+                    ProvideWindowInsets {
                         CommentsScreen(viewModel, findNavController())
                     }
                 }
@@ -92,9 +80,6 @@ class CommentsFragment : Fragment() {
 @Composable
 fun CommentsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
     val focusRequester = remember { FocusRequester() }
-    val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
-    val lifecycleOwner = LocalLifecycleOwner.current
     var selectedComment: Comment? by remember { mutableStateOf(null) }
     val currentUser by viewModel.getCurrentUser().observeAsState()
     val article by viewModel.getSelectedArticle()?.observeAsState()
@@ -115,7 +100,7 @@ fun CommentsScreen(viewModel: SocialMediaViewModel, navController: NavController
             })
     }
     Column {
-        LazyColumn(modifier = Modifier.weight(1f), state = listState) {
+        LazyColumn(modifier = Modifier.weight(1f)) {
             item {
                 if (post != null)
                     PostContent(
@@ -161,35 +146,22 @@ fun CommentsScreen(viewModel: SocialMediaViewModel, navController: NavController
         }
         BottomTextField(
             modifier = Modifier
-                .fillMaxWidth()
-                .navigationBarsWithImePadding(),
+                .fillMaxWidth(),
             currentUser = currentUser,
             selectedComment = selectedComment,
             focusRequester = focusRequester,
             clearSelectedUser = { selectedComment = null },
             onClick = { text, selectedComment ->
-                val comment =
-                    if (selectedComment is SubComment)
-                        selectedComment.parentComment
-                    else selectedComment
                 val liveData = MutableLiveData(Resource.loading(null))
                 viewModel.getViewModelScope().launch {
                     liveData.postValue(
                         viewModel.sendMessage(
                             message = text,
-                            parentComment = comment,
+                            parentComment = selectedComment,
                             id = if (article != null) article!!.content.id else post!!.content.id,
                             _class = if (article != null) ArticleModel::class.java else PostModel::class.java
                         )
                     )
-                }
-                val lastItemIndex = listState.layoutInfo.totalItemsCount - 1
-                liveData.observe(lifecycleOwner) {
-                    if (it.status == Status.SUCCESS)
-                        coroutineScope.launch {
-                            if (comment == null)
-                                listState.scrollToItem(lastItemIndex)
-                        }
                 }
                 liveData
             },
@@ -234,7 +206,6 @@ fun BottomTextField(
                     modifier = Modifier
                         .weight(1f, true)
                         .focusRequester(focusRequester)
-//                        .clearFocusOnKeyboardDismiss()
                 )
                 IconButton(
                     enabled = isButtonEnabled,

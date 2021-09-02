@@ -19,10 +19,11 @@ import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_asteroid_radar.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidRadarBinding
 import ru.myitschool.nasa_bootcamp.utils.*
@@ -80,7 +81,7 @@ class AsteroidRadarFragment : Fragment() {
 
         if (!this::asteroidController.isInitialized) {
             asteroidController = AsteroidEpoxyController(requireContext())
-            (activity as MainActivity).getMainLoading().startLoadingAnimation()
+            activity?.main_loading?.startLoadingAnimation()
 
             asteroidViewModel.getViewModelScope().launch {
                 asteroidViewModel.getAsteroidList()
@@ -103,7 +104,7 @@ class AsteroidRadarFragment : Fragment() {
                 )
 
                 MainScope().launch {
-                    (activity as MainActivity).getMainLoading().stopLoadingAnimation(false)
+                    activity?.main_loading?.stopLoadingAnimation(false)
                 }
             }
         })
@@ -112,7 +113,7 @@ class AsteroidRadarFragment : Fragment() {
     }
 
     override fun onPause() {
-        (activity as MainActivity).getMainLoading().stopLoadingAnimation()
+        activity?.main_loading?.stopLoadingAnimation()
         super.onPause()
     }
 }

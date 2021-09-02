@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -13,9 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -29,31 +28,27 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.transition.MaterialSharedAxis
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_review.*
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.databinding.FragmentReviewBinding
+import java.io.File
 import java.io.IOException
 import java.io.OutputStream
 import java.util.*
 import kotlin.properties.Delegates
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
-    private var _binding: FragmentReviewBinding? = null
-    private val binding get() = _binding!!
     val args: ReviewFragmentArgs by navArgs()
     var systemUI by Delegates.notNull<Int>()
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentReviewBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).getMainLoading().startLoadingAnimation()
+        (activity as MainActivity).main_loading?.startLoadingAnimation()
 
         Glide.with(this)
             .load(args.url)
-            .apply(RequestOptions().override(binding.background.width / 2, binding.background.height / 2))
+            .apply(RequestOptions().override(background.width / 2, background.height / 2))
             .into(object : SimpleTarget<Drawable>() {
                 override fun onResourceReady(
                     resource: Drawable,
@@ -61,17 +56,17 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
                 ) {
                     Glide.with(this@ReviewFragment)
                         .load(resource)
-                        .into(binding.background)
+                        .into(background)
 
                     val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Y, true)
-                    TransitionManager.beginDelayedTransition(binding.reviewRoot, sharedAxis)
+                    TransitionManager.beginDelayedTransition(review_root, sharedAxis)
 
-                    (activity as MainActivity).getMainLoading().stopLoadingAnimation()
-                    binding.background.visibility = View.VISIBLE
-                    binding.download.visibility = View.VISIBLE
-                    binding.setAsWallpaper.visibility = View.VISIBLE
+                    (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                    background.visibility = View.VISIBLE
+                    download.visibility = View.VISIBLE
+                    set_as_wallpaper.visibility = View.VISIBLE
 
-                    binding.download.setOnClickListener {
+                    download.setOnClickListener {
                         saveImageToStorage(
                             requireContext(),
                             resource.toBitmap(),
@@ -80,7 +75,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
                         )
                     }
 
-                    binding.setAsWallpaper.setOnClickListener {
+                    set_as_wallpaper.setOnClickListener {
                         saveImageToStorage(
                             requireContext(),
                             resource.toBitmap(),
@@ -92,7 +87,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
 
             })
 
-        binding.back.setOnClickListener {
+        back.setOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -101,7 +96,6 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
             it.systemUiVisibility =
                 it.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
         }
-        return binding.root
     }
 
     private fun beginDownload(

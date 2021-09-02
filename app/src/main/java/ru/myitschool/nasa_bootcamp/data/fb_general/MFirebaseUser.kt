@@ -31,8 +31,8 @@ class MFirebaseUser() : ViewModel() {
         return downloadFirebaseImage(storageRef)
     }
 
-    fun signOutUser(context: Context): LiveData<Data<FirebaseUser>> {
-        val returnData: MutableLiveData<Data<FirebaseUser>> = MutableLiveData()
+    fun signOutUser(context: Context): LiveData<Data<out FirebaseUser>> {
+        val returnData: MutableLiveData<Data<out FirebaseUser>> = MutableLiveData()
         try {
             authenticator.signOut()
             context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit().clear().apply()

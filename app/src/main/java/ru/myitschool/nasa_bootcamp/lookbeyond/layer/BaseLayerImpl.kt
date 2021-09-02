@@ -64,7 +64,7 @@ abstract class BaseLayerImpl(protected val resources: Resources) : BaseLayer {
         sources: ArrayList<E>?,
         classType: ClassType, run: RendererThreadRun.RunRendering
     ) {
-        var manager = renderMap[classType]
+        var manager = renderMap[classType] as RendererRunner.RenderManager?
         if (sources == null || sources.isEmpty()) {
             if (manager != null) {
                 manager.runObjects<E>(emptyList(), run)

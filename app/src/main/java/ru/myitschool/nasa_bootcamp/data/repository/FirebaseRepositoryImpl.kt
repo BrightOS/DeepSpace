@@ -284,8 +284,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: String,
         imageId: Int,
         imagePath: Uri
-    ): LiveData<Data<String>> {
-        val returnData = MutableLiveData<Data<String>>()
+    ): LiveData<Data<out String>> {
+        val returnData = MutableLiveData<Data<out String>>()
         try {
             val storageRef = storage.getReference("posts").child(postId).child("$imageId")
             storageRef.putFile(imagePath).addOnSuccessListener {
@@ -557,7 +557,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override fun signOutUser(context: Context): LiveData<Data<String>> {
+    override fun signOutUser(context: Context): LiveData<Data<out String>> {
         val returnData: MutableLiveData<Data<out String>> = MutableLiveData()
         try {
             authenticator.signOut()
@@ -609,15 +609,16 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     override suspend fun getUser(uid: String): UserModel? {
         var user: UserModel? = null
         try {
+            var userName = ""
             var avatarUrl: Uri? = null
-            val userName =
+            userName =
                 dbInstance.getReference("user_data").child(uid).child("username").get().await()
                     .getValue(String::class.java).toString()
             try {
                 avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
             } catch (e: Exception) {
             }
-            user = UserModel(userName, avatarUrl, uid)
+            user = UserModel(userName.toString(), avatarUrl, uid)
         } catch (e: Exception) {
         }
         return user

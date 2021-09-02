@@ -103,16 +103,12 @@ class SpaceXLaunchAdapter :
 
         @SuppressLint("SetTextI18n")
         fun bind(launchModel: SxLaunchModel) {
-
-
             binding.loadProgressbar.visibility = View.VISIBLE
-
 
             binding.missionName.text = launchModel.mission_name
             binding.missionYear.text = convertDateFromUnix(launchModel.launch_date_unix)
             binding.details.text = launchModel.details
             binding.launchSite.text = launchModel.launch_site.site_name_long
-
 
             val finalString = convertDateFromUnix(launchModel.launch_date_unix)
 
@@ -125,8 +121,6 @@ class SpaceXLaunchAdapter :
                 ),
                 finalString.indexOf('.')
             )
-
-
             binding.characteristicsLaunch.rocketName.text =
                 "Rocket name: ${launchModel.rocket.rocket_name}"
 
