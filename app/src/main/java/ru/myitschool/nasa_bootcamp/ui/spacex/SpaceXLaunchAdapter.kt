@@ -178,8 +178,15 @@ class SpaceXLaunchAdapter :
 
             binding.characteristicsLaunch.recoverAttempt.text = tried
 
+            when(launchModel.rocket.rocket_name){
+                "Falcon 9"-> binding.characteristicsLaunch.appCompatImageView.setImageResource(R.drawable.falcon9)
+                "Falcon Heavy"-> binding.characteristicsLaunch.appCompatImageView.setImageResource(R.drawable.falcon_img)
+                else-> binding.characteristicsLaunch.appCompatImageView.setImageResource(R.drawable.falcon9)
+
+            }
+
             var recovered = "Recovered? : No"
-            if (launchModel.rocket.fairings != null && launchModel.rocket.fairings.reused != null)
+            if (launchModel.rocket.fairings?.reused != null)
                 recovered =
                     "Recovered? : ${if (launchModel.rocket.fairings.reused!!) "Yes " else "No"}"
 
