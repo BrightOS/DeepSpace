@@ -38,12 +38,13 @@ class SpaceXLaunchAdapter :
         }
     }
 
+    //TODO : сделать такую анимацию во всех ресайклах + эктеншн
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = getItem(position)
-        if(holder.adapterPosition > lastPosition){
+        if(holder.absoluteAdapterPosition > lastPosition){
             val animation = AnimationUtils.loadAnimation(holder.context,R.anim.slide_enter_anim)
             holder.itemView.startAnimation(animation)
-            lastPosition = holder.adapterPosition
+            lastPosition = holder.absoluteAdapterPosition
         }
         holder.bind(model)
     }
