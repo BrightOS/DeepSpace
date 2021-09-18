@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,8 @@ import java.util.*
 class SpaceXLaunchAdapter :
     ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
 
+    var lastPosition = -1
+
     class DiffCallback : DiffUtil.ItemCallback<SxLaunchModel>() {
         override fun areItemsTheSame(oldItem: SxLaunchModel, newItem: SxLaunchModel): Boolean {
             return oldItem.mission_name == newItem.mission_name
@@ -37,7 +40,11 @@ class SpaceXLaunchAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = getItem(position)
-
+        if(holder.adapterPosition > lastPosition){
+            val animation = AnimationUtils.loadAnimation(holder.context,R.anim.slide_enter_anim)
+            holder.itemView.startAnimation(animation)
+            lastPosition = holder.adapterPosition
+        }
         holder.bind(model)
     }
 

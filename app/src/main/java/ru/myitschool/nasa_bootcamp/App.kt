@@ -7,6 +7,7 @@ import dagger.hilt.android.HiltAndroidApp
 import ru.myitschool.nasa_bootcamp.lookbeyond.managers.AbstractPointing
 import ru.myitschool.nasa_bootcamp.lookbeyond.managers.VectorPointing
 import ru.myitschool.nasa_bootcamp.lookbeyond.layer.LayerManager
+import kotlin.reflect.KProperty
 
 
 @HiltAndroidApp
@@ -25,3 +26,4 @@ class App: Application(){
 
      }
 }
+
