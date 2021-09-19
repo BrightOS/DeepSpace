@@ -20,7 +20,6 @@ import java.util.*
 class CoresAdapter internal constructor(
     context: Context,
     coreModels: ArrayList<CoreModel>,
-    // val navController: NavController
 ) :
     RecyclerView.Adapter<CoresViewHolder>() {
     var context: Context
