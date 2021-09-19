@@ -46,3 +46,5 @@ abstract class ResBaseLayerImpl(resources: Resources?) :
 
     protected abstract fun init(sources: ArrayList<InitialResource>)
 }
+
+

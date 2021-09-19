@@ -121,7 +121,7 @@
                 android:textColor="@color/white_subtitle_color"
                 android:textSize="13sp"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="@id/recycle_item_img"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/recycle_item_img"
                 app:layout_constraintTop_toBottomOf="@+id/launch_site"

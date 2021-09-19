@@ -26,7 +26,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object MainModule {
 
-
     fun checkInternetConnection(): Boolean {
         return try {
             val inAddress: InetAddress = InetAddress.getByName("http://google.com")
@@ -55,8 +54,6 @@ object MainModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
 
-//        okHttpBuilder.interceptors().add(interceptor)
-
         return Retrofit.Builder()
             .baseUrl(NASA_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -72,8 +69,6 @@ object MainModule {
             .connectTimeout(5, TimeUnit.MINUTES)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
-
-//        okHttpBuilder.interceptors().add(interceptor)
 
         return Retrofit.Builder()
             .baseUrl(SPACEX_BASE_URL)
