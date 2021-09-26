@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.renderer
 
-import android.content.res.Resources
 import android.opengl.GLSurfaceView
 import ru.myitschool.nasa_bootcamp.lookbeyond.Math.GeocentricCoord
 import ru.myitschool.nasa_bootcamp.lookbeyond.Math.Matrix4D
@@ -11,10 +10,11 @@ import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 import kotlin.collections.HashSet
 import kotlin.math.cos
+import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-open class MainRender(res: Resources?) : GLSurfaceView.Renderer {
+open class MainRender : GLSurfaceView.Renderer {
     private val renderState = RenderingValues()
     private var projectionMatrix: Matrix4D? = null
     private var viewMatrix: Matrix4D? = null
@@ -95,7 +95,6 @@ open class MainRender(res: Resources?) : GLSurfaceView.Renderer {
 
     fun addRunTask(update: Runnable) {
         taasks.add(update)
-        this.viewModel = viewModel
     }
 
     fun addObjectManager(rendererManager: RendererManager) {
@@ -130,7 +129,7 @@ open class MainRender(res: Resources?) : GLSurfaceView.Renderer {
 
 
     fun setTextAngle(angleInRadians: Double) {
-        val newAngle = Math.round(angleInRadians * (2.0f / Math.PI)) * (Math.PI / 2.0)
+        val newAngle = (angleInRadians * (2.0f / Math.PI)).roundToInt() * (Math.PI / 2.0)
         renderState.upAngle = newAngle
     }
 
@@ -282,8 +281,7 @@ internal class RenderingValues : RenderingValuesInterface {
     override var screenHeight = 100
         private set
 
-    var transformToDeviceMatrix = Matrix4D.createIdentity()
-        private set
+    private var transformToDeviceMatrix = Matrix4D.createIdentity()
 
     var transformToScreenMatrix = Matrix4D.createIdentity()
         private set

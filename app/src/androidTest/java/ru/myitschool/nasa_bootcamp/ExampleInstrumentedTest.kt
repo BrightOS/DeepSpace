@@ -21,4 +21,6 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("ru.myitschool.nasa_bootcamp", appContext.packageName)
     }
+
+
 }

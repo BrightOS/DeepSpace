@@ -14,7 +14,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.*
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.databinding.SpaceNavigatorBinding
@@ -109,7 +108,7 @@ class SpaceNavigatorActivity : AppCompatActivity() {
 
         skyView = binding.spaceNav
         skyView!!.setEGLConfigChooser(false)
-        val renderer = MainRender(resources)
+        val renderer = MainRender()
         skyView!!.setRenderer(renderer)
 
         rendererThreadRun = RendererThreadRun(renderer, skyView!!)
