@@ -104,8 +104,6 @@ class AboutFragment : Fragment() {
             copyToClipBoard(danilMail,binding.danilkhairulin.text.toString())
         }
 
-
-
         return binding.root
     }
 
