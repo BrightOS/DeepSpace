@@ -11,29 +11,48 @@ import ru.myitschool.nasa_bootcamp.data.repository.NasaRepository
 import ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidRadarViewModel
 import java.lang.Exception
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class MarsRoversViewModelImpl @Inject constructor(
     private val repository: NasaRepository
 ) : ViewModel(), MarsRoversViewModel {
 
-     var roverModels: MutableLiveData<ArrayList<RoverModel>> =
+    var roverModels: MutableLiveData<ArrayList<RoverModel>> =
         MutableLiveData<ArrayList<RoverModel>>()
 
     var list: ArrayList<RoverModel> = arrayListOf()
 
+    fun createRandomSol(): Int {
+        val solValues = arrayListOf<Int>(2000, 1000, 2428, 2426, 2727, 2723, )
+        return Random.nextInt(solValues.size)
+    }
+
+
+    //TODO: move to interactor + use cases
     override suspend fun loadRoverPhotos() {
         try {
-            val response = repository.getRoverPhotos()
-
-            if (response.isSuccessful) {
-                if (response.body() != null) {
-                    for (r in response.body()!!.photos) {
+            val rnd = createRandomSol()
+            val response = repository.getRoverCuriosityPhotos(createRandomSol())
+            if (response.isSuccessful)
+                if (response.body() != null)
+                    for (r in response.body()!!.photos)
                         list.add(r.createRoverModel())
-                    }
-                }
-            }
-            //  list.reverse()
+
+            val response2 = repository.getRoverOpportunityPhotos(2000)
+            val response3 = repository.getRoverSpiritPhotos(1000)
+
+            if (response2.isSuccessful)
+                if (response2.body() != null)
+                    for (r in response2.body()!!.photos)
+                        list.add(r.createRoverModel())
+
+            if (response3.isSuccessful)
+                if (response3.body() != null)
+                    for (r in response3.body()!!.photos)
+                        list.add(r.createRoverModel())
+
+            list.shuffle()
             roverModels.value = list
 
             for (r in roverModels.value!!)
