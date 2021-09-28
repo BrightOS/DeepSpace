@@ -90,7 +90,7 @@ class RoverRecyclerAdapter internal constructor(
         }
 
         holder.binding.roverName.text = roverModel.rover.name
-        holder.binding.landingDate.text = roverModel.rover.landing_date
+        holder.binding.landingDate.text = roverModel.earth_date
         holder.binding.launchingDate.text = roverModel.rover.launch_date
         holder.binding.status.text = roverModel.rover.status
         holder.binding.camera.text =

@@ -9,5 +9,8 @@ import ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids.Asteroid
 interface NasaRepository {
     suspend fun getImageOfTheDay(): Response<Apod>
     suspend fun getAsteroids(beginDate: String, endDate: String): Response<Asteroid>
-    suspend fun getRoverPhotos(): Response<Rovers>
- }
+    suspend fun getRoverCuriosityPhotos(sol : Int): Response<Rovers>
+    suspend fun getRoverOpportunityPhotos(sol : Int): Response<Rovers>
+    suspend fun getRoverSpiritPhotos(sol : Int): Response<Rovers>
+
+}
