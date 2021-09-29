@@ -274,5 +274,10 @@
             android:defaultValue="none"
             app:argType="string" />
     </activity>
+    <fragment
+        android:id="@+id/earthFragment"
+        android:name="ru.myitschool.nasa_bootcamp.ui.earth.EarthFragment"
+        android:label="fragment_earth"
+        tools:layout="@layout/fragment_earth" />
 
 </navigation>
