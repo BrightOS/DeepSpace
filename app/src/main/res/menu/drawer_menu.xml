@@ -13,6 +13,11 @@
         <item
             android:id="@+id/marsRoversFragment"
             android:title="@string/mars_rovers" />
+
+        <item
+            android:id="@+id/earthFragment"
+            android:title="@string/earth" />
+
         <item
             android:id="@+id/spaceXFragment"
             android:title="@string/spacex" />
