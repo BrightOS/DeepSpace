@@ -24,7 +24,7 @@ class MarsRoversViewModelImpl @Inject constructor(
     var list: ArrayList<RoverModel> = arrayListOf()
 
     fun createRandomSol(): Int {
-        val solValues = arrayListOf<Int>(2000, 1000, 2428, 2426, 2727, 2723, )
+        val solValues = arrayListOf<Int>(2000, 1000, 2428, 2426)
         return Random.nextInt(solValues.size)
     }
 
