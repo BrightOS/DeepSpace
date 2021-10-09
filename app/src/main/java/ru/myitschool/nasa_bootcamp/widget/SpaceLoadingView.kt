@@ -36,7 +36,7 @@ class SpaceLoadingView constructor(
 
             typedArray.getString(R.styleable.SpaceLoadingView_errorText)?.let {
                 error_text?.text =
-                    if (it.length > 0)
+                    if (it.isNotEmpty())
                         it
                     else
                         cont.resources.getString(R.string.default_error)

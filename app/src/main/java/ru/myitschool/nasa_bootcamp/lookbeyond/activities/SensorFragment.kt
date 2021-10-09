@@ -31,7 +31,6 @@ class SensorFragment : Fragment(), SensorEventListener {
         model = VectorPointing()
     }
 
-
     private var accelSensor: Sensor? = null
     private var magSensor: Sensor? = null
     private var gyroSensor: Sensor? = null
