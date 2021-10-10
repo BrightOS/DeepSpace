@@ -95,7 +95,7 @@
     <string name="user_posts">User posts</string>
     <string name="blogs">Blogs</string>
     <string name="blogs_and_news"><![CDATA[Blogs & News]]></string>
-    <string name="about_app">Project for Samsung Innovation Campus 2021 Dive into the world of space! Read space news, communicate with the other space-lovers and always know where planets are located at the current moment by using space navigator!</string>
+    <string name="about_app"> Dive into the world of space! Read space news, communicate with the other space-lovers and always know where planets are located at the current moment by using space navigator!</string>
     <string name="developers">Developers: </string>
 
     <string name="copiedToClipboard">%1$s email copied to clipboard</string>
