@@ -22,7 +22,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-
             android:id="@+id/logo_gif"
             android:layout_width="150dp"
             android:layout_height="150dp"
