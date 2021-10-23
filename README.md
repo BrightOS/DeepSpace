@@ -7,13 +7,14 @@ Dive into the world of space! Read space news, communicate with the other space-
 Окунись в мир космоса! Читай космические новости, общайся с другими любителями космоса, всегда знай расположение планет на текущий момент, благодаря космическому навигатору!
 
 English:
+
 What does application represent? 
--Authentication (sign up/sign in, profile )
--Authorized users can blog, create their own posts  
--Authorized users can like and comment on news or posts of other users
--Asteroid radar which allows you to find out whether asteroids that will be close to Earth on a given date are dangerous and view their characteristics 
--Mars Rover Photos. There you can view photos from Mars, set them on phone  background, read when they were taken and find out information about the rover that took the photo
--SpaceX section.
+- Authentication (sign up/sign in, profile )
+- Authorized users can blog, create their own posts  
+- Authorized users can like and comment on news or posts of other users
+- Asteroid radar which allows you to find out whether asteroids that will be close to Earth on a given date are dangerous and view their characteristics 
+- Mars Rover Photos. There you can view photos from Mars, set them on phone  background, read when they were taken and find out information about the rover that took the photo
+- SpaceX section.
  1. You take a look at list of all missions of the past years, find out if they were successful or not, with which spaceships they were launched, read about the characteristics of the 1st and 2nd stages, engines, whether the stages were reused and more
  2. Information about the company. Here you can check information about the heads of the company, the date of creation, the location of the headquarters, etc. You can also go to the "history" tab and read in details what the company went through to become what we know it now.
  3. Where is Elon Musk's Tesla Roadster now? You can find out it’s location, the distance to the Earth/Mars and other
@@ -28,6 +29,7 @@ What does application represent?
 - In the About/Contact tabs  you can read about the application and contact the developers
 
 Russian:
+
 Что предоставляет приложение? 
 - Возможность создавать аккаунт ( Регистрация/вход, обновление фото профиля)
 - Авторизированные пользователи могут вести блоги, создавать свои посты, прикрепляя к ним изображения
