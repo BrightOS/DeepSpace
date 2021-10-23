@@ -13,9 +13,7 @@ import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
 import ru.myitschool.nasa_bootcamp.data.room.LaunchesDao
 import ru.myitschool.nasa_bootcamp.utils.Data
-import ru.myitschool.nasa_bootcamp.utils.EasyTimer
 import ru.myitschool.nasa_bootcamp.utils.Status
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -69,7 +67,7 @@ class SpaceXViewModelImpl @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                liveData.postValue(Data.Error("noInternet"));
+                liveData.postValue(Data.Error("noInternet"))
             }
         }
         return liveData

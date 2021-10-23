@@ -17,11 +17,11 @@ class LaunchLandViewModelImpl @Inject constructor(
     private val repository: SpaceXRepository
 ) : ViewModel(), LaunchLandViewModel {
 
-    var landModels: MutableLiveData<ArrayList<LandPadModel>> = MutableLiveData<ArrayList<LandPadModel>>()
-    var listLand: ArrayList<LandPadModel> = arrayListOf()
+    private var landModels: MutableLiveData<ArrayList<LandPadModel>> = MutableLiveData<ArrayList<LandPadModel>>()
+    private var listLand: ArrayList<LandPadModel> = arrayListOf()
     private var status: MutableLiveData<Status> = MutableLiveData<Status>()
-    var launchModels: MutableLiveData<ArrayList<LaunchPadModel>> = MutableLiveData<ArrayList<LaunchPadModel>>()
-    var listLaunch: ArrayList<LaunchPadModel> = arrayListOf()
+    private var launchModels: MutableLiveData<ArrayList<LaunchPadModel>> = MutableLiveData<ArrayList<LaunchPadModel>>()
+    private var listLaunch: ArrayList<LaunchPadModel> = arrayListOf()
 
 
     override suspend fun getLaunchPads() {

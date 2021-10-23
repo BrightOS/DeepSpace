@@ -56,6 +56,7 @@ class NotificationCentre {
         val intent = Intent(context, NotificationReceiver::class.java)
         intent.putExtra(NotificationReceiver.titleIntent, notification.title)
         intent.putExtra(NotificationReceiver.textIntent, notification.text)
+
         deleteNotification(context, notification)
         val pendingIntent =
             PendingIntent.getBroadcast(context, notification.requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)

@@ -20,7 +20,7 @@ class HistoryViewModelImpl @Inject constructor(
         return status
     }
 
-    var historyModels: MutableLiveData<ArrayList<HistoryModel>> =
+    private var historyModels: MutableLiveData<ArrayList<HistoryModel>> =
         MutableLiveData<ArrayList<HistoryModel>>()
     var list: ArrayList<HistoryModel> = arrayListOf()
 
@@ -44,6 +44,4 @@ class HistoryViewModelImpl @Inject constructor(
     override fun getHistoryList(): MutableLiveData<ArrayList<HistoryModel>> {
         return historyModels
     }
-
-
 }

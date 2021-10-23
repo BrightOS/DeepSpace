@@ -6,6 +6,5 @@ import ru.myitschool.nasa_bootcamp.databinding.CoreItemBinding
 import ru.myitschool.nasa_bootcamp.databinding.DragonItemBinding
 
 class CoresViewHolder(
-    val binding: CoreItemBinding,
-    private val context: Context
+    val binding: CoreItemBinding
 ) : RecyclerView.ViewHolder(binding.root)

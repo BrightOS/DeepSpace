@@ -18,7 +18,7 @@ class MapActivity : AppCompatActivity() {
     var longitude: Double? = null
     var name: String? = null
     var details: String? = null
-    var nameDetails: NameDetails? = null
+    private var nameDetails: NameDetails? = null
 
     val args: MapActivityArgs by navArgs()
 

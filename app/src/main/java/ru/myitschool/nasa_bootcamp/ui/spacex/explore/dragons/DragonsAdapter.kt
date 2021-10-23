@@ -3,7 +3,6 @@ package ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.DragonModel
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
@@ -30,8 +29,7 @@ class DragonsAdapter internal constructor(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            context
+            )
         )
     }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import ru.myitschool.nasa_bootcamp.databinding.FragmentExploreBinding
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
@@ -17,17 +18,11 @@ class ExploreFragment : Fragment() {
     private var _binding: FragmentExploreBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -35,48 +30,47 @@ class ExploreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
 
-        DimensionsUtil.dpToPx(requireContext(), 15).let {
-            DimensionsUtil.setMargins(
-                binding.back,
-                it,
-                DimensionsUtil.getStatusBarHeight(resources) + it,
-                it,
-                it
-            )
+        with(binding) {
+            DimensionsUtil.dpToPx(requireContext(), 15).let {
+                DimensionsUtil.setMargins(
+                    back,
+                    it,
+                    DimensionsUtil.getStatusBarHeight(resources) + it,
+                    it,
+                    it
+                )
+            }
+            setupNavigation(navController)
+            loadImage(requireContext(), SPACEX_LOGO_GIF, starmanGif)
+        }
+    }
+
+    private fun FragmentExploreBinding.setupNavigation(navController: NavController) {
+        historyCard.setOnClickListener {
+            navController.navigate(ExploreFragmentDirections.actionExploreFragmentToHistoryFragment())
         }
 
-        binding.historyCard.setOnClickListener {
-            val action = ExploreFragmentDirections.actionExploreFragmentToHistoryFragment()
-            navController.navigate(action)
+        roadsterCard.setOnClickListener {
+            navController.navigate(ExploreFragmentDirections.actionExploreFragmentToRoadsterFragment())
         }
 
-        binding.roadsterCard.setOnClickListener {
-            val action = ExploreFragmentDirections.actionExploreFragmentToRoadsterFragment()
-            navController.navigate(action)
+        capsulesCard.setOnClickListener {
+            navController.navigate(ExploreFragmentDirections.actionExploreFragmentToCapsulesFragment())
         }
 
-        binding.capsulesCard.setOnClickListener {
-            val action = ExploreFragmentDirections.actionExploreFragmentToCapsulesFragment()
-            navController.navigate(action)
+        coresCard.setOnClickListener {
+            navController.navigate(ExploreFragmentDirections.actionExploreFragmentToCoresFragment())
         }
 
-        binding.coresCard.setOnClickListener {
-            val action = ExploreFragmentDirections.actionExploreFragmentToCoresFragment()
-            navController.navigate(action)
+        dragonsCard.setOnClickListener {
+            navController.navigate(ExploreFragmentDirections.actionExploreFragmentToDragonsFragment())
         }
 
-        binding.dragonsCard.setOnClickListener {
-            val action = ExploreFragmentDirections.actionExploreFragmentToDragonsFragment()
-            navController.navigate(action)
+        launchCard.setOnClickListener {
+            navController.navigate(ExploreFragmentDirections.actionExploreFragmentToLaunchLandFragment())
         }
-
-        binding.launchCard.setOnClickListener {
-            val action = ExploreFragmentDirections.actionExploreFragmentToLaunchLandFragment()
-            navController.navigate(action)
-        }
-        binding.back.setOnClickListener{
+        back.setOnClickListener {
             navController.navigateUp()
         }
-        loadImage(requireContext(), SPACEX_LOGO_GIF, binding.starmanGif)
     }
 }

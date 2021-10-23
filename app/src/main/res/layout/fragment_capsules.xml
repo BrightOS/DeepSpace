@@ -84,6 +84,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/capsules_recycler"
                 android:layout_width="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="1"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/capsule_item" />

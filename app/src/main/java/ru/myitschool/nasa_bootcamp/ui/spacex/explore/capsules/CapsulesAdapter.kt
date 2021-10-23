@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.CapsuleModel
-import ru.myitschool.nasa_bootcamp.data.model.CoreModel
 import ru.myitschool.nasa_bootcamp.databinding.CapsuleItemBinding
-import ru.myitschool.nasa_bootcamp.databinding.CoreItemBinding
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores.CoresViewHolder
 import ru.myitschool.nasa_bootcamp.utils.addSubstringAtIndex
 import ru.myitschool.nasa_bootcamp.utils.capitalize
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
@@ -35,8 +32,7 @@ class CapsulesAdapter internal constructor(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            context
+            )
         )
     }
 

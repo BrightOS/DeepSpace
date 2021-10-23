@@ -120,4 +120,10 @@
     <string name="date">Date:</string>
     <string name="curiosity">Curiosity</string>
     <string name="earth">Earth</string>
+    <string name="core">Core:</string>
+    <string name="mission">Mission:</string>
+    <string name="landedn_on_water">Landed on water?</string>
+    <string name="status">Status:</string>
+    <string name="blocks">Blocks:</string>
+    <string name="reused">Reused:</string>
 </resources>
