@@ -7,6 +7,25 @@ Dive into the world of space! Read space news, communicate with the other space-
 Окунись в мир космоса! Читай космические новости, общайся с другими любителями космоса, всегда знай расположение планет на текущий момент, благодаря космическому навигатору!
 
 English:
+What does application represent? 
+-Authentication (sign up/sign in, profile )
+-Authorized users can blog, create their own posts  
+-Authorized users can like and comment on news or posts of other users
+-Asteroid radar which allows you to find out whether asteroids that will be close to Earth on a given date are dangerous and view their characteristics 
+-Mars Rover Photos. There you can view photos from Mars, set them on phone  background, read when they were taken and find out information about the rover that took the photo
+-SpaceX section.
+ 1. You take a look at list of all missions of the past years, find out if they were successful or not, with which spaceships they were launched, read about the characteristics of the 1st and 2nd stages, engines, whether the stages were reused and more
+ 2. Information about the company. Here you can check information about the heads of the company, the date of creation, the location of the headquarters, etc. You can also go to the "history" tab and read in details what the company went through to become what we know it now.
+ 3. Where is Elon Musk's Tesla Roadster now? You can find out it’s location, the distance to the Earth/Mars and other
+ 4. "Dragons." Here you can read the characteristics of Dragons
+ 5. Capsules. All technical information about SpaceX capsule
+ 6. Cores. All information about SpaceX rocket engines
+ 7. Launching and Landing pages. SpaceX starting and landing points. Here you can find out where the flights start and where the landing takes place, read the characteristics of the zones, and also view the location on the google map
+- The Home page. Here you can quickly switch sections, watch the latest space news, NASA's picture of day 
+- SpaceNavigator. With its help, you can find out the location of the planets at a given time 
+- Sensors (navigator subsection). Gives you an ability to  see the indicators of the phone's sensors. Indicators are highlighted in color depending on how well they work
+- Upcoming events - upcoming SpaceX launches. User can set a notification for the launch date so as not to miss the event.
+- In the About/Contact tabs  you can read about the application and contact the developers
 
 Russian:
 Что предоставляет приложение? 
