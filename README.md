@@ -1,6 +1,8 @@
 # Deep Space 
 APK можно загрузить по ссылке: https://drive.google.com/file/d/1gmA5UAjOWfY_8iK-2Lo7f7qCaUBPe548/view?usp=sharing
 
+Presentation: https://docs.google.com/presentation/d/1c-eezTK-GtelYbv_2g7yAjRDPWDCi9j0/edit#slide=id.p25
+
 ![image](https://user-images.githubusercontent.com/55493845/128432221-8806288e-f41f-44c1-9ee1-7cbd6b70e9d7.png)
 
 Dive into the world of space! Read space news, communicate with the other space-lovers and always know where planets are located at the current moment by using space navigator!
