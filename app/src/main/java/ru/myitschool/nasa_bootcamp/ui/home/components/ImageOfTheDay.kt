@@ -28,6 +28,9 @@ import ru.myitschool.nasa_bootcamp.ui.home.components.Gradient
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun ImageOfTheDay(
     model: Resource<ImageOfTheDayModel>,

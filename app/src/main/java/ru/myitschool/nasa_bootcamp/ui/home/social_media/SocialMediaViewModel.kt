@@ -1,14 +1,15 @@
 package ru.myitschool.nasa_bootcamp.ui.home.social_media
 
 import androidx.lifecycle.LiveData
-import androidx.paging.Pager
 import androidx.paging.PagingData
-import com.google.firebase.database.DataSnapshot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import ru.myitschool.nasa_bootcamp.data.model.*
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
+/*
+ * @author Samuil Nalisin
+ */
 interface SocialMediaViewModel {
     fun getNews(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>
     suspend fun loadNews()

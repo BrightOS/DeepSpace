@@ -20,6 +20,9 @@ import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 
+/*
+ * @author Yana Glad
+ */
 @AndroidEntryPoint
 class SpaceXFragment : Fragment() {
 

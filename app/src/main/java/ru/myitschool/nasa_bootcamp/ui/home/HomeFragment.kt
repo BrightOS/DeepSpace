@@ -40,6 +40,9 @@ import ru.myitschool.nasa_bootcamp.ui.home.components.NavigationCardData
 import ru.myitschool.nasa_bootcamp.ui.home.components.NewsCarousel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
+/*
+ * @author Samuil Nalisin
+ */
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels<HomeViewModelImpl>()

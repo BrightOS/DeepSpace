@@ -8,15 +8,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.android.synthetic.main.layout_loading.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import ru.myitschool.nasa_bootcamp.R
 
+@DelicateCoroutinesApi
 class SpaceLoadingView constructor(
     private val cont: Context,
-    private val attrs: AttributeSet?
+    attrs: AttributeSet?
 ) :
     ConstraintLayout(cont, attrs) {
 
@@ -26,12 +24,12 @@ class SpaceLoadingView constructor(
         }
         get() = error_text?.text
 
-    var showCheckIcon: Boolean = false
+    private var showCheckIcon: Boolean = false
 
     init {
         View.inflate(context, R.layout.layout_loading, this)
 
-        attrs?.let {
+        attrs?.let { it ->
             val typedArray = context.obtainStyledAttributes(it, R.styleable.SpaceLoadingView)
 
             typedArray.getString(R.styleable.SpaceLoadingView_errorText)?.let {

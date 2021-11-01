@@ -17,6 +17,9 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import ru.myitschool.nasa_bootcamp.utils.Status
 
+/*
+ * @author Samuil Nalisin
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun <T> CarouselTemplate(

@@ -1,8 +1,6 @@
 package ru.myitschool.nasa_bootcamp.ui.mars_rovers
 
 import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,19 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.google.android.material.transition.MaterialSharedAxis
-import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import ru.myitschool.nasa_bootcamp.databinding.RoverItemBinding
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 import java.util.ArrayList
 
 class RoverRecyclerAdapter internal constructor(
-    context: Context,
+    var context: Context,
     roverModels: ArrayList<RoverModel>,
     val navController: NavController
 ) :
     RecyclerView.Adapter<RoverViewHolder>() {
-    var context: Context = context
     var roverModels: ArrayList<RoverModel>
 
     internal interface OnRoverClickListener {
@@ -44,8 +40,7 @@ class RoverRecyclerAdapter internal constructor(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            context
+            )
         )
     }
 

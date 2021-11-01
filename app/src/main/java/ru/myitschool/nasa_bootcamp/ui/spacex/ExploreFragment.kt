@@ -12,7 +12,9 @@ import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.SPACEX_LOGO_GIF
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
-
+/*
+ * @author Yana Glad
+ */
 class ExploreFragment : Fragment() {
 
     private var _binding: FragmentExploreBinding? = null
@@ -28,7 +30,6 @@ class ExploreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navController = findNavController()
 
         with(binding) {
             DimensionsUtil.dpToPx(requireContext(), 15).let {
@@ -40,7 +41,7 @@ class ExploreFragment : Fragment() {
                     it
                 )
             }
-            setupNavigation(navController)
+            setupNavigation(findNavController())
             loadImage(requireContext(), SPACEX_LOGO_GIF, starmanGif)
         }
     }

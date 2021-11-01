@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -32,7 +31,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_review.*
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
-import java.io.File
 import java.io.IOException
 import java.io.OutputStream
 import java.util.*
@@ -40,7 +38,8 @@ import kotlin.properties.Delegates
 
 class ReviewFragment : Fragment(R.layout.fragment_review) {
     val args: ReviewFragmentArgs by navArgs()
-    var systemUI by Delegates.notNull<Int>()
+    private var systemUI by Delegates.notNull<Int>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -210,7 +209,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         }
     }
 
-    fun getRealPathFromURI(context: Context, contentUri: Uri?): String {
+    private fun getRealPathFromURI(context: Context, contentUri: Uri?): String {
         var cursor: Cursor? = null
         return try {
             val proj = arrayOf(MediaStore.Images.Media.DATA)
@@ -238,4 +237,5 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
             }
         }
     }
+
 }

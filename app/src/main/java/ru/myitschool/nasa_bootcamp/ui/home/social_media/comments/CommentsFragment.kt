@@ -54,6 +54,9 @@ import ru.myitschool.nasa_bootcamp.utils.Status
 import ru.myitschool.nasa_bootcamp.utils.getDateFromUnixTimestamp
 import ru.myitschool.nasa_bootcamp.utils.parseNewsDate
 
+/*
+ * @author Samuil Nalisin
+ */
 @AndroidEntryPoint
 class CommentsFragment : Fragment() {
     val viewModel: SocialMediaViewModel

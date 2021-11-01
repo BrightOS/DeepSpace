@@ -48,7 +48,6 @@ class CapsulesFragment : Fragment() {
                 .observe(viewLifecycleOwner, {
                     capsulesAdapter =
                         CapsulesAdapter(
-                            requireContext(),
                             capsulesViewModel.getCapsulesList().value!!
                         )
                     capsulesRecycler.adapter = capsulesAdapter

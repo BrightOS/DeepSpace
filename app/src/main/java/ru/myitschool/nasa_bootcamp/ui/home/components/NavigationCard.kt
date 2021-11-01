@@ -18,6 +18,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
+/*
+ * @author Samuil Nalisin
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NavigationCard(

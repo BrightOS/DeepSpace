@@ -3,9 +3,6 @@ package ru.myitschool.nasa_bootcamp.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.util.TypedValue
-import android.view.KeyEvent
-import android.view.MotionEvent
 import android.view.View
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -15,7 +12,9 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.getColorFromAttributes
 
-
+/*
+ * @author Denis Shaikhlbarin
+ */
 class SpaceButton constructor(
     cont: Context,
     attrs: AttributeSet?,
@@ -32,12 +31,10 @@ class SpaceButton constructor(
         View.inflate(context, R.layout.layout_space_button, this)
 
         radius = DimensionsUtil.dpToPx(context, 16).toFloat()
-        setBackgroundTintList(
-            ColorStateList.valueOf(
-                getColorFromAttributes(
-                    context,
-                    R.attr.buttonBackgroundColor
-                )
+        backgroundTintList = ColorStateList.valueOf(
+            getColorFromAttributes(
+                context,
+                R.attr.buttonBackgroundColor
             )
         )
 
