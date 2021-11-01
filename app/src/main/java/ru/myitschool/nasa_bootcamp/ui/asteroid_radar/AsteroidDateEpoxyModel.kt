@@ -4,12 +4,13 @@ import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.airbnb.epoxy.stickyheader.StickyHeaderCallbacks
 import ru.myitschool.nasa_bootcamp.R
-
 import ru.myitschool.nasa_bootcamp.utils.KotlinEpoxyHolder
 import ru.myitschool.nasa_bootcamp.utils.dateToAmericanFormat
 
+/*
+ * @author Denis Shaikhlbarin
+ */
 @EpoxyModelClass(layout = R.layout.date_item)
 abstract class AsteroidDateEpoxyModel :
     EpoxyModelWithHolder<AsteroidDateEpoxyModel.Holder>() {

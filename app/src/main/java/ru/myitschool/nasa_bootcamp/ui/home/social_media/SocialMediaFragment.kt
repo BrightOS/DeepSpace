@@ -36,6 +36,9 @@ import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.BlogsScreen
 import ru.myitschool.nasa_bootcamp.ui.home.social_media.pages.NewsScreen
 
+/*
+ * @author Samuil Nalisin
+ */
 @AndroidEntryPoint
 class SocialMediaFragment : Fragment() {
     val args: SocialMediaFragmentArgs by navArgs()

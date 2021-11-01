@@ -1,21 +1,15 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_info.*
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentCoresBinding
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons.DragonsAdapter
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
-import ru.myitschool.nasa_bootcamp.utils.STARMAN_GIF_LINK
-import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
-import ru.myitschool.nasa_bootcamp.utils.loadImage
 
 @AndroidEntryPoint
 class CoresFragment : Fragment() {
@@ -25,44 +19,44 @@ class CoresFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var coresAdapter: CoresAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCoresBinding.inflate(inflater, container, false)
-
-        DimensionsUtil.dpToPx(requireContext(), 5).let {
-            DimensionsUtil.setMargins(
-                binding.toolBar,
-                it,
-                DimensionsUtil.getStatusBarHeight(resources) + it,
-                it,
-                it
-            )
-        }
-
-        binding.coresRecycle.setHasFixedSize(true)
-        binding.coresRecycle.layoutManager = GridLayoutManager(context, 1)
-
-        coresViewModel.getViewModelScope().launch {
-            coresViewModel.getCores()
-        }
-
-        coresViewModel.getCoresList().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            coresAdapter =
-                CoresAdapter(
-                    requireContext(),
-                    coresViewModel.getCoresList().value!!
-                )
-            binding.coresRecycle.adapter = coresAdapter
-        })
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding) {
+            DimensionsUtil.dpToPx(requireContext(), 5).let {
+                DimensionsUtil.setMargins(
+                    toolBar,
+                    it,
+                    DimensionsUtil.getStatusBarHeight(resources) + it,
+                    it,
+                    it
+                )
+            }
+
+            coresRecycle.setHasFixedSize(true)
+
+            coresViewModel.getViewModelScope().launch {
+                coresViewModel.getCores()
+            }
+
+            coresViewModel.getCoresList().apply {
+                observe(viewLifecycleOwner, {
+                    coresAdapter =
+                        CoresAdapter(
+                            value!!
+                        )
+                    coresRecycle.adapter = coresAdapter
+                })
+            }
+        }
     }
 
 }

@@ -19,6 +19,9 @@ import coil.compose.rememberImagePainter
 import ru.myitschool.nasa_bootcamp.data.model.ArticleModel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun NewsCarousel(
     title: String,

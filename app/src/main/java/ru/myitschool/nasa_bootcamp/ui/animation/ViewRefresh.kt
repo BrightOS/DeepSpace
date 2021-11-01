@@ -102,12 +102,12 @@ class ViewRefresh {
         var height = view.height.toFloat()
         if (viewToChange.containsKey(view)) {
             val anim = viewToChange[view]
-            height = heightScaled(anim!!, view, height)
+            height = heightScaled(anim!!, height)
         }
         return height
     }
 
-    private fun heightScaled(viewInstance: ViewInstance, view: View, height: Float): Float {
+    private fun heightScaled(viewInstance: ViewInstance, height: Float): Float {
         var h = height
         val scaleY = viewInstance.getWillHasScaleY()
         if (scaleY != 1f) {
@@ -115,5 +115,4 @@ class ViewRefresh {
         }
         return h
     }
-
 }

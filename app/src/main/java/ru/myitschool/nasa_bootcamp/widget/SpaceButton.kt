@@ -3,24 +3,27 @@ package ru.myitschool.nasa_bootcamp.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.util.TypedValue
-import android.view.KeyEvent
-import android.view.MotionEvent
 import android.view.View
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.layout_space_button.view.*
+import kotlinx.android.synthetic.main.layout_space_button.view.button_text
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.getColorFromAttributes
 
-
+/*
+ * @author Denis Shaikhlbarin
+ */
 class SpaceButton constructor(
     cont: Context,
     attrs: AttributeSet?,
 ) :
     MaterialCardView(cont, attrs) {
+
+    companion object{
+        const val RADIUS_DP = 16
+    }
 
     var text: String?
         set(value) {
@@ -31,13 +34,11 @@ class SpaceButton constructor(
     init {
         View.inflate(context, R.layout.layout_space_button, this)
 
-        radius = DimensionsUtil.dpToPx(context, 16).toFloat()
-        setBackgroundTintList(
-            ColorStateList.valueOf(
-                getColorFromAttributes(
-                    context,
-                    R.attr.buttonBackgroundColor
-                )
+        radius = DimensionsUtil.dpToPx(context, RADIUS_DP).toFloat()
+        backgroundTintList = ColorStateList.valueOf(
+            getColorFromAttributes(
+                context,
+                R.attr.buttonBackgroundColor
             )
         )
 

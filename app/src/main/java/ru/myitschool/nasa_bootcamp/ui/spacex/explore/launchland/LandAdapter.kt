@@ -1,49 +1,44 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland
 
-import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
-import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
-import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 import ru.myitschool.nasa_bootcamp.databinding.LandPadItemBinding
 import ru.myitschool.nasa_bootcamp.utils.capitalize
-import java.util.ArrayList
+import java.util.*
 
 class LandAdapter internal constructor(
-    context: Context,
     landModels: ArrayList<LandPadModel>,
     val navController: NavController
 ) :
     RecyclerView.Adapter<LandHolder>() {
-    var context: Context
-    var landModels: ArrayList<LandPadModel>
+    private var landModels: ArrayList<LandPadModel>
 
     internal interface OnLandPadClickListener {
         fun onLandPadClick(landModel: LandPadModel, position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LandHolder {
-        return LandHolder(LandPadItemBinding.inflate(LayoutInflater.from(parent.context)), context)
+        return LandHolder(LandPadItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: LandHolder, position: Int) {
         val landPadModel: LandPadModel = landModels[position]
 
-        holder.binding.nameLand.text = landPadModel.full_name
-        holder.binding.locationLand.text =
-            "${landPadModel.location.name}, ${landPadModel.location.region}"
-        holder.binding.attempedSuccessfulLand.text =
-            "${landPadModel.attempted_landings} / ${landPadModel.successful_landings}"
-        holder.binding.statusLand.text = capitalize(landPadModel.status)
-        holder.binding.landingTypeLand.text = landPadModel.landing_type
-        holder.binding.descriptionLand.text = landPadModel.details
-        holder.binding.descriptionLand.text = landPadModel.details
-
+        with(holder.binding) {
+            landPadModel.also {
+                nameLand.text = it.full_name
+                locationLand.text =
+                    "${it.location.name}, ${it.location.region}"
+                attempedSuccessfulLand.text =
+                    "${it.attempted_landings} / ${it.successful_landings}"
+                statusLand.text = capitalize(it.status)
+                landingTypeLand.text = it.landing_type
+                descriptionLand.text = it.details
+            }
+        }
         val onLandPadClickListener = object : OnLandPadClickListener {
             override fun onLandPadClick(landModel: LandPadModel, position: Int) {
                 val action = LaunchLandFragmentDirections.actionToLandMap(
@@ -59,7 +54,7 @@ class LandAdapter internal constructor(
 
         holder.itemView.setOnClickListener {
             onLandPadClickListener.onLandPadClick(
-                landModels.get(position),
+                landModels[position],
                 position
             )
         }
@@ -76,7 +71,6 @@ class LandAdapter internal constructor(
     }
 
     init {
-        this.context = context
         this.landModels = landModels
     }
 }

@@ -1,18 +1,15 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.dragons
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentDragonsBinding
 import ru.myitschool.nasa_bootcamp.utils.DRAGONS_GIF
-import ru.myitschool.nasa_bootcamp.utils.SPACEMAN_ANIMATED
-import ru.myitschool.nasa_bootcamp.utils.STARS_ANIMATED_BACKGROUND
 import ru.myitschool.nasa_bootcamp.utils.loadImage
 
 @AndroidEntryPoint
@@ -23,35 +20,37 @@ class DragonsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var dragonsAdapter: DragonsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDragonsBinding.inflate(inflater, container, false)
 
-        binding.dragonsRecycle.setHasFixedSize(true)
-        binding.dragonsRecycle.layoutManager = GridLayoutManager(context, 1)
-
-        loadImage(requireContext(), DRAGONS_GIF, binding.dragonImage)
-
-        dragonsViewModel.getViewModelScope().launch {
-            dragonsViewModel.getDragons()
-        }
-
-        dragonsViewModel.getDragonsList().observe(viewLifecycleOwner, {
-            dragonsAdapter =
-                DragonsAdapter(
-                    requireContext(),
-                    dragonsViewModel.getDragonsList().value!!
-                )
-            binding.dragonsRecycle.adapter = dragonsAdapter
-        })
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            dragonsRecycle.setHasFixedSize(true)
+
+            loadImage(requireContext(), DRAGONS_GIF, dragonImage)
+
+            dragonsViewModel.getViewModelScope().launch {
+                dragonsViewModel.getDragons()
+            }
+
+            dragonsViewModel.getDragonsList().apply {
+                observe(viewLifecycleOwner, {
+                    dragonsAdapter =
+                        DragonsAdapter(
+                            requireContext(),
+                            value!!
+                        )
+                    dragonsRecycle.adapter = dragonsAdapter
+                })
+            }
+        }
     }
 
 }

@@ -12,6 +12,9 @@ import ru.myitschool.nasa_bootcamp.data.repository.NewsRepository
 import ru.myitschool.nasa_bootcamp.utils.Resource
 import javax.inject.Inject
 
+/*
+ * @author Samuil Nalisin
+ */
 @HiltViewModel
 class HomeViewModelImpl @Inject constructor(
     private val nasaRepository: NasaRepository,

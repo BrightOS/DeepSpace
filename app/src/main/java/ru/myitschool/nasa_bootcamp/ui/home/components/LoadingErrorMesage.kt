@@ -12,6 +12,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ru.myitschool.nasa_bootcamp.R
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun ErrorMessage(onClick: () -> Unit, modifier: Modifier) {
     Column(

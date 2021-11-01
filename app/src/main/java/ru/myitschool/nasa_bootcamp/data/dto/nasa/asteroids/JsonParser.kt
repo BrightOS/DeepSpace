@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
+package ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids
 
 import android.util.Log
 import com.google.gson.JsonObject
@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+/*
+ * @author Yana Glad
+ */
 fun parseAsteroidsJsonResult(jsonResult: JsonObject): ArrayList<AsteroidModel> {
 
     val asteroidList = ArrayList<AsteroidModel>()

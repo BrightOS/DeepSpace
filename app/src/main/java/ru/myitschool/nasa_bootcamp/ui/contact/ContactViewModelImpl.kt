@@ -7,6 +7,9 @@ import io.sentry.Sentry
 import io.sentry.UserFeedback
 import ru.myitschool.nasa_bootcamp.utils.Data
 
+/*
+ * @author Vladimir Abubakirov
+ */
 class ContactViewModelImpl : ViewModel(), ContactViewModel {
     override fun sendFeedback(
         title: String,

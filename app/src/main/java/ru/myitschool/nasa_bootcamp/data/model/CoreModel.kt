@@ -2,6 +2,9 @@ package ru.myitschool.nasa_bootcamp.data.model
 
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.Mission
 
+/*
+ * @author Yana Glad
+ */
 data class CoreModel(
     val core_serial: String,
     val block: Int?,

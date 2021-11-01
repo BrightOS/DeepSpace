@@ -2,6 +2,7 @@ package ru.myitschool.nasa_bootcamp.data.dto.firebase
 
 import ru.myitschool.nasa_bootcamp.data.model.UserModel
 
+
 class CommentDto(val id: Long, val comment: String, val likes: List<UserModel>, val subComments: List<SubCommentDto>, val userId: UserDto, val date: Long) {
     constructor() : this(-1, "", listOf(), listOf(), UserDto(), -1)
 

@@ -6,29 +6,22 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.nav_header_main.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.activity_main.main_loading
+import kotlinx.coroutines.*
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.data.fb_general.MFirebaseUser
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAuthBinding
 import ru.myitschool.nasa_bootcamp.utils.Data
-import ru.myitschool.nasa_bootcamp.utils.wrongCredits
 
+/*
+ * @author Vladimir Abubakirov
+ */
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
     private var _binding: FragmentAuthBinding? = null
@@ -99,6 +92,7 @@ class AuthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun onSuccessLogin() {
         (activity as MainActivity).apply {
             main_loading.stopLoadingAnimation(true)

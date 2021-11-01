@@ -7,6 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun Gradient(modifier: Modifier, color: Color = Color(0xAA000000)) {
     Box( // gradient

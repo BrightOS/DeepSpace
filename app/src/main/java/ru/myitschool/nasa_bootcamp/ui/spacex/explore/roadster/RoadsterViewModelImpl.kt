@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 import ru.myitschool.nasa_bootcamp.data.model.RoadsterModel
 import ru.myitschool.nasa_bootcamp.data.repository.SpaceXRepository
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland.LaunchLandViewModel
 import ru.myitschool.nasa_bootcamp.utils.Status
 import javax.inject.Inject
 
@@ -17,7 +15,7 @@ class RoadsterViewModelImpl @Inject constructor(
     private val repository: SpaceXRepository
 ) : ViewModel(), RoadsterViewModel {
 
-    var roadsterModell: MutableLiveData<RoadsterModel> = MutableLiveData<RoadsterModel>()
+    private var roadsterModell: MutableLiveData<RoadsterModel> = MutableLiveData<RoadsterModel>()
     private var status: MutableLiveData<Status> = MutableLiveData<Status>()
 
     override suspend fun getRoadsterInfo() {
@@ -41,6 +39,4 @@ class RoadsterViewModelImpl @Inject constructor(
     override fun getStatus(): MutableLiveData<Status> {
         return status
     }
-
-
 }

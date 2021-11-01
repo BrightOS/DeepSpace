@@ -1,6 +1,5 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.renderer
 
-import android.graphics.Color
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.lookbeyond.Math.*
 import ru.myitschool.nasa_bootcamp.lookbeyond.resourc.LineRes
@@ -94,7 +93,7 @@ class LineTexture(layer: Int, textureModule: TextureModule?) :
     }
 
     override fun reload(gl: GL10, fullReload: Boolean) {
-        texture = textureManager().loadResourceTexture(gl, R.drawable.line)
+        texture = textureManager().loadResourceTexture(gl)
         vertexBuffer.glBuffer.reload()
         colorGl.glBuffer.reload()
         texCoordBuffer.reload()
@@ -123,5 +122,4 @@ class LineTexture(layer: Int, textureModule: TextureModule?) :
         gl.glDisable(GL10.GL_TEXTURE_2D)
         gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY)
     }
- 
 }

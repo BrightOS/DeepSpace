@@ -12,6 +12,9 @@ import androidx.compose.ui.unit.sp
 import ru.myitschool.nasa_bootcamp.data.model.EventModel
 import ru.myitschool.nasa_bootcamp.utils.Resource
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun EventsCarousel(
     title: String,

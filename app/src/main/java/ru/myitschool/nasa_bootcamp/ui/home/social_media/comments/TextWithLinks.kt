@@ -9,6 +9,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun TextWithLinks(annotatedText: AnnotatedString, modifier: Modifier = Modifier) {
     val uriHandler = LocalUriHandler.current

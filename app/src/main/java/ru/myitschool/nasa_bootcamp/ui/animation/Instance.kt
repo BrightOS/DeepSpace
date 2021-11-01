@@ -3,12 +3,20 @@ package ru.myitschool.nasa_bootcamp.ui.animation
 import android.view.Gravity
 import android.view.View
 import androidx.annotation.IntDef
-import ru.myitschool.nasa_bootcamp.ui.animation.alpha.*
-import ru.myitschool.nasa_bootcamp.ui.animation.attributes.*
-import ru.myitschool.nasa_bootcamp.ui.animation.margins.*
-import ru.myitschool.nasa_bootcamp.ui.animation.paddings.*
+import ru.myitschool.nasa_bootcamp.ui.animation.alpha.AlphaInstance
+import ru.myitschool.nasa_bootcamp.ui.animation.alpha.AlphaInstanceValue
+import ru.myitschool.nasa_bootcamp.ui.animation.attributes.AttributesAnimInstance
+import ru.myitschool.nasa_bootcamp.ui.animation.attributes.TextColorAnimInstance
+import ru.myitschool.nasa_bootcamp.ui.animation.attributes.TextSizeAnimInstance
+import ru.myitschool.nasa_bootcamp.ui.animation.margins.Margin
+import ru.myitschool.nasa_bootcamp.ui.animation.margins.MarginSetAnimInstance
+import ru.myitschool.nasa_bootcamp.ui.animation.paddings.Padding
+import ru.myitschool.nasa_bootcamp.ui.animation.paddings.PaddingSetAnimInstance
 import ru.myitschool.nasa_bootcamp.ui.animation.position.*
-import ru.myitschool.nasa_bootcamp.ui.animation.scale.*
+import ru.myitschool.nasa_bootcamp.ui.animation.scale.ScaleInstance
+import ru.myitschool.nasa_bootcamp.ui.animation.scale.ScaleInstanceHeight
+import ru.myitschool.nasa_bootcamp.ui.animation.scale.ScaleInstanceValues
+import ru.myitschool.nasa_bootcamp.ui.animation.scale.ScaleInstanceWidth
 
 class Instance() {
 
@@ -59,7 +67,7 @@ class Instance() {
     }
 
     fun sameCenterHorizontalAs(view: View): PositionAnimInstance {
-        return sameCenterAs(view, true, false).apply {
+        return sameCenterAs(view, horizontal = true, vertical = false).apply {
             instances.add(this)
         }
     }

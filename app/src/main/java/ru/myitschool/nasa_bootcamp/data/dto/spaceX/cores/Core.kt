@@ -1,8 +1,8 @@
 package ru.myitschool.nasa_bootcamp.data.dto.spaceX.cores
 
 import com.google.gson.annotations.SerializedName
-import ru.myitschool.nasa_bootcamp.data.model.CoreModel
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.Mission
+import ru.myitschool.nasa_bootcamp.data.model.CoreModel
 
 class Core(
     @field:SerializedName("core_serial") val core_serial: String,

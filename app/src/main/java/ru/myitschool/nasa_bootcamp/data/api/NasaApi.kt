@@ -1,14 +1,16 @@
 package ru.myitschool.nasa_bootcamp.data.api
 
 import com.example.firstkotlinapp.model.apod.Apod
-import com.example.firstkotlinapp.model.rovers.Rovers
+import ru.myitschool.nasa_bootcamp.data.dto.nasa.rovers.Rovers
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.myitschool.nasa_bootcamp.data.dto.nasa.asteroids.Asteroid
 import ru.myitschool.nasa_bootcamp.utils.API_KEY
 
+/*
+ * @author Yana Glad
+ */
 interface NasaApi {
 
     // Изображение дня от НАСА

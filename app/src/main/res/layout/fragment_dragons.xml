@@ -1,94 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-        android:id="@+id/coordinatorLayout"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/background_dragon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:scaleType="centerCrop"
+        android:src="@drawable/stars_backg_nasa" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/background_dragon"
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@android:color/white"
+        android:gravity="top"
+        android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:liftOnScroll="false">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/stars_backg_nasa"
-            />
+            android:layout_height="250dp"
+            android:minHeight="80dp"
+            app:collapsedTitleTextAppearance="@style/CollapsedSpaceAppBar"
+            app:contentScrim="@android:color/white"
+            app:expandedTitleGravity="center"
+            app:expandedTitleMarginTop="16dp"
+            app:expandedTitleTextAppearance="@style/ExpandedSpaceAppBar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:titleEnabled="true">
 
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:background="@android:color/white"
-            android:gravity="top"
-            android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:liftOnScroll="false">
-
-            <com.google.android.material.appbar.CollapsingToolbarLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:minHeight="80dp"
-                app:collapsedTitleTextAppearance="@style/CollapsedSpaceAppBar"
-                app:contentScrim="@android:color/white"
-                app:expandedTitleGravity="center"
-                app:expandedTitleMarginTop="16dp"
-                app:expandedTitleTextAppearance="@style/ExpandedSpaceAppBar"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:titleEnabled="true">
+                android:layout_height="80dp"
+                android:layout_gravity="top"
+                android:layout_marginBottom="48dp"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Small"
+                app:theme="@style/ActionBar" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/tool_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_gravity="top"
-                    android:layout_marginBottom="48dp"
-                    android:background="@android:color/transparent"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:theme="@style/ActionBar" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/dragon_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax"
-                    app:srcCompat="@drawable/dragon_image" />
-
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
-
-
-        <LinearLayout
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout"
-            tools:context=".RoversActivity"
-            tools:layout_editor_absoluteX="0dp">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/dragons_recycle"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/dragon_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/dragon_item"
-                android:paddingBottom="8dp"
-                android:clipToPadding="false"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:srcCompat="@drawable/dragon_image" />
 
-        </LinearLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout"
+        tools:context=".RoversActivity"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dragons_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:spanCount="1"
+            tools:listitem="@layout/dragon_item" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

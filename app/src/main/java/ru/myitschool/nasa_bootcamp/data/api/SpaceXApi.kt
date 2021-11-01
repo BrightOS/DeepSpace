@@ -12,6 +12,9 @@ import ru.myitschool.nasa_bootcamp.data.dto.spaceX.landingPads.LaunchPad
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Launch
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.roadster.Roadster
 
+/*
+ * @author Yana Glad
+ */
 interface SpaceXApi {
 
     @GET("launches")

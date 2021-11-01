@@ -67,7 +67,6 @@ open class ImageResImpl(
         vz = v.z
     }
 
-
     init {
 
         setUpVector(upVec)

@@ -1,9 +1,7 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.history
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.HistoryModel
 import ru.myitschool.nasa_bootcamp.databinding.HistoryItemBinding
@@ -13,13 +11,10 @@ import ru.myitschool.nasa_bootcamp.utils.getDayOfMonthSuffix
 import java.util.*
 
 class HistoryAdapter internal constructor(
-    context: Context,
     landModels: ArrayList<HistoryModel>,
-
-    ) :
+) :
     RecyclerView.Adapter<HistoryViewHolder>() {
-    var context: Context
-    var historyModels: ArrayList<HistoryModel>
+    private var historyModels: ArrayList<HistoryModel>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         return HistoryViewHolder(
@@ -27,8 +22,7 @@ class HistoryAdapter internal constructor(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            context
+            )
         )
     }
 
@@ -62,7 +56,6 @@ class HistoryAdapter internal constructor(
     }
 
     init {
-        this.context = context
         this.historyModels = landModels
     }
 }

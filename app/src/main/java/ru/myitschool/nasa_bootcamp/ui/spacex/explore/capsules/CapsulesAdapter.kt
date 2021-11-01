@@ -1,31 +1,28 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.capsules
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.CapsuleModel
-import ru.myitschool.nasa_bootcamp.data.model.CoreModel
 import ru.myitschool.nasa_bootcamp.databinding.CapsuleItemBinding
-import ru.myitschool.nasa_bootcamp.databinding.CoreItemBinding
-import ru.myitschool.nasa_bootcamp.ui.spacex.explore.cores.CoresViewHolder
 import ru.myitschool.nasa_bootcamp.utils.addSubstringAtIndex
 import ru.myitschool.nasa_bootcamp.utils.capitalize
 import ru.myitschool.nasa_bootcamp.utils.convertDateFromUnix
 import ru.myitschool.nasa_bootcamp.utils.getDayOfMonthSuffix
 import java.util.*
 
+/*
+ * @author Yana Glad
+ */
 class CapsulesAdapter internal constructor(
-    context: Context,
     capsuleModels: ArrayList<CapsuleModel>,
-    // val navController: NavController
 ) :
     RecyclerView.Adapter<CapsulesViewHolder>() {
-    var context: Context
-    var capsuleodels: ArrayList<CapsuleModel>
+    private var capsuleModels: ArrayList<CapsuleModel>
 
-    internal interface onCapsuleClickListener {
+    internal interface OnCapsuleClickListener {
         fun onCapsuleClick(capsuleModel: CapsuleModel, position: Int)
     }
 
@@ -35,65 +32,68 @@ class CapsulesAdapter internal constructor(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            context
+            )
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CapsulesViewHolder, position: Int) {
-        val capsuleModel: CapsuleModel = capsuleodels[position]
+        val capsuleModel: CapsuleModel = capsuleModels[position]
 
-        if (capsuleModel.details != null)
-            holder.binding.capsuleItemDescription.text = "${capsuleModel.details}"
-        else {
-            holder.binding.capsuleItemDescription.visibility = View.GONE
-            holder.binding.separator.visibility = View.GONE
+        with(holder.binding) {
+            if (capsuleModel.details != null)
+                capsuleItemDescription.text = "${capsuleModel.details}"
+            else {
+                capsuleItemDescription.visibility = View.GONE
+                separator.visibility = View.GONE
+            }
+
+            capsuleItemSerialTitle.text = "Capsule:"
+            capsuleTypeItemTitle.text = "Type:"
+            capsuleItemStatusTitle.text = "Status:"
+            capsuleItemLandingsTitle.text = "Number of landings:"
+            capsuleItemMissionsTitle.text = "Mission:"
+
+            capsuleItemSerial.text = capsuleModel.capsule_serial
+            capsuleItemLandings.text = "${capsuleModel.landings}"
+            if (capsuleModel.missions.isNotEmpty())
+                capsuleItemMissions.text = capsuleModel.missions[0].name
+            capsuleItemStatus.text = capitalize(capsuleModel.status)
+            capsuleTypeItem.text = capsuleModel.type
+
+            setupDateData(capsuleModel)
         }
 
-        holder.binding.capsuleItemSerialTitle.text = "Capsule:"
-        holder.binding.capsuleTypeItemTitle.text = "Type:"
-        holder.binding.capsuleItemStatusTitle.text = "Status:"
-        holder.binding.capsuleItemLandingsTitle.text = "Number of landings:"
-        holder.binding.capsuleItemMissionsTitle.text = "Mission:"
+        val onCapsuleClickListener = object : OnCapsuleClickListener {
+            override fun onCapsuleClick(capsuleModel: CapsuleModel, position: Int) {
 
-        holder.binding.capsuleItemSerial.text = capsuleModel.capsule_serial
-        holder.binding.capsuleItemLandings.text = "${capsuleModel.landings}"
-        if (capsuleModel.missions.size > 0)
-            holder.binding.capsuleItemMissions.text = capsuleModel.missions[0].name
-        holder.binding.capsuleItemStatus.text = capitalize(capsuleModel.status)
-        holder.binding.capsuleTypeItem.text = capsuleModel.type
+            }
+        }
+    }
 
+    private fun CapsuleItemBinding.setupDateData(capsuleModel: CapsuleModel) {
         val finalString = convertDateFromUnix(capsuleModel.original_launch_unix)
-
         val calendar = GregorianCalendar()
         calendar.time = Date(capsuleModel.original_launch_unix * 1000L)
 
-        holder.binding.capsuleLaunchDate.text = finalString.addSubstringAtIndex(
+        capsuleLaunchDate.text = finalString.addSubstringAtIndex(
             getDayOfMonthSuffix(
                 calendar.get(Calendar.DAY_OF_MONTH)
             ),
             finalString.indexOf('.')
         )
-
-        val onCapsuleClickListener = object : onCapsuleClickListener {
-            override fun onCapsuleClick(capsuleModel: CapsuleModel, position: Int) {
-
-            }
-        }
-
     }
 
     override fun getItemCount(): Int {
-        return capsuleodels.size
+        return capsuleModels.size
     }
 
     fun update(modelList: ArrayList<CapsuleModel>) {
-        capsuleodels = modelList
+        capsuleModels = modelList
         notifyDataSetChanged()
     }
 
     init {
-        this.context = context
-        this.capsuleodels = capsuleModels
+        this.capsuleModels = capsuleModels
     }
 }

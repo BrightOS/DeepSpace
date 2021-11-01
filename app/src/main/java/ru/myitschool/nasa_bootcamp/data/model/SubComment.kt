@@ -1,5 +1,8 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
+/*
+ * @author Vladimir Abubakirov
+ */
 class SubComment(
     id: Long,
     val parentComment: Comment,

@@ -46,5 +46,4 @@ class DragonsViewModelImpl @Inject constructor(
     override fun getStatus(): MutableLiveData<Status> {
         return status
     }
-
 }

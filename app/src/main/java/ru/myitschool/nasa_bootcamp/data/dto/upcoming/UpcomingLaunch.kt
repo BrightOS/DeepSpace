@@ -1,8 +1,6 @@
 package ru.myitschool.nasa_bootcamp.data.dto.upcoming
 
 import com.google.gson.annotations.SerializedName
-import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Links
-import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Rocket
 import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
 
 class UpcomingLaunch( //MAIN !!! in V5

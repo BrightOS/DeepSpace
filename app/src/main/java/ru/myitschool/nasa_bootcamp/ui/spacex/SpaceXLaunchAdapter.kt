@@ -11,12 +11,10 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionManager
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.material.transition.MaterialSharedAxis
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.databinding.LaunchItemBinding
@@ -26,7 +24,7 @@ import java.util.*
 class SpaceXLaunchAdapter :
     ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
 
-    var lastPosition = -1
+    private var lastPosition = -1
 
     class DiffCallback : DiffUtil.ItemCallback<SxLaunchModel>() {
         override fun areItemsTheSame(oldItem: SxLaunchModel, newItem: SxLaunchModel): Boolean {
@@ -38,11 +36,11 @@ class SpaceXLaunchAdapter :
         }
     }
 
-    //TODO : сделать такую анимацию во всех ресайклах + эктеншн
+    //TODO : create such anim in all recyclers + extensions
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = getItem(position)
-        if(holder.absoluteAdapterPosition > lastPosition){
-            val animation = AnimationUtils.loadAnimation(holder.context,R.anim.slide_enter_anim)
+        if (holder.absoluteAdapterPosition > lastPosition) {
+            val animation = AnimationUtils.loadAnimation(holder.context, R.anim.slide_enter_anim)
             holder.itemView.startAnimation(animation)
             lastPosition = holder.absoluteAdapterPosition
         }
@@ -69,9 +67,9 @@ class SpaceXLaunchAdapter :
 
     class ViewHolder(private val binding: LaunchItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val context = binding.root.context
+        val context = binding.root.context!!
 
-        var expanded = false
+        private var expanded = false
 
         private val requestListener = object : RequestListener<Drawable> {
             override fun onLoadFailed(
@@ -111,147 +109,139 @@ class SpaceXLaunchAdapter :
 
         @SuppressLint("SetTextI18n")
         fun bind(launchModel: SxLaunchModel) {
-            binding.loadProgressbar.visibility = View.VISIBLE
+            with(binding) {
+                loadProgressbar.visibility = View.VISIBLE
 
-            binding.missionName.text = launchModel.mission_name
-            binding.missionYear.text = convertDateFromUnix(launchModel.launch_date_unix)
-            binding.details.text = launchModel.details
-            binding.launchSite.text = launchModel.launch_site.site_name_long
+                missionName.text = launchModel.mission_name
+                missionYear.text = convertDateFromUnix(launchModel.launch_date_unix)
+                details.text = launchModel.details
+                launchSite.text = launchModel.launch_site.site_name_long
 
-            val finalString = convertDateFromUnix(launchModel.launch_date_unix)
+                val finalString = convertDateFromUnix(launchModel.launch_date_unix)
 
-            val calendar = GregorianCalendar()
-            calendar.time = Date(launchModel.launch_date_unix * 1000L)
+                val calendar = GregorianCalendar()
+                calendar.time = Date(launchModel.launch_date_unix * 1000L)
 
-            binding.missionYear.text = finalString.addSubstringAtIndex(
-                getDayOfMonthSuffix(
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                ),
-                finalString.indexOf('.')
-            )
-            binding.characteristicsLaunch.rocketName.text =
-                "Rocket name: ${launchModel.rocket.rocket_name}"
+                missionYear.text = finalString.addSubstringAtIndex(
+                    getDayOfMonthSuffix(
+                        calendar.get(Calendar.DAY_OF_MONTH)
+                    ),
+                    finalString.indexOf('.')
+                )
+                characteristicsLaunch.apply {
+                    rocketName.text =
+                        "Rocket name: ${launchModel.rocket.rocket_name}"
 
-            binding.characteristicsLaunch.rocketType.text =
-                "Rocket type: ${launchModel.rocket.rocket_type}"
+                    rocketType.text =
+                        "Rocket type: ${launchModel.rocket.rocket_type}"
 
-            binding.characteristicsLaunch.flightNumber.text =
-                "Flight number: ${launchModel.rocket.first_stage.cores[0].flight}"
+                    flightNumber.text =
+                        "Flight number: ${launchModel.rocket.first_stage.cores[0].flight}"
 
-            binding.characteristicsLaunch.country.text =
-                "Nationality: ${launchModel.rocket.second_stage.payloads[0].nationality}"
+                    country.text =
+                        "Nationality: ${launchModel.rocket.second_stage.payloads[0].nationality}"
 
-            binding.characteristicsLaunch.block.text =
-                "Blocks: ${launchModel.rocket.second_stage.block}"
+                    block.text =
+                        "Blocks: ${launchModel.rocket.second_stage.block}"
 
+                    coreSerial.text =
+                        if (launchModel.rocket.first_stage.cores[0].core_serial != null)
+                            "Core serial : ${launchModel.rocket.first_stage.cores[0].core_serial}"
+                        else "Core serial — "
 
-            binding.characteristicsLaunch.coreSerial.text =
-                if (launchModel.rocket.first_stage.cores[0].core_serial != null)
-                    "Core serial : ${launchModel.rocket.first_stage.cores[0].core_serial}"
-                else "Core serial — "
+                    reusedCore.text =
+                        "Reused? : ${if (launchModel.rocket.first_stage.cores[0].reused) "Yes " else "No, not yet"}"
 
-            binding.characteristicsLaunch.reusedCore.text =
-                "Reused? : ${if (launchModel.rocket.first_stage.cores[0].reused) "Yes " else "No, not yet"}"
+                    payloadId.text =
+                        "Payload : ${launchModel.rocket.second_stage.payloads[0].payload_id}"
 
-            binding.characteristicsLaunch.payloadId.text =
-                "Payload : ${launchModel.rocket.second_stage.payloads[0].payload_id}"
+                    payloadMass.text =
+                        "Payload mass : ${launchModel.rocket.second_stage.payloads[0].payload_mass_kg}"
 
-            binding.characteristicsLaunch.payloadMass.text =
-                "Payload mass : ${launchModel.rocket.second_stage.payloads[0].payload_mass_kg}"
+                    payloadType.text =
+                        "Payload type : ${launchModel.rocket.second_stage.payloads[0].payload_type}"
 
-            binding.characteristicsLaunch.payloadType.text =
-                "Payload type : ${launchModel.rocket.second_stage.payloads[0].payload_type}"
+                    manufacturer.text =
+                        if (manufacturer != null)
+                            "Manufacturer : ${launchModel.rocket.second_stage.payloads[0].manufacturer}"
+                        else "Manufacturer — "
 
-            binding.characteristicsLaunch.manufacturer.text =
-                if( binding.characteristicsLaunch.manufacturer!=null)
-                "Manufacturer : ${launchModel.rocket.second_stage.payloads[0].manufacturer}"
-            else "Manufacturer — "
+                    refSystem.text =
+                        if (launchModel.rocket.second_stage.payloads[0].reference_system != null)
+                            "Payload : ${launchModel.rocket.second_stage.payloads[0].reference_system}"
+                        else "Payload —  "
 
-            binding.characteristicsLaunch.refSystem.text =
-                if (launchModel.rocket.second_stage.payloads[0].reference_system != null)
-                    "Payload : ${launchModel.rocket.second_stage.payloads[0].reference_system}"
-                else "Payload —  "
+                    var reused = "Reused? : No"
+                    if (launchModel.rocket.fairings?.reused != null)
+                        reused =
+                            "Reused? : ${if (launchModel.rocket.fairings.reused) "Yes " else "No, not yet"}"
 
-            var reused = "Reused? : No"
-            if (launchModel.rocket.fairings != null && launchModel.rocket.fairings.reused != null)
-                reused =
-                    "Reused? : ${if (launchModel.rocket.fairings.reused!!) "Yes " else "No, not yet"}"
+                    reusedFairings.text = reused
 
-            binding.characteristicsLaunch.reusedFairings.text = reused
+                    var tried = "Tried to recover? : No"
+                    if (launchModel.rocket.fairings?.reused != null)
+                        tried =
+                            "Tried to recover? : ${if (launchModel.rocket.fairings.reused) "Yes " else "No"}"
 
-            var tried = "Tried to recover? : No"
-            if (launchModel.rocket.fairings != null && launchModel.rocket.fairings.reused != null)
-                tried =
-                    "Tried to recover? : ${if (launchModel.rocket.fairings.reused!!) "Yes " else "No"}"
+                    recoverAttempt.text = tried
 
-            binding.characteristicsLaunch.recoverAttempt.text = tried
+                    when (launchModel.rocket.rocket_name) {
+                        "Falcon 9" -> appCompatImageView.setImageResource(R.drawable.falcon9)
+                        "Falcon Heavy" -> appCompatImageView.setImageResource(R.drawable.falcon_img)
+                        else -> appCompatImageView.setImageResource(R.drawable.falcon9)
 
-            when(launchModel.rocket.rocket_name){
-                "Falcon 9"-> binding.characteristicsLaunch.appCompatImageView.setImageResource(R.drawable.falcon9)
-                "Falcon Heavy"-> binding.characteristicsLaunch.appCompatImageView.setImageResource(R.drawable.falcon_img)
-                else-> binding.characteristicsLaunch.appCompatImageView.setImageResource(R.drawable.falcon9)
+                    }
 
-            }
+                    var recovered = "Recovered? : No"
+                    if (launchModel.rocket.fairings?.reused != null)
+                        recovered =
+                            "Recovered? : ${if (launchModel.rocket.fairings.reused) "Yes " else "No"}"
 
-            var recovered = "Recovered? : No"
-            if (launchModel.rocket.fairings?.reused != null)
-                recovered =
-                    "Recovered? : ${if (launchModel.rocket.fairings.reused!!) "Yes " else "No"}"
+                    this.recovered.text = recovered
 
-            binding.characteristicsLaunch.recovered.text = recovered
+                }
 
+                Log.d(
+                    "LAUNCH_ADAPTER_TAG",
+                    "Mission patch is null? ${(launchModel.links?.mission_patch == null)}"
+                )
 
-            Log.d(
-                "LAUNCH_ADAPTER_TAG",
-                "Mission patch is null? ${(launchModel.links?.mission_patch == null)}"
-            )
-
-            if (launchModel.links != null) {
-                Log.i("debug","not null links");
-                if (launchModel.links.mission_patch != null)
-                    loadImage(
-                        binding.recycleItemImg.context,
-                        launchModel.links.mission_patch,
-                        binding.recycleItemImg,
+                if (launchModel.links != null) {
+                    Log.i("debug", "not null links");
+                    if (launchModel.links.mission_patch != null)
+                        loadImage(
+                            recycleItemImg.context,
+                            launchModel.links.mission_patch,
+                            recycleItemImg,
+                            requestListener
+                        )
+                    else loadImage(
+                        recycleItemImg.context,
+                        LAUNCH_LOGOS_GIF,
+                        recycleItemImg,
                         requestListener
                     )
-                else loadImage(
-                    binding.recycleItemImg.context,
-                    LAUNCH_LOGOS_GIF,
-                    binding.recycleItemImg,
-                    requestListener
-                )
-            } else {
-                Log.i("debug","null links");
-                loadImage(
-                    binding.recycleItemImg.context,
-                    "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
-                    binding.recycleItemImg,
-                    requestListener
-                )
-            }
-            if (launchModel.launch_success) {
-                binding.status.setText("Status: success")
+                } else {
+                    Log.i("debug", "null links");
+                    loadImage(
+                        recycleItemImg.context,
+                        "https://cdn.dribbble.com/users/932046/screenshots/4818792/space_dribbble.png",
+                        recycleItemImg,
+                        requestListener
+                    )
+                }
 
-                context.getColor(R.color.green).let {
-                    binding.status.setTextColor(it)
+                status.text = if (launchModel.launch_success) "Status: success" else "Status: failed"
+
+                context.getColor(if (launchModel.launch_success) R.color.green else R.color.red).let {
+                    status.setTextColor(it)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        binding.cardLaunch.outlineSpotShadowColor = it
-                        binding.cardLaunch.outlineAmbientShadowColor = it
+                        cardLaunch.outlineSpotShadowColor = it
+                        cardLaunch.outlineAmbientShadowColor = it
                     }
                 }
-            } else {
-                binding.status.setText("Status: failed")
 
-                context.getColor(R.color.red).let {
-                    binding.status.setTextColor(it)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        binding.cardLaunch.outlineSpotShadowColor = it
-                        binding.cardLaunch.outlineAmbientShadowColor = it
-                    }
-                }
             }
         }
     }
-
 }

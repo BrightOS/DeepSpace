@@ -2,7 +2,6 @@ package ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland
 
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
-import ru.myitschool.nasa_bootcamp.data.model.HistoryModel
 import ru.myitschool.nasa_bootcamp.data.model.LandPadModel
 import ru.myitschool.nasa_bootcamp.data.model.LaunchPadModel
 import ru.myitschool.nasa_bootcamp.utils.Status

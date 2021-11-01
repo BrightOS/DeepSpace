@@ -1,28 +1,27 @@
 package ru.myitschool.nasa_bootcamp.ui.upcoming_events
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentUpcomingEventsBinding
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 
+/*
+ * @author Danil Khairulin
+ */
 @AndroidEntryPoint
 class UpcomingEventsFragment : Fragment() {
     private var _binding: FragmentUpcomingEventsBinding? = null
-    private val launchesViewModel: UpcomingEventsViewModel by viewModels<UpcomingEventsViewModelImpl>()
-    private lateinit var upcomingEventsAdapter: UpcomingRecylcerAdapter
-
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
+    private val launchesViewModel: UpcomingEventsViewModel by viewModels<UpcomingEventsViewModelImpl>()
+    private lateinit var upcomingEventsAdapter: UpcomingRecylcerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,13 +34,14 @@ class UpcomingEventsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recylcerUpcoming.setHasFixedSize(false)
-        binding.recylcerUpcoming.layoutManager = GridLayoutManager(context, 1)
+        initView()
+        observeData()
+    }
 
+    private fun observeData() {
         launchesViewModel.getViewModelScope().launch {
             launchesViewModel.getUpcomingLaunches()
         }
-        activity?.main_loading?.startLoadingAnimation()
 
         launchesViewModel.getUpcomingList().observe(viewLifecycleOwner) {
 
@@ -54,6 +54,10 @@ class UpcomingEventsFragment : Fragment() {
             binding.recylcerUpcoming.adapter = upcomingEventsAdapter
             activity?.main_loading?.stopLoadingAnimation()
         }
+    }
+
+    private fun initView() {
+        activity?.main_loading?.startLoadingAnimation()
 
         DimensionsUtil.dpToPx(requireContext(), 10).let {
             DimensionsUtil.setMargins(

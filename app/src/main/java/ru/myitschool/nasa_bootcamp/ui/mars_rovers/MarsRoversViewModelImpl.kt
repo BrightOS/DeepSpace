@@ -8,31 +8,33 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import ru.myitschool.nasa_bootcamp.data.repository.NasaRepository
-import ru.myitschool.nasa_bootcamp.ui.asteroid_radar.AsteroidRadarViewModel
-import java.lang.Exception
 import javax.inject.Inject
 import kotlin.random.Random
 
+/*
+ * @author Yana Glad
+ * @author Danil Khairulin
+ * @author Samuil Nalisin
+ */
 @HiltViewModel
 class MarsRoversViewModelImpl @Inject constructor(
     private val repository: NasaRepository
 ) : ViewModel(), MarsRoversViewModel {
 
-    var roverModels: MutableLiveData<ArrayList<RoverModel>> =
+    private var roverModels: MutableLiveData<ArrayList<RoverModel>> =
         MutableLiveData<ArrayList<RoverModel>>()
 
     var list: ArrayList<RoverModel> = arrayListOf()
 
-    fun createRandomSol(): Int {
-        val solValues = arrayListOf<Int>(2000, 1000, 2428, 2426)
+    private fun createRandomSol(): Int {
+        val solValues = arrayListOf(2000, 1000, 2428, 2426)
         return Random.nextInt(solValues.size)
     }
-
 
     //TODO: move to interactor + use cases
     override suspend fun loadRoverPhotos() {
         try {
-            val rnd = createRandomSol()
+            createRandomSol()
             val response = repository.getRoverCuriosityPhotos(createRandomSol())
             if (response.isSuccessful)
                 if (response.body() != null)

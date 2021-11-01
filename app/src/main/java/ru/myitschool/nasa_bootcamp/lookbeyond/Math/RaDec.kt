@@ -1,16 +1,16 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.Math
 
- import ru.myitschool.nasa_bootcamp.utils.RADIANS_TO_DEGREES
- import java.util.*
+import ru.myitschool.nasa_bootcamp.utils.RADIANS_TO_DEGREES
+import java.util.*
 import kotlin.math.*
 
 
 class RaDec(
     var ra: Double,
-    var dec: Double
+    var dec: Double,
 ) {
 
-    var longtitude : Double? = null
+    var longtitude: Double? = null
     var inclination: Double? = null
     var perihelion: Double? = null
     var axis: Double? = null
@@ -18,9 +18,11 @@ class RaDec(
     private var meanAnomaly: Double? = null
     private var trueAnomaly: Double? = null
 
-    constructor( _ra: Double,  _dec: Double, _longtitude: Double, _inclination: Double,
-                 _perihelion : Double, _axis : Double, _eccentricity : Double, _meanAnomaly: Double  )
-            : this(_ra , _dec ){
+    constructor(
+        _ra: Double, _dec: Double, _longtitude: Double, _inclination: Double,
+        _perihelion: Double, _axis: Double, _eccentricity: Double, _meanAnomaly: Double,
+    )
+            : this(_ra, _dec) {
         longtitude = _longtitude
         inclination = _inclination
         perihelion = _perihelion
@@ -28,9 +30,10 @@ class RaDec(
         eccentricity = _eccentricity
         meanAnomaly = _meanAnomaly
 
-        val E = meanAnomaly!! + eccentricity!! * (180 / Math.PI) * Math.sin(meanAnomaly!!.toDouble()) * (1.0 + eccentricity!! * Math.cos(
-            meanAnomaly!!.toDouble()
-        ))
+        val E =
+            meanAnomaly!! + eccentricity!! * (180 / Math.PI) * Math.sin(meanAnomaly!!.toDouble()) * (1.0 + eccentricity!! * Math.cos(
+                meanAnomaly!!.toDouble()
+            ))
         //or  E = M + e * sin(M) * ( 1.0 + e * cos(M) ) in radians
 
         val xv = cos(E) - eccentricity!!
@@ -62,7 +65,7 @@ class RaDec(
         }
 
         fun calculateRaDecDist(coords: HeliocentricCoords): RaDec {
-             val ra =
+            val ra =
                 modPart(atan2(coords.y, coords.x)) * RADIANS_TO_DEGREES
             val dec =
                 (atan(coords.z / sqrt(coords.x * coords.x + coords.y * coords.y))
@@ -72,9 +75,9 @@ class RaDec(
 
         fun getInstance(
             planet: Planet, time: Date?,
-            earthCoords: HeliocentricCoords
+            earthCoords: HeliocentricCoords,
         ): RaDec {
-             if (planet == Planet.Moon) {
+            if (planet == Planet.Moon) {
                 return Planet.getMoonLocation1(time)
             }
             val coords: HeliocentricCoords?
@@ -94,7 +97,7 @@ class RaDec(
 
         fun getInstance(coords: GeocentricCoord): RaDec {
             var raRad = atan2(coords.y, coords.x)
-            if (raRad < 0) raRad += PI*2
+            if (raRad < 0) raRad += PI * 2
             val decRad = atan2(coords.z, sqrt(coords.x * coords.x + coords.y * coords.y))
             return RaDec(
                 raRad * RADIANS_TO_DEGREES,

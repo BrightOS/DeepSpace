@@ -6,7 +6,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,34 +14,30 @@ import ru.myitschool.nasa_bootcamp.data.api.NewsApi
 import ru.myitschool.nasa_bootcamp.data.api.SpaceXApi
 import ru.myitschool.nasa_bootcamp.data.api.UpcomingEventsApi
 import ru.myitschool.nasa_bootcamp.data.repository.*
-import ru.myitschool.nasa_bootcamp.utils.*
+import ru.myitschool.nasa_bootcamp.utils.NASA_BASE_URL
+import ru.myitschool.nasa_bootcamp.utils.NEWS_BASE_URL
+import ru.myitschool.nasa_bootcamp.utils.SPACEX_BASE_URL
+import ru.myitschool.nasa_bootcamp.utils.SPACEX_BASE_V5_URL
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
 
+/*
+ * @author Danil Khairulin
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object MainModule {
 
-    fun checkInternetConnection(): Boolean {
+    private fun checkInternetConnection(): Boolean {
         return try {
             val inAddress: InetAddress = InetAddress.getByName("http://google.com")
             !inAddress.equals("")
         } catch (e: java.lang.Exception) {
             false
         }
-    }
-
-    private val interceptor = Interceptor { chain ->
-        if (!checkInternetConnection()) {
-            throw NoConnectivityException()
-            // Throwing our custom exception 'NoConnectivityException'
-        }
-
-        val builder = chain.request().newBuilder()
-        chain.proceed(builder.build())
     }
 
     @Provides
@@ -168,5 +163,4 @@ object MainModule {
     fun getUpcomingRepository(upcomingEventsApi: UpcomingEventsApi): UpcomingRepository {
         return UpcomingRepositoryImpl(upcomingEventsApi)
     }
-
 }

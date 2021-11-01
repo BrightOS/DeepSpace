@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.myitschool.nasa_bootcamp.MainActivity
@@ -21,6 +20,9 @@ import ru.myitschool.nasa_bootcamp.ui.animation.animateIt
 import ru.myitschool.nasa_bootcamp.utils.Data
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 
+/*
+ * @author Yana Glad
+ */
 @AndroidEntryPoint
 class SpaceXFragment : Fragment() {
 
@@ -36,10 +38,7 @@ class SpaceXFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSpacexBinding.inflate(inflater, container, false)
-        spaceXLaunchAdapter = SpaceXLaunchAdapter()
-        binding.launchesRecycle.adapter = spaceXLaunchAdapter
-        binding.launchesRecycle.layoutManager = LinearLayoutManager(requireContext())
-        binding.launchesRecycle.setHasFixedSize(false)
+        setupRecycle()
 
         DimensionsUtil.dpToPx(requireContext(), 5).let {
             DimensionsUtil.setMargins(
@@ -53,41 +52,43 @@ class SpaceXFragment : Fragment() {
 
         fun observeSpaceXLaunchers() {
             launchesViewModel.getSpaceXLaunches().observe(viewLifecycleOwner) { data ->
-                when (data) {
-                    is Data.Ok -> {
-                        binding.noInternet.visibility = GONE
-                        binding.reconnect.visibility = GONE
-                        binding.reconnectProgressBar.visibility = GONE
-                        binding.loadProgressbar.visibility = GONE
-                        binding.textNoInternet.visibility = GONE
+                with(binding) {
+                    when (data) {
+                        is Data.Ok -> {
+                            noInternet.visibility = GONE
+                            reconnect.visibility = GONE
+                            reconnectProgressBar.visibility = GONE
+                            loadProgressbar.visibility = GONE
+                            textNoInternet.visibility = GONE
 
-                        spaceXLaunchAdapter.submitList(data.data)
-                        (activity as MainActivity).main_loading?.stopLoadingAnimation()
-                    }
-                    is Data.Error -> {
-                        if (data.message == "noInternet") {
+                            spaceXLaunchAdapter.submitList(data.data)
                             (activity as MainActivity).main_loading?.stopLoadingAnimation()
-
-                            binding.noInternet.visibility = VISIBLE
-                            binding.reconnect.visibility = VISIBLE
-                            binding.reconnectProgressBar.visibility = GONE
-                            binding.loadProgressbar.visibility = GONE
-                            binding.textNoInternet.visibility = VISIBLE
-
-
-                            Toast.makeText(
-                                requireContext(),
-                                "no internet connection",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
-                    }
-                    is Data.Local -> {
-                        spaceXLaunchAdapter.submitList(data.data)
-                        (activity as MainActivity).main_loading?.stopLoadingAnimation()
-                    }
-                    Data.Loading -> {
+                        is Data.Error -> {
+                            if (data.message == "noInternet") {
+                                (activity as MainActivity).main_loading?.stopLoadingAnimation()
 
+                                noInternet.visibility = VISIBLE
+                                reconnect.visibility = VISIBLE
+                                reconnectProgressBar.visibility = GONE
+                                loadProgressbar.visibility = GONE
+                                textNoInternet.visibility = VISIBLE
+
+
+                                Toast.makeText(
+                                    requireContext(),
+                                    "no internet connection",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                        is Data.Local -> {
+                            spaceXLaunchAdapter.submitList(data.data)
+                            (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                        }
+                        Data.Loading -> {
+
+                        }
                     }
                 }
             }
@@ -100,6 +101,23 @@ class SpaceXFragment : Fragment() {
             observeSpaceXLaunchers()
         }
 
+        setupAnimations()
+
+        binding.explore.setOnClickListener {
+            val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
+            findNavController().navigate(action)
+        }
+
+        return binding.root
+
+    }
+
+    private fun setupRecycle() {
+        spaceXLaunchAdapter = SpaceXLaunchAdapter()
+        binding.launchesRecycle.adapter = spaceXLaunchAdapter
+    }
+
+    private fun setupAnimations() {
         val animation = animateIt {
             animate(binding.spaceXLogo) animateTo {
                 topOfItsParent(marginDp = 35f)
@@ -125,18 +143,6 @@ class SpaceXFragment : Fragment() {
             val percent = scrollY * 1f
             animation.setPercent(percent)
         }
-
-        val navController = findNavController()
-
-        binding.explore.setOnClickListener {
-            val action = SpaceXFragmentDirections.actionSpaceXFragmentToExploreFragment()
-            navController.navigate(action)
-        }
-
-
-
-        return binding.root
-
     }
 
     override fun onPause() {
