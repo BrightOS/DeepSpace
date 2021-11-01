@@ -1,5 +1,6 @@
 # Deep Space 
-APK можно загрузить по ссылке: https://drive.google.com/file/d/1gmA5UAjOWfY_8iK-2Lo7f7qCaUBPe548/view?usp=sharing
+
+Will be available in Google Play upcoming month
 
 Presentation: https://docs.google.com/presentation/d/1c-eezTK-GtelYbv_2g7yAjRDPWDCi9j0/edit#slide=id.p25
 
