@@ -24,7 +24,6 @@ class CoresFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCoresBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 

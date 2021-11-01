@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.databinding.FragmentHistoryBinding
@@ -26,15 +25,18 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
-
         return binding.root
+    }
+
+    companion object{
+        const val TOOL_BAR_DP_MARGIN = 5
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            DimensionsUtil.dpToPx(requireContext(), 5).let {
+            DimensionsUtil.dpToPx(requireContext(), TOOL_BAR_DP_MARGIN).let {
                 DimensionsUtil.setMargins(
                     toolBar,
                     it,

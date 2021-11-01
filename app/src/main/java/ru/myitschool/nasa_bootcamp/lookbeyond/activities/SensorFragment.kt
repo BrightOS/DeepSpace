@@ -222,5 +222,4 @@ class SensorFragment : Fragment(), SensorEventListener {
             }
         }
     }
-
 }

@@ -109,7 +109,7 @@ fun parseNewsDate(input: String): String {
 }
 
 fun TextInputEditText.checkForErrors(inputLayout: TextInputLayout) {
-    doOnTextChanged { text, start, before, count ->
+    doOnTextChanged { _, _, _, _ ->
         inputLayout.isErrorEnabled = false
     }
 }
@@ -148,7 +148,7 @@ fun dateToAmericanFormat(dateString: String, addTime: Boolean = false): String {
 
 fun getDayOfMonthSuffix(n: Int): String {
     Preconditions.checkArgument(n >= 1 && n <= 31, "illegal day of month: $n")
-    return if (n >= 11 && n <= 13) {
+    return if (n in 11..13) {
         "th"
     } else when (n % 10) {
         1 -> "st"

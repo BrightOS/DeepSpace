@@ -10,7 +10,7 @@ import ru.myitschool.nasa_bootcamp.ui.animation.scale.AnimScale
 
 class ViewInstance internal constructor(private val updateAnim: SpaceAnimation, internal val viewToMove: View) {
     private val animations: MutableList<Animator> = mutableListOf()
-    internal val animInstances: MutableList<AnimInstance> = mutableListOf()
+    private val animInstances: MutableList<AnimInstance> = mutableListOf()
 
     private var willHasScaleX: Float? = null
     private var willHasScaleY: Float? = null

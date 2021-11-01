@@ -23,7 +23,7 @@ import java.util.*
 
 class UpcomingRecylcerAdapter internal constructor(
     var context: Context,
-    private var upcomingLaunches: ArrayList<UpcomingLaunchModel>
+    private var upcomingLaunches: ArrayList<UpcomingLaunchModel>,
 ) :
     RecyclerView.Adapter<UpcomingRecyclerHolder>() {
 
@@ -177,8 +177,6 @@ class UpcomingRecylcerAdapter internal constructor(
                 )
             )
         }
-
         colorAnimation.start()
     }
-
 }

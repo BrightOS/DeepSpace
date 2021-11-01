@@ -24,12 +24,6 @@ class TrimDelegate : ReadWriteProperty<Any?, String> {
 
 class Example {
     var param: String by TrimDelegate()
-//    private val delegate = TrimDelegate()
-//    var param: String
-//        get() = delegate.getValue(this, ::param)
-//        set(value) {
-//            delegate.setValue(this, ::param, value)
-//        }
 }
 
 fun main(){

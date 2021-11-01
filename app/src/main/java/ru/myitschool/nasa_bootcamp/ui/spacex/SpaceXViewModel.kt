@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import ru.myitschool.nasa_bootcamp.data.model.SxLaunchModel
 import ru.myitschool.nasa_bootcamp.utils.Data
-import ru.myitschool.nasa_bootcamp.utils.EasyTimer
 import ru.myitschool.nasa_bootcamp.utils.Status
 
 interface SpaceXViewModel {
@@ -13,6 +12,4 @@ interface SpaceXViewModel {
     fun getErrorHandler() : MutableLiveData<Status>
     fun getViewModelScope() : CoroutineScope
     suspend fun reconnectToSpaceX()
-
-
 }

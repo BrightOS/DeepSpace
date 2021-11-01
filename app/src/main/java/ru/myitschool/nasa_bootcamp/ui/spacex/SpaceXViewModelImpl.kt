@@ -78,5 +78,4 @@ class SpaceXViewModelImpl @Inject constructor(
     }
 
     override fun getViewModelScope(): CoroutineScope = viewModelScope
-
 }

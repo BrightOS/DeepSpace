@@ -12,7 +12,7 @@ import com.google.android.material.transition.MaterialSharedAxis
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import ru.myitschool.nasa_bootcamp.databinding.RoverItemBinding
 import ru.myitschool.nasa_bootcamp.utils.loadImage
-import java.util.ArrayList
+import java.util.*
 
 class RoverRecyclerAdapter internal constructor(
     var context: Context,

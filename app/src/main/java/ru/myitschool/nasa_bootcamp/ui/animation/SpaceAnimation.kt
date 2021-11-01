@@ -5,6 +5,7 @@ import android.view.View
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.math.max
 
 class SpaceAnimation {
 
@@ -37,10 +38,10 @@ class SpaceAnimation {
         val viewInstance = ViewInstance(this, view)
         instanceList.add(viewInstance)
 
-        if (block != null) {
-            return viewInstance.animateTo(block)
+        return if (block != null) {
+            viewInstance.animateTo(block)
         } else {
-            return viewInstance
+            viewInstance
         }
     }
 
@@ -65,7 +66,7 @@ class SpaceAnimation {
                 viewRefresh.setInstanceForView(anim.viewToMove, anim)
             }
 
-            while (!upcomingAnimations.isEmpty()) {
+            while (upcomingAnimations.isNotEmpty()) {
                 val iterator = upcomingAnimations.iterator()
                 while (iterator.hasNext()) {
                     val viewExpectation = iterator.next()
@@ -138,8 +139,8 @@ class SpaceAnimation {
         executeAfterDraw(anyView, Runnable { setPercent(1f) })
     }
 
-    fun executeAfterDraw(view: View?, runnable: Runnable) {
-        view?.postDelayed(runnable, Math.max(5, startDelay))
+    private fun executeAfterDraw(view: View?, runnable: Runnable) {
+        view?.postDelayed(runnable, max(5, startDelay))
     }
 
     fun reset() {
@@ -161,7 +162,7 @@ class SpaceAnimation {
         return this
     }
 
-    fun withEndAction(listener: (SpaceAnimation) -> Unit): SpaceAnimation {
+    private fun withEndAction(listener: (SpaceAnimation) -> Unit): SpaceAnimation {
         this.endListeners.add(listener)
         return this
     }
@@ -209,8 +210,6 @@ class SpaceAnimation {
     }
 
     companion object {
-
-        private val DEFAULT_DURATION = 300L
-
+        private const val DEFAULT_DURATION = 300L
     }
 }

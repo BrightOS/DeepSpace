@@ -2,7 +2,7 @@ package ru.myitschool.nasa_bootcamp.ui.animation.position
 
 import android.view.View
 
-class PositionAnimInstanceSameCenterAs(val otherView: View, private val horizontal: Boolean, private val vertical: Boolean)
+class PositionAnimInstanceSameCenterAs(private val otherView: View, private val horizontal: Boolean, private val vertical: Boolean)
     : PositionAnimInstance() {
 
     init {

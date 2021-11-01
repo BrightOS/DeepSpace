@@ -14,11 +14,11 @@ import ru.myitschool.nasa_bootcamp.R
 @DelicateCoroutinesApi
 class SpaceLoadingView constructor(
     private val cont: Context,
-    attrs: AttributeSet?
+    attrs: AttributeSet?,
 ) :
     ConstraintLayout(cont, attrs) {
 
-    var errorText: CharSequence?
+    private var errorText: CharSequence?
         set(value) {
             error_text?.text = value
         }
@@ -47,7 +47,7 @@ class SpaceLoadingView constructor(
                 loading_progress_bar.visibility = View.VISIBLE
                 loading_root.visibility = View.VISIBLE
                 GlobalScope.launch {
-                    delay(200)
+                    delay(DEFAULT_SPACE_LOAD_DELAY)
                     MainScope().launch {
                         loading_progress_bar.indeterminateMode = true
                     }
@@ -73,7 +73,7 @@ class SpaceLoadingView constructor(
     }
 
     fun stopLoadingAnimation(
-        showCheckIcon: Boolean = this.showCheckIcon
+        showCheckIcon: Boolean = this.showCheckIcon,
     ) {
         MainScope().launch {
             if (showCheckIcon) {
@@ -86,7 +86,7 @@ class SpaceLoadingView constructor(
                 done_pic.visibility = View.VISIBLE
 
                 GlobalScope.launch {
-                    delay(1000)
+                    delay(DELAY)
                     MainScope().launch {
                         sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
                         rootView?.let {
@@ -108,7 +108,7 @@ class SpaceLoadingView constructor(
     }
 
     fun showError(
-        errorText: String = this.errorText as String
+        errorText: String = this.errorText as String,
     ) {
         MainScope().launch {
             var sharedAxis: MaterialSharedAxis
@@ -147,7 +147,6 @@ class SpaceLoadingView constructor(
                     rootView?.let {
                         TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
                     }
-
                     loading_root.visibility = View.GONE
                 }
             }
@@ -161,7 +160,8 @@ class SpaceLoadingView constructor(
         done_pic.visibility = View.GONE
     }
 
-    companion object{
+    companion object {
         const val DELAY = 1000L
+        const val DEFAULT_SPACE_LOAD_DELAY = 200L
     }
 }

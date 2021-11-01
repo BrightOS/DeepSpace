@@ -1,6 +1,11 @@
 package ru.myitschool.nasa_bootcamp.utils
 
-import android.app.*
+import android.app.PendingIntent
+import android.app.AlarmManager
+import android.app.NotificationManager
+import android.app.TaskStackBuilder
+import android.app.Notification
+import android.app.NotificationChannel
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -16,7 +21,6 @@ import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.data.model.NotificationModel
 import ru.myitschool.nasa_bootcamp.data.model.UpcomingLaunchModel
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -25,7 +29,13 @@ class NotificationCentre {
     private val sharedPreferencesFileName = "savedNotifications"
     private val sharedPreferencesTableName = "notifs"
 
-    fun scheduleNotification(context: Context, title: String, text: String, date: String, launchModel: UpcomingLaunchModel): NotificationModel {
+    fun scheduleNotification(
+        context: Context,
+        title: String,
+        text: String,
+        date: String,
+        launchModel: UpcomingLaunchModel,
+    ): NotificationModel {
         val intent = Intent(context, NotificationReceiver::class.java)
         intent.putExtra(NotificationReceiver.titleIntent, title)
         intent.putExtra(NotificationReceiver.textIntent, text)
@@ -33,7 +43,7 @@ class NotificationCentre {
         println(Date(dateAlarm).toString())
 
         // getting last request code so we will be able to cancel scheduled notification
-        val lastRequestCode: Int = try{
+        val lastRequestCode: Int = try {
             getAllScheduledNotifications(context).last().requestCode + 1
         } catch (e: Exception) {
             0
@@ -74,7 +84,8 @@ class NotificationCentre {
     }
 
     private fun deleteNotification(context: Context, notification: NotificationModel) {
-        val sharedPreferencesEditable = context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+        val sharedPreferencesEditable =
+            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
         val allNotifications = getAllScheduledNotifications(context)
         allNotifications.remove(notification)
         val json = Gson().toJson(allNotifications)

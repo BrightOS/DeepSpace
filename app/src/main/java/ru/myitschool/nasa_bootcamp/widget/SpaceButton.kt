@@ -7,7 +7,7 @@ import android.view.View
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.layout_space_button.view.*
+import kotlinx.android.synthetic.main.layout_space_button.view.button_text
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
 import ru.myitschool.nasa_bootcamp.utils.getColorFromAttributes
@@ -21,6 +21,10 @@ class SpaceButton constructor(
 ) :
     MaterialCardView(cont, attrs) {
 
+    companion object{
+        const val RADIUS_DP = 16
+    }
+
     var text: String?
         set(value) {
             button_text?.text = value
@@ -30,7 +34,7 @@ class SpaceButton constructor(
     init {
         View.inflate(context, R.layout.layout_space_button, this)
 
-        radius = DimensionsUtil.dpToPx(context, 16).toFloat()
+        radius = DimensionsUtil.dpToPx(context, RADIUS_DP).toFloat()
         backgroundTintList = ColorStateList.valueOf(
             getColorFromAttributes(
                 context,

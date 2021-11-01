@@ -285,6 +285,4 @@ internal class RenderingValues : RenderingValuesInterface {
 
     var transformToScreenMatrix = Matrix4D.createIdentity()
         private set
-
-
 }

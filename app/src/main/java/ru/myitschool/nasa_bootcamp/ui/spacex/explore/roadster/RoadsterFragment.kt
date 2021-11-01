@@ -78,5 +78,4 @@ class RoadsterFragment : Fragment() {
         loadImage(requireContext(), STARMAN_2, roadsterGif2)
         loadImage(requireContext(), STARMAN_3, roadsterGif3)
     }
-
 }

@@ -39,6 +39,4 @@ class RoadsterViewModelImpl @Inject constructor(
     override fun getStatus(): MutableLiveData<Status> {
         return status
     }
-
-
 }

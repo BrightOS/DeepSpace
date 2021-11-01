@@ -19,7 +19,7 @@ class TextureModule {
         return createTex(gl)
     }
 
-    fun loadResourceTexture(gl: GL10, res: Int): Texture {
+    fun loadResourceTexture(gl: GL10): Texture {
         return createTextureFromResource(gl)
     }
 

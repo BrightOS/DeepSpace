@@ -7,19 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.myitschool.nasa_bootcamp.data.model.DragonModel
 import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import ru.myitschool.nasa_bootcamp.databinding.DragonItemBinding
-
-import java.util.ArrayList
+import java.util.*
 
 class DragonsAdapter internal constructor(
-    context: Context,
+    var context: Context,
     dragonModels: ArrayList<DragonModel>,
    // val navController: NavController
 ) :
     RecyclerView.Adapter<DragonsViewHolder>() {
-    var context: Context
     var dragonModels: ArrayList<DragonModel>
 
-    internal interface onDragonClick {
+    internal interface OnDragonClick {
         fun onDragonClick(roverModel: RoverModel, position: Int)
     }
 
@@ -60,12 +58,11 @@ class DragonsAdapter internal constructor(
         holder.binding.fuel2Thruster.text = "Fuel 2: ${dragonModel.thrusters[0].fuel_2}"
         holder.binding.pods.text = "Pods: ${dragonModel.thrusters[0].pods}"
 
-        val onDragonClickListener = object : onDragonClick {
+        val onDragonClickListener = object : OnDragonClick {
             override fun onDragonClick(roverModel: RoverModel, position: Int) {
 
             }
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -78,7 +75,6 @@ class DragonsAdapter internal constructor(
     }
 
     init {
-        this.context = context
         this.dragonModels = dragonModels
     }
 }
