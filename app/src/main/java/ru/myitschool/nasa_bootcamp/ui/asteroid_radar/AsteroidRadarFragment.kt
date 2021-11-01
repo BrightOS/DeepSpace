@@ -1,36 +1,30 @@
 package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
 import android.os.Bundle
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.epoxy.stickyheader.StickyHeaderLinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.transition.platform.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_asteroid_radar.*
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentAsteroidRadarBinding
-import ru.myitschool.nasa_bootcamp.utils.*
-import java.util.*
-import kotlin.collections.ArrayList
+import ru.myitschool.nasa_bootcamp.utils.DimensionsUtil
+import ru.myitschool.nasa_bootcamp.utils.getColorFromAttributes
 
-
+/*
+ * @author Denis Shaikhlbarin
+ */
+@DelicateCoroutinesApi
 @AndroidEntryPoint
 class AsteroidRadarFragment : Fragment() {
     private var _binding: FragmentAsteroidRadarBinding? = null
@@ -39,15 +33,64 @@ class AsteroidRadarFragment : Fragment() {
     private lateinit var asteroidController: AsteroidEpoxyController
     private val binding get() = _binding!!
 
-    private var currentTime = getTodayDateFormatted()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAsteroidRadarBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initAppBar()
+        uploadData()
+        setupRecycler()
+        observeData()
+
+    }
+
+    private fun observeData() {
+        asteroidViewModel.getAsteroidListViewModel().observe(viewLifecycleOwner, {
+            GlobalScope.launch {
+                asteroidController.setData(
+                    asteroidViewModel.getAsteroidListViewModel().value
+                )
+
+                MainScope().launch {
+                    activity?.main_loading?.stopLoadingAnimation(false)
+                }
+            }
+        })
+    }
+
+    private fun uploadData() {
+        if (!this::asteroidController.isInitialized) {
+            asteroidController = AsteroidEpoxyController(requireContext())
+            activity?.main_loading?.startLoadingAnimation()
+
+            asteroidViewModel.apply {
+                getViewModelScope().launch {
+                    getAsteroidList()
+                }
+            }
+        }
+    }
+
+    private fun setupRecycler() {
+        val list = ArrayList<Long>()
+        for (i in -8..-1)
+            list.add(AsteroidDateEpoxyModel_().id(-1).id())
+
+        binding.asteroidList.let {
+            it.layoutManager = StickyHeaderLinearLayoutManager(requireContext())
+            it.adapter = asteroidController.adapter
+        }
+    }
+
+    private fun initAppBar() {
         DimensionsUtil.dpToPx(requireContext(), 5).let {
             DimensionsUtil.setMargins(
                 binding.toolBar,
@@ -78,38 +121,6 @@ class AsteroidRadarFragment : Fragment() {
                 }
             }
         })
-
-        if (!this::asteroidController.isInitialized) {
-            asteroidController = AsteroidEpoxyController(requireContext())
-            activity?.main_loading?.startLoadingAnimation()
-
-            asteroidViewModel.getViewModelScope().launch {
-                asteroidViewModel.getAsteroidList()
-            }
-        }
-
-        val list = ArrayList<Long>()
-        for (i in -8..-1)
-            list.add(AsteroidDateEpoxyModel_().id(-1).id())
-
-        binding.asteroidList.let {
-            it.layoutManager = StickyHeaderLinearLayoutManager(requireContext())
-            it.adapter = asteroidController.adapter
-        }
-
-        asteroidViewModel.getAsteroidListViewModel().observe(viewLifecycleOwner, {
-            GlobalScope.launch {
-                asteroidController.setData(
-                    asteroidViewModel.getAsteroidListViewModel().value
-                )
-
-                MainScope().launch {
-                    activity?.main_loading?.stopLoadingAnimation(false)
-                }
-            }
-        })
-
-        return binding.root
     }
 
     override fun onPause() {

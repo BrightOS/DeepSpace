@@ -1,7 +1,10 @@
-package com.example.firstkotlinapp.model.rovers
+package ru.myitschool.nasa_bootcamp.data.dto.nasa.rovers
 
 import com.google.gson.annotations.SerializedName
 
+/*
+ * @author Yana Glad
+ */
 class Rover(
     @field:SerializedName("id") val id: Int,
     @field:SerializedName("name") val name: String, //Название ровера

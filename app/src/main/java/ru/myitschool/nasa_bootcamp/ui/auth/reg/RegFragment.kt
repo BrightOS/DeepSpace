@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.R
@@ -29,6 +30,10 @@ import ru.myitschool.nasa_bootcamp.utils.invalidEmail
 import ru.myitschool.nasa_bootcamp.utils.userAlreadyRegistered
 import java.io.IOException
 
+/*
+ * @author Danil Khairulin
+ */
+@DelicateCoroutinesApi
 @AndroidEntryPoint
 class RegFragment : Fragment() {
     private val PICK_IMAGE_REQUEST = 71

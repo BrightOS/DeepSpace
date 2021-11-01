@@ -141,7 +141,7 @@ class SpaceLoadingView constructor(
             }
 
             GlobalScope.launch {
-                delay(1000)
+                delay(DELAY)
                 MainScope().launch {
                     sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
                     rootView?.let {
@@ -159,5 +159,9 @@ class SpaceLoadingView constructor(
         error_pic.visibility = View.GONE
         error_text.visibility = View.GONE
         done_pic.visibility = View.GONE
+    }
+
+    companion object{
+        const val DELAY = 1000L
     }
 }

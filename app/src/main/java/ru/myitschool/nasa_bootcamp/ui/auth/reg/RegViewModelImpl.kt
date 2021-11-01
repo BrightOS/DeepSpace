@@ -12,6 +12,9 @@ import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
 import ru.myitschool.nasa_bootcamp.utils.Data
 import javax.inject.Inject
 
+/*
+ * @author Danil Khairulin
+ */
 @HiltViewModel
 class RegViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository

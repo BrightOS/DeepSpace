@@ -1,6 +1,8 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
-
+/*
+ * @author Yana Glad
+ */
 data class AsteroidModel(
     val id: Long,
     val name: String,

@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import ru.myitschool.nasa_bootcamp.databinding.FragmentContactBinding
 
+/*
+ * @author Danil Khairulin
+ */
 class UserCabinetFragment : Fragment() {
     private var _binding: FragmentContactBinding? = null
     private val viewModel: UserCabinetViewModel by viewModels<UserCabinetViewModelImpl>()

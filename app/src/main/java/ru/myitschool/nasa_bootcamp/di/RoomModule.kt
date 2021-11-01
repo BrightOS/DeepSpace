@@ -13,6 +13,9 @@ import ru.myitschool.nasa_bootcamp.data.room.LocalDatabase
 //import ru.myitschool.nasa_bootcamp.data.db.AsteroidDatabase
 import javax.inject.Singleton
 
+/*
+ * @author Danil Khairulin
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object RoomModule {

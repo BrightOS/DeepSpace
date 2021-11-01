@@ -1,8 +1,11 @@
-package com.example.firstkotlinapp.model.rovers
+package ru.myitschool.nasa_bootcamp.data.dto.nasa.rovers
 
-import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 import com.google.gson.annotations.SerializedName
+import ru.myitschool.nasa_bootcamp.data.model.RoverModel
 
+/*
+ * @author Yana Glad
+ */
 data class Photos(
     @field:SerializedName("id") private val id: Int,
     @field:SerializedName("camera")private val camera: Camera,

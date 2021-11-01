@@ -1,8 +1,11 @@
 package com.example.firstkotlinapp.model.apod
 
-import ru.myitschool.nasa_bootcamp.data.model.ImageOfTheDayModel
 import com.google.gson.annotations.SerializedName
+import ru.myitschool.nasa_bootcamp.data.model.ImageOfTheDayModel
 
+/*
+ * @author Yana Glad
+ */
 data class Apod(
     @field:SerializedName("date") val date: String,
     @field:SerializedName("explanation") val explanation: String,

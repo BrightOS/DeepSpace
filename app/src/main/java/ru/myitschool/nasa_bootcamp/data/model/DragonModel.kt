@@ -3,6 +3,9 @@ package ru.myitschool.nasa_bootcamp.data.model
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.dragons.PayloadMass
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.dragons.Thruster
 
+/*
+ * @author Yana Glad
+ */
 data class DragonModel(
     val id: String,
     val name: String,

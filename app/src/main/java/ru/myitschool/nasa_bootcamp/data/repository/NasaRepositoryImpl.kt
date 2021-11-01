@@ -1,6 +1,6 @@
 package ru.myitschool.nasa_bootcamp.data.repository;
 
-import com.example.firstkotlinapp.model.rovers.Rovers
+import ru.myitschool.nasa_bootcamp.data.dto.nasa.rovers.Rovers
 import retrofit2.Response
 import javax.inject.Inject;
 import ru.myitschool.nasa_bootcamp.data.api.NasaApi;

@@ -69,8 +69,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-
-    // enable close drawer on back pressed
     override fun onBackPressed() {
         main_loading.stopLoadingAnimation(false)
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))

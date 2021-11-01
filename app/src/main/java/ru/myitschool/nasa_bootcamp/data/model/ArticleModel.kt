@@ -1,6 +1,8 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
-
+/*
+ * @author Yana Glad
+ */
 data class ArticleModel(
     val id: Long,
     val title: String,

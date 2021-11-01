@@ -14,7 +14,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.*
 import ru.myitschool.nasa_bootcamp.MainActivity
 import ru.myitschool.nasa_bootcamp.databinding.SpaceNavigatorBinding
 import ru.myitschool.nasa_bootcamp.lookbeyond.layer.LayerManager
@@ -64,20 +63,13 @@ class SpaceNavigatorActivity : AppCompatActivity() {
 
     private var rendererThreadRun: RendererThreadRun? = null
     private var skyView: GLSurfaceView? = null
-    var layerManager: LayerManager? = null
+    private var layerManager: LayerManager? = null
     private var playServicesChecker: GooglePlayServicesChecker? = null
 
 
     public override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
-
         _binding = SpaceNavigatorBinding.inflate(layoutInflater)
-
-
-        viewModel.isLoaded.observe(this) {
-            //   Log.d("LOAD", "LOAEDDD")
-            // binding.loadProgressbar.visibility = View.GONE
-        }
 
         controller = Managers(
             SensorManager(

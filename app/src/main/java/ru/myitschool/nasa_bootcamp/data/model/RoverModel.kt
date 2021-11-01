@@ -1,7 +1,7 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
-import com.example.firstkotlinapp.model.rovers.Camera
-import com.example.firstkotlinapp.model.rovers.Rover
+import ru.myitschool.nasa_bootcamp.data.dto.nasa.rovers.Camera
+import ru.myitschool.nasa_bootcamp.data.dto.nasa.rovers.Rover
 
 class RoverModel(_id: Int, _img_src: String, _camera: Camera, _rover: Rover, _earth_date : String) {
     var id = _id

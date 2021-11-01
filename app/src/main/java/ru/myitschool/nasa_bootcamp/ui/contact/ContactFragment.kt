@@ -20,10 +20,9 @@ import ru.myitschool.nasa_bootcamp.utils.Data
 @AndroidEntryPoint
 class ContactFragment : Fragment() {
     private var _binding: FragmentContactBinding? = null
-    private val viewModel: ContactViewModel by viewModels<ContactViewModelImpl>()
-
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    private val viewModel: ContactViewModel by viewModels<ContactViewModelImpl>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

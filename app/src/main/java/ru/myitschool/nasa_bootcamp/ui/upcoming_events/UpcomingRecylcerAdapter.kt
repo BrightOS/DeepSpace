@@ -2,6 +2,7 @@ package ru.myitschool.nasa_bootcamp.ui.upcoming_events
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Build
@@ -10,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import ru.myitschool.nasa_bootcamp.R
@@ -23,7 +23,7 @@ import java.util.*
 
 class UpcomingRecylcerAdapter internal constructor(
     var context: Context,
-    var upcomingLaunches: ArrayList<UpcomingLaunchModel>
+    private var upcomingLaunches: ArrayList<UpcomingLaunchModel>
 ) :
     RecyclerView.Adapter<UpcomingRecyclerHolder>() {
 
@@ -34,11 +34,11 @@ class UpcomingRecylcerAdapter internal constructor(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            context
+            )
         )
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UpcomingRecyclerHolder, position: Int) {
         val upcomingLaunchModel: UpcomingLaunchModel = upcomingLaunches[position]
         var isEnabledNotification = false

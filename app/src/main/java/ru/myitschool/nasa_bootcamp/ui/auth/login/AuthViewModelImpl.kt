@@ -11,6 +11,9 @@ import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
 import ru.myitschool.nasa_bootcamp.utils.Data
 import javax.inject.Inject
 
+/*
+ * @author Vladimir Abubakirov
+ */
 @HiltViewModel
 class AuthViewModelImpl @Inject constructor(
     private val repository: FirebaseRepository

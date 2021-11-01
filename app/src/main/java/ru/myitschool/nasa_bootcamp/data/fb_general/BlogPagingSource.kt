@@ -12,6 +12,9 @@ import ru.myitschool.nasa_bootcamp.data.repository.FirebaseRepository
 import ru.myitschool.nasa_bootcamp.utils.BLOG_PAGE_SIZE
 import ru.myitschool.nasa_bootcamp.utils.Status
 
+/*
+ * @author Yana Glad
+ */
 class BlogPagingSource(private val firebaseRepository: FirebaseRepository) :
     PagingSource<DataSnapshot, LiveData<ContentWithLikesAndComments<PostModel>>>() {
 

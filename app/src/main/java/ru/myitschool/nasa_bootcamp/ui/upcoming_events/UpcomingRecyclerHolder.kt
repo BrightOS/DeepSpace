@@ -1,18 +1,14 @@
 package ru.myitschool.nasa_bootcamp.ui.upcoming_events
 
-import android.content.Context
 import android.graphics.drawable.Drawable
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import ru.myitschool.nasa_bootcamp.databinding.UpcomingItemBinding
-import javax.sql.DataSource
 
-class UpcomingRecyclerHolder (
-    val binding: UpcomingItemBinding,
-    private val context: Context
+class UpcomingRecyclerHolder(
+    val binding: UpcomingItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     var requestListener = object : RequestListener<Drawable> {

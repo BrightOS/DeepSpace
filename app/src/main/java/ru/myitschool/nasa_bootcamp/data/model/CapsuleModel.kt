@@ -2,6 +2,9 @@ package ru.myitschool.nasa_bootcamp.data.model
 
 import ru.myitschool.nasa_bootcamp.data.dto.spaceX.Mission
 
+/*
+ * @author Yana Glad
+ */
 data class CapsuleModel(
     val capsule_serial: String,
     val capsule_id: String,

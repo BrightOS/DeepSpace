@@ -2,16 +2,18 @@ package ru.myitschool.nasa_bootcamp.ui.asteroid_radar
 
 import android.content.Context
 import android.view.View
-import androidx.core.view.ViewCompat
 import com.airbnb.epoxy.EpoxyController
 import ru.myitschool.nasa_bootcamp.data.model.AsteroidModel
 
+/*
+ * @author Denis Shaikhlbarin
+ */
 class AsteroidEpoxyController(
     val context: Context
 ) : EpoxyController() {
 
     val data: MutableList<AsteroidModel> = mutableListOf()
-    val isSticky: MutableList<Boolean> = mutableListOf()
+    private val isSticky: MutableList<Boolean> = mutableListOf()
     private var currentDate = ""
 
     fun setData(data: MutableList<AsteroidModel>?) {
@@ -20,7 +22,7 @@ class AsteroidEpoxyController(
         addData(data)
     }
 
-    fun addData(data: MutableList<AsteroidModel>?) {
+    private fun addData(data: MutableList<AsteroidModel>?) {
         if (data != null) {
             this.data.addAll(data)
 

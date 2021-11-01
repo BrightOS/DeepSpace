@@ -6,6 +6,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.tasks.await
 
+/*
+ * @author Vladimir Abubakirov
+ */
 class UserCabinetViewModelImpl : ViewModel(), UserCabinetViewModel {
     private var authenticator: FirebaseAuth = FirebaseAuth.getInstance()
     private var userDbReference: DatabaseReference =

@@ -1,5 +1,6 @@
 package ru.myitschool.nasa_bootcamp.utils
 
+
 sealed class Data<out T>{
     object Loading : Data<Nothing>()
     data class Error(val message: String): Data<Nothing>()

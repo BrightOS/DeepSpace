@@ -13,6 +13,9 @@ import com.google.android.material.card.MaterialCardView
 import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.utils.KotlinEpoxyHolder
 
+/*
+ * @author Denis Shaikhlbarin
+ */
 @SuppressLint("NonConstantResourceId")
 @EpoxyModelClass(layout = R.layout.asteroid_item)
 abstract class AsteroidEpoxyModel(
@@ -37,6 +40,7 @@ abstract class AsteroidEpoxyModel(
     @EpoxyAttribute
     open var potencialDanger: Boolean = false
 
+    @SuppressLint("SetTextI18n")
     override fun bind(holder: Holder) {
         holder.asteroidName.text = name
         holder.distanceFromEarth.text = "%.6f AU".format(distanceFromEarth)

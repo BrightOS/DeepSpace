@@ -1,41 +1,27 @@
 package ru.myitschool.nasa_bootcamp.lookbeyond.activities
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.content.ContextWrapper
-import android.util.Log
 import androidx.core.app.ActivityCompat
-import androidx.core.content.PermissionChecker
-import androidx.core.content.PermissionChecker.checkPermission
-import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.myitschool.nasa_bootcamp.MainActivity
-import ru.myitschool.nasa_bootcamp.R
 import ru.myitschool.nasa_bootcamp.databinding.FragmentWaitingBinding
-import ru.myitschool.nasa_bootcamp.databinding.SpaceNavigatorBinding
-import ru.myitschool.nasa_bootcamp.ui.spacex.ExploreFragmentDirections
 
 
 class WaitingFragment : Fragment() {
 
     private var _binding: FragmentWaitingBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,7 +1,8 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
-import android.net.Uri
-
+/*
+ * @author Vladimir Abubakirov
+ */
 open class Comment(
     val id: Long,
     val text: String,

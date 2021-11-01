@@ -1,12 +1,12 @@
 package ru.myitschool.nasa_bootcamp.data.model
 
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
-import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.*
+import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.LaunchSite
+import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Links
+import ru.myitschool.nasa_bootcamp.data.dto.spaceX.launches.Rocket
 
+/*
+ * @author Yana Glad
+ */
 data class SxLaunchModel(
     val launch_date_unix: Long,
     val flight_number: Int,
