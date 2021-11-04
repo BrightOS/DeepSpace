@@ -6,9 +6,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-
-
-
     <android.opengl.GLSurfaceView
         android:id="@+id/space_nav"
         android:layout_width="0dp"

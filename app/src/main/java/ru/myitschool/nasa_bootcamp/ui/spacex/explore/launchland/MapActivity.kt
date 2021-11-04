@@ -1,7 +1,7 @@
 package ru.myitschool.nasa_bootcamp.ui.spacex.explore.launchland
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -41,7 +41,7 @@ class MapActivity : AppCompatActivity() {
         val callback = OnMapReadyCallback { googleMap ->
             val landingZone = LatLng(latitude!!, longitude!!)
 
-            googleMap.addMarker(MarkerOptions().position(landingZone).title(name)).apply {
+            googleMap.addMarker(MarkerOptions().position(landingZone).title(name))?.apply {
                 tag = nameDetails
             }
             googleMap.setInfoWindowAdapter(MarkerInfoAdapter(this))
