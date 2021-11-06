@@ -14,8 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ru.myitschool.deepspace.R
 import ru.myitschool.deepspace.databinding.FragmentSensorsBinding
-import ru.myitschool.deepspace.navigator.control.AbstractPointing
-import ru.myitschool.deepspace.navigator.control.VectorPointing
+import ru.myitschool.deepspace.navigator.pointing.AbstractPointing
+import ru.myitschool.deepspace.navigator.pointing.VectorPointing
 import java.util.*
 
 class SensorFragment : Fragment(), SensorEventListener {

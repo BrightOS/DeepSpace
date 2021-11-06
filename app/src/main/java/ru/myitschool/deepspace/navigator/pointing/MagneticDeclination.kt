@@ -1,4 +1,4 @@
-package ru.myitschool.deepspace.navigator.control
+package ru.myitschool.deepspace.navigator.pointing
 
 import android.hardware.GeomagneticField
 import ru.myitschool.deepspace.maths.coords.LatLong

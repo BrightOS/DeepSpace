@@ -13,14 +13,14 @@
         android:id="@+id/location_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_regular"
-        android:text="Click to view the area"
-        android:textColor="#E1E1E1"
-        android:alpha="0.5"
-        android:textSize="12sp"
-        android:textAlignment="textEnd"
-        android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:alpha="0.5"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/click_to_view_the_area"
+        android:textAlignment="textEnd"
+        android:textColor="#E1E1E1"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -34,10 +34,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
+            android:text="@string/name"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="Name:" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/name_launch_pad"
@@ -46,22 +46,22 @@
             android:fontFamily="@font/inter_extrabold"
             android:textColor="@color/white"
             android:textSize="24sp"
-            tools:text="VAFB SLC 3W"/>
+            tools:text="VAFB SLC 3W" />
 
         <TextView
             android:id="@+id/location_launch_pad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="5dp"
+            android:drawableTint="@android:color/white"
             android:fontFamily="@font/inter_semibold"
+            tools:text="Vandenberg Air Force Base Space Launch Complex 3W"
             android:textColor="#E1E1E1"
             android:textSize="16sp"
-            android:text="Vandenberg Air Force Base Space Launch Complex 3W"
-            android:drawableStart="@drawable/ic_location"
-            android:drawableTint="@android:color/white"
-            android:drawablePadding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/vehicles_launched_title"
@@ -69,10 +69,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
+            android:text="@string/vehicles_launched"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="Vehicles launched:" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/vehicles_launched"
@@ -92,10 +92,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_regular"
+            android:text="@string/status"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="Status:" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/status_launch_pad"
@@ -115,10 +115,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_regular"
+            android:text="@string/attempted_successful_launches"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="Attempted/Successful launches:" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/attemped_successful_launches"
@@ -158,5 +158,5 @@
     <ru.myitschool.deepspace.widget.SpaceLoadingView
         android:id="@+id/launch_pad_loading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </com.google.android.material.card.MaterialCardView>

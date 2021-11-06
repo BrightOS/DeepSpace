@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
 import ru.myitschool.deepspace.databinding.FragmentCapsulesBinding
 import ru.myitschool.deepspace.utils.DimensionsUtil
 import ru.myitschool.deepspace.utils.Status
 
+@DelicateCoroutinesApi
 @AndroidEntryPoint
 class CapsulesFragment : Fragment() {
     private val capsulesViewModel: CapsulesViewModel by viewModels<CapsulesViewModelImpl>()
@@ -27,6 +29,8 @@ class CapsulesFragment : Fragment() {
         _binding = FragmentCapsulesBinding.inflate(inflater, container, false)
 
         with(binding) {
+            spaceLoading.startLoadingAnimation()
+
             DimensionsUtil.dpToPx(requireContext(), 5).let {
                 DimensionsUtil.setMargins(
                     toolBar,
@@ -51,6 +55,7 @@ class CapsulesFragment : Fragment() {
                             capsulesViewModel.getCapsulesList().value!!
                         )
                     capsulesRecycler.adapter = capsulesAdapter
+                    spaceLoading.stopLoadingAnimation()
                 })
 
             capsulesViewModel.apply {

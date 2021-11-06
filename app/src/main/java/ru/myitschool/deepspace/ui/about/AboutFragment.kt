@@ -1,4 +1,4 @@
-package ru.myitschool.nasa_bootcamp.ui.about
+package ru.myitschool.deepspace.ui.about
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -13,10 +13,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import ru.myitschool.nasa_bootcamp.R
-import ru.myitschool.nasa_bootcamp.databinding.FragmentAboutBinding
-import ru.myitschool.nasa_bootcamp.utils.ANIMATED_DEEP_SPACE
-import ru.myitschool.nasa_bootcamp.utils.loadImageCircle
+import ru.myitschool.deepspace.R
+import ru.myitschool.deepspace.databinding.FragmentAboutBinding
+import ru.myitschool.deepspace.utils.ANIMATED_DEEP_SPACE
+import ru.myitschool.deepspace.utils.loadImageCircle
 
 
 /*

@@ -19,8 +19,8 @@
                 android:layout_width="115dp"
                 android:layout_height="115dp"
                 android:layout_marginTop="32dp"
-                android:src="@drawable/ic_camera_mini"
                 android:background="@drawable/circle"
+                android:src="@drawable/ic_camera_mini"
                 app:layout_constraintBottom_toTopOf="@id/login_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,44 +117,6 @@
                     android:paddingHorizontal="20dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--<com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutFname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_fname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/firstName" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutLname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutFname">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_lname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/lastName" />
-            </com.google.android.material.textfield.TextInputLayout>-->
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textLayoutPassword"
                 android:layout_width="match_parent"
@@ -235,7 +197,7 @@
                 android:fontFamily="@font/inter_regular"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Already have an account? Sign in!"
+                android:text="@string/already_have_an_account_sign_in"
                 app:drawableStartCompat="@drawable/ic_login"
                 app:drawableTint="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"

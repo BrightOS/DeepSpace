@@ -1,13 +1,14 @@
 package ru.myitschool.deepspace.ui.upcoming_events
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import ru.myitschool.deepspace.databinding.FragmentUpcomingEventsBinding
 import ru.myitschool.deepspace.utils.DimensionsUtil
@@ -23,10 +24,12 @@ class UpcomingEventsFragment : Fragment() {
     private val launchesViewModel: UpcomingEventsViewModel by viewModels<UpcomingEventsViewModelImpl>()
     private lateinit var upcomingEventsAdapter: UpcomingRecylcerAdapter
 
+    private val handler = Handler(Looper.myLooper()!!)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUpcomingEventsBinding.inflate(inflater, container, false)
         return binding.root
@@ -45,7 +48,6 @@ class UpcomingEventsFragment : Fragment() {
         }
 
         launchesViewModel.getUpcomingList().observe(viewLifecycleOwner) {
-
             upcomingEventsAdapter =
                 UpcomingRecylcerAdapter(
                     requireContext(),
@@ -53,12 +55,13 @@ class UpcomingEventsFragment : Fragment() {
                 )
 
             binding.recylcerUpcoming.adapter = upcomingEventsAdapter
-            activity?.main_loading?.stopLoadingAnimation()
+            handler.postDelayed({ binding.spaceLoading.stopLoadingAnimation() }, DELAY)
+
         }
     }
 
     private fun initView() {
-        activity?.main_loading?.startLoadingAnimation()
+        binding.spaceLoading.startLoadingAnimation()
 
         DimensionsUtil.dpToPx(requireContext(), 10).let {
             DimensionsUtil.setMargins(
@@ -69,6 +72,10 @@ class UpcomingEventsFragment : Fragment() {
                 0
             )
         }
+    }
+
+    companion object{
+        const val DELAY = 1000L
     }
 
     /*

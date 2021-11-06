@@ -4,15 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/stars_sky_background_blur" />
-
     <fragment
-        android:id="@+id/sensors_fragm"
-        android:name="ru.myitschool.deepspace.navigator.activities.SensorFragment"
+        android:id="@+id/fragm_planet"
+        android:name="ru.myitschool.deepspace.navigator.activities.AboutPlanetsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:visibility="visible" />

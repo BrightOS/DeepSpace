@@ -1,11 +1,9 @@
-package ru.myitschool.deepspace.navigator.control
+package ru.myitschool.deepspace.navigator.managers
 
 import android.content.Context
 import android.hardware.SensorManager
 import androidx.core.content.ContextCompat
-import ru.myitschool.deepspace.navigator.managers.AbstractManager
-import ru.myitschool.deepspace.navigator.managers.GpsManager
-import ru.myitschool.deepspace.navigator.managers.ZoomManager
+import ru.myitschool.deepspace.navigator.pointing.VectorPointing
 import java.util.*
 
 
@@ -41,7 +39,7 @@ class Managers(context: Context?, gpsManager: GpsManager) : AbstractManager {
 
     init {
         addController(gpsManager)
-        sensorController = ru.myitschool.deepspace.navigator.managers.SensorManager(
+        sensorController = SensorManager(
             ContextCompat.getSystemService(
                 context!!,
                 SensorManager::class.java

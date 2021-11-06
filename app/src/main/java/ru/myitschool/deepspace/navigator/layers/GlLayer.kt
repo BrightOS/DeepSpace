@@ -1,7 +1,7 @@
 package ru.myitschool.deepspace.navigator.layers
 
 import android.content.res.Resources
-import ru.myitschool.deepspace.navigator.control.VectorPointing
+import ru.myitschool.deepspace.navigator.pointing.VectorPointing
 import ru.myitschool.deepspace.navigator.rendertype.Grid
 import ru.myitschool.deepspace.navigator.rendertype.ImageRun
 import ru.myitschool.deepspace.navigator.rendertype.LineRun

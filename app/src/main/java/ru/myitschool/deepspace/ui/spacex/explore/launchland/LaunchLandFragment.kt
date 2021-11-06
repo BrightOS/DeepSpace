@@ -37,6 +37,7 @@ class LaunchLandFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            spaceLoading.startLoadingAnimation()
             launchLandViewModel.apply {
                 getViewModelScope().launch {
                     getLandPads()
@@ -88,6 +89,7 @@ class LaunchLandFragment : Fragment() {
                     )
 
                 launchLandRecycler.adapter = launchAdapter
+                binding.spaceLoading.stopLoadingAnimation()
             })
     }
 }

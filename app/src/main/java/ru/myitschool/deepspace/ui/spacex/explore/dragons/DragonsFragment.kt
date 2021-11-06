@@ -25,32 +25,35 @@ class DragonsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDragonsBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            dragonsRecycle.setHasFixedSize(true)
+            spaceLoading.startLoadingAnimation()
 
+            setupRecycler()
             loadImage(requireContext(), DRAGONS_GIF, dragonImage)
 
             dragonsViewModel.getViewModelScope().launch {
                 dragonsViewModel.getDragons()
             }
-
-            dragonsViewModel.getDragonsList().apply {
-                observe(viewLifecycleOwner, {
-                    dragonsAdapter =
-                        DragonsAdapter(
-                            requireContext(),
-                            value!!
-                        )
-                    dragonsRecycle.adapter = dragonsAdapter
-                })
-            }
         }
     }
 
+    private fun FragmentDragonsBinding.setupRecycler() {
+        dragonsRecycle.setHasFixedSize(true)
+        dragonsViewModel.getDragonsList().apply {
+            observe(viewLifecycleOwner, {
+                dragonsAdapter =
+                    DragonsAdapter(
+                        requireContext(),
+                        value!!
+                    )
+                dragonsRecycle.adapter = dragonsAdapter
+                spaceLoading.stopLoadingAnimation()
+            })
+        }
+    }
 }

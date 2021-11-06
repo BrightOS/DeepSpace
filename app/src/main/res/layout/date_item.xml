@@ -12,6 +12,6 @@
     android:fontFamily="@font/inter_bold"
     android:paddingHorizontal="15dp"
     android:paddingVertical="12dp"
-    tools:text="July 2nd. 2015"
     android:textColor="@android:color/white"
-    android:textSize="21sp" />
+    android:textSize="21sp"
+    tools:text="July 2nd. 2015" />

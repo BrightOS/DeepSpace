@@ -4,8 +4,8 @@ import android.app.Application
 import android.hardware.SensorManager
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.HiltAndroidApp
-import ru.myitschool.deepspace.navigator.control.AbstractPointing
-import ru.myitschool.deepspace.navigator.control.VectorPointing
+import ru.myitschool.deepspace.navigator.pointing.AbstractPointing
+import ru.myitschool.deepspace.navigator.pointing.VectorPointing
 
 
 @HiltAndroidApp

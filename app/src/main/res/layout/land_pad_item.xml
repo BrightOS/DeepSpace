@@ -13,14 +13,14 @@
         android:id="@+id/location_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_regular"
-        android:text="Click to view the area"
-        android:textColor="#E1E1E1"
-        android:alpha="0.5"
-        android:textSize="12sp"
-        android:textAlignment="textEnd"
-        android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:alpha="0.5"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/click_to_view_the_area"
+        android:textAlignment="textEnd"
+        android:textColor="#E1E1E1"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
-            android:text="Name:"
+            android:text="@string/name"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Landing type:"
+            android:text="@string/landing_type"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Status:"
+            android:text="@string/status"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Attempted/Successful landings:"
+            android:text="@string/attempted_successful_launches"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -158,5 +158,5 @@
     <ru.myitschool.deepspace.widget.SpaceLoadingView
         android:id="@+id/land_pad_loading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </com.google.android.material.card.MaterialCardView>

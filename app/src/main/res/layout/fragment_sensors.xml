@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,6 +17,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -28,15 +29,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="24dp"
                 android:layout_margin="8dp"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/my_boarder"
                 android:text="@string/sensors"
-                android:textStyle="bold"
-                android:textSize="25sp"
-                android:textColor="@color/white"
                 android:textAlignment="center"
-                  />
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/divider3"
@@ -110,9 +110,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="8dp"
                 android:layout_marginTop="12dp"
                 android:orientation="vertical"
-                android:layout_margin="8dp"
                 android:weightSum="3">
 
                 <TextView
@@ -138,8 +138,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/down_line"
-                    android:textAlignment="center"
-                   />
+                    android:textAlignment="center" />
+
                 <TextView
                     android:id="@+id/rotation_matrix_3"
                     android:layout_width="match_parent"
@@ -160,9 +160,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="8dp"
                 android:layout_marginTop="12dp"
                 android:orientation="vertical"
-                android:layout_margin="8dp"
                 android:weightSum="2">
 
                 <TextView
@@ -186,8 +186,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_margin="8dp"
+                android:orientation="vertical"
                 android:weightSum="2">
 
                 <TextView
@@ -212,8 +212,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_margin="8dp"
+                android:orientation="vertical"
                 android:weightSum="2">
 
                 <TextView
@@ -238,8 +238,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_margin="8dp"
+                android:orientation="vertical"
                 android:weightSum="2">
 
                 <TextView
@@ -263,8 +263,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_margin="8dp"
+                android:orientation="vertical"
                 android:weightSum="2">
 
                 <TextView
@@ -289,8 +289,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:layout_margin="8dp"
+                android:orientation="vertical"
                 android:weightSum="2">
 
                 <TextView
@@ -310,8 +310,6 @@
                     android:text="@string/down_line"
                     android:textAlignment="center" />
             </LinearLayout>
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>

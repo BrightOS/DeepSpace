@@ -26,7 +26,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/my_boarder"
             android:fontFamily="@font/inter_extrabold"
-            android:text="Name"
+            tools:text="Name"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="24sp"
@@ -41,7 +41,7 @@
             android:drawablePadding="5dp"
             android:drawableTint="#E1E1E1"
             android:fontFamily="@font/inter_semibold"
-            android:text="Lauched: 20/12/2021 9:35"
+            tools:text="Lauched: 20/12/2021 9:35"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="#E1E1E1"
             android:textSize="18sp" />
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Launch mass (Kg):"
+            android:text="@string/launch_mass_kg"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="1350"
+            tools:text="1350"
             android:textColor="#E1E1E1"
             android:textSize="18sp" />
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Orbit type:"
+            android:text="@string/orbit_type"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="Orbit type"
+            tools:text="Orbit type"
             android:textColor="#E1E1E1"
             android:textSize="18sp" />
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Longtitude:"
+            android:text="@string/longtitude"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="Longtitude : "
+            tools:text="Longtitude : "
             android:textColor="#E1E1E1"
             android:textSize="18sp" />
 
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Distance from the Earth:"
+            android:text="@string/distance_from_the_earth"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -118,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="Distance from the Earth : "
+            tools:text="Distance from the Earth : "
             android:textColor="#E1E1E1"
             android:textSize="18sp" />
 
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Distance from the Mars:"
+            android:text="@string/distance_from_the_mars"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -138,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="Distance from the Mars : "
+            tools:text="Distance from the Mars : "
             android:textColor="#E1E1E1"
             android:textSize="18sp" />
 
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_regular"
-            android:text="Details:"
+            android:text="@string/details"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -158,7 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="Details : "
+            tools:text="Details : "
             android:textColor="#E1E1E1"
             android:textSize="18sp" />
 

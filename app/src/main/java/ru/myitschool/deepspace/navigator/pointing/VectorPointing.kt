@@ -1,4 +1,4 @@
-package ru.myitschool.deepspace.navigator.control
+package ru.myitschool.deepspace.navigator.pointing
 
 import android.hardware.SensorManager
 import ru.myitschool.deepspace.maths.astronomy.getZenith
@@ -8,7 +8,7 @@ import ru.myitschool.deepspace.maths.matrix.Vector3D
 import ru.myitschool.deepspace.maths.matrix.rotationMatrix
 import ru.myitschool.deepspace.maths.matrix.scalarTimes
 import ru.myitschool.deepspace.maths.matrix.scaleVector
-import ru.myitschool.deepspace.navigator.control.AbstractPointing.Pointing
+import ru.myitschool.deepspace.navigator.pointing.AbstractPointing.Pointing
 import ru.myitschool.deepspace.navigator.maths.Matrix3Dimension
 import ru.myitschool.deepspace.navigator.maths.Matrix3Dimension.Companion.idMatrix
 import ru.myitschool.deepspace.navigator.maths.multVector

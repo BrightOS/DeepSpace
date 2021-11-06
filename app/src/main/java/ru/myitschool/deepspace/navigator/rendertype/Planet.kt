@@ -7,17 +7,17 @@ import ru.myitschool.deepspace.maths.astronomy.RaDec
 import ru.myitschool.deepspace.maths.astronomy.TimeMachine
 import ru.myitschool.deepspace.maths.coords.GeocentricCoordinates
 import ru.myitschool.deepspace.maths.coords.HeliocentricCoordinates
-import ru.myitschool.deepspace.navigator.control.AbstractPointing
 import ru.myitschool.deepspace.navigator.maths.DEGREES_TO_RADIANS
 import ru.myitschool.deepspace.navigator.maths.RADIANS_TO_DEGREES
 import ru.myitschool.deepspace.navigator.maths.mod
+import ru.myitschool.deepspace.navigator.pointing.AbstractPointing
 import java.util.*
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-enum class Planet(private val id: Int) {
+enum class Planet(internal val id: Int) {
 
     Pluto(R.drawable.pluto),
     Neptune(R.drawable.neptune),
@@ -30,10 +30,6 @@ enum class Planet(private val id: Int) {
     Venus(R.drawable.venus),
     Moon(R.drawable.moon),
     ISS(R.drawable.isss);
-
-    fun getImageResourceId(): Int {
-        return id
-    }
 
     fun getOrbitalElements(date: Date?): OrbitalElements {
         val time = TimeMachine.julianCenturies(date)
@@ -159,7 +155,7 @@ enum class Planet(private val id: Int) {
         fun setupIcon(): List<ImageRun> {
             val time = model.time
             updateCoords(time)
-            imageId = planet.getImageResourceId()
+            imageId = planet.id
 
             icons.add(
                 ImageRun(

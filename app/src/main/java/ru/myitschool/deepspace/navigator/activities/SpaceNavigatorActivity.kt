@@ -14,11 +14,11 @@ import android.view.WindowManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ru.myitschool.deepspace.databinding.SpaceNavigatorBinding
-import ru.myitschool.deepspace.navigator.control.Managers
-import ru.myitschool.deepspace.navigator.control.VectorPointing
 import ru.myitschool.deepspace.navigator.layers.AbstractGlLayer
 import ru.myitschool.deepspace.navigator.layers.GlLayer
 import ru.myitschool.deepspace.navigator.managers.GpsManager
+import ru.myitschool.deepspace.navigator.managers.Managers
+import ru.myitschool.deepspace.navigator.pointing.VectorPointing
 import ru.myitschool.deepspace.navigator.renderer.MainRenderer
 import ru.myitschool.deepspace.navigator.thread.RendererExecutor
 import ru.myitschool.deepspace.navigator.touch.ZoomDetector
@@ -155,6 +155,9 @@ class SpaceNavigatorActivity : Activity() {
 
         binding.sensorsButton.setOnClickListener {
             startActivity(Intent(applicationContext, SensorsActivity::class.java))
+        }
+        binding.info.setOnClickListener {
+            startActivity(Intent(applicationContext, PlanetsActivity::class.java))
         }
     }
 
