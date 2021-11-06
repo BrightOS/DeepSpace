@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
 import ru.myitschool.deepspace.databinding.FragmentCoresBinding
 import ru.myitschool.deepspace.utils.DimensionsUtil
 
+@DelicateCoroutinesApi
 @AndroidEntryPoint
 class CoresFragment : Fragment() {
 
@@ -31,6 +33,7 @@ class CoresFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            binding.spaceLoading.startLoadingAnimation()
             DimensionsUtil.dpToPx(requireContext(), 5).let {
                 DimensionsUtil.setMargins(
                     toolBar,
@@ -54,6 +57,7 @@ class CoresFragment : Fragment() {
                             value!!
                         )
                     coresRecycle.adapter = coresAdapter
+                    binding.spaceLoading.stopLoadingAnimation()
                 })
             }
         }

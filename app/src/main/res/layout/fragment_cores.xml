@@ -41,7 +41,6 @@
                 app:expandedTitleMarginTop="16dp"
                 app:expandedTitleTextAppearance="@style/ExpandedSpaceAppBar"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:title="Cores"
                 app:titleEnabled="true">
 
                 <androidx.appcompat.widget.Toolbar
@@ -91,5 +90,11 @@
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ru.myitschool.deepspace.widget.SpaceLoadingView
+        android:id="@+id/space_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

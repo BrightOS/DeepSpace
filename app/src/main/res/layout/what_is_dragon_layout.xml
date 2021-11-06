@@ -18,7 +18,7 @@
             android:id="@+id/appCompatTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="What are Dragons?"
+            android:text="@string/what_are_dragons"
             android:textAlignment="center"
             android:textSize="25sp"
             android:textStyle="bold"

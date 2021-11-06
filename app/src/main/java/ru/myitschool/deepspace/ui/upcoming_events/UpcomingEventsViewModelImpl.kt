@@ -27,16 +27,14 @@ class UpcomingEventsViewModelImpl @Inject constructor(
         val response = repository.getUpcomingLaunches()
 
         for (launch in response.body()!!) {
-            Log.d(
-                "UPCOMING_EVENT_LOAD_TAG",
-                " Is upcoming? ${launch.createUpcomingLaunchModel().upcoming}"
-            )
-            if (launch.createUpcomingLaunchModel().upcoming!!) {
-                list.add(launch.createUpcomingLaunchModel())
-            }
-        }
+            Log.d("UPCOMING_EVENT_LOAD_TAG", " Is upcoming? ${launch.createUpcomingLaunchModel().upcoming}")
 
+            if (launch.createUpcomingLaunchModel().upcoming!!)
+                list.add(launch.createUpcomingLaunchModel())
+
+        }
         upcomingList.value = list
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

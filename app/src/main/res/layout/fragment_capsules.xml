@@ -84,10 +84,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/capsules_recycler"
                 android:layout_width="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="1"
                 android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:spanCount="1"
                 tools:listitem="@layout/capsule_item" />
 
         </LinearLayout>
@@ -106,5 +106,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ru.myitschool.deepspace.widget.SpaceLoadingView
+        android:id="@+id/space_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

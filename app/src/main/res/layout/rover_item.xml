@@ -15,7 +15,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/recycle_rover_item_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,7 +56,7 @@
         android:padding="15dp"
         android:visibility="gone">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.75"
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
-            android:text="Rover name:"
+            android:text="@string/rover_name"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -112,14 +112,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extrabold"
-            android:text="2012.08.06"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/status_title"
             app:layout_constraintEnd_toStartOf="@id/launching_date"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/landing_date_title" />
+            app:layout_constraintTop_toBottomOf="@id/landing_date_title"
+            tools:text="2012.08.06" />
 
         <TextView
             android:id="@+id/launching_date_title"
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
             android:gravity="end"
-            android:text="Launching date:"
+            android:text="@string/launching_date"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -140,21 +140,21 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extrabold"
             android:gravity="end"
-            android:text="2011.11.26"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/status_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/landing_date"
-            app:layout_constraintTop_toBottomOf="@id/launching_date_title" />
+            app:layout_constraintTop_toBottomOf="@id/launching_date_title"
+            tools:text="2011.11.26" />
 
         <TextView
             android:id="@+id/status_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
-            android:text="Status:"
+            android:text="@string/status"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -168,7 +168,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extrabold"
-            android:text="Active"
+            android:text="@string/active"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -183,7 +183,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_regular"
             android:gravity="end"
-            android:text="Camera:"
+            android:text="@string/camera"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -196,13 +196,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_extrabold"
             android:gravity="end"
-            android:text="null"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/status"
-            app:layout_constraintTop_toBottomOf="@id/status_title" />
+            app:layout_constraintTop_toBottomOf="@id/status_title"
+            tools:text="null" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

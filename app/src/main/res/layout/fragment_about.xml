@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo_gif"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -113,7 +112,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/YanaVk"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -126,7 +125,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/YanaGladkikh"
                     app:srcCompat="@drawable/vk" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/YanaMail"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -136,7 +135,7 @@
                     app:srcCompat="@drawable/ic_message"
                     app:tint="@color/white" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/YanaGit"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -158,6 +157,7 @@
             android:layout_marginEnd="8dp"
             android:background="@color/transparent_gray"
             app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/yanaCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
@@ -181,7 +181,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/DenisVk"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -194,7 +194,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/DenisBarov"
                     app:srcCompat="@drawable/vk" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/DenisMail"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -204,7 +204,7 @@
                     app:srcCompat="@drawable/ic_message"
                     app:tint="@color/white" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/DenisGit"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -220,12 +220,13 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/vladCard"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:background="@color/transparent_gray"
             app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/samuilCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/denisCard">
@@ -242,14 +243,15 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/inter_regular"
-                    android:text="@string/vladimir_abubakirov"
                     android:gravity="center"
+                    android:text="@string/vladimir_abubakirov"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/vladVk"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -262,7 +264,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/VladimirKrylov"
                     app:srcCompat="@drawable/vk" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/vladMail"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -272,7 +274,7 @@
                     app:srcCompat="@drawable/ic_message"
                     app:tint="@color/white" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/vladGit"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -319,7 +321,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/samuilVk"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -332,7 +334,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/samuilNalisin"
                     app:srcCompat="@drawable/vk" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/samuilMail"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -342,7 +344,7 @@
                     app:srcCompat="@drawable/ic_message"
                     app:tint="@color/white" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/samuilGit"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -387,7 +389,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/danilVk"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -400,7 +402,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/danilkhairulin"
                     app:srcCompat="@drawable/vk" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/danilMail"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -410,7 +412,7 @@
                     app:srcCompat="@drawable/ic_message"
                     app:tint="@color/white" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/danilGit"
                     android:layout_width="40dp"
                     android:layout_height="40dp"

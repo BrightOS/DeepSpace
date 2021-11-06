@@ -3,11 +3,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#0D131F"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
-
+    android:background="#0D131F">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -16,8 +14,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -103,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:gravity="center"
-                    android:text="astronomical picture of the day"
+                    android:text="@string/astronomical_picture_of_the_day"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="italic"
@@ -127,7 +124,7 @@
         android:gravity="bottom"
         android:keepScreenOn="true"
         android:onClick="goToRoversActivity"
-        android:text="Mars Rover Photos"
+        android:text="@string/mars_rover_photos"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="20sp"

@@ -146,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:text="Reconnect"
+        android:text="@string/reconnect"
         android:textColor="#D1D1D1"
         android:visibility="gone"
         app:backgroundTint="@color/transparent_blue"
