@@ -19,7 +19,7 @@ What does application represent?
 - Asteroid radar which allows you to find out whether asteroids that will be close to Earth on a given date are dangerous and view their characteristics 
 - Mars Rover Photos. There you can view photos from Mars, set them on phone  background, read when they were taken and find out information about the rover that took the photo
 - SpaceX section.
- 1. You take a look at list of all missions of the past years, find out if they were successful or not, with which spaceships they were launched, read about the characteristics of the 1st and 2nd stages, engines, whether the stages were reused and more
+ 1. You can take a look at list of all missions of the past years, find out if they were successful or not, with which spaceships they were launched, read about the characteristics of the 1st and 2nd stages, engines, whether the stages were reused and more
  2. Information about the company. Here you can check information about the heads of the company, the date of creation, the location of the headquarters, etc. You can also go to the "history" tab and read in details what the company went through to become what we know it now.
  3. Where is Elon Musk's Tesla Roadster now? You can find out it’s location, the distance to the Earth/Mars and other
  4. "Dragons." Here you can read the characteristics of Dragons
