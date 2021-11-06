@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lookbeyond.activities.WaitingFragment">
+    >
 
-    <ru.myitschool.nasa_bootcamp.widget.SpaceLoadingView
+    <ru.myitschool.deepspace.widget.SpaceLoadingView
         android:id="@+id/waiting_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

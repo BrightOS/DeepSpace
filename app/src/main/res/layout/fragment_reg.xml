@@ -212,7 +212,7 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ru.myitschool.nasa_bootcamp.widget.SpaceButton
+            <ru.myitschool.deepspace.widget.SpaceButton
                 android:id="@+id/button_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

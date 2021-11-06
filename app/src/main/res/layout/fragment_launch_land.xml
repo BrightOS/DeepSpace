@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ru.myitschool.nasa_bootcamp.widget.SpaceButton
+    <ru.myitschool.deepspace.widget.SpaceButton
         android:id="@+id/map_launch_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         app:text="@string/launch_pads" />
 
-    <ru.myitschool.nasa_bootcamp.widget.SpaceButton
+    <ru.myitschool.deepspace.widget.SpaceButton
         android:id="@+id/map_land_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

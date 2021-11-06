@@ -155,7 +155,7 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <ru.myitschool.nasa_bootcamp.widget.SpaceLoadingView
+    <ru.myitschool.deepspace.widget.SpaceLoadingView
         android:id="@+id/land_pad_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
