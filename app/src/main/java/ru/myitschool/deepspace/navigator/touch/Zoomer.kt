@@ -1,7 +1,7 @@
 package ru.myitschool.deepspace.navigator.touch
 
 import android.content.Context
-import ru.myitschool.deepspace.navigator.control.Managers
+import ru.myitschool.deepspace.navigator.managers.Managers
 import ru.myitschool.deepspace.navigator.maths.RADIANS_TO_DEGREES
 import ru.myitschool.deepspace.navigator.touch.ZoomDetector.OnZoomListener
 

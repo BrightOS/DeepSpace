@@ -71,6 +71,10 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
+            android:name="ru.myitschool.deepspace.navigator.activities.PlanetsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="ru.myitschool.deepspace.MainActivity"
             android:exported="true"
             android:configChanges="orientation|screenSize"

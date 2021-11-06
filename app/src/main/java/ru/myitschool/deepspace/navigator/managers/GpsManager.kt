@@ -5,7 +5,7 @@ import android.location.*
 import android.os.Bundle
 import android.widget.Toast
 import ru.myitschool.deepspace.maths.coords.LatLong
-import ru.myitschool.deepspace.navigator.control.VectorPointing
+import ru.myitschool.deepspace.navigator.pointing.VectorPointing
 import java.io.IOException
 import java.util.*
 

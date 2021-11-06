@@ -4,7 +4,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import ru.myitschool.deepspace.navigator.control.VectorPointing
+import ru.myitschool.deepspace.navigator.pointing.VectorPointing
 
 
 class SensorManager(private val manager: SensorManager) : AbstractManager,
