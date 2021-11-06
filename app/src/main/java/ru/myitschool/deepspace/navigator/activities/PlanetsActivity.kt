@@ -7,6 +7,6 @@ import ru.myitschool.deepspace.R
 class PlanetsActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sensors)
+        setContentView(R.layout.activity_planets)
     }
 }

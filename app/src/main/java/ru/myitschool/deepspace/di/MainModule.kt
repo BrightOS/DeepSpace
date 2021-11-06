@@ -9,15 +9,9 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.myitschool.deepspace.data.api.NasaApi
-import ru.myitschool.deepspace.data.api.NewsApi
-import ru.myitschool.deepspace.data.api.SpaceXApi
-import ru.myitschool.deepspace.data.api.UpcomingEventsApi
+import ru.myitschool.deepspace.data.api.*
 import ru.myitschool.deepspace.data.repository.*
-import ru.myitschool.deepspace.utils.NASA_BASE_URL
-import ru.myitschool.deepspace.utils.NEWS_BASE_URL
-import ru.myitschool.deepspace.utils.SPACEX_BASE_URL
-import ru.myitschool.deepspace.utils.SPACEX_BASE_V5_URL
+import ru.myitschool.deepspace.utils.*
 import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
@@ -98,6 +92,19 @@ object MainModule {
             .build()
     }
 
+    @Provides
+    @Singleton
+    @Named("SPACEX_LAUNCH")
+    fun getLaunchRetrofit(): Retrofit {
+        val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+
+        return Retrofit.Builder()
+            .baseUrl(SPACEX_LAUNCH_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpBuilder.build())
+            .build()
+    }
+
 
     @Provides
     @Singleton
@@ -114,10 +121,14 @@ object MainModule {
     @Provides
     @Singleton
     fun getUpcomingEventsApi(@Named("UPCOMING") retrofit: Retrofit): UpcomingEventsApi {
-
         return retrofit.create(UpcomingEventsApi::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun getSpaceXLaunchApi(@Named("SPACEX_LAUNCH") retrofit: Retrofit): LaunchApi {
+        return retrofit.create(LaunchApi::class.java)
+    }
 
     @Provides
     @Singleton

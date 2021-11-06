@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.myitschool.deepspace.data.model.SxLaunchModel
 import ru.myitschool.deepspace.data.repository.SpaceXRepository
+import ru.myitschool.deepspace.data.repository.UpcomingRepository
 import ru.myitschool.deepspace.data.room.LaunchesDao
 import ru.myitschool.deepspace.utils.Data
 import ru.myitschool.deepspace.utils.Status
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SpaceXViewModelImpl @Inject constructor(
     private val repository: SpaceXRepository,
-    private val launchesDao: LaunchesDao
+    private val launchesDao: LaunchesDao,
+    private val upcomingRepository: UpcomingRepository,
 ) : ViewModel(), SpaceXViewModel {
 
     private var errorHandler: MutableLiveData<Status> = MutableLiveData<Status>(Status.LOADING)

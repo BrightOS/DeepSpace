@@ -9,7 +9,8 @@ import ru.myitschool.deepspace.data.model.SxLaunchModel
 
 
 @Entity(tableName = "launches_table")
-class Launch( //MAIN
+class Launch(
+    //MAIN
 
     @PrimaryKey(autoGenerate = false)
     @field:SerializedName("flight_number")
@@ -39,16 +40,16 @@ class Launch( //MAIN
     val launch_success: Boolean,
 
     @field:SerializedName("launch_date_unix")
-    val launch_date_unix : Long,
+    val launch_date_unix: Long,
 
     @field:SerializedName("details")
     val details: String?,
 
     @Embedded
     @field:SerializedName("launch_site")
-    val launch_site: LaunchSite
+    val launch_site: LaunchSite,
 
-) {
+    ) {
     public fun createLaunchModel(): SxLaunchModel {
         return SxLaunchModel(
             launch_date_unix,
@@ -64,22 +65,29 @@ class Launch( //MAIN
             launch_site
         )
     }
-    constructor(flight_number: Int,
-                mission_name: String,
-                launch_year: Int,
-                launch_date_utc: String?,
-                links: Links?, //Cсылка на эмблему миссии
-                upcoming: Boolean,
-                launch_success: Boolean,
-                launch_date_unix : Long,
-                details: String?,
-                launch_site: LaunchSite)
+
+    constructor(
+        flight_number: Int,
+        mission_name: String,
+        launch_year: Int,
+        launch_date_utc: String?,
+        links: Links?, //Cсылка на эмблему миссии
+        upcoming: Boolean,
+        launch_success: Boolean,
+        launch_date_unix: Long,
+        details: String?,
+        launch_site: LaunchSite,
+    )
             : this(flight_number,
         mission_name,
         launch_year,
         launch_date_utc ?: "",
         links,
-        Rocket("","", FirstStage(arrayListOf(StageCore("",0,false,false))), SecondStage(0, arrayListOf(Payloads("",false,"","",0.0,"",""))), Fairing(false,false,false)),
+        Rocket("", "", FirstStage(arrayListOf(
+            StageCore("", 0, false, false))),
+            SecondStage(0, arrayListOf(Payloads("", false, "",
+                "", 0.0, "", ""))),
+            Fairing(false, false, false)),
         upcoming,
         launch_success,
         launch_date_unix,

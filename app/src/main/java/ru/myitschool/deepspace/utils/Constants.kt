@@ -5,6 +5,7 @@ import kotlin.math.PI
 const val TAG = "BERS"
 const val NASA_BASE_URL = "https://api.nasa.gov/"
 const val SPACEX_BASE_URL = "https://api.spacexdata.com/v3/"
+const val SPACEX_LAUNCH_URL = "https://api.spacexdata.com/v4/"
 const val SPACEX_BASE_V5_URL = "https://api.spacexdata.com/v5/"
 const val NEWS_BASE_URL = "https://api.spaceflightnewsapi.net/v3/"
 const val API_KEY = "uej4DeQlgTn9GRLfb98qSj38c2mecIuWspj3JyTN"
