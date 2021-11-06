@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ru.myitschool.nasa_bootcamp.widget.SpaceButton
+    <ru.myitschool.deepspace.widget.SpaceButton
         android:id="@+id/history_go"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

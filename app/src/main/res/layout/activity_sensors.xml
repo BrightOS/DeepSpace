@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/sensors_fragm"
-        android:name="ru.myitschool.nasa_bootcamp.lookbeyond.activities.SensorFragment"
+        android:name="ru.myitschool.deepspace.navigator.activities.SensorFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:visibility="visible" />

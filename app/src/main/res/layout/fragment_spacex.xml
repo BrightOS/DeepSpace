@@ -69,7 +69,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <ru.myitschool.nasa_bootcamp.widget.SpaceButton
+                        <ru.myitschool.deepspace.widget.SpaceButton
                             android:id="@+id/explore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
