@@ -1,6 +1,7 @@
 # Deep Space 
 
-Will be available in Google Play upcoming month
+Available in Google Play!
+Download now! https://play.google.com/store/apps/details?id=ru.berserkers.deepspace
 
 Presentation: https://docs.google.com/presentation/d/1c-eezTK-GtelYbv_2g7yAjRDPWDCi9j0/edit#slide=id.p25
 
