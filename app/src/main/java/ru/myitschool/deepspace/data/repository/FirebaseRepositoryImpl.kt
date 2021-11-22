@@ -25,7 +25,6 @@ import ru.myitschool.deepspace.utils.Resource
 import ru.myitschool.deepspace.utils.downloadFirebaseImage
 import java.io.ByteArrayOutputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class FirebaseRepositoryImpl(val appContext: Context) :
@@ -68,9 +67,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         val returnData = mutableListOf<MutableLiveData<ContentWithLikesAndComments<PostModel>>>()
         try {
             snapshot.children.forEach {
-                val _username = it.child("author").child("name").getValue(String::class.java)!!
+                val _username = it.child("author").child("name").getValue(String::class.java) ?: "anonymous"
                 val _url =
-                    it.child("author").child("avatarUrl").getValue(String::class.java)!!.toUri()
+                    it.child("author").child("avatarUrl").getValue(String::class.java)?.toUri()
                 val _id = it.child("author").child("id").getValue(String::class.java)!!
                 val author = UserModel(_username, _url, _id)
 
@@ -79,11 +78,11 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     data.add(_data.getValue(String::class.java)!!)
                 }
 
-                val date = it.child("date").getValue(Long::class.java)!!
+                val date = it.child("date").getValue(Long::class.java) ?: 1L
 
                 val id = it.key!!.toLong()
 
-                val title = it.child("title").getValue(String::class.java)!!
+                val title = it.child("title").getValue(String::class.java) ?: ""
 
                 val postModel = PostModel(id, title, date, data, author)
                 val comments = getAllUserPostComments(id.toInt())
@@ -627,15 +626,12 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     override fun getCurrentUser(): UserModel? {
         val sharedPreferences =
             appContext.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
-        try {
-            val id = sharedPreferences.getString(sharedPreferencesId, null)!!
-            val userName = sharedPreferences.getString(sharedPreferencesUserName, null)!!
-            val url = sharedPreferences.getString(sharedPreferencesUri, null)!!.toUri()
-            return UserModel(userName, url, id)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
+        val id = sharedPreferences.getString(sharedPreferencesId, null)
+        val userName = sharedPreferences.getString(sharedPreferencesUserName, null)
+        val url = sharedPreferences.getString(sharedPreferencesUri, null)?.toUri()
+        return if (id != null && userName != null && url != null)
+            UserModel(userName, url, id) else
+            null
     }
 
     override suspend fun getArticleModelComments(postId: Long): List<Comment> {

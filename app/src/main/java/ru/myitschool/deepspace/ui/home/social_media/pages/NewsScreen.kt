@@ -13,7 +13,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
@@ -38,22 +37,20 @@ fun NewsScreen(
             NewsItem(item)
         },
         onLikeButtonClick = {
-            val liveData = MutableLiveData(Resource.loading(null))
             viewModel.getViewModelScope().launch {
-                liveData.postValue(viewModel.pressedLikeOnItem(it))
+                viewModel.pressedLikeOnItem(it)
             }
-            liveData
+            viewModel.pressedOnLikeStatus
         },
         onItemClick = {
             viewModel.setSelectedArticle(it)
             navController.navigate(action)
         },
         onLikeInCommentClick = { item, comment ->
-            val liveData = MutableLiveData(Resource.loading(null))
             viewModel.getViewModelScope().launch {
-                liveData.postValue(viewModel.pressedLikeOnComment(item, comment))
+                viewModel.pressedLikeOnComment(item, comment)
             }
-            liveData
+            viewModel.pressedOnLikeStatus
         },
         listResource = listResource,
         currentUser = currentUser,

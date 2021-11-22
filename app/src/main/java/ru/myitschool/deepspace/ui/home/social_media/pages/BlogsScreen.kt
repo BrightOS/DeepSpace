@@ -32,7 +32,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import kotlinx.coroutines.delay
@@ -49,45 +48,43 @@ import ru.myitschool.deepspace.utils.getDateFromUnixTimestamp
 @Composable
 fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
     val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
     val action = SocialMediaFragmentDirections.actionSocialMediaFragmentToCommentsFragment()
     val currentUser by viewModel.getCurrentUser().observeAsState()
     FeedWithPager(
         itemContent = { item: PostModel -> BlogItemContent(item) },
         onLikeButtonClick = {
-            val liveData = MutableLiveData(Resource.loading(null))
             viewModel.getViewModelScope().launch {
-                liveData.postValue(viewModel.pressedLikeOnItem(it))
+                viewModel.pressedLikeOnItem(it)
             }
-            liveData
+            viewModel.pressedOnLikeStatus
         },
         onItemClick = {
             viewModel.setSelectedPost(it)
             navController.navigate(action)
         },
         onLikeInCommentClick = { item, comment ->
-            val liveData = MutableLiveData(Resource.loading(null))
             viewModel.getViewModelScope().launch {
-                liveData.postValue(viewModel.pressedLikeOnComment(item, comment))
+                viewModel.pressedLikeOnComment(item, comment)
             }
-            liveData
+            viewModel.pressedOnLikeStatus
         },
         pagerFlow = viewModel.getBlogs(),
         currentUser = currentUser,
         headerContent = { lazyItems ->
             BlogCreatePost { title, postItems ->
-                val liveData = MutableLiveData(Resource.loading(null))
                 viewModel.getViewModelScope().launch {
-                    liveData.postValue(viewModel.createPost(title, postItems))
-                    liveData.postValue(Resource.success(null))
+                    viewModel.createPost(title, postItems)
                 }
-                liveData.observe(lifecycleOwner) {
+                viewModel.createPostStatus.observe(lifecycleOwner) {
                     if (it.status == Status.SUCCESS)
                         viewModel.getViewModelScope().launch {
                             delay(1000)
                             lazyItems.refresh()
                         }
+                    if (it.status == Status.ERROR) Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
                 }
-                liveData
+                viewModel.createPostStatus
             }
         },
         onDeleteComment = { comment, item ->
@@ -129,7 +126,7 @@ fun BlogItemContent(item: PostModel) {
 
 @Composable
 fun BlogCreatePost(
-    onSendButton: (String, List<Any>) -> LiveData<Resource<Nothing>>
+    onSendButton: (String, List<Any>) -> LiveData<Resource<Unit>>
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -246,8 +243,7 @@ fun BlogCreatePost(
                 onClick = {
                     if (isExpanded) {
                         focusManager.clearFocus()
-                        val liveData = onSendButton(title, postItems)
-                        liveData.observe(lifecycleOwner) {
+                        onSendButton(title, postItems).observe(lifecycleOwner) {
                             when (it.status) {
                                 Status.SUCCESS -> {
                                     postItems = listOf()

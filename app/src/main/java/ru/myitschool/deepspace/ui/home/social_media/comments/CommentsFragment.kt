@@ -92,15 +92,14 @@ fun CommentsScreen(viewModel: SocialMediaViewModel, navController: NavController
     val likeButton: @Composable () -> Unit = {
         LikeButton(
             list = article?.likes ?: post!!.likes,
-            currentUser = currentUser,
-            onClick = {
-                Log.d("HELP", "CommentsScreen: ${article ?: post!!}")
-                val liveData = MutableLiveData(Resource.loading(null))
-                viewModel.getViewModelScope().launch {
-                    liveData.postValue(viewModel.pressedLikeOnItem(article ?: post!!))
-                }
-                liveData
-            })
+            currentUser = currentUser
+        ) {
+            Log.d("HELP", "CommentsScreen: ${article ?: post!!}")
+            viewModel.getViewModelScope().launch {
+                viewModel.pressedLikeOnItem(article ?: post!!)
+            }
+            viewModel.pressedOnLikeStatus
+        }
     }
     Column {
         LazyColumn(modifier = Modifier.weight(1f)) {
@@ -125,16 +124,10 @@ fun CommentsScreen(viewModel: SocialMediaViewModel, navController: NavController
                     comment = it,
                     currentUser = currentUser,
                     onLikeClick = {
-                        val liveData = MutableLiveData(Resource.loading(null))
                         viewModel.getViewModelScope().launch {
-                            liveData.postValue(
-                                viewModel.pressedLikeOnComment(
-                                    article ?: post!!,
-                                    it
-                                )
-                            )
+                            viewModel.pressedLikeOnComment(article ?: post!!, it)
                         }
-                        liveData
+                        viewModel.pressedOnLikeStatus
                     },
                     onCommentClick = {
                         selectedComment = it

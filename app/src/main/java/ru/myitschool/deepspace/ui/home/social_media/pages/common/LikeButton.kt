@@ -21,7 +21,7 @@ fun LikeButton(
     list: List<UserModel>,
     currentUser: UserModel?,
     modifier: Modifier = Modifier,
-    onClick: () -> LiveData<Resource<Nothing>>
+    onClick: () -> LiveData<Resource<Unit>>
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -34,8 +34,7 @@ fun LikeButton(
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val liveData = onClick()
-                liveData.observe(lifecycleOwner) {
+                    onClick().observe(lifecycleOwner) {
                     if (it.status == Status.ERROR)
                         Toast.makeText(
                             context,

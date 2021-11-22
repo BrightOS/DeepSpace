@@ -29,7 +29,7 @@ import ru.myitschool.deepspace.utils.getDateFromUnixTimestamp
 fun CommentItem(
     comment: Comment,
     currentUser: UserModel?,
-    onLikeClick: (Comment) -> LiveData<Resource<Nothing>>,
+    onLikeClick: (Comment) -> LiveData<Resource<Unit>>,
     onCommentClick: (Comment) -> Unit,
     onDeleteComment: (Comment) -> Unit,
     modifier: Modifier = Modifier,
@@ -72,7 +72,7 @@ fun CommentItem(
                         )
                     }
                 }
-                LikeButton(list = comment.likes, currentUser = currentUser, onClick = { onLikeClick(comment) })
+                LikeButton(list = comment.likes, currentUser = currentUser) { onLikeClick(comment) }
             }
             Text(
                 fontSize = 16.sp,

@@ -22,9 +22,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.flow.Flow
 import ru.myitschool.deepspace.R
-import ru.myitschool.deepspace.data.model.Comment
-import ru.myitschool.deepspace.data.model.ContentWithLikesAndComments
-import ru.myitschool.deepspace.data.model.UserModel
+import ru.myitschool.deepspace.data.model.*
 import ru.myitschool.deepspace.ui.home.components.ErrorMessage
 import ru.myitschool.deepspace.utils.Resource
 import ru.myitschool.deepspace.utils.Status
@@ -36,8 +34,8 @@ fun <T> Feed(
     onRetryButtonClick: () -> Unit,
     itemContent: @Composable (T) -> Unit,
     headerContent: @Composable LazyItemScope.() -> Unit = { Spacer(Modifier) },
-    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Nothing>>,
-    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Nothing>>,
+    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Unit>>,
+    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Unit>>,
     onDeleteComment: (Comment, ContentWithLikesAndComments<T>) -> Unit,
     onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
 ) {
@@ -81,8 +79,8 @@ fun <T> FeedWithPager(
     headerContent: @Composable
     LazyItemScope.(LazyPagingItems<LiveData<ContentWithLikesAndComments<T>>>)
     -> Unit = { Spacer(Modifier) },
-    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Nothing>>,
-    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Nothing>>,
+    onLikeButtonClick: (ContentWithLikesAndComments<T>) -> LiveData<Resource<Unit>>,
+    onLikeInCommentClick: (ContentWithLikesAndComments<T>, Comment) -> LiveData<Resource<Unit>>,
     onDeleteComment: (Comment, ContentWithLikesAndComments<T>) -> Unit,
     onItemClick: (LiveData<ContentWithLikesAndComments<T>>) -> Unit
 ) {
@@ -165,8 +163,8 @@ fun <T> ItemWithLikesAndComments(
     item: ContentWithLikesAndComments<T>,
     currentUser: UserModel?,
     itemContent: @Composable (T) -> Unit,
-    onLikeInCommentClick: (Comment) -> LiveData<Resource<Nothing>>,
-    onLikeButtonClick: () -> LiveData<Resource<Nothing>>,
+    onLikeInCommentClick: (Comment) -> LiveData<Resource<Unit>>,
+    onLikeButtonClick: () -> LiveData<Resource<Unit>>,
     onCommentButtonClick: () -> Unit,
     onDeleteComment: (Comment) -> Unit,
     onClick: () -> Unit

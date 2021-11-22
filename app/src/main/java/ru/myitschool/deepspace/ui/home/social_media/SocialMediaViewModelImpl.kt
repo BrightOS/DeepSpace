@@ -30,6 +30,11 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     private val currentUser = MutableLiveData<UserModel?>(null)
 
     override fun getBlogs() = blogsFlow
+    private val _createPostStatus = MutableLiveData<Resource<Unit>>()
+    override val createPostStatus: LiveData<Resource<Unit>> = _createPostStatus
+    private val _pressedOnLikeStatus = MutableLiveData<Resource<Unit>>()
+    override val pressedOnLikeStatus: LiveData<Resource<Unit>> = _pressedOnLikeStatus
+
     override fun getNews() = articles
 
 
@@ -59,12 +64,14 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     override suspend fun pressedLikeOnComment(
         item: ContentWithLikesAndComments<out Any>,
         comment: Comment
-    ): Resource<Nothing> {
-        return networkRepository.pressedLikeOnComment(item, comment)
+    ) {
+        _pressedOnLikeStatus.postValue(Resource.loading(null))
+        _pressedOnLikeStatus.postValue(networkRepository.pressedLikeOnComment(item, comment))
     }
 
-    override suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing> {
-        return networkRepository.pressedLikeOnItem(item)
+    override suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>) {
+        _pressedOnLikeStatus.postValue(Resource.loading(null))
+        _pressedOnLikeStatus.postValue(networkRepository.pressedLikeOnItem(item))
     }
 
     override suspend fun sendMessage(
@@ -77,8 +84,9 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     }
 
     override fun getCurrentUser() = currentUser
-    override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
-        return networkRepository.createPost(title, postItems)
+    override suspend fun createPost(title: String, postItems: List<Any>) {
+        _createPostStatus.postValue(Resource.loading(null))
+        _createPostStatus.postValue(networkRepository.createPost(title, postItems))
     }
 
     override suspend fun deleteComment(

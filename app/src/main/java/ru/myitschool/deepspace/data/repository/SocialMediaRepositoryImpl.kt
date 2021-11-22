@@ -170,6 +170,10 @@ class SocialMediaRepositoryImpl @Inject constructor(
     }
 
     override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+        if (title.length > 200)
+            return Resource.error("Too long title", null)
+        if (postItems.size > 200)
+            return Resource.error("Too many data in post", null)
         if (postItems.isEmpty())
             return Resource.error("Post without aby data", null)
         val result = firebaseRepository.createPost(title, postItems)

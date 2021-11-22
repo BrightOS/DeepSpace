@@ -11,6 +11,8 @@ import ru.myitschool.deepspace.utils.Resource
  * @author Samuil Nalisin
  */
 interface SocialMediaViewModel {
+    val createPostStatus: LiveData<Resource<Unit>>
+    val pressedOnLikeStatus: LiveData<Resource<Unit>>
     fun getNews(): LiveData<Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>>
     suspend fun loadNews()
     suspend fun loadCurrentUser()
@@ -22,9 +24,9 @@ interface SocialMediaViewModel {
     suspend fun pressedLikeOnComment(
         item: ContentWithLikesAndComments<out Any>,
         comment: Comment
-    ): Resource<Nothing>
+    )
 
-    suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
+    suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>)
     suspend fun sendMessage(
         message: String,
         id: Long,
@@ -33,7 +35,7 @@ interface SocialMediaViewModel {
     ): Resource<Nothing>
 
     fun getCurrentUser(): LiveData<UserModel?>
-    suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing>
+    suspend fun createPost(title: String, postItems: List<Any>)
     suspend fun deleteComment(
         comment: Comment,
         item: ContentWithLikesAndComments<out Any>
