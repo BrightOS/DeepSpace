@@ -33,7 +33,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
@@ -148,18 +147,15 @@ fun CommentsScreen(viewModel: SocialMediaViewModel, navController: NavController
             focusRequester = focusRequester,
             clearSelectedUser = { selectedComment = null },
             onClick = { text, selectedComment ->
-                val liveData = MutableLiveData(Resource.loading(null))
                 viewModel.getViewModelScope().launch {
-                    liveData.postValue(
-                        viewModel.sendMessage(
-                            message = text,
-                            parentComment = selectedComment,
-                            id = if (article != null) article!!.content.id else post!!.content.id,
-                            _class = if (article != null) ArticleModel::class.java else PostModel::class.java
-                        )
+                    viewModel.sendMessage(
+                        message = text,
+                        parentComment = selectedComment,
+                        id = if (article != null) article!!.content.id else post!!.content.id,
+                        _class = if (article != null) ArticleModel::class.java else PostModel::class.java
                     )
                 }
-                liveData
+                viewModel.sendMessageStatus
             },
         )
     }
@@ -171,7 +167,7 @@ fun BottomTextField(
     currentUser: UserModel?,
     selectedComment: Comment? = null,
     focusRequester: FocusRequester,
-    onClick: (String, Comment?) -> LiveData<Resource<Nothing>>,
+    onClick: (String, Comment?) -> LiveData<Resource<Unit>>,
     clearSelectedUser: () -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -214,8 +210,7 @@ fun BottomTextField(
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            val liveData = onClick(messageTextField, selectedComment)
-                            liveData.observe(lifecycleOwner) {
+                            onClick(messageTextField, selectedComment).observe(lifecycleOwner) {
                                 isButtonEnabled = false
                                 when (it.status) {
                                     Status.SUCCESS -> {

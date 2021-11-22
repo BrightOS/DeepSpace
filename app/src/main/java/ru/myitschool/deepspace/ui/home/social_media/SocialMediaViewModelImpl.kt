@@ -34,6 +34,10 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     override val createPostStatus: LiveData<Resource<Unit>> = _createPostStatus
     private val _pressedOnLikeStatus = MutableLiveData<Resource<Unit>>()
     override val pressedOnLikeStatus: LiveData<Resource<Unit>> = _pressedOnLikeStatus
+    private val _sendMessageStatus = MutableLiveData<Resource<Unit>>()
+    override val sendMessageStatus: LiveData<Resource<Unit>> = _sendMessageStatus
+    private val _deleteCommentStatus = MutableLiveData<Resource<Unit>>()
+    override val deleteCommentStatus: LiveData<Resource<Unit>> = _deleteCommentStatus
 
     override fun getNews() = articles
 
@@ -79,8 +83,16 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
         id: Long,
         _class: Class<*>,
         parentComment: Comment?
-    ): Resource<Nothing> {
-        return networkRepository.sendComment(message, id, _class, parentComment)
+    ) {
+        _sendMessageStatus.postValue(Resource.loading(null))
+        _sendMessageStatus.postValue(
+            networkRepository.sendComment(
+                message,
+                id,
+                _class,
+                parentComment
+            )
+        )
     }
 
     override fun getCurrentUser() = currentUser
@@ -92,5 +104,8 @@ class SocialMediaViewModelImpl @Inject constructor(private val networkRepository
     override suspend fun deleteComment(
         comment: Comment,
         item: ContentWithLikesAndComments<out Any>
-    ): Resource<Nothing> = networkRepository.deleteComment(comment, item)
+    ) {
+        _deleteCommentStatus.postValue(Resource.loading(null))
+        _deleteCommentStatus.postValue(networkRepository.deleteComment(comment, item))
+    }
 }

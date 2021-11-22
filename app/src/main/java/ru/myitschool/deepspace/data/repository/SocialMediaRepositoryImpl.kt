@@ -42,7 +42,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
     override fun getBlogPagingSource() = BlogPagingSource(firebaseRepository)
     override suspend fun pressedLikeOnItem(
         item: ContentWithLikesAndComments<out Any>
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         try {
             if (item.content::class.java == ArticleModel::class.java) {
                 val result = firebaseRepository.pushLike(
@@ -70,7 +70,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
     override suspend fun pressedLikeOnComment(
         item: ContentWithLikesAndComments<out Any>,
         comment: Comment
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         try {
             if (comment::class.java != SubComment::class.java) {
                 if (item.content::class.java == ArticleModel::class.java) {
@@ -126,7 +126,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
         id: Long,
         _class: Class<*>,
         parentComment: Comment?
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         if (parentComment == null) {
             if (_class == ArticleModel::class.java) {
                 val result = firebaseRepository.pushComment("ArticleModel", id.toInt(), message)
@@ -169,7 +169,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
         return firebaseRepository.getUser(uid)
     }
 
-    override suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing> {
+    override suspend fun createPost(title: String, postItems: List<Any>): Resource<Unit> {
         if (title.length > 200)
             return Resource.error("Too long title", null)
         if (postItems.size > 200)
@@ -186,7 +186,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
     override suspend fun deleteComment(
         comment: Comment,
         item: ContentWithLikesAndComments<out Any>
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         val source =
             if (item.content is ArticleModel) "ArticleModel"
             else "UserPost"

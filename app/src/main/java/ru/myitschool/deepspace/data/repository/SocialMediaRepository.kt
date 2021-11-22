@@ -9,19 +9,19 @@ interface SocialMediaRepository {
     suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>
     suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>
     fun getBlogPagingSource(): BlogPagingSource
-    suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
+    suspend fun pressedLikeOnItem(item: ContentWithLikesAndComments<out Any>): Resource<Unit>
     suspend fun getCurrentUser(): UserModel?
     suspend fun pressedLikeOnComment(
         item: ContentWithLikesAndComments<out Any>,
         comment: Comment
-    ): Resource<Nothing>
+    ): Resource<Unit>
     suspend fun sendComment(
         message: String,
         id: Long,
         _class: Class<*>,
         parentComment: Comment? = null
-    ): Resource<Nothing>
+    ): Resource<Unit>
     suspend fun getUser(uid: String): UserModel?
-    suspend fun createPost(title: String, postItems: List<Any>): Resource<Nothing>
-    suspend fun deleteComment(comment: Comment, item: ContentWithLikesAndComments<out Any>): Resource<Nothing>
+    suspend fun createPost(title: String, postItems: List<Any>): Resource<Unit>
+    suspend fun deleteComment(comment: Comment, item: ContentWithLikesAndComments<out Any>): Resource<Unit>
 }

@@ -313,7 +313,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         source: String,
         postId: Int,
         comment: String
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         if (authenticator.uid != null) {
             try {
                 val commentId = getLastCommentId(source, postId) + 1
@@ -342,7 +342,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         comment: String
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         if (authenticator.uid != null) {
             try {
                 val subCommentId = getLastSubCommentId(source, postId, fatherCommentId) + 1
@@ -370,7 +370,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         source: String,
         postId: Int,
         commentId: Long
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         return try {
             dbInstance.getReference("posts").child(source).child(postId.toString())
                 .child("comments")
@@ -386,7 +386,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         return try {
             dbInstance.getReference("posts").child(source).child(postId.toString())
                 .child("comments")
@@ -398,7 +398,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun pushLike(source: String, postId: Int): Resource<Nothing> {
+    override suspend fun pushLike(source: String, postId: Int): Resource<Unit> {
         return if (authenticator.uid != null && !checkIfHasLike(source, postId)) {
             try {
                 val user = getCurrentUser()!!
@@ -421,7 +421,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         source: String,
         postId: Int,
         commentId: Long
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         return if (authenticator.uid != null && !checkIfHasCommentLike(source, postId, commentId)) {
             try {
                 val user = getCurrentUser()!!
@@ -444,7 +444,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         if (authenticator.uid != null && !checkIfHasSubCommentLike(
                 source,
                 postId,
@@ -468,7 +468,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         return deleteSubCommentLike(source, postId, fatherCommentId, subCommentId)
     }
 
-    override suspend fun deleteLike(source: String, postId: Int): Resource<Nothing> {
+    override suspend fun deleteLike(source: String, postId: Int): Resource<Unit> {
         return if (authenticator.uid != null && checkIfHasLike(source, postId)) {
             try {
                 dbInstance.getReference("posts").child(source).child(postId.toString())
@@ -487,7 +487,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         source: String,
         postId: Int,
         commentId: Long
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         return if (authenticator.uid != null && checkIfHasCommentLike(source, postId, commentId)) {
             try {
                 dbInstance.getReference("posts").child(source).child(postId.toString())
@@ -509,7 +509,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         fatherCommentId: Long,
         subCommentId: Long
-    ): Resource<Nothing> {
+    ): Resource<Unit> {
         if (authenticator.uid != null && checkIfHasSubCommentLike(
                 source,
                 postId,
