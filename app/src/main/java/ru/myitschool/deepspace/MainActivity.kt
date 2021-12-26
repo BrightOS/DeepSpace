@@ -20,6 +20,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.yodo1.mas.Yodo1Mas
+import com.yodo1.mas.error.Yodo1MasError
+import com.yodo1.mas.helper.model.Yodo1MasAdBuildConfig
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.myitschool.deepspace.data.fb_general.MFirebaseUser
@@ -42,6 +45,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        val config = Yodo1MasAdBuildConfig.Builder().enableUserPrivacyDialog(true).build()
+        Yodo1Mas.getInstance().setAdBuildConfig(config)
+        Yodo1Mas.getInstance().init(this, "ErxwlzR9KT", object : Yodo1Mas.InitListener {
+            override fun onMasInitSuccessful() {
+                Toast.makeText(this@MainActivity, "[Yodo1 Mas] Successful initialization", Toast.LENGTH_SHORT).show()
+            }
+            override fun onMasInitFailed(error: Yodo1MasError) {
+                Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val navHostFragment =

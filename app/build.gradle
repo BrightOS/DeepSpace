@@ -20,10 +20,12 @@ android {
         applicationId "ru.myitschool.nasa_bootcamp"
         minSdkVersion 24
         targetSdkVersion 31
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -82,6 +84,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    implementation 'com.yodo1.mas:full:4.4.5'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.2'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
