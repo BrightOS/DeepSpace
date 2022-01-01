@@ -11,6 +11,9 @@ import ru.myitschool.deepspace.data.dto.spaceX.landingPads.LaunchPad
 import ru.myitschool.deepspace.data.dto.spaceX.launches.Launch
 import ru.myitschool.deepspace.data.dto.spaceX.roadster.Roadster
 
+/*
+ * @author Yana Glad
+ */
 interface SpaceXRepository {
     suspend fun getSpaceXLaunches(): Response<List<Launch>>
     suspend fun getDragons(): Response<ArrayList<Dragon>>

@@ -10,6 +10,9 @@ import ru.myitschool.deepspace.data.model.UpcomingLaunchModel
 import ru.myitschool.deepspace.data.repository.UpcomingRepository
 import javax.inject.Inject
 
+/*
+ * @author Samuil Nalisin
+ */
 @HiltViewModel
 class UpcomingEventsViewModelImpl @Inject constructor(
     private val repository: UpcomingRepository

@@ -13,6 +13,9 @@ import ru.myitschool.deepspace.databinding.FragmentCapsulesBinding
 import ru.myitschool.deepspace.utils.DimensionsUtil
 import ru.myitschool.deepspace.utils.Status
 
+/*
+ * @author Yana Glad
+ */
 @DelicateCoroutinesApi
 @AndroidEntryPoint
 class CapsulesFragment : Fragment() {

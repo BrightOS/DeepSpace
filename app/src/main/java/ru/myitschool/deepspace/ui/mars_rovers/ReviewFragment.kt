@@ -36,6 +36,9 @@ import java.io.OutputStream
 import java.util.*
 import kotlin.properties.Delegates
 
+/*
+ * @author Denis Shaikhlbarin
+ */
 class ReviewFragment : Fragment(R.layout.fragment_review) {
     val args: ReviewFragmentArgs by navArgs()
     private var systemUI by Delegates.notNull<Int>()

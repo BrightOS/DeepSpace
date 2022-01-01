@@ -21,6 +21,9 @@ import ru.myitschool.deepspace.utils.*
 import java.util.*
 
 
+/*
+ * @author Vladimir Abubakirov
+ */
 class UpcomingRecylcerAdapter internal constructor(
     var context: Context,
     private var upcomingLaunches: ArrayList<UpcomingLaunchModel>,

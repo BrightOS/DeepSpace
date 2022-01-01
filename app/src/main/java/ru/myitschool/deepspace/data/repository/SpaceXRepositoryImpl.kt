@@ -12,6 +12,9 @@ import ru.myitschool.deepspace.data.dto.spaceX.landingPads.LaunchPad
 import ru.myitschool.deepspace.data.dto.spaceX.roadster.Roadster
 import javax.inject.Inject
 
+/*
+ * @author Yana Glad
+ */
 class SpaceXRepositoryImpl @Inject constructor(
     private val spaceXApi: SpaceXApi
 ) : SpaceXRepository {

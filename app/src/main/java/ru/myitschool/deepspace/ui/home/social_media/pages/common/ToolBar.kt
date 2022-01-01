@@ -16,6 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.insets.statusBarsPadding
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun ToolBar(navController: NavController, title: String) {
     Spacer(modifier = Modifier.statusBarsPadding())

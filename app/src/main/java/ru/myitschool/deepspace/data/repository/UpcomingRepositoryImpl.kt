@@ -5,6 +5,9 @@ import ru.myitschool.deepspace.data.api.UpcomingEventsApi
 import ru.myitschool.deepspace.data.dto.upcoming.UpcomingLaunch
 import javax.inject.Inject
 
+/*
+ * @author Yana Glad
+ */
 class UpcomingRepositoryImpl @Inject constructor(
     private val upcomingEventsApi: UpcomingEventsApi
 ) : UpcomingRepository {

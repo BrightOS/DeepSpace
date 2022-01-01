@@ -8,6 +8,9 @@ import ru.myitschool.deepspace.utils.Resource
 import ru.myitschool.deepspace.utils.Status
 import javax.inject.Inject
 
+/*
+ * @author Vladimir Abubakirov
+ */
 class SocialMediaRepositoryImpl @Inject constructor(
     private val firebaseRepository: FirebaseRepository,
     private val newsRepository: NewsRepository

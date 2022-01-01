@@ -6,6 +6,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ru.myitschool.deepspace.data.dto.spaceX.launches.Launch
 
+/*
+ * @author Danil Khairulin
+ */
 @Dao
 interface LaunchesDao {
 

@@ -14,6 +14,9 @@ import ru.myitschool.deepspace.MainActivity
 import ru.myitschool.deepspace.databinding.FragmentMarsRoversBinding
 import ru.myitschool.deepspace.utils.DimensionsUtil
 
+/*
+ * @author Denis Shaikhlbarin
+ */
 @AndroidEntryPoint
 class MarsRoversFragment : Fragment() {
 

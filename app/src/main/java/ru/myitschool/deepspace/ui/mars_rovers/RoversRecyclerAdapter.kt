@@ -14,6 +14,9 @@ import ru.myitschool.deepspace.databinding.RoverItemBinding
 import ru.myitschool.deepspace.utils.loadImage
 import java.util.*
 
+/*
+ * @author Yana Glad
+ */
 class RoverRecyclerAdapter internal constructor(
     var context: Context,
     roverModels: ArrayList<RoverModel>,

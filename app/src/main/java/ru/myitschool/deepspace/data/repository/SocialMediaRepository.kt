@@ -5,6 +5,9 @@ import ru.myitschool.deepspace.data.fb_general.BlogPagingSource
 import ru.myitschool.deepspace.data.model.*
 import ru.myitschool.deepspace.utils.Resource
 
+/*
+ * @author Samuil Nalisin
+ */
 interface SocialMediaRepository {
     suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>>
     suspend fun getBlogPosts(): Resource<List<LiveData<ContentWithLikesAndComments<PostModel>>>>

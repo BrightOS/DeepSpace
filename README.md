@@ -1,7 +1,7 @@
 # Deep Space 
 
 Available in Google Play!
-Download now! https://play.google.com/store/apps/details?id=ru.berserkers.deepspace
+Download now! https://play.google.com/store/apps/details?id=ru.berserkerMainActivitys.deepspace
 
 Presentation: https://docs.google.com/presentation/d/1c-eezTK-GtelYbv_2g7yAjRDPWDCi9j0/edit#slide=id.p25
 

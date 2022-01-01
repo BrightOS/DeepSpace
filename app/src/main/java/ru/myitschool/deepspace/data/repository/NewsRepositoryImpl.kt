@@ -5,6 +5,9 @@ import ru.myitschool.deepspace.data.model.ArticleModel
 import ru.myitschool.deepspace.utils.Resource
 import javax.inject.Inject
 
+/*
+ * @author Yana Glad
+ */
 class NewsRepositoryImpl @Inject constructor(
     private val newsApi: NewsApi
 ) : NewsRepository {

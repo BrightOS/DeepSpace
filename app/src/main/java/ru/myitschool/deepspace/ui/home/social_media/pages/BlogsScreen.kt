@@ -45,6 +45,9 @@ import ru.myitschool.deepspace.utils.Resource
 import ru.myitschool.deepspace.utils.Status
 import ru.myitschool.deepspace.utils.getDateFromUnixTimestamp
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun BlogsScreen(viewModel: SocialMediaViewModel, navController: NavController) {
     val lifecycleOwner = LocalLifecycleOwner.current

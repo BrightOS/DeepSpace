@@ -25,6 +25,9 @@ import ru.myitschool.deepspace.data.model.UserModel
 import ru.myitschool.deepspace.utils.Resource
 import ru.myitschool.deepspace.utils.getDateFromUnixTimestamp
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun CommentItem(
     comment: Comment,

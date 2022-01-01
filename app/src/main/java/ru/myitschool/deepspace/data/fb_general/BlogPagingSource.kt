@@ -13,7 +13,7 @@ import ru.myitschool.deepspace.utils.BLOG_PAGE_SIZE
 import ru.myitschool.deepspace.utils.Status
 
 /*
- * @author Yana Glad
+ * @author Vladimir Abubakirov
  */
 class BlogPagingSource(private val firebaseRepository: FirebaseRepository) :
     PagingSource<DataSnapshot, LiveData<ContentWithLikesAndComments<PostModel>>>() {

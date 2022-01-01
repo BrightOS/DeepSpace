@@ -6,6 +6,9 @@ import ru.myitschool.deepspace.data.dto.nasa.rovers.Rovers
 import retrofit2.Response
 import ru.myitschool.deepspace.data.dto.nasa.asteroids.Asteroid
 
+/*
+ * @author Yana Glad
+ */
 interface NasaRepository {
     suspend fun getImageOfTheDay(): Response<Apod>
     suspend fun getAsteroids(beginDate: String, endDate: String): Response<Asteroid>

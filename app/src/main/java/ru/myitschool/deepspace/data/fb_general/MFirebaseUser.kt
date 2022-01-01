@@ -12,7 +12,7 @@ import ru.myitschool.deepspace.utils.Data
 import ru.myitschool.deepspace.utils.downloadFirebaseImage
 
 /*
- * @author Yana Glad
+ * @author Vladimir Abubakirov
  */
 class MFirebaseUser() : ViewModel() {
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()

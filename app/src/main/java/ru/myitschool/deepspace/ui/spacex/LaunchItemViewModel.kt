@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.myitschool.deepspace.utils.Status
 
-
+/*
+ * @author Yana Glad
+ */
 class LaunchItemViewModel : ViewModel() {
     private val isLoaded = MutableLiveData(false)
     var error: MutableLiveData<Status> = MutableLiveData<Status>(Status.SUCCESS)

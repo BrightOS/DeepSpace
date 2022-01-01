@@ -21,6 +21,9 @@ import ru.myitschool.deepspace.databinding.LaunchItemBinding
 import ru.myitschool.deepspace.utils.*
 import java.util.*
 
+/*
+ * @author Yana Glad
+ */
 class SpaceXLaunchAdapter :
     ListAdapter<SxLaunchModel, SpaceXLaunchAdapter.ViewHolder>(DiffCallback()) {
 

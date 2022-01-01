@@ -16,6 +16,9 @@ import ru.myitschool.deepspace.data.model.UserModel
 import ru.myitschool.deepspace.utils.Resource
 import ru.myitschool.deepspace.utils.Status
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun LikeButton(
     list: List<UserModel>,

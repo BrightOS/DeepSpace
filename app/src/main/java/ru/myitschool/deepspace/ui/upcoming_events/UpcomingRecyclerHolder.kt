@@ -7,6 +7,9 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import ru.myitschool.deepspace.databinding.UpcomingItemBinding
 
+/*
+ * @author Yana Glad
+ */
 class UpcomingRecyclerHolder(
     val binding: UpcomingItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {

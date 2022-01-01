@@ -27,6 +27,9 @@ import ru.myitschool.deepspace.ui.home.components.ErrorMessage
 import ru.myitschool.deepspace.utils.Resource
 import ru.myitschool.deepspace.utils.Status
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun <T> Feed(
     listResource: Resource<List<LiveData<ContentWithLikesAndComments<T>>>>,

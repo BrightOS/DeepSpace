@@ -11,6 +11,9 @@ import kotlinx.android.synthetic.main.layout_loading.view.*
 import kotlinx.coroutines.*
 import ru.myitschool.deepspace.R
 
+/*
+ * @author Denis Shaikhlbarin
+ */
 @DelicateCoroutinesApi
 class SpaceLoadingView constructor(
     private val cont: Context,

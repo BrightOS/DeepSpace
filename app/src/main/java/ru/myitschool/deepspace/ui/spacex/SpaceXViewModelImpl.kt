@@ -17,6 +17,9 @@ import ru.myitschool.deepspace.utils.Data
 import ru.myitschool.deepspace.utils.Status
 import javax.inject.Inject
 
+/*
+ * @author Samuil Nalisin
+ */
 @HiltViewModel
 class SpaceXViewModelImpl @Inject constructor(
     private val repository: SpaceXRepository,

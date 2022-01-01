@@ -23,6 +23,9 @@ import ru.myitschool.deepspace.ui.home.social_media.pages.common.Feed
 import ru.myitschool.deepspace.utils.Resource
 import ru.myitschool.deepspace.utils.parseNewsDate
 
+/*
+ * @author Samuil Nalisin
+ */
 @Composable
 fun NewsScreen(
     viewModel: SocialMediaViewModel,

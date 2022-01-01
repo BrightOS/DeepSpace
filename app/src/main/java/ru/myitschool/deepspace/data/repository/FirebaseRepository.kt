@@ -12,6 +12,9 @@ import ru.myitschool.deepspace.data.model.*
 import ru.myitschool.deepspace.utils.Data
 import ru.myitschool.deepspace.utils.Resource
 
+/*
+ * @author Vladimir Abubakirov
+ */
 interface FirebaseRepository {
     suspend fun getPostsFromDataSnapshot(snapshot: DataSnapshot): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
     suspend fun getAllPostsRawData(): Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>>
