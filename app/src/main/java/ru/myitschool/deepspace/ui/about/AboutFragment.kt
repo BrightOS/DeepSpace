@@ -11,13 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import ru.myitschool.deepspace.R
 import ru.myitschool.deepspace.databinding.FragmentAboutBinding
 import ru.myitschool.deepspace.utils.ANIMATED_DEEP_SPACE
 import ru.myitschool.deepspace.utils.loadImageCircle
-
 
 /*
  * @author Danil Khairulin
@@ -26,8 +24,6 @@ import ru.myitschool.deepspace.utils.loadImageCircle
 class AboutFragment : Fragment() {
     private var _binding: FragmentAboutBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: AboutFragmentViewModel by viewModels<AboutFragmentViewModelImpl>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,7 +104,7 @@ class AboutFragment : Fragment() {
         val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip: ClipData = ClipData.newPlainText("email", text)
         clipboard.setPrimaryClip(clip)
-        Toast.makeText(requireContext(), getString(R.string.copiedToClipboard, name), Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), getString(R.string.copiedToClipboard, name), Toast.LENGTH_SHORT).show()
     }
 
     companion object Links {

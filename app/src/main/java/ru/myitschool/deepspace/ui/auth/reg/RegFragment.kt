@@ -127,12 +127,8 @@ class RegFragment : Fragment() {
                             password,
                             imagePath
                         )) {
-                            is Data.Ok -> {
-                                successRegister()
-                            }
-                            is Data.Error -> {
-                                (activity as MainActivity).main_loading.showError(it.message)
-                            }
+                            is Data.Ok -> successRegister()
+                            is Data.Error -> (activity as MainActivity).main_loading.showError(it.message)
                         }
                     }
                 } else {

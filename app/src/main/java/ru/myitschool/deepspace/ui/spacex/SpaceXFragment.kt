@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.DelicateCoroutinesApi
 import ru.myitschool.deepspace.MainActivity
 import ru.myitschool.deepspace.R
 import ru.myitschool.deepspace.databinding.FragmentSpacexBinding
@@ -32,6 +33,7 @@ class SpaceXFragment : Fragment() {
     private var _binding: FragmentSpacexBinding? = null
     private val binding get() = _binding!!
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

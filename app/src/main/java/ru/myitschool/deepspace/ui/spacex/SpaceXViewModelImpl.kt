@@ -67,8 +67,6 @@ class SpaceXViewModelImpl @Inject constructor(
                         errorHandler.postValue(Status.SUCCESS)
                         Log.i("vm_debug", "retrofit got")
                         //launchesDao.insertAllLaunches(launches)
-                        Log.i("vm_debug", "launches saved")
-
                     }
                 }
             } catch (e: Exception) {

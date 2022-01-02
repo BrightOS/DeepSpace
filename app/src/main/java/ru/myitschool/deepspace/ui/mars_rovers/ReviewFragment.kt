@@ -29,6 +29,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_review.*
+import kotlinx.coroutines.DelicateCoroutinesApi
 import ru.myitschool.deepspace.MainActivity
 import ru.myitschool.deepspace.R
 import java.io.IOException
@@ -43,6 +44,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
     val args: ReviewFragmentArgs by navArgs()
     private var systemUI by Delegates.notNull<Int>()
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,10 +54,8 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
             .load(args.url)
             .apply(RequestOptions().override(background.width / 2, background.height / 2))
             .into(object : SimpleTarget<Drawable>() {
-                override fun onResourceReady(
-                    resource: Drawable,
-                    transition: Transition<in Drawable>?
-                ) {
+                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+
                     Glide.with(this@ReviewFragment)
                         .load(resource)
                         .into(background)
@@ -178,11 +178,8 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             beginDownload(context, bitmap, displayName, setAsWallpaper)
         } else {
-            if (ContextCompat.checkSelfPermission(
-                    requireActivity(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED
-            )
+            if (ContextCompat.checkSelfPermission
+                    (requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                 beginDownload(context, bitmap, displayName, setAsWallpaper)
             else {
                 Toast.makeText(
@@ -221,9 +218,7 @@ class ReviewFragment : Fragment(R.layout.fragment_review) {
             cursor.moveToFirst()
             cursor.getString(column_index)
         } finally {
-            if (cursor != null) {
-                cursor.close()
-            }
+            cursor?.close()
         }
     }
 

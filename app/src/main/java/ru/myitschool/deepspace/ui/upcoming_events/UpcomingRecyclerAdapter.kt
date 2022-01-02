@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
+import kotlinx.coroutines.DelicateCoroutinesApi
 import ru.myitschool.deepspace.R
 import ru.myitschool.deepspace.data.model.NotificationModel
 import ru.myitschool.deepspace.data.model.UpcomingLaunchModel
@@ -24,7 +25,7 @@ import java.util.*
 /*
  * @author Vladimir Abubakirov
  */
-class UpcomingRecylcerAdapter internal constructor(
+class UpcomingRecyclerAdapter internal constructor(
     var context: Context,
     private var upcomingLaunches: ArrayList<UpcomingLaunchModel>,
 ) :
@@ -33,14 +34,10 @@ class UpcomingRecylcerAdapter internal constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         UpcomingRecyclerHolder(
-            UpcomingItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+            UpcomingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
-
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UpcomingRecyclerHolder, position: Int) {
         val upcomingLaunchModel: UpcomingLaunchModel = upcomingLaunches[position]
@@ -58,11 +55,7 @@ class UpcomingRecylcerAdapter internal constructor(
                 calendar.time = Date(upcomingLaunchModel.static_fire_date_unix * 1000)
 
                 missionDate.text = finalString.addSubstringAtIndex(
-                    getDayOfMonthSuffix(
-                        calendar.get(Calendar.DAY_OF_MONTH)
-                    ),
-                    finalString.indexOf('.')
-                )
+                    getDayOfMonthSuffix(calendar.get(Calendar.DAY_OF_MONTH)), finalString.indexOf('.'))
             } else {
                 finalString = ""
             }
@@ -84,9 +77,7 @@ class UpcomingRecylcerAdapter internal constructor(
                     associatedNotification = notification
 
                     context.resources.getColor(R.color.green).let {
-                        enableNotificationButton.setCardBackgroundColor(
-                            ColorStateList.valueOf(it)
-                        )
+                        enableNotificationButton.setCardBackgroundColor(ColorStateList.valueOf(it))
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                             cardLaunch.outlineSpotShadowColor = it
@@ -108,9 +99,7 @@ class UpcomingRecylcerAdapter internal constructor(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         animateShadow(
                             cardLaunch.outlineSpotShadowColor,
-                            context.resources.getColor(
-                                R.color.upcoming_blue
-                            ),
+                            context.resources.getColor(R.color.upcoming_blue),
                             holder.binding.cardLaunch
                         )
                     }
@@ -130,17 +119,13 @@ class UpcomingRecylcerAdapter internal constructor(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         animateShadow(
                             cardLaunch.outlineSpotShadowColor,
-                            context.resources.getColor(
-                                R.color.green
-                            ),
+                            context.resources.getColor(R.color.green),
                             holder.binding.cardLaunch
                         )
                     }
                     animateButton(
                         enableNotificationButton.cardBackgroundColor.defaultColor,
-                        context.resources.getColor(
-                            R.color.green
-                        ),
+                        context.resources.getColor(R.color.green),
                         holder.binding
                     )
                     buttonText.text = "Disable notification"

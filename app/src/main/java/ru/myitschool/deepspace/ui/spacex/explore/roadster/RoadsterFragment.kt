@@ -42,20 +42,13 @@ class RoadsterFragment : Fragment() {
         roadsterViewModel.getRoadsterModel()
             .observe(viewLifecycleOwner, {
                 roadsterViewModel.getRoadsterModel().value!!.also {
-                    earthDistanceRoadster.text =
-                        "${it.earth_distance_km}"
-                    marsDistanceRoadster.text =
-                        "${it.mars_distance_km}"
-                    launchMassKgRoadster.text =
-                        "${it.launch_mass_kg}"
-                    longitudeRoadster.text =
-                        "${it.longitude}"
-                    nameRoadster.text =
-                        it.name
-                    orbitTypeRoadster.text =
-                        it.orbit_type
-                    detailsRoadster.text =
-                        it.details
+                    earthDistanceRoadster.text = "${it.earth_distance_km}"
+                    marsDistanceRoadster.text = "${it.mars_distance_km}"
+                    launchMassKgRoadster.text = "${it.launch_mass_kg}"
+                    longitudeRoadster.text = "${it.longitude}"
+                    nameRoadster.text = it.name
+                    orbitTypeRoadster.text = it.orbit_type
+                    detailsRoadster.text = it.details
                 }
                 val finalString =
                     convertDateFromUnix(roadsterViewModel.getRoadsterModel().value?.launch_date_unix!!)
