@@ -346,7 +346,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun deleteComment(source: String, postId: Int, commentId: Long ): Resource<Unit> {
+    override suspend fun deleteComment(source: String, postId: Int, commentId: Long): Resource<Unit> {
         return try {
             dbInstance.getReference("posts").child(source).child(postId.toString())
                 .child("comments")
@@ -357,8 +357,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun deleteSubComment(source: String, postId: Int,
-                                          fatherCommentId: Long, subCommentId: Long): Resource<Unit> {
+    override suspend fun deleteSubComment(
+        source: String, postId: Int,
+        fatherCommentId: Long, subCommentId: Long,
+    ): Resource<Unit> {
         return try {
             dbInstance.getReference("posts").child(source).child(postId.toString())
                 .child("comments")
@@ -460,8 +462,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun deleteSubCommentLike(source: String, postId: Int,
-                                              fatherCommentId: Long, subCommentId: Long): Resource<Unit> {
+    override suspend fun deleteSubCommentLike(
+        source: String, postId: Int,
+        fatherCommentId: Long, subCommentId: Long,
+    ): Resource<Unit> {
         if (authenticator.uid != null && checkIfHasSubCommentLike(source, postId, fatherCommentId, subCommentId)) {
             return try {
                 dbInstance.getReference("posts").child(source).child(postId.toString())
@@ -486,7 +490,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             val sharedPreferences =
                 context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
 
-            with(sharedPreferences){
+            with(sharedPreferences) {
                 putString(sharedPreferencesUserName, userInfo!!.name)
                 putString(sharedPreferencesUri, userInfo.avatarUrl.toString())
                 putString(sharedPreferencesId, user.user!!.uid)
@@ -515,8 +519,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         return returnData
     }
 
-    override suspend fun createUser(context: Context, userName: String,
-        email: String, password: String, imagePath: Uri?): Data<FirebaseUser> {
+    override suspend fun createUser(
+        context: Context, userName: String,
+        email: String, password: String, imagePath: Uri?,
+    ): Data<FirebaseUser> {
         try {
             val user = authenticator.createUserWithEmailAndPassword(email, password).await()
             if (user != null) {
@@ -530,7 +536,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
                 val sharedPreferences = context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
                     .edit()
-                with(sharedPreferences){
+                with(sharedPreferences) {
                     putString(sharedPreferencesUserName, userName)
                     putString(sharedPreferencesUri, imagePath.toString())
                     putString(sharedPreferencesId, user.user!!.uid)
@@ -550,7 +556,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         try {
             var avatarUrl: Uri? = null
             val userName: String = dbInstance.getReference("user_data").child(uid).child("username").get().await()
-                    .getValue(String::class.java).toString()
+                .getValue(String::class.java).toString()
             try {
                 avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
             } catch (e: Exception) {
@@ -578,8 +584,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     override suspend fun getArticleModelComments(postId: Long): List<Comment> {
         val comments = mutableListOf<Comment>()
-        dbInstance.getReference("posts").child("ArticleModel").child(postId.toString())
-            .child("comments").get().await().children.forEach {
+        dbInstance.getReference(POSTS).child("ArticleModel").child(postId.toString())
+            .child(COMMENTS).get().await().children.forEach {
                 val text = it.child("comment").getValue(String::class.java)!!
                 val date = it.child("date").getValue(Long::class.java)!!
                 val id = it.child("id").getValue(Long::class.java)!!
@@ -595,7 +601,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     override suspend fun getArticleModelLikes(postId: Long): List<UserModel> {
         var likes = listOf<UserModel>()
-        dbInstance.getReference("posts").child(postId.toString()).get().await().children.forEach {
+        dbInstance.getReference(POSTS).child(postId.toString()).get().await().children.forEach {
             likes = getCommentLikes(it)
         }
         return likes
@@ -607,7 +613,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     ) {
         val dbInstance = FirebaseDatabase.getInstance()
         try {
-            dbInstance.getReference("posts").child("ArticleModel")
+            dbInstance.getReference(POSTS).child("ArticleModel")
                 .child(postId.toString()).child("id")
                 .setValue(articleModel.value!!.content.id.toString())
         } catch (e: Exception) {
@@ -621,9 +627,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                         val comments: MutableList<Comment> = mutableListOf()
                         val likes: MutableList<UserModel> = mutableListOf()
 
-                        snapshot.child("comments").children.forEach {
+                        snapshot.child(COMMENTS).children.forEach {
                             val id = it.child("id").getValue(Long::class.java)
-                            val text = it.child("comment").getValue(String::class.java)
+                            val text = it.child(COMMENTS).getValue(String::class.java)
                             val commentLikes = mutableListOf<UserModel>()
                             it.child("likes").children.forEach { like ->
                                 val _username = like.child("name").getValue(String::class.java)!!
@@ -645,14 +651,13 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
                             val date = it.child("date").getValue(Long::class.java)!!
 
-                            val comment =
-                                Comment(id!!, text!!, commentLikes, listOf(), author, date)
+                            val comment = Comment(id!!, text!!, commentLikes, listOf(), author, date)
                             val subComments = getSubComments(it, comment)
                             comment.subComments = subComments
                             comments.add(comment)
                         }
 
-                        snapshot.child("likes").children.forEach {
+                        snapshot.child(LIKES).children.forEach {
                             val _name = it.child("name").getValue(String::class.java)!!
                             val _url = it.child("avatarUrl").getValue(String::class.java)!!.toUri()
                             val _id = it.child("id").getValue(String::class.java)!!
@@ -679,7 +684,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     private fun getSubComments(snapshot: DataSnapshot, comment: Comment): List<SubComment> {
         val subComments = mutableListOf<SubComment>()
-        snapshot.child("subComments").children.forEach { subComment ->
+        snapshot.child(SUB_COMMENTS).children.forEach { subComment ->
             val subId = subComment.child("id").getValue(Long::class.java)!!
             val text = subComment.child("text").getValue(String::class.java)!!
             val likes = getCommentLikes(subComment)
@@ -710,8 +715,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     private suspend fun getLastCommentId(source: String, postId: Int): Long {
         return try {
-            dbInstance.getReference("posts").child(source).child(postId.toString())
-                .child("comments").get()
+            dbInstance.getReference(POSTS).child(source).child(postId.toString())
+                .child(COMMENTS).get()
                 .await().children.last().key!!.toLong()
         } catch (e: java.lang.Exception) {
             1
@@ -724,9 +729,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         fatherCommentId: Long,
     ): Long {
         return try {
-            dbInstance.getReference("posts").child(source).child(postId.toString())
-                .child("comments")
-                .child(fatherCommentId.toString()).child("subComments")
+            dbInstance.getReference(POSTS).child(source).child(postId.toString())
+                .child(COMMENTS)
+                .child(fatherCommentId.toString()).child(SUB_COMMENTS)
                 .get()
                 .await().children.last().key!!.toLong()
         } catch (e: java.lang.Exception) {
@@ -734,16 +739,15 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-
     suspend fun getLikeCount(source: String, postId: Int): Long {
-        return dbInstance.getReference("posts").child(source).child(postId.toString())
-            .child("likes").get()
+        return dbInstance.getReference(POSTS).child(source).child(postId.toString())
+            .child(LIKES).get()
             .await().childrenCount
     }
 
     private suspend fun checkIfHasLike(source: String, postId: Int): Boolean {
-        return dbInstance.getReference("posts").child(source).child(postId.toString())
-            .child("likes").get()
+        return dbInstance.getReference(POSTS).child(source).child(postId.toString())
+            .child(LIKES).get()
             .await()
             .hasChild(authenticator.uid!!)
     }
@@ -753,22 +757,27 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         postId: Int,
         commentId: Long,
     ): Boolean {
-        return dbInstance.getReference("posts").child(source).child(postId.toString())
-            .child("comments")
-            .child(commentId.toString()).child("likes").get().await()
+        return dbInstance.getReference(POSTS).child(source).child(postId.toString())
+            .child(COMMENTS)
+            .child(commentId.toString()).child(LIKES).get().await()
             .hasChild(authenticator.uid!!)
     }
 
     private suspend fun checkIfHasSubCommentLike(
-        source: String,
-        postId: Int,
-        fatherCommentId: Long,
-        subCommentId: Long,
+        source: String, postId: Int,
+        fatherCommentId: Long, subCommentId: Long,
     ): Boolean {
-        return dbInstance.getReference("posts").child(source).child(postId.toString())
-            .child("comments")
-            .child(fatherCommentId.toString()).child("subComments").child(subCommentId.toString())
-            .child("likes").get().await()
+        return dbInstance.getReference(COMMENTS).child(source).child(postId.toString())
+            .child(COMMENTS)
+            .child(fatherCommentId.toString()).child(SUB_COMMENTS).child(subCommentId.toString())
+            .child(LIKES).get().await()
             .hasChild(authenticator.uid!!)
+    }
+
+    companion object {
+        private const val COMMENTS = "comments"
+        private const val POSTS = "posts"
+        private const val LIKES = "likes"
+        private const val SUB_COMMENTS = "subComments"
     }
 }
