@@ -39,10 +39,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         val allPosts = ArrayList<Post>()
         try {
             dbInstance.getReference(USER_DATA).get().await().children.forEach {
-                val username = getUsernameById(it.child("author").getValue(String::class.java)!!)
+                val username = getUsernameById(it.child(AUTHOR).getValue(String::class.java)!!)
                 val postData = Post(
                     it.key!!,
-                    it.child("title").getValue(String::class.java)!!,
+                    it.child(TITLE).getValue(String::class.java)!!,
                     it.child("dateCreated").getValue(Long::class.java)!!,
                     username,
                     null
@@ -60,10 +60,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         val returnData = mutableListOf<MutableLiveData<ContentWithLikesAndComments<PostModel>>>()
         try {
             snapshot.children.forEach {
-                val _username = it.child("author").child("name").getValue(String::class.java) ?: "anonymous"
+                val _username = it.child(AUTHOR).child(NAME).getValue(String::class.java) ?: "anonymous"
                 val _url =
-                    it.child("author").child("avatarUrl").getValue(String::class.java)?.toUri()
-                val _id = it.child("author").child("id").getValue(String::class.java)!!
+                    it.child(AUTHOR).child(AVATAR_URL).getValue(String::class.java)?.toUri()
+                val _id = it.child(AUTHOR).child(ID).getValue(String::class.java)!!
                 val author = UserModel(_username, _url, _id)
 
                 val data = mutableListOf<String>()
@@ -71,11 +71,11 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     data.add(_data.getValue(String::class.java)!!)
                 }
 
-                val date = it.child("date").getValue(Long::class.java) ?: 1L
+                val date = it.child(DATE).getValue(Long::class.java) ?: 1L
 
                 val id = it.key!!.toLong()
 
-                val title = it.child("title").getValue(String::class.java) ?: ""
+                val title = it.child(TITLE).getValue(String::class.java) ?: ""
 
                 val postModel = PostModel(id, title, date, data, author)
                 val comments = getAllUserPostComments(id.toInt())
@@ -98,7 +98,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             Resource<List<MutableLiveData<ContentWithLikesAndComments<PostModel>>>> {
         return getPostsFromDataSnapshot(
             dbInstance.getReference(USER_DATA)
-                .orderByChild("date").get().await()
+                .orderByChild(DATE).get().await()
         )
     }
 
@@ -115,28 +115,29 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                         val likes: MutableList<UserModel> = mutableListOf()
 
                         snapshot.child(COMMENTS).children.forEach {
-                            val id = it.child("id").getValue(Long::class.java)
+                            val id = it.child(ID).getValue(Long::class.java)
                             val text = it.child(COMMENT).getValue(String::class.java)
                             val commentLikes = mutableListOf<UserModel>()
+
                             it.child(LIKES).children.forEach { like ->
-                                val _username = like.child("name").getValue(String::class.java)!!
+                                val _username = like.child(NAME).getValue(String::class.java)!!
                                 val _url =
-                                    like.child("avatarUrl").getValue(String::class.java)!!.toUri()
-                                val _id = like.child("id").getValue(String::class.java)!!
+                                    like.child(AVATAR_URL).getValue(String::class.java)!!.toUri()
+                                val _id = like.child(ID).getValue(String::class.java)!!
                                 commentLikes.add(UserModel(_username, _url, _id))
                             }
 
                             val authorUsername =
-                                it.child(USER_ID).child("name").getValue(String::class.java)!!
+                                it.child(USER_ID).child(NAME).getValue(String::class.java)!!
                             val authorUrl =
-                                it.child(USER_ID).child("avatarUrl")
+                                it.child(USER_ID).child(AVATAR_URL)
                                     .getValue(String::class.java)!!
                                     .toUri()
                             val authorId =
-                                it.child(USER_ID).child("id").getValue(String::class.java)!!
+                                it.child(USER_ID).child(ID).getValue(String::class.java)!!
                             val author = UserModel(authorUsername, authorUrl, authorId)
 
-                            val date = it.child("date").getValue(Long::class.java)!!
+                            val date = it.child(DATE).getValue(Long::class.java)!!
                             val comment =
                                 Comment(id!!, text!!, commentLikes, listOf(), author, date)
                             val subComments = getSubComments(it, comment)
@@ -145,9 +146,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                         }
 
                         snapshot.child(LIKES).children.forEach {
-                            val _name = it.child("name").getValue(String::class.java)!!
-                            val _url = it.child("avatarUrl").getValue(String::class.java)!!.toUri()
-                            val _id = it.child("id").getValue(String::class.java)!!
+                            val _name = it.child(NAME).getValue(String::class.java)!!
+                            val _url = it.child(AVATAR_URL).getValue(String::class.java)!!.toUri()
+                            val _id = it.child(ID).getValue(String::class.java)!!
                             likes.add(UserModel(_name, _url, _id))
                         }
 
@@ -169,8 +170,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             .child(COMMENTS).get().await().children.forEach {
 
                 val text = it.child(COMMENT).getValue(String::class.java)!!
-                val id = it.child("id").getValue(Long::class.java)!!
-                val date = it.child("date").getValue(Long::class.java)!!
+                val id = it.child(ID).getValue(Long::class.java)!!
+                val date = it.child(DATE).getValue(Long::class.java)!!
                 val userDto = it.child(USER_ID).getValue(UserDto::class.java)!!
                 val user = UserModel(userDto.name, userDto.avatarUrl!!.toUri(), userDto.id)
                 val likes = mutableListOf<UserModel>()
@@ -218,8 +219,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         try {
             val postId = getLastPostId()
             var photoCount = 1
-            val reference = dbInstance.getReference("user_posts").child(postId)
-            reference.child("title").setValue(title)
+            val reference = dbInstance.getReference(USER_POSTS).child(postId)
+            reference.child(TITLE).setValue(title)
             val fbPostItems = mutableListOf<String>()
 
             for (value in postItems) {
@@ -240,9 +241,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             }
             val user = getCurrentUser()!!
             val userDto = UserDto(user.name, user.avatarUrl.toString(), user.id)
-            reference.child("author").setValue(userDto).await()
+            reference.child(AUTHOR).setValue(userDto).await()
             val date = Date().time
-            reference.child("date").setValue(date).await()
+            reference.child(DATE).setValue(date).await()
             reference.child("postItems").setValue(fbPostItems).await()
 
             val post = ContentWithLikesAndComments(PostModel(postId.toLong(), title, date, fbPostItems, user), listOf(), listOf())
@@ -278,7 +279,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     override suspend fun getLastPostId(): String {
         var returnData = "0"
         try {
-            returnData = (dbInstance.getReference("user_posts").get()
+            returnData = (dbInstance.getReference(USER_POSTS).get()
                 .await().children.last().key?.toLong()!! + 1).toString()
         } catch (e: Exception) {
             Log.e("FB_ERROR_TAG", "${e.printStackTrace()}")
@@ -392,6 +393,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .child(COMMENTS)
                     .child(commentId.toString()).child(LIKES).child(authenticator.uid!!)
                     .setValue(userObject).await()
+
                 Resource.success(null)
             } catch (e: Exception) {
                 Resource.error(e.message.toString(), null)
@@ -414,6 +416,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                     .child(fatherCommentId.toString()).child(SUB_COMMENTS)
                     .child(subCommentId.toString()).child(LIKES).child(authenticator.uid!!)
                     .setValue(userDto).await()
+
                 Resource.success(null)
             } catch (e: Exception) {
                 Resource.error(e.message.toString(), null)
@@ -518,7 +521,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         try {
             val user = authenticator.createUserWithEmailAndPassword(email, password).await()
             if (user != null) {
-                dbInstance.getReference(USER_DATA).child(user.user!!.uid).child("username")
+                dbInstance.getReference(USER_DATA).child(user.user!!.uid).child(USERNAME)
                     .setValue(userName).await()
                 val storageRef = storage.getReference("$USER_DATA/${user.user?.uid}")
 
@@ -528,6 +531,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
                 val sharedPreferences = context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
                     .edit()
+
                 with(sharedPreferences) {
                     putString(sharedPreferencesUserName, userName)
                     putString(sharedPreferencesUri, imagePath.toString())
@@ -579,12 +583,13 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         dbInstance.getReference(POSTS).child("ArticleModel").child(postId.toString())
             .child(COMMENTS).get().await().children.forEach {
                 val text = it.child(COMMENT).getValue(String::class.java)!!
-                val date = it.child("date").getValue(Long::class.java)!!
-                val id = it.child("id").getValue(Long::class.java)!!
-                val userDto = it.child("userId").getValue(UserDto::class.java)!!
+                val date = it.child(DATE).getValue(Long::class.java)!!
+                val id = it.child(ID).getValue(Long::class.java)!!
+                val userDto = it.child(USER_ID).getValue(UserDto::class.java)!!
                 val user = UserModel(userDto.name, userDto.avatarUrl!!.toUri(), userDto.id)
                 val comment = Comment(id, text, getCommentLikes(it), listOf(), user, date)
                 val subComments = getSubComments(it, comment)
+
                 comment.subComments = subComments
                 comments.add(comment)
             }
@@ -606,42 +611,44 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         val dbInstance = FirebaseDatabase.getInstance()
         try {
             dbInstance.getReference(POSTS).child("ArticleModel")
-                .child(postId.toString()).child("id")
+                .child(postId.toString()).child(ID)
                 .setValue(articleModel.value!!.content.id.toString())
         } catch (e: Exception) {
             // value has already been set
         }
         try {
-            dbInstance.getReference("posts").child("ArticleModel")
+            dbInstance.getReference(POSTS).child("ArticleModel")
                 .child(articleModel.value!!.content.id.toString())
                 .addValueEventListener(object : ValueEventListener {
+
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val comments: MutableList<Comment> = mutableListOf()
                         val likes: MutableList<UserModel> = mutableListOf()
 
                         snapshot.child(COMMENTS).children.forEach {
-                            val id = it.child("id").getValue(Long::class.java)
+                            val id = it.child(ID).getValue(Long::class.java)
                             val text = it.child(COMMENT).getValue(String::class.java)
                             val commentLikes = mutableListOf<UserModel>()
+
                             it.child(LIKES).children.forEach { like ->
-                                val _username = like.child("name").getValue(String::class.java)!!
+                                val _username = like.child(NAME).getValue(String::class.java)!!
                                 val _url =
-                                    like.child("avatarUrl").getValue(String::class.java)!!.toUri()
-                                val _id = like.child("id").getValue(String::class.java)!!
+                                    like.child(AVATAR_URL).getValue(String::class.java)!!.toUri()
+                                val _id = like.child(ID).getValue(String::class.java)!!
                                 commentLikes.add(UserModel(_username, _url, _id))
                             }
 
                             val authorUsername =
-                                it.child(USER_ID).child("name").getValue(String::class.java)!!
+                                it.child(USER_ID).child(NAME).getValue(String::class.java)!!
                             val authorUrl =
-                                it.child(USER_ID).child("avatarUrl")
+                                it.child(USER_ID).child(AVATAR_URL)
                                     .getValue(String::class.java)!!
                                     .toUri()
                             val authorId =
-                                it.child(USER_ID).child("id").getValue(String::class.java)!!
+                                it.child(USER_ID).child(ID).getValue(String::class.java)!!
                             val author = UserModel(authorUsername, authorUrl, authorId)
 
-                            val date = it.child("date").getValue(Long::class.java)!!
+                            val date = it.child(DATE).getValue(Long::class.java)!!
 
                             val comment = Comment(id!!, text!!, commentLikes, listOf(), author, date)
                             val subComments = getSubComments(it, comment)
@@ -650,9 +657,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                         }
 
                         snapshot.child(LIKES).children.forEach {
-                            val _name = it.child("name").getValue(String::class.java)!!
-                            val _url = it.child("avatarUrl").getValue(String::class.java)!!.toUri()
-                            val _id = it.child("id").getValue(String::class.java)!!
+                            val _name = it.child(NAME).getValue(String::class.java)!!
+                            val _url = it.child(AVATAR_URL).getValue(String::class.java)!!.toUri()
+                            val _id = it.child(ID).getValue(String::class.java)!!
                             likes.add(UserModel(_name, _url, _id))
                         }
 
@@ -675,12 +682,12 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     private fun getSubComments(snapshot: DataSnapshot, comment: Comment): List<SubComment> {
         val subComments = mutableListOf<SubComment>()
         snapshot.child(SUB_COMMENTS).children.forEach { subComment ->
-            val subId = subComment.child("id").getValue(Long::class.java)!!
+            val subId = subComment.child(ID).getValue(Long::class.java)!!
             val text = subComment.child("text").getValue(String::class.java)!!
             val likes = getCommentLikes(subComment)
             val authorDto = subComment.child(USER_ID).getValue(UserDto::class.java)!!
             val author = UserModel(authorDto.name, authorDto.avatarUrl!!.toUri(), authorDto.id)
-            val date = subComment.child("date").getValue(Long::class.java)!!
+            val date = subComment.child(DATE).getValue(Long::class.java)!!
             subComments.add(SubComment(subId, comment, text, likes, author, date))
         }
         return subComments
@@ -688,7 +695,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     private fun getCommentLikes(snapshot: DataSnapshot): List<UserModel> {
         val likes = mutableListOf<UserModel>()
-        snapshot.child("likes").children.forEach { like ->
+        snapshot.child(LIKES).children.forEach { like ->
             val userDto = like.getValue(UserDto::class.java)!!
             likes.add(UserModel(userDto.name, userDto.avatarUrl!!.toUri(), userDto.id))
         }
@@ -697,7 +704,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     private suspend fun getUsernameById(uid: String): String =
         try {
-            dbInstance.getReference("user_data").child(uid).child("username").get().await()
+            dbInstance.getReference(USER_DATA).child(uid).child(USERNAME).get().await()
                 .getValue(String::class.java)!!
         } catch (e: Exception) {
             "DELETED USER"
@@ -772,6 +779,14 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         private const val SUB_COMMENTS = "subComments"
         private const val USER_ID = "userId"
         private const val USER_DATA = "user_data"
+        private const val NAME = "name"
+        private const val ID = "id"
+        private const val DATE = "date"
+        private const val AUTHOR = "author"
+        private const val AVATAR_URL = "avatarUrl"
+        private const val USERNAME = "username"
+        private const val USER_POSTS = "user_posts"
+        private const val TITLE = "title"
         private const val sharedPreferencesFileName = "currentUser"
         private const val sharedPreferencesUserName = "userName"
         private const val sharedPreferencesUri = "uri"
