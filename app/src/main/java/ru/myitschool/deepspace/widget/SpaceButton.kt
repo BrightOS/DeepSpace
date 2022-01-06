@@ -3,12 +3,12 @@ package ru.myitschool.deepspace.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.google.android.material.card.MaterialCardView
-import kotlinx.android.synthetic.main.layout_space_button.view.button_text
 import ru.myitschool.deepspace.R
+import ru.myitschool.deepspace.databinding.LayoutSpaceButtonBinding
 import ru.myitschool.deepspace.utils.DimensionsUtil
 import ru.myitschool.deepspace.utils.getColorFromAttributes
 
@@ -20,19 +20,20 @@ class SpaceButton constructor(
     attrs: AttributeSet?,
 ) :
     MaterialCardView(cont, attrs) {
+    private val binding: LayoutSpaceButtonBinding =
+        LayoutSpaceButtonBinding.inflate(LayoutInflater.from(context), this)
 
-    companion object{
+    companion object {
         const val RADIUS_DP = 16
     }
 
     var text: String?
         set(value) {
-            button_text?.text = value
+            binding.buttonText.text = value
         }
-        get() = button_text?.text?.toString()
+        get() = binding.buttonText.text.toString()
 
     init {
-        View.inflate(context, R.layout.layout_space_button, this)
 
         radius = DimensionsUtil.dpToPx(context, RADIUS_DP).toFloat()
         backgroundTintList = ColorStateList.valueOf(
@@ -48,10 +49,15 @@ class SpaceButton constructor(
         attrs?.let {
             val typedArray = context.obtainStyledAttributes(it, R.styleable.SpaceButton)
 
-            button_text?.text = typedArray.getString(R.styleable.SpaceButton_text)
-            button_text?.isAllCaps =
+            binding.buttonText.text = typedArray.getString(R.styleable.SpaceButton_text)
+            binding.buttonText.isAllCaps =
                 typedArray.getBoolean(R.styleable.SpaceButton_textAllCaps, false)
-            button_text?.setTextColor(typedArray.getColor(R.styleable.SpaceButton_textColor, Color.White.toArgb()))
+            binding.buttonText.setTextColor(
+                typedArray.getColor(
+                    R.styleable.SpaceButton_textColor,
+                    Color.White.toArgb()
+                )
+            )
 
             typedArray.recycle()
         }

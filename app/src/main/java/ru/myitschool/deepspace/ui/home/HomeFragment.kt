@@ -47,7 +47,6 @@ import ru.myitschool.deepspace.utils.Resource
 class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels<HomeViewModelImpl>()
 
-    @ExperimentalFoundationApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,7 +83,6 @@ class HomeFragment : Fragment() {
     }
 }
 
-@ExperimentalFoundationApi
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,

@@ -26,7 +26,6 @@ class AsteroidRadarViewModelImpl @Inject constructor(
         MutableLiveData<ArrayList<AsteroidModel>>()
 
 
-    @DelicateCoroutinesApi
     override suspend fun getAsteroidList() {
         try {
             val response =
