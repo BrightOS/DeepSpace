@@ -36,5 +36,4 @@ object TimeMachine {
         if (result < 0) result += 360.0
         return result
     }
-
 }

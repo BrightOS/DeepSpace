@@ -14,10 +14,7 @@ class NewsRepositoryImpl @Inject constructor(
     override suspend fun getNews(): Resource<List<ArticleModel>> {
         return try {
             val response = newsApi.getArticles()
-            if (response.body() != null)
-                Resource.success(
-                    response.body()!!.map { dto -> dto.createArticleModel() }
-                )
+            if (response.body() != null) Resource.success(response.body()!!.map { dto -> dto.createArticleModel() })
             else Resource.error("Empty response body", null)
         } catch (e: Exception) {
             e.printStackTrace()

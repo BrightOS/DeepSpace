@@ -3,7 +3,6 @@ package ru.myitschool.deepspace.maths.astronomy
 import ru.myitschool.deepspace.navigator.maths.mod
 import kotlin.math.*
 
-
 class OrbitalElements(
     val eccentricity: Double,
     val inclination: Double,
@@ -15,7 +14,6 @@ class OrbitalElements(
 ) {
     val anomaly: Double
         get() = trueAnomaly2 ?: calculateTrueAnomaly(meanLongitude - perihelion, inclination)
-
 
     private fun calculateTrueAnomaly(meanAnomaly: Double, ecc: Double): Double {
         val EPS = 1.0e-6
@@ -34,5 +32,4 @@ class OrbitalElements(
         val v = 2f * atan(sqrt((1 + ecc) / (1 - ecc)) * tan(0.5f * E))
         return mod(v)
     }
-
 }

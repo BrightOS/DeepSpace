@@ -14,7 +14,6 @@ fun absDown(x: Double): Double {
     return if (x >= 0.0) floor(x) else ceil(x)
 }
 
-
 fun mod(x: Double): Double {
     val factor = x / TWO_PI
     var result = TWO_PI * (factor - absDown(factor))
@@ -23,7 +22,6 @@ fun mod(x: Double): Double {
     }
     return result
 }
-
 
 fun Matrix3Dimension.multVector(v: Vector3D): Vector3D {
     return Vector3D(

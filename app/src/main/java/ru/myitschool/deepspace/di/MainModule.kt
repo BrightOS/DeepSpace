@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
-
 /*
  * @author Danil Khairulin
  */
@@ -104,7 +103,6 @@ object MainModule {
             .client(okHttpBuilder.build())
             .build()
     }
-
 
     @Provides
     @Singleton

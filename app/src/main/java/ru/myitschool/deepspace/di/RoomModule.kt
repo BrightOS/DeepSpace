@@ -20,7 +20,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RoomModule {
 
-
     @Provides
     @Singleton
     fun getDatabase(@ApplicationContext context: Context): LocalDatabase {
@@ -36,5 +35,4 @@ object RoomModule {
     fun getAsteroidDao(database: LocalDatabase): LaunchesDao {
         return database.getLaunchesDao()
     }
-
 }

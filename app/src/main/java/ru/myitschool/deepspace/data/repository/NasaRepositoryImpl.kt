@@ -18,5 +18,4 @@ class NasaRepositoryImpl @Inject constructor(
         API_KEY, sol)
     override suspend fun getRoverOpportunityPhotos(sol: Int): Response<Rovers> = nasaApi.getRoverOpportunityPhotos(API_KEY, sol)
     override suspend fun getRoverSpiritPhotos(sol: Int): Response<Rovers> = nasaApi.getRoverSpiritPhotos(API_KEY, sol)
-
 }

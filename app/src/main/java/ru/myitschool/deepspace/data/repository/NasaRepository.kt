@@ -15,5 +15,4 @@ interface NasaRepository {
     suspend fun getRoverCuriosityPhotos(sol : Int): Response<Rovers>
     suspend fun getRoverOpportunityPhotos(sol : Int): Response<Rovers>
     suspend fun getRoverSpiritPhotos(sol : Int): Response<Rovers>
-
 }

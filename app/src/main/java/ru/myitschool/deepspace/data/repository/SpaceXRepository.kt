@@ -24,5 +24,4 @@ interface SpaceXRepository {
     suspend fun getLaunchPads(): Response<ArrayList<LaunchPad>>
     suspend fun getLandPads(): Response<ArrayList<LandPad>>
     suspend fun getInfo(): Response<Info>
-
 }

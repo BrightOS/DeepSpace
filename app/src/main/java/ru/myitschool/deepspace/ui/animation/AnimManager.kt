@@ -10,5 +10,4 @@ abstract class AnimManager(
 
     abstract fun getAnimators(): List<Animator>
     abstract fun change()
-
 }

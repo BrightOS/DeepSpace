@@ -30,7 +30,6 @@ import java.util.*
 class FirebaseRepositoryImpl(val appContext: Context) :
     FirebaseRepository {
 
-
     private val authenticator: FirebaseAuth = FirebaseAuth.getInstance()
     private val storage: FirebaseStorage = FirebaseStorage.getInstance()
     private val dbInstance = FirebaseDatabase.getInstance()
@@ -111,7 +110,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     private fun userPostCommentsAndLikesListener(
         postModel: MutableLiveData<ContentWithLikesAndComments<PostModel>>,
-        postId: Long
+        postId: Long,
     ) {
         try {
             dbInstance.getReference("posts").child("UserPost")
@@ -158,13 +157,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
                             likes.add(UserModel(_name, _url, _id))
                         }
 
-                        postModel.postValue(
-                            ContentWithLikesAndComments(
-                                postModel.value!!.content,
-                                likes,
-                                comments
-                            )
-                        )
+                        postModel.postValue(ContentWithLikesAndComments(postModel.value!!.content, likes, comments))
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -214,17 +207,16 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     override suspend fun downloadImage(
         postId: String,
-        imageId: String
+        imageId: String,
     ): Data<Bitmap> {
         val storageRef = storage.getReference("posts/$postId/$imageId")
         return downloadFirebaseImage(storageRef)
     }
 
     // USER CUSTOM POST CREATION:
-
     override suspend fun createPost(
         title: String,
-        postItems: List<Any>
+        postItems: List<Any>,
     ): Resource<MutableLiveData<ContentWithLikesAndComments<PostModel>>> {
         try {
             val postId = getLastPostId()
@@ -254,15 +246,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
             reference.child("date").setValue(date).await()
             reference.child("postItems").setValue(fbPostItems).await()
 
-            val post = ContentWithLikesAndComments(
-                PostModel(
-                    postId.toLong(),
-                    title,
-                    date,
-                    fbPostItems,
-                    user
-                ), listOf(), listOf()
-            )
+            val post = ContentWithLikesAndComments(PostModel(postId.toLong(), title, date, fbPostItems, user), listOf(), listOf())
             val liveData = MutableLiveData<ContentWithLikesAndComments<PostModel>>()
             liveData.postValue(post)
             userPostCommentsAndLikesListener(liveData, postId.toLong())
@@ -272,13 +256,11 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-
-    // USER CUSTOM POST CREATION:
-
+    //USER CUSTOM POST CREATION:
     override fun uploadImage(
         postId: String,
         imageId: Int,
-        imagePath: Uri
+        imagePath: Uri,
     ): LiveData<Data<String>> {
         val returnData = MutableLiveData<Data<String>>()
         try {
@@ -306,13 +288,11 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         return returnData
     }
 
-
     // COMMENTS AND LIKES OPERATIONS:
-
     override suspend fun pushComment(
         source: String,
         postId: Int,
-        comment: String
+        comment: String,
     ): Resource<Unit> {
         if (authenticator.uid != null) {
             try {
@@ -341,7 +321,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         source: String,
         postId: Int,
         fatherCommentId: Long,
-        comment: String
+        comment: String,
     ): Resource<Unit> {
         if (authenticator.uid != null) {
             try {
@@ -366,11 +346,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun deleteComment(
-        source: String,
-        postId: Int,
-        commentId: Long
-    ): Resource<Unit> {
+    override suspend fun deleteComment(source: String, postId: Int, commentId: Long ): Resource<Unit> {
         return try {
             dbInstance.getReference("posts").child(source).child(postId.toString())
                 .child("comments")
@@ -381,12 +357,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun deleteSubComment(
-        source: String,
-        postId: Int,
-        fatherCommentId: Long,
-        subCommentId: Long
-    ): Resource<Unit> {
+    override suspend fun deleteSubComment(source: String, postId: Int,
+                                          fatherCommentId: Long, subCommentId: Long): Resource<Unit> {
         return try {
             dbInstance.getReference("posts").child(source).child(postId.toString())
                 .child("comments")
@@ -417,11 +389,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun pushLikeForComment(
-        source: String,
-        postId: Int,
-        commentId: Long
-    ): Resource<Unit> {
+    override suspend fun pushLikeForComment(source: String, postId: Int, commentId: Long): Resource<Unit> {
         return if (authenticator.uid != null && !checkIfHasCommentLike(source, postId, commentId)) {
             try {
                 val user = getCurrentUser()!!
@@ -440,18 +408,10 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     }
 
     override suspend fun pushLikeForSubComment(
-        source: String,
-        postId: Int,
-        fatherCommentId: Long,
-        subCommentId: Long
+        source: String, postId: Int,
+        fatherCommentId: Long, subCommentId: Long,
     ): Resource<Unit> {
-        if (authenticator.uid != null && !checkIfHasSubCommentLike(
-                source,
-                postId,
-                fatherCommentId,
-                subCommentId
-            )
-        ) {
+        if (authenticator.uid != null && !checkIfHasSubCommentLike(source, postId, fatherCommentId, subCommentId)) {
             return try {
                 val user = getCurrentUser()!!
                 val userDto = UserDto(user.name, user.avatarUrl.toString(), user.id)
@@ -483,11 +443,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun deleteCommentLike(
-        source: String,
-        postId: Int,
-        commentId: Long
-    ): Resource<Unit> {
+    override suspend fun deleteCommentLike(source: String, postId: Int, commentId: Long): Resource<Unit> {
         return if (authenticator.uid != null && checkIfHasCommentLike(source, postId, commentId)) {
             try {
                 dbInstance.getReference("posts").child(source).child(postId.toString())
@@ -504,19 +460,9 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         }
     }
 
-    override suspend fun deleteSubCommentLike(
-        source: String,
-        postId: Int,
-        fatherCommentId: Long,
-        subCommentId: Long
-    ): Resource<Unit> {
-        if (authenticator.uid != null && checkIfHasSubCommentLike(
-                source,
-                postId,
-                fatherCommentId,
-                subCommentId
-            )
-        ) {
+    override suspend fun deleteSubCommentLike(source: String, postId: Int,
+                                              fatherCommentId: Long, subCommentId: Long): Resource<Unit> {
+        if (authenticator.uid != null && checkIfHasSubCommentLike(source, postId, fatherCommentId, subCommentId)) {
             return try {
                 dbInstance.getReference("posts").child(source).child(postId.toString())
                     .child("comments")
@@ -532,21 +478,20 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         return Resource.error("User is not authenticated or he didn't`t like this subComment", null)
     }
 
-    override suspend fun authenticateUser(
-        context: Context,
-        email: String,
-        password: String
-    ): Data<FirebaseUser> {
+    override suspend fun authenticateUser(context: Context, email: String, password: String): Data<FirebaseUser> {
         return try {
             val user = authenticator.signInWithEmailAndPassword(email, password).await()
             val userInfo = getUser(user.user!!.uid)
 
             val sharedPreferences =
                 context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
-            sharedPreferences.putString(sharedPreferencesUserName, userInfo!!.name)
-            sharedPreferences.putString(sharedPreferencesUri, userInfo.avatarUrl.toString())
-            sharedPreferences.putString(sharedPreferencesId, user.user!!.uid)
-            sharedPreferences.apply()
+
+            with(sharedPreferences){
+                putString(sharedPreferencesUserName, userInfo!!.name)
+                putString(sharedPreferencesUri, userInfo.avatarUrl.toString())
+                putString(sharedPreferencesId, user.user!!.uid)
+                apply()
+            }
 
             (Data.Ok(user?.user!!))
         } catch (e: Exception) {
@@ -558,8 +503,11 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         val returnData: MutableLiveData<Data<String>> = MutableLiveData()
         try {
             authenticator.signOut()
-            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
-                .clear().apply()
+            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+                .edit()
+                .clear()
+                .apply()
+
             returnData.postValue(Data.Ok("Ok"))
         } catch (e: Exception) {
             returnData.postValue(Data.Error(e.message.toString()))
@@ -567,32 +515,27 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         return returnData
     }
 
-    override suspend fun createUser(
-        context: Context,
-        userName: String,
-        email: String,
-        password: String,
-        imagePath: Uri?
-    ): Data<FirebaseUser> {
+    override suspend fun createUser(context: Context, userName: String,
+        email: String, password: String, imagePath: Uri?): Data<FirebaseUser> {
         try {
             val user = authenticator.createUserWithEmailAndPassword(email, password).await()
             if (user != null) {
                 dbInstance.getReference("user_data").child(user.user!!.uid).child("username")
                     .setValue(userName).await()
                 val storageRef = storage.getReference("user_data/${user.user?.uid}")
-                if (imagePath != null) {
-                    storageRef.putFile(imagePath).await()
-                }
+
+                if (imagePath != null) storageRef.putFile(imagePath).await()
+
                 user.user!!.sendEmailVerification().await()
 
-                val sharedPreferences =
-                    context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
-                        .edit()
-                sharedPreferences.putString(sharedPreferencesUserName, userName)
-                sharedPreferences.putString(sharedPreferencesUri, imagePath.toString())
-                sharedPreferences.putString(sharedPreferencesId, user.user!!.uid)
-                sharedPreferences.apply()
-
+                val sharedPreferences = context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+                    .edit()
+                with(sharedPreferences){
+                    putString(sharedPreferencesUserName, userName)
+                    putString(sharedPreferencesUri, imagePath.toString())
+                    putString(sharedPreferencesId, user.user!!.uid)
+                    apply()
+                }
                 return (Data.Ok(user.user!!))
             } else {
                 return (Data.Error("Unknown error happened."))
@@ -605,10 +548,8 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     override suspend fun getUser(uid: String): UserModel? {
         var user: UserModel? = null
         try {
-            var userName: String
             var avatarUrl: Uri? = null
-            userName =
-                dbInstance.getReference("user_data").child(uid).child("username").get().await()
+            val userName: String = dbInstance.getReference("user_data").child(uid).child("username").get().await()
                     .getValue(String::class.java).toString()
             try {
                 avatarUrl = storage.getReference("user_data/${uid}").downloadUrl.await()
@@ -624,11 +565,12 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     }
 
     override fun getCurrentUser(): UserModel? {
-        val sharedPreferences =
-            appContext.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+        val sharedPreferences = appContext.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+
         val id = sharedPreferences.getString(sharedPreferencesId, null)
         val userName = sharedPreferences.getString(sharedPreferencesUserName, null)
         val url = sharedPreferences.getString(sharedPreferencesUri, null)?.toUri()
+
         return if (id != null && userName != null && url != null)
             UserModel(userName, url, id) else
             null
@@ -661,7 +603,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
 
     override fun articleModelEventListener(
         articleModel: MutableLiveData<ContentWithLikesAndComments<ArticleModel>>,
-        postId: Long
+        postId: Long,
     ) {
         val dbInstance = FirebaseDatabase.getInstance()
         try {
@@ -779,7 +721,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     private suspend fun getLastSubCommentId(
         source: String,
         postId: Int,
-        fatherCommentId: Long
+        fatherCommentId: Long,
     ): Long {
         return try {
             dbInstance.getReference("posts").child(source).child(postId.toString())
@@ -809,7 +751,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
     private suspend fun checkIfHasCommentLike(
         source: String,
         postId: Int,
-        commentId: Long
+        commentId: Long,
     ): Boolean {
         return dbInstance.getReference("posts").child(source).child(postId.toString())
             .child("comments")
@@ -821,7 +763,7 @@ class FirebaseRepositoryImpl(val appContext: Context) :
         source: String,
         postId: Int,
         fatherCommentId: Long,
-        subCommentId: Long
+        subCommentId: Long,
     ): Boolean {
         return dbInstance.getReference("posts").child(source).child(postId.toString())
             .child("comments")

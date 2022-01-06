@@ -12,7 +12,6 @@ open class Vector3D(var x: Double, var y: Double, var z: Double) {
         return Vector3D(this.x + other.x, this.y + other.y, this.z + other.z)
     }
 
-
     operator fun times(other: Vector3D): Vector3D {
         return Vector3D(
             this.y * other.z - this.z * other.y,
@@ -86,7 +85,6 @@ fun Vector3D.normalized(): Vector3D {
         zeroVector()
     } else scale(this, 1.0 / len)
 }
-
 
 fun mirror(v: Vector3D): Vector3D {
     return Vector3D(-v.x, -v.y, -v.z)

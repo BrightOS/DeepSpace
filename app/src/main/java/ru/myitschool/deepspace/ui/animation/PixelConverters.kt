@@ -16,5 +16,4 @@ object PixelConverters {
     fun spToDp(context: Context, pixel: Float): Float {
         return pixel / context.resources.displayMetrics.scaledDensity
     }
-
 }

@@ -41,7 +41,6 @@ class Matrix4Dimension(contents: DoubleArray) {
         )
     }
 
-
     companion object {
 
         fun createScaling(x: Double, y: Double, z: Double): Matrix4Dimension {
@@ -195,6 +194,3 @@ class Matrix3Dimension : Cloneable {
                 0.0, 0.0, 1.0)
     }
 }
-
-
-

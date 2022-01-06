@@ -2,7 +2,6 @@ package ru.myitschool.deepspace.maths
 
 import kotlin.math.abs
 
-
 fun swapLines(_i: Int, _j: Int, _matr: List<FloatArray>): List<FloatArray> {
     val matr = _matr
     for (j in matr.indices) {
@@ -111,5 +110,4 @@ class Determinant internal constructor(private val matrix: List<FloatArray>) {
             matrix[row2][j] = tempRow[j]
         }
     }
-
 }
