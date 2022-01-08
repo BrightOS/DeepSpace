@@ -111,7 +111,6 @@ class SpaceXFragment : Fragment() {
         }
 
         return binding.root
-
     }
 
     private fun setupRecycle() {

@@ -130,5 +130,4 @@ class GpsManager(private val context: Context, private val locationManager: Loca
 
         return place
     }
-
 }

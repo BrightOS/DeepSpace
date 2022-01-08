@@ -9,6 +9,4 @@ import java.util.*
 data class Rovers (
     @field:SerializedName("photos")
     val photos: ArrayList<Photos>
-
 )
-

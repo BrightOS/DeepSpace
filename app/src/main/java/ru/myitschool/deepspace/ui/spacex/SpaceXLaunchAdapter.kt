@@ -97,7 +97,6 @@ class SpaceXLaunchAdapter :
             }
         }
 
-
         init {
             binding.root.setOnClickListener {
                 expanded = if (expanded) {
@@ -243,8 +242,6 @@ class SpaceXLaunchAdapter :
                         cardLaunch.outlineAmbientShadowColor = it
                     }
                 }
-
-            }
-        }
+            } }
     }
 }

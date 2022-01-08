@@ -6,7 +6,6 @@ import ru.myitschool.deepspace.navigator.rendertype.ImageRun
 import javax.microedition.khronos.opengles.GL10
 import javax.microedition.khronos.opengles.GL11
 
-
 class ImageManager(layer: Int, manager: TextureManager) :
     Renderer(layer, manager) {
 

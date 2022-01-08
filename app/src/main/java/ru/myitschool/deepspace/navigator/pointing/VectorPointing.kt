@@ -15,7 +15,6 @@ import ru.myitschool.deepspace.navigator.maths.multVector
 import java.util.*
 import kotlin.math.abs
 
-
 class VectorPointing : AbstractPointing {
     private val acc = Vector3D(0.0, -1.0, -9.0)
     override var up = scaleVector(acc, -1.0)

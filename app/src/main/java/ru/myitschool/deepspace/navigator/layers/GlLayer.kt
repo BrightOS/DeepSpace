@@ -59,5 +59,4 @@ class GlLayer(resources: Resources?, private val pointing: VectorPointing, val t
             render(thread)
         }
     }
-
 }

@@ -13,4 +13,3 @@ data class ArticleModel(
     val publishedAt: String = "",
     val updatedAt: String = ""
 )
- 

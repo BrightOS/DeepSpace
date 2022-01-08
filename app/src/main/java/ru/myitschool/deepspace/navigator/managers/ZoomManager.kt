@@ -3,7 +3,6 @@ package ru.myitschool.deepspace.navigator.managers
 import ru.myitschool.deepspace.navigator.pointing.VectorPointing
 import kotlin.math.min
 
-
 class ZoomManager : AbstractManager {
     override var pointing: VectorPointing? = null
 

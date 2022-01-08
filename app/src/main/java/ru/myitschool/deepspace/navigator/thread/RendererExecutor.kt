@@ -4,7 +4,6 @@ import android.opengl.GLSurfaceView
 import ru.myitschool.deepspace.navigator.renderer.MainRenderer
 import java.util.*
 
-
 class RendererExecutor(renderer: MainRenderer, surface: GLSurfaceView) : RendererTypeExecutorHelper(renderer) {
 
     class RenderThread internal constructor(renderer: MainRenderer) : RendererTypeExecutorHelper(renderer) {

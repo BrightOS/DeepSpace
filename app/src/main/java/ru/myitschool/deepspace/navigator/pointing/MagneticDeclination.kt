@@ -3,7 +3,6 @@ package ru.myitschool.deepspace.navigator.pointing
 import android.hardware.GeomagneticField
 import ru.myitschool.deepspace.maths.coords.LatLong
 
-
 class MagneticDeclination {
     private var geomagneticField: GeomagneticField? = null
 

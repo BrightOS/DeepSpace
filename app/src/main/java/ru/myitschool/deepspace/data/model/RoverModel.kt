@@ -10,4 +10,3 @@ class RoverModel(_id: Int, _img_src: String, _camera: Camera, _rover: Rover, _ea
     val camera = _camera //Информация о камере
     val earth_date = _earth_date
 }
-
