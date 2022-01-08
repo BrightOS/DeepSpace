@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="@+id/sign_in"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ru.myitschool.deepspace.widget.SpaceButton
+        <ru.berserkers.deepspace.widget.SpaceButton
             android:id="@+id/sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

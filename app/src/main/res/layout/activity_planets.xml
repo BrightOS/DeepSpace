@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragm_planet"
-        android:name="ru.myitschool.deepspace.navigator.activities.AboutPlanetsFragment"
+        android:name="ru.berserkers.deepspace.navigator.activities.AboutPlanetsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:visibility="visible" />

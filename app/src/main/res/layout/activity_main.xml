@@ -18,7 +18,7 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
-    <ru.myitschool.deepspace.widget.SpaceLoadingView
+    <ru.berserkers.deepspace.widget.SpaceLoadingView
         android:id="@+id/main_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

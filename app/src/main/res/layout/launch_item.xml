@@ -56,7 +56,7 @@
                 app:layout_constraintStart_toStartOf="@id/recycle_item_img"
                 app:layout_constraintTop_toTopOf="@id/recycle_item_img">
 
-                <ru.myitschool.deepspace.widget.SpaceLoadingView
+                <ru.berserkers.deepspace.widget.SpaceLoadingView
                     android:id="@+id/load_progressbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

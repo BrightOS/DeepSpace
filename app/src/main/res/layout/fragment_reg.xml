@@ -174,7 +174,7 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ru.myitschool.deepspace.widget.SpaceButton
+            <ru.berserkers.deepspace.widget.SpaceButton
                 android:id="@+id/button_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

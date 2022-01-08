@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.myitschool.deepspace"
+    package="ru.berserkers.deepspace"
     android:versionName="1.0"
     android:versionCode="1">
 
@@ -36,7 +36,7 @@
         android:required="false" />
 
     <application
-        android:name="ru.myitschool.deepspace.App"
+        android:name="ru.berserkers.deepspace.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -45,7 +45,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NASA_Bootcamp">
         <activity
-            android:name="ru.myitschool.deepspace.ui.spacex.explore.launchland.MapActivity"
+            android:name="ru.berserkers.deepspace.ui.spacex.explore.launchland.MapActivity"
             android:exported="true" />
 
         <meta-data
@@ -57,7 +57,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="ru.myitschool.deepspace.ui.splash.SplashActivity"
+            android:name="ru.berserkers.deepspace.ui.splash.SplashActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -69,24 +69,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ru.myitschool.deepspace.navigator.activities.SpaceNavigatorActivity"
+            android:name="ru.berserkers.deepspace.navigator.activities.SpaceNavigatorActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ru.myitschool.deepspace.navigator.activities.SensorsActivity"
+            android:name="ru.berserkers.deepspace.navigator.activities.SensorsActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ru.myitschool.deepspace.navigator.activities.PlanetsActivity"
+            android:name="ru.berserkers.deepspace.navigator.activities.PlanetsActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ru.myitschool.deepspace.MainActivity"
+            android:name="ru.berserkers.deepspace.MainActivity"
             android:exported="true"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 
-        <receiver android:name="ru.myitschool.deepspace.utils.NotificationCentre$NotificationReceiver" />
+        <receiver android:name="ru.berserkers.deepspace.utils.NotificationCentre$NotificationReceiver" />
 
         <meta-data android:name="io.sentry.dsn" android:value="https://e5ebd3549df14c98a5fac161c9a0ac23@o923792.ingest.sentry.io/5871504" />
     </application>
