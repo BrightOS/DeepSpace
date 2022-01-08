@@ -12,7 +12,6 @@ plugins {
 
 android {
 
-
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
@@ -21,11 +20,10 @@ android {
         minSdkVersion 24
         targetSdkVersion 31
         multiDexEnabled true
-        versionCode 1
+        versionCode 2
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -176,6 +174,4 @@ dependencies {
     implementation 'io.sentry:sentry-android:5.0.1'
     // Paging 3 for Compose
     implementation "androidx.paging:paging-compose:1.0.0-alpha14"
-
 }
-
