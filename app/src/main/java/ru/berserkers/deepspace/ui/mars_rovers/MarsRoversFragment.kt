@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import ru.berserkers.deepspace.MainActivity
 import ru.berserkers.deepspace.databinding.FragmentMarsRoversBinding
@@ -49,11 +48,11 @@ class MarsRoversFragment : Fragment() {
             }
         }
 
-        viewModel.getRoverModelsLiveData().observe(viewLifecycleOwner, {
+        viewModel.getRoverModelsLiveData().observe(viewLifecycleOwner) {
             val list = viewModel.getRoverModelsLiveData().value!!
             list.shuffle()
 
-            (activity as MainActivity).main_loading?.stopLoadingAnimation()
+            (activity as MainActivity).stopLoadingAnimation(false)
 
             roverRecyclerAdapter =
                 RoverRecyclerAdapter(
@@ -63,7 +62,7 @@ class MarsRoversFragment : Fragment() {
                 )
 
             binding.roversRecycle.adapter = roverRecyclerAdapter
-        })
+        }
     }
 
     private fun init() {
@@ -77,7 +76,7 @@ class MarsRoversFragment : Fragment() {
             )
         }
 
-        (activity as MainActivity).main_loading?.startLoadingAnimation()
+        (activity as MainActivity).startLoadingAnimation()
 
         binding.roversRecycle.setHasFixedSize(true)
     }

@@ -11,7 +11,6 @@ import com.airbnb.epoxy.stickyheader.StickyHeaderLinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
@@ -20,6 +19,7 @@ import ru.berserkers.deepspace.R
 import ru.berserkers.deepspace.databinding.FragmentAsteroidRadarBinding
 import ru.berserkers.deepspace.utils.DimensionsUtil
 import ru.berserkers.deepspace.utils.getColorFromAttributes
+import ru.berserkers.deepspace.MainActivity
 
 /*
  * @author Denis Shaikhlbarin
@@ -53,23 +53,23 @@ class AsteroidRadarFragment : Fragment() {
     }
 
     private fun observeData() {
-        asteroidViewModel.getAsteroidListViewModel().observe(viewLifecycleOwner, {
+        asteroidViewModel.getAsteroidListViewModel().observe(viewLifecycleOwner) {
             GlobalScope.launch {
                 asteroidController.setData(
                     asteroidViewModel.getAsteroidListViewModel().value
                 )
 
                 MainScope().launch {
-                    activity?.main_loading?.stopLoadingAnimation(false)
+                    (activity as MainActivity).stopLoadingAnimation(false)
                 }
             }
-        })
+        }
     }
 
     private fun uploadData() {
         if (!this::asteroidController.isInitialized) {
             asteroidController = AsteroidEpoxyController(requireContext())
-            activity?.main_loading?.startLoadingAnimation()
+            (activity as MainActivity).startLoadingAnimation()
 
             asteroidViewModel.apply {
                 getViewModelScope().launch {
@@ -124,7 +124,7 @@ class AsteroidRadarFragment : Fragment() {
     }
 
     override fun onPause() {
-        activity?.main_loading?.stopLoadingAnimation()
+        (activity as MainActivity).stopLoadingAnimation()
         super.onPause()
     }
 }

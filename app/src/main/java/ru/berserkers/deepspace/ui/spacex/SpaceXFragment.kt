@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import ru.berserkers.deepspace.MainActivity
 import ru.berserkers.deepspace.R
@@ -64,11 +63,11 @@ class SpaceXFragment : Fragment() {
                             textNoInternet.visibility = GONE
 
                             spaceXLaunchAdapter.submitList(data.data)
-                            (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                            (activity as MainActivity).stopLoadingAnimation(false)
                         }
                         is Data.Error -> {
                             if (data.message == "noInternet") {
-                                (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                                (activity as MainActivity).stopLoadingAnimation(false)
 
                                 noInternet.visibility = VISIBLE
                                 reconnect.visibility = VISIBLE
@@ -86,7 +85,7 @@ class SpaceXFragment : Fragment() {
                         }
                         is Data.Local -> {
                             spaceXLaunchAdapter.submitList(data.data)
-                            (activity as MainActivity).main_loading?.stopLoadingAnimation()
+                            (activity as MainActivity).stopLoadingAnimation(false)
                         }
                         Data.Loading -> {
 
@@ -147,7 +146,7 @@ class SpaceXFragment : Fragment() {
     }
 
     override fun onPause() {
-        (activity as MainActivity).main_loading?.stopLoadingAnimation()
+        (activity as MainActivity).stopLoadingAnimation(false)
         super.onPause()
     }
 }

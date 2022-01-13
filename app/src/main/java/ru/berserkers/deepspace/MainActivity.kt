@@ -24,7 +24,6 @@ import com.yodo1.mas.Yodo1Mas
 import com.yodo1.mas.error.Yodo1MasError
 import com.yodo1.mas.helper.model.Yodo1MasAdBuildConfig
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import ru.berserkers.deepspace.data.fb_general.MFirebaseUser
 import ru.berserkers.deepspace.databinding.ActivityMainBinding
 import ru.berserkers.deepspace.databinding.NavHeaderMainBinding
@@ -49,8 +48,13 @@ class MainActivity : AppCompatActivity() {
         Yodo1Mas.getInstance().setAdBuildConfig(config)
         Yodo1Mas.getInstance().init(this, "ErxwlzR9KT", object : Yodo1Mas.InitListener {
             override fun onMasInitSuccessful() {
-                Toast.makeText(this@MainActivity, "[Yodo1 Mas] Successful initialization", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    "[Yodo1 Mas] Successful initialization",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+
             override fun onMasInitFailed(error: Yodo1MasError) {
                 Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
             }
@@ -83,7 +87,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        main_loading.stopLoadingAnimation(false)
+        binding.mainLoading.stopLoadingAnimation(false)
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         else
@@ -96,7 +100,8 @@ class MainActivity : AppCompatActivity() {
             navHeaderMainBinding.userAvatar.setImageBitmap(bitmap)
             val user = FirebaseAuth.getInstance()
             if (data?.data != null) {
-                FirebaseStorage.getInstance().getReference("user_data/${user.uid}").putFile(data.data!!)
+                FirebaseStorage.getInstance().getReference("user_data/${user.uid}")
+                    .putFile(data.data!!)
             }
         } catch (e: IOException) {
             Toast.makeText(
@@ -164,6 +169,22 @@ class MainActivity : AppCompatActivity() {
             0,
             0
         )
+    }
+
+    fun stopLoadingAnimation(showCheckIcon: Boolean? = null) {
+        binding.mainLoading.apply {
+            if (showCheckIcon == null)
+                stopLoadingAnimation()
+            else stopLoadingAnimation(showCheckIcon)
+        }
+    }
+
+    fun startLoadingAnimation() {
+        binding.mainLoading.startLoadingAnimation()
+    }
+
+    fun showError(errorText: String) {
+        binding.mainLoading.showError(errorText)
     }
 
     fun hideKeyboard() {

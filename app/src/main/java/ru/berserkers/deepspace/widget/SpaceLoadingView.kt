@@ -2,57 +2,55 @@ package ru.berserkers.deepspace.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
-import kotlinx.android.synthetic.main.layout_loading.view.*
 import kotlinx.coroutines.*
 import ru.berserkers.deepspace.R
+import ru.berserkers.deepspace.databinding.LayoutLoadingBinding
 
 /*
  * @author Denis Shaikhlbarin
  */
-@DelicateCoroutinesApi
+@OptIn(DelicateCoroutinesApi::class)
 class SpaceLoadingView constructor(
     private val cont: Context,
     attrs: AttributeSet?,
 ) :
     ConstraintLayout(cont, attrs) {
 
+    private val binding: LayoutLoadingBinding =
+        LayoutLoadingBinding.inflate(LayoutInflater.from(context), this)
     private var errorText: CharSequence?
         set(value) {
-            error_text?.text = value
+            binding.errorText.text = value
         }
-        get() = error_text?.text
+        get() = binding.errorText.text
 
     private var showCheckIcon: Boolean = false
 
     init {
-        View.inflate(context, R.layout.layout_loading, this)
-
         attrs?.let { it ->
             val typedArray = context.obtainStyledAttributes(it, R.styleable.SpaceLoadingView)
 
             typedArray.getString(R.styleable.SpaceLoadingView_errorText)?.let {
-                error_text?.text =
-                    if (it.isNotEmpty())
-                        it
-                    else
-                        cont.resources.getString(R.string.default_error)
+                binding.errorText.text =
+                    it.ifEmpty { cont.resources.getString(R.string.default_error) }
 
             }
             showCheckIcon = typedArray.getBoolean(R.styleable.SpaceLoadingView_checkEnabled, false)
 
             if (typedArray.getBoolean(R.styleable.SpaceLoadingView_showByDefault, false)) {
                 prepareLoadingView()
-                loading_progress_bar.visibility = View.VISIBLE
-                loading_root.visibility = View.VISIBLE
+                binding.loadingProgressBar.visibility = View.VISIBLE
+                binding.loadingRoot.visibility = View.VISIBLE
                 GlobalScope.launch {
                     delay(DEFAULT_SPACE_LOAD_DELAY)
                     MainScope().launch {
-                        loading_progress_bar.indeterminateMode = true
+                        binding.loadingProgressBar.indeterminateMode = true
                     }
                 }
             }
@@ -64,14 +62,12 @@ class SpaceLoadingView constructor(
     fun startLoadingAnimation() {
         MainScope().launch {
             prepareLoadingView()
-            loading_progress_bar.visibility = View.VISIBLE
+            binding.loadingProgressBar.visibility = View.VISIBLE
 
             val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, false)
-            rootView?.let {
-                TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
-            }
+            TransitionManager.beginDelayedTransition(binding.root as ViewGroup, sharedAxis)
 
-            loading_root.visibility = View.VISIBLE
+            binding.loadingRoot.visibility = View.VISIBLE
         }
     }
 
@@ -81,31 +77,28 @@ class SpaceLoadingView constructor(
         MainScope().launch {
             if (showCheckIcon) {
                 var sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
-                loading_root?.let {
-                    TransitionManager.beginDelayedTransition(it, sharedAxis)
-                }
+                TransitionManager.beginDelayedTransition(binding.loadingRoot, sharedAxis)
 
-                loading_progress_bar.visibility = View.GONE
-                done_pic.visibility = View.VISIBLE
+                binding.loadingProgressBar.visibility = View.GONE
+                binding.donePic.visibility = View.VISIBLE
 
                 GlobalScope.launch {
                     delay(DELAY)
                     MainScope().launch {
                         sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-                        rootView?.let {
-                            TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
-                        }
+                        TransitionManager.beginDelayedTransition(
+                            binding.root as ViewGroup,
+                            sharedAxis
+                        )
 
-                        loading_root.visibility = View.GONE
+                        binding.loadingRoot.visibility = View.GONE
                     }
                 }
             } else {
                 val sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-                rootView?.let {
-                    TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
-                }
+                TransitionManager.beginDelayedTransition(binding.root as ViewGroup, sharedAxis)
 
-                loading_root.visibility = View.GONE
+                binding.loadingRoot.visibility = View.GONE
             }
         }
     }
@@ -116,51 +109,41 @@ class SpaceLoadingView constructor(
         MainScope().launch {
             var sharedAxis: MaterialSharedAxis
 
-            error_text.text = errorText
+            binding.errorText.text = errorText
 
-            if (loading_root.visibility == View.GONE) {
+            if (binding.loadingRoot.visibility == View.GONE) {
                 prepareLoadingView()
 
-                error_pic.visibility = View.VISIBLE
-                error_text.visibility = View.VISIBLE
+                binding.errorPic.visibility = View.VISIBLE
+                binding.errorText.visibility = View.VISIBLE
 
                 sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-
-                rootView?.let {
-                    TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
-                }
-
-                loading_root.visibility = View.VISIBLE
+                TransitionManager.beginDelayedTransition(binding.root as ViewGroup, sharedAxis)
+                binding.loadingRoot.visibility = View.VISIBLE
             } else {
-
                 sharedAxis = MaterialSharedAxis(MaterialSharedAxis.X, true)
-                loading_root?.let {
-                    TransitionManager.beginDelayedTransition(it, sharedAxis)
-                }
-
-                loading_progress_bar.visibility = View.GONE
-                error_pic.visibility = View.VISIBLE
-                error_text.visibility = View.VISIBLE
+                TransitionManager.beginDelayedTransition(binding.loadingRoot, sharedAxis)
+                binding.loadingProgressBar.visibility = View.GONE
+                binding.errorPic.visibility = View.VISIBLE
+                binding.errorText.visibility = View.VISIBLE
             }
 
             GlobalScope.launch {
                 delay(DELAY)
                 MainScope().launch {
                     sharedAxis = MaterialSharedAxis(MaterialSharedAxis.Z, true)
-                    rootView?.let {
-                        TransitionManager.beginDelayedTransition(it as ViewGroup, sharedAxis)
-                    }
-                    loading_root.visibility = View.GONE
+                    TransitionManager.beginDelayedTransition(binding.root as ViewGroup, sharedAxis)
+                    binding.loadingRoot.visibility = View.GONE
                 }
             }
         }
     }
 
     private fun prepareLoadingView() {
-        loading_progress_bar.visibility = View.GONE
-        error_pic.visibility = View.GONE
-        error_text.visibility = View.GONE
-        done_pic.visibility = View.GONE
+        binding.loadingProgressBar.visibility = View.GONE
+        binding.errorPic.visibility = View.GONE
+        binding.errorText.visibility = View.GONE
+        binding.donePic.visibility = View.GONE
     }
 
     companion object {

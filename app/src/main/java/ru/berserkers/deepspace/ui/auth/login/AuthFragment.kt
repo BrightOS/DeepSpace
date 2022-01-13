@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import ru.berserkers.deepspace.MainActivity
 import ru.berserkers.deepspace.R
@@ -40,7 +39,7 @@ class AuthFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAuthBinding.inflate(inflater)
         return binding.root
@@ -50,48 +49,46 @@ class AuthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var loading = false
 
-        with(binding) {
+        binding.textName.doOnTextChanged { _, _, _, _ ->
+            binding.textLayoutName.isErrorEnabled = false
+        }
+        binding.textPassword.doOnTextChanged { _, _, _, _ ->
+            binding.textLayoutPassword.isErrorEnabled = false
+        }
 
-            textName.doOnTextChanged { _, _, _, _ ->
-                textLayoutName.isErrorEnabled = false
-            }
-            textPassword.doOnTextChanged { _, _, _, _ ->
-                textLayoutPassword.isErrorEnabled = false
-            }
+        binding.buttonLogin.setOnClickListener {
+            if (!loading) {
+                val userName = binding.textName.text.toString()
+                val password = binding.textPassword.text.toString()
 
-            buttonLogin.setOnClickListener {
-                if (!loading) {
-                    val userName = textName.text.toString()
-                    val password = textPassword.text.toString()
+                if (userName.isEmpty() || password.isEmpty()) {
+                    if (userName.isEmpty()) {
+                        binding.textLayoutName.error = getString(R.string.emptyField)
+                    }
+                    if (password.isEmpty()) {
+                        binding.textLayoutPassword.error = getString(R.string.emptyField)
+                    }
+                } else {
+                    loading = true
+                    (activity as MainActivity).apply {
+                        startLoadingAnimation()
+                        hideKeyboard()
+                    }
 
-                    if (userName.isEmpty() || password.isEmpty()) {
-                        if (userName.isEmpty()) {
-                            textLayoutName.error = getString(R.string.emptyField)
-                        }
-                        if (password.isEmpty()) {
-                            textLayoutPassword.error = getString(R.string.emptyField)
-                        }
-                    } else {
-                        loading = true
-                        (activity as MainActivity).apply {
-                            main_loading.startLoadingAnimation()
-                            hideKeyboard()
-                        }
-
-                        lifecycleScope.launchWhenStarted {
-                            when (val it = viewModel.authenticateUser(requireContext(), userName, password)) {
-                                is Data.Ok -> onSuccessLogin()
-                                is Data.Error ->
-                                    (activity as MainActivity).main_loading.showError(it.message)
-                            }
+                    lifecycleScope.launchWhenStarted {
+                        when (val data =
+                            viewModel.authenticateUser(requireContext(), userName, password)) {
+                            is Data.Ok -> onSuccessLogin()
+                            is Data.Error ->
+                                (activity as MainActivity).showError(data.message)
                         }
                     }
                 }
             }
+        }
 
-            createAccount.setOnClickListener {
-                findNavController().navigate(AuthFragmentDirections.reg())
-            }
+        binding.createAccount.setOnClickListener {
+            findNavController().navigate(AuthFragmentDirections.reg())
         }
 
         super.onViewCreated(view, savedInstanceState)
@@ -100,7 +97,7 @@ class AuthFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun onSuccessLogin() {
         (activity as MainActivity).apply {
-            main_loading.stopLoadingAnimation(true)
+            stopLoadingAnimation(true)
             changeHeader()
             hideKeyboard()
         }
