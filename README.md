@@ -1,13 +1,11 @@
 # Deep Space 
 
-Available in Google Play!
+#Available in Google Play!
 Download now! https://play.google.com/store/apps/details?id=ru.berserkerMainActivitys.deepspace
-
-Presentation: https://docs.google.com/presentation/d/1c-eezTK-GtelYbv_2g7yAjRDPWDCi9j0/edit#slide=id.p25
 
 ![image](https://user-images.githubusercontent.com/55493845/128432221-8806288e-f41f-44c1-9ee1-7cbd6b70e9d7.png)
 
-Dive into the world of space! Read space news, communicate with the other space-lovers and always know where planets are located at the current moment by using space navigator!
+### Dive into the world of space! Read space news, communicate with the other space-lovers and always know where planets are located at the current moment by using space navigator!
 
 Окунись в мир космоса! Читай космические новости, общайся с другими любителями космоса, всегда знай расположение планет на текущий момент, благодаря космическому навигатору!
 
