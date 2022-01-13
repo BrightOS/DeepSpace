@@ -16,7 +16,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import ru.berserkers.deepspace.MainActivity
 import ru.berserkers.deepspace.R
@@ -116,7 +115,7 @@ class RegFragment : Fragment() {
                     }
 
                     if (fieldsValidation) {
-                        (activity as MainActivity).main_loading.startLoadingAnimation()
+                        (activity as MainActivity).startLoadingAnimation()
 
                         val userName = textName.text.toString()
                         val password = textPassword.text.toString()
@@ -130,7 +129,7 @@ class RegFragment : Fragment() {
                                 imagePath
                             )) {
                                 is Data.Ok -> successRegister()
-                                is Data.Error -> (activity as MainActivity).main_loading.showError(data.message)
+                                is Data.Error -> (activity as MainActivity).showError(data.message)
                             }
                         }
                     } else {
@@ -143,7 +142,7 @@ class RegFragment : Fragment() {
 
     private fun successRegister() {
         (activity as MainActivity).apply {
-            main_loading.stopLoadingAnimation(true)
+            stopLoadingAnimation(true)
             changeHeader()
             hideKeyboard()
         }
