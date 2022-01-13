@@ -16,7 +16,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "ru.myitschool.nasa_bootcamp"
+        applicationId "ru.berserkers.deepspace"
         minSdkVersion 24
         targetSdkVersion 31
         multiDexEnabled true
