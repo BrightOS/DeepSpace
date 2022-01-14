@@ -9,7 +9,7 @@ import javax.inject.Inject
  * @author Yana Glad
  */
 class UpcomingRepositoryImpl @Inject constructor(
-    private val upcomingEventsApi: UpcomingEventsApi
+    private val upcomingEventsApi: UpcomingEventsApi,
 ) : UpcomingRepository {
     override suspend fun getUpcomingLaunches(): Response<List<UpcomingLaunch>> =
         upcomingEventsApi.getUpcomingLaunches()

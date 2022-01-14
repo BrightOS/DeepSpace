@@ -7,8 +7,8 @@ import ru.berserkers.deepspace.data.dto.spaceX.launches.Launch
 /*
  * @author Danil Khairulin
  */
-@Database(entities = [Launch::class],version = 1, exportSchema = false)
-abstract class LocalDatabase : RoomDatabase(){
+@Database(entities = [Launch::class], version = 1, exportSchema = false)
+abstract class LocalDatabase : RoomDatabase() {
 
     abstract fun getLaunchesDao(): LaunchesDao
 }

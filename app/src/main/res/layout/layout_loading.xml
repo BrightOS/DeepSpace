@@ -8,9 +8,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loading_root"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <View
             android:id="@+id/loading_background"
@@ -55,9 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
             android:fontFamily="@font/inter_regular"
+            android:gravity="center"
             android:text="@string/unexpected_error"
             android:textColor="@android:color/white"
-            android:gravity="center"
             android:textSize="18sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

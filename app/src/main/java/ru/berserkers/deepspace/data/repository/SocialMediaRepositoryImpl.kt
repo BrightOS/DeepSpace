@@ -13,7 +13,7 @@ import javax.inject.Inject
  */
 class SocialMediaRepositoryImpl @Inject constructor(
     private val firebaseRepository: FirebaseRepository,
-    private val newsRepository: NewsRepository
+    private val newsRepository: NewsRepository,
 ) : SocialMediaRepository {
     override suspend fun getNews(): Resource<List<LiveData<ContentWithLikesAndComments<ArticleModel>>>> {
         val newsList = mutableListOf<LiveData<ContentWithLikesAndComments<ArticleModel>>>()
@@ -44,7 +44,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
 
     override fun getBlogPagingSource() = BlogPagingSource(firebaseRepository)
     override suspend fun pressedLikeOnItem(
-        item: ContentWithLikesAndComments<out Any>
+        item: ContentWithLikesAndComments<out Any>,
     ): Resource<Unit> {
         try {
             if (item.content::class.java == ArticleModel::class.java) {
@@ -72,7 +72,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
 
     override suspend fun pressedLikeOnComment(
         item: ContentWithLikesAndComments<out Any>,
-        comment: Comment
+        comment: Comment,
     ): Resource<Unit> {
         try {
             if (comment::class.java != SubComment::class.java) {
@@ -128,7 +128,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
         message: String,
         id: Long,
         _class: Class<*>,
-        parentComment: Comment?
+        parentComment: Comment?,
     ): Resource<Unit> {
         if (parentComment == null) {
             if (_class == ArticleModel::class.java) {
@@ -188,7 +188,7 @@ class SocialMediaRepositoryImpl @Inject constructor(
 
     override suspend fun deleteComment(
         comment: Comment,
-        item: ContentWithLikesAndComments<out Any>
+        item: ContentWithLikesAndComments<out Any>,
     ): Resource<Unit> {
         val source =
             if (item.content is ArticleModel) "ArticleModel"

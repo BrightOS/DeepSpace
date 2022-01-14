@@ -43,8 +43,8 @@ class ImageManager(layer: Int, manager: TextureManager) :
                 addPoint(xyz.x - h[0] + v[0], xyz.y - h[1] + v[1], xyz.z - h[2] + v[2])
                 addPoint(xyz.x + h[0] - v[0], xyz.y + h[1] - v[1], xyz.z + h[2] - v[2])
                 addPoint(xyz.x + h[0] + v[0], xyz.y + h[1] + v[1], xyz.z + h[2] + v[2])
-             }
-            with(coordBuffer){
+            }
+            with(coordBuffer) {
                 addTexCoords(0f, 1f)
                 addTexCoords(0f, 0f)
                 addTexCoords(1f, 1f)
