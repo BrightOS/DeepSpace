@@ -1,5 +1,6 @@
 package ru.berserkers.deepspace.ui.mars_rovers
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import kotlinx.coroutines.launch
 import ru.berserkers.deepspace.MainActivity
 import ru.berserkers.deepspace.databinding.FragmentMarsRoversBinding
 import ru.berserkers.deepspace.utils.DimensionsUtil
+import ru.berserkers.deepspace.utils.dismissBanner
+import ru.berserkers.deepspace.utils.showBanner
 
 /*
  * @author Denis Shaikhlbarin
@@ -39,6 +42,7 @@ class MarsRoversFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         observeData()
+        showBanner(activity as Activity)
     }
 
     private fun observeData() {
@@ -84,5 +88,6 @@ class MarsRoversFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        dismissBanner()
     }
 }

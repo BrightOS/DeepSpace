@@ -45,3 +45,6 @@ const val DEC_LINES_COUNT = 36
 const val RA_LINES_COUNT = 2
 
 const val BLOG_PAGE_SIZE = 20
+
+const val BANNER_HEIGHT = 50
+const val BANNER_WIDTH = 320
