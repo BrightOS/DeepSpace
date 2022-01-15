@@ -11,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.berserkers.deepspace.data.model.SxLaunchModel
 import ru.berserkers.deepspace.data.repository.SpaceXRepository
-import ru.berserkers.deepspace.data.repository.UpcomingRepository
 import ru.berserkers.deepspace.data.room.LaunchesDao
 import ru.berserkers.deepspace.utils.Data
 import ru.berserkers.deepspace.utils.Status
@@ -24,7 +23,6 @@ import javax.inject.Inject
 class SpaceXViewModelImpl @Inject constructor(
     private val repository: SpaceXRepository,
     private val launchesDao: LaunchesDao,
-    private val upcomingRepository: UpcomingRepository,
 ) : ViewModel(), SpaceXViewModel {
 
     private var errorHandler: MutableLiveData<Status> = MutableLiveData<Status>(Status.LOADING)
@@ -40,7 +38,6 @@ class SpaceXViewModelImpl @Inject constructor(
             Log.i("vm_debug", "retrofit got")
             //launchesDao.insertAllLaunches(launches)
             Log.i("vm_debug", "launches saved")
-
         }
     }
 
@@ -66,7 +63,6 @@ class SpaceXViewModelImpl @Inject constructor(
                         liveData.postValue(Data.Ok(sxLaunches))
                         errorHandler.postValue(Status.SUCCESS)
                         Log.i("vm_debug", "retrofit got")
-                        //launchesDao.insertAllLaunches(launches)
                     }
                 }
             } catch (e: Exception) {

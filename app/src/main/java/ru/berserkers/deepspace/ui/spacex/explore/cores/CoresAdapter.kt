@@ -19,7 +19,7 @@ class CoresAdapter internal constructor(
     RecyclerView.Adapter<CoresViewHolder>() {
     private var coreModels: ArrayList<CoreModel>
 
-    internal interface onCoreClickListener {
+    internal interface OnCoreClickListener {
         fun onCoreClick(coreModel: CoreModel, position: Int)
     }
 
@@ -87,7 +87,7 @@ class CoresAdapter internal constructor(
                 finalString.indexOf('.')
             )
         }
-        val onCoreClickListener = object : onCoreClickListener {
+        val onCoreClickListener = object : OnCoreClickListener {
             override fun onCoreClick(coreModel: CoreModel, position: Int) {
 
             }

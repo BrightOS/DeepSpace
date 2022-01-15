@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.datepicker.MaterialCalendar
 import ru.berserkers.deepspace.databinding.FragmentExploreBinding
 import ru.berserkers.deepspace.utils.DimensionsUtil
 import ru.berserkers.deepspace.utils.SPACEX_LOGO_GIF
@@ -43,6 +45,12 @@ class ExploreFragment : Fragment() {
             }
             setupNavigation(findNavController())
             loadImage(requireContext(), SPACEX_LOGO_GIF, starmanGif)
+        }
+    }
+
+    private fun setOnClickListener(card: MaterialCardView, func: ()-> Unit){
+        card.setOnClickListener {
+            func()
         }
     }
 
