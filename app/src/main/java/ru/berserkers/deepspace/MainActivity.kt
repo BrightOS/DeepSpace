@@ -90,11 +90,10 @@ class MainActivity : AppCompatActivity() {
             }
 
         // Azure notifications
-        NotificationHub.setListener(AzureNotificationListener())
+        NotificationHub.setListener(AzureNotificationListener(this))
         val connectionString = this.resources.getString(R.string.azure_connection_string)
         val hubName = this.resources.getString(R.string.azure_hub_name)
-        print(connectionString)
-        NotificationHub.start(this.application, hubName, connectionString);
+        NotificationHub.start(this.application, hubName, connectionString)
     }
 
 
