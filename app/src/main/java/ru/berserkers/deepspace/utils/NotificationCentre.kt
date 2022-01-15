@@ -104,7 +104,7 @@ class NotificationCentre {
 
     class NotificationReceiver : BroadcastReceiver() {
         private val channelId = "channel-id"
-        private val channelName = "channel-name"
+        private val channelName = "Upcoming events"
         private val notificationId = 0
 
         override fun onReceive(context: Context?, intent: Intent?) {
