@@ -59,8 +59,11 @@ class NotificationCentre {
 
     fun cancelNotification(context: Context, notification: NotificationModel) {
         val intent = Intent(context, NotificationReceiver::class.java)
-        intent.putExtra(NotificationReceiver.titleIntent, notification.title)
-        intent.putExtra(NotificationReceiver.textIntent, notification.text)
+
+        intent.apply {
+            putExtra(NotificationReceiver.titleIntent, notification.title)
+            putExtra(NotificationReceiver.textIntent, notification.text)
+        }
 
         deleteNotification(context, notification)
         val pendingIntent =
@@ -70,17 +73,19 @@ class NotificationCentre {
     }
 
     fun getAllScheduledNotifications(context: Context): ArrayList<NotificationModel> {
-        val sharedPreferences =
-            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
+
         val json = sharedPreferences.getString(sharedPreferencesTableName, null)
         val type = object : TypeToken<ArrayList<NotificationModel>>() {}.type
         val notifications = Gson().fromJson<ArrayList<NotificationModel>>(json, type)
+
         return notifications ?: ArrayList()
     }
 
     private fun deleteNotification(context: Context, notification: NotificationModel) {
         val sharedPreferencesEditable =
             context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+
         val allNotifications = getAllScheduledNotifications(context)
         allNotifications.remove(notification)
         val json = Gson().toJson(allNotifications)
@@ -93,9 +98,9 @@ class NotificationCentre {
     }
 
     private fun saveNotification(context: Context, notification: NotificationModel) {
-        val sharedPreferencesEditable: SharedPreferences.Editor =
-            context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
+        val sharedPreferencesEditable: SharedPreferences.Editor = context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE).edit()
         val allNotifications = getAllScheduledNotifications(context)
+
         allNotifications.add(notification)
         val json = Gson().toJson(allNotifications)
         sharedPreferencesEditable.putString(sharedPreferencesTableName, json)
@@ -132,6 +137,7 @@ class NotificationCentre {
 
         private fun createNotification(context: Context, intent: Intent): Notification {
             val toDoAfterClick = Intent(context, MainActivity::class.java)
+
             val pendingIntent = TaskStackBuilder.create(context).run {
                 addNextIntentWithParentStack(toDoAfterClick)
                 getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)

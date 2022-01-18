@@ -69,11 +69,11 @@ class UpcomingEventsFragment : Fragment() {
 
         DimensionsUtil.dpToPx(requireContext(), 10).let {
             DimensionsUtil.setMargins(
-                binding.upcomingDescription,
-                it,
-                DimensionsUtil.getStatusBarHeight(resources) + it,
-                it,
-                0
+                view = binding.upcomingDescription,
+                left = it,
+                top = DimensionsUtil.getStatusBarHeight(resources) + it,
+                right = it,
+                bottom = 0
             )
         }
     }
@@ -83,7 +83,7 @@ class UpcomingEventsFragment : Fragment() {
         dismissBanner()
     }
 
-    companion object{
+    companion object {
         const val DELAY = 1000L
     }
 
