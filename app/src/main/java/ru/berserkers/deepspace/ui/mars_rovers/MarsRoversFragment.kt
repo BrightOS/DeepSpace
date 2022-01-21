@@ -32,11 +32,7 @@ class MarsRoversFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentMarsRoversBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
+    ): View  = FragmentMarsRoversBinding.inflate(inflater, container, false).root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,12 +54,7 @@ class MarsRoversFragment : Fragment() {
 
             (activity as MainActivity).stopLoadingAnimation(false)
 
-            roverRecyclerAdapter =
-                RoverRecyclerAdapter(
-                    requireContext(),
-                    list,
-                    findNavController()
-                )
+            roverRecyclerAdapter = RoverRecyclerAdapter(requireContext(), list, findNavController())
 
             binding.roversRecycle.adapter = roverRecyclerAdapter
         }
@@ -72,11 +63,11 @@ class MarsRoversFragment : Fragment() {
     private fun init() {
         DimensionsUtil.dpToPx(requireContext(), 5).let {
             DimensionsUtil.setMargins(
-                binding.toolBar,
-                it,
-                DimensionsUtil.getStatusBarHeight(resources) + it,
-                it,
-                it
+                view = binding.toolBar,
+                left = it,
+                top = DimensionsUtil.getStatusBarHeight(resources) + it,
+                right = it,
+                bottom = it
             )
         }
 

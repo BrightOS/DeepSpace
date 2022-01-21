@@ -21,51 +21,40 @@ import ru.berserkers.deepspace.utils.Data
 class ContactFragment : Fragment() {
     private var _binding: FragmentContactBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: ContactViewModel by viewModels<ContactViewModelImpl>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentContactBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    ): View = FragmentContactBinding.inflate(inflater, container, false).root
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
-            titleText.doOnTextChanged { _, _, _, _ ->
-                titleForFeedback.isErrorEnabled = false
-            }
-            nameText.doOnTextChanged { _, _, _, _ ->
-                nameForFeedback.isErrorEnabled = false
-            }
-            emailText.doOnTextChanged { _, _, _, _ ->
-                emailForFeedback.isErrorEnabled = false
-            }
-            textText.doOnTextChanged { _, _, _, _ ->
-                textForFeedback.isErrorEnabled = false
-            }
+            titleText.doOnTextChanged { _, _, _, _ -> titleForFeedback.isErrorEnabled = false }
+
+            nameText.doOnTextChanged { _, _, _, _ -> nameForFeedback.isErrorEnabled = false }
+
+            emailText.doOnTextChanged { _, _, _, _ -> emailForFeedback.isErrorEnabled = false }
+
+            textText.doOnTextChanged { _, _, _, _ -> textForFeedback.isErrorEnabled = false }
 
             sendFeedbackButton.setOnClickListener {
                 val title = titleText.text.toString()
                 val name = nameText.text.toString()
                 val email = emailText.text.toString()
                 val comments = textText.text.toString()
+
                 if (title.isEmpty() || name.isEmpty() || email.isEmpty() || comments.isEmpty()) {
-                    if (title.isEmpty()) {
-                        titleForFeedback.error = getString(R.string.emptyField)
-                    }
-                    if (name.isEmpty()) {
-                        nameForFeedback.error = getString(R.string.emptyField)
-                    }
-                    if (email.isEmpty()) {
-                        emailForFeedback.error = getString(R.string.emptyField)
-                    }
-                    if (comments.isEmpty()) {
-                        textForFeedback.error = getString(R.string.emptyField)
-                    }
+                    if (title.isEmpty()) titleForFeedback.error = getString(R.string.emptyField)
+
+                    if (name.isEmpty()) nameForFeedback.error = getString(R.string.emptyField)
+
+                    if (email.isEmpty()) emailForFeedback.error = getString(R.string.emptyField)
+
+                    if (comments.isEmpty()) textForFeedback.error = getString(R.string.emptyField)
+
                 } else {
                     progressBar.visibility = View.VISIBLE
                     viewModel.sendFeedback(title, name, email, comments).observe(viewLifecycleOwner) {

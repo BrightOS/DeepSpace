@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import com.airbnb.epoxy.stickyheader.StickyHeaderLinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
-import com.unity3d.services.banners.api.Banner
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -42,10 +41,7 @@ class AsteroidRadarFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentAsteroidRadarBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    ): View = FragmentAsteroidRadarBinding.inflate(inflater, container, false).root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

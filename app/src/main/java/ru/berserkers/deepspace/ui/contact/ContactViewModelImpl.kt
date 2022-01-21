@@ -11,6 +11,7 @@ import ru.berserkers.deepspace.utils.Data
  * @author Vladimir Abubakirov
  */
 class ContactViewModelImpl : ViewModel(), ContactViewModel {
+
     override fun sendFeedback(
         title: String,
         name: String,
