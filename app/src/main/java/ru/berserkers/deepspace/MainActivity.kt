@@ -21,6 +21,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.microsoft.windowsazure.messaging.notificationhubs.NotificationHub
 import com.yodo1.mas.Yodo1Mas
 import com.yodo1.mas.error.Yodo1MasError
 import com.yodo1.mas.event.Yodo1MasAdEvent
@@ -29,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.berserkers.deepspace.data.fb_general.MFirebaseUser
 import ru.berserkers.deepspace.databinding.ActivityMainBinding
 import ru.berserkers.deepspace.databinding.NavHeaderMainBinding
+import ru.berserkers.deepspace.utils.AzureNotificationListener
 import ru.berserkers.deepspace.utils.Data
 import ru.berserkers.deepspace.utils.DimensionsUtil
 import ru.berserkers.deepspace.utils.showBanner
@@ -52,15 +54,11 @@ class MainActivity : AppCompatActivity() {
         Yodo1Mas.getInstance().init(this, "ErxwlzR9KT", object : Yodo1Mas.InitListener {
             override fun onMasInitSuccessful() {
                 val bannerListener: Yodo1Mas.BannerListener = object : Yodo1Mas.BannerListener() {
-                    override fun onAdOpened(event: Yodo1MasAdEvent) {
-
-                    }
+                    override fun onAdOpened(event: Yodo1MasAdEvent) {}
                     override fun onAdError(event: Yodo1MasAdEvent, error: Yodo1MasError) {
                         Log.d("YODO", error.message)
                     }
-                    override fun onAdClosed(event: Yodo1MasAdEvent) {
-
-                    }
+                    override fun onAdClosed(event: Yodo1MasAdEvent) {}
                 }
                 Yodo1Mas.getInstance().setBannerListener(bannerListener)
             }
@@ -90,6 +88,12 @@ class MainActivity : AppCompatActivity() {
                     setImage(it.data)
                 }
             }
+
+        // Azure notifications
+        NotificationHub.setListener(AzureNotificationListener(this))
+        val connectionString = this.resources.getString(R.string.azure_connection_string)
+        val hubName = this.resources.getString(R.string.azure_hub_name)
+        NotificationHub.start(this.application, hubName, connectionString)
     }
 
 
