@@ -32,7 +32,10 @@ class MarsRoversFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View  = FragmentMarsRoversBinding.inflate(inflater, container, false).root
+    ): View {
+        _binding = FragmentMarsRoversBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

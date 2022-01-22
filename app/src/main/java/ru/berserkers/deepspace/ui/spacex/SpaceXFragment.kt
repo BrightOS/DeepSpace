@@ -38,7 +38,10 @@ class SpaceXFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View = FragmentSpacexBinding.inflate(inflater, container, false).root
+    ): View {
+        _binding = FragmentSpacexBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

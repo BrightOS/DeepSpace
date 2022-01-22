@@ -41,7 +41,10 @@ class AsteroidRadarFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View = FragmentAsteroidRadarBinding.inflate(inflater, container, false).root
+    ): View {
+        _binding = FragmentAsteroidRadarBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

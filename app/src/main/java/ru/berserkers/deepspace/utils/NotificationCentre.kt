@@ -47,7 +47,8 @@ class NotificationCentre {
         saveNotification(context, notificationModel)
 
         val pendingIntent =
-            PendingIntent.getBroadcast(context, lastRequestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(context, lastRequestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -67,7 +68,7 @@ class NotificationCentre {
 
         deleteNotification(context, notification)
         val pendingIntent =
-            PendingIntent.getBroadcast(context, notification.requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(context, notification.requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
     }
@@ -140,7 +141,7 @@ class NotificationCentre {
 
             val pendingIntent = TaskStackBuilder.create(context).run {
                 addNextIntentWithParentStack(toDoAfterClick)
-                getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+                getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             }
 
             return NotificationCompat.Builder(context, channelId)
