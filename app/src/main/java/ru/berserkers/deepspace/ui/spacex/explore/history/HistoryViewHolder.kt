@@ -6,3 +6,4 @@ import ru.berserkers.deepspace.databinding.HistoryItemBinding
 class HistoryViewHolder(
     val binding: HistoryItemBinding
 ) : RecyclerView.ViewHolder(binding.root)
+

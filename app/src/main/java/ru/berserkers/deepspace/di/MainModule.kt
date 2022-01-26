@@ -67,6 +67,22 @@ object MainModule {
 
     @Provides
     @Singleton
+    @Named("SPACEX_NEW")
+    fun getSpaceXNewRetrofit(): Retrofit {
+        val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+
+        return Retrofit.Builder()
+            .baseUrl(SPACEX_BASE_V5_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpBuilder.build())
+            .build()
+    }
+
+    @Provides
+    @Singleton
     @Named("NEWS")
     fun getNewsRetrofit(): Retrofit {
         val okHttpBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
@@ -113,6 +129,12 @@ object MainModule {
     @Provides
     @Singleton
     fun getSpaceXApi(@Named("SPACEX") retrofit: Retrofit): SpaceXApi {
+        return retrofit.create(SpaceXApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun getSpaceXNewApi(@Named("SPACEX_NEW") retrofit: Retrofit): SpaceXApi {
         return retrofit.create(SpaceXApi::class.java)
     }
 

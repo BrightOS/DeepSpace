@@ -149,7 +149,7 @@ fun dateToAmericanFormat(dateString: String, addTime: Boolean = false): String {
 }
 
 fun getDayOfMonthSuffix(n: Int): String {
-    Preconditions.checkArgument(n >= 1 && n <= 31, "illegal day of month: $n")
+    Preconditions.checkArgument(n in 1..31, "illegal day of month: $n")
     return if (n in 11..13) {
         "th"
     } else when (n % 10) {

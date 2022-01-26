@@ -44,6 +44,4 @@ class CapsulesViewModelImpl @Inject constructor(
     override fun getStatus(): MutableLiveData<Status> {
         return errorHandler
     }
-
-
 }

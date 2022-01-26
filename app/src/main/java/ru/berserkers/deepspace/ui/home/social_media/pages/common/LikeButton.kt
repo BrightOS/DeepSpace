@@ -2,7 +2,11 @@ package ru.berserkers.deepspace.ui.home.social_media.pages.common
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material.*
+import androidx.compose.material.IconButton
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier

@@ -47,7 +47,11 @@ class NotificationCentre {
         saveNotification(context, notificationModel)
 
         val pendingIntent =
-            PendingIntent.getBroadcast(context, lastRequestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(
+                context,
+                lastRequestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(
@@ -68,7 +72,12 @@ class NotificationCentre {
 
         deleteNotification(context, notification)
         val pendingIntent =
-            PendingIntent.getBroadcast(context, notification.requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getBroadcast(
+                context,
+                notification.requestCode,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
     }
