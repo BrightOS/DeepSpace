@@ -8,6 +8,7 @@ import ru.berserkers.deepspace.data.dto.news.Article
  * @author Yana Glad
  */
 interface NewsApi {
+
     @GET("articles")
     suspend fun getArticles(): Response<List<Article>>
 }

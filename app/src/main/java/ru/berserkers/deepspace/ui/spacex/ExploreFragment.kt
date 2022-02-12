@@ -35,11 +35,11 @@ class ExploreFragment : Fragment() {
         with(binding) {
             DimensionsUtil.dpToPx(requireContext(), 15).let {
                 DimensionsUtil.setMargins(
-                    back,
-                    it,
-                    DimensionsUtil.getStatusBarHeight(resources) + it,
-                    it,
-                    it
+                   view =  back,
+                   left =  it,
+                   top = DimensionsUtil.getStatusBarHeight(resources) + it,
+                   right = it,
+                   bottom = it,
                 )
             }
             setupNavigation(findNavController())
