@@ -23,7 +23,6 @@ class ZoomDetector(private val listener: OnZoomListener) {
     private var lastSecondX = 0.0
     private var lastSecondY = 0.0
 
-
     private fun updateLast(event: MotionEvent) {
         lastFirstX = event.getX(0).toDouble()
         lastFirstY = event.getY(0).toDouble()

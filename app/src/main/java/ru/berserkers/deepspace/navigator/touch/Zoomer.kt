@@ -5,8 +5,8 @@ import ru.berserkers.deepspace.navigator.managers.Managers
 import ru.berserkers.deepspace.navigator.maths.RADIANS_TO_DEGREES
 import ru.berserkers.deepspace.navigator.touch.ZoomDetector.OnZoomListener
 
-class Zoomer(private val managers: Managers, context: Context) :
-    OnZoomListener {
+class Zoomer(private val managers: Managers, context: Context) : OnZoomListener {
+
     private val size: Double
 
     override fun onDrag(xPixels: Double, yPixels: Double): Boolean {

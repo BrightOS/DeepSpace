@@ -23,7 +23,6 @@
             android:orientation="vertical"
             android:showDividers="beginning|middle|end">
 
-
             <TextView
                 style="bold"
                 android:layout_width="match_parent"
@@ -72,7 +71,6 @@
                     android:textAlignment="center" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -97,7 +95,6 @@
                     android:text="@string/down_line"
                     android:textAlignment="center" />
             </LinearLayout>
-
 
             <View
                 android:id="@+id/divider"
@@ -208,7 +205,6 @@
                     android:textAlignment="center" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -233,7 +229,6 @@
                     android:text="@string/down_line"
                     android:textAlignment="center" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -284,7 +279,6 @@
                     android:text="@string/down_line"
                     android:textAlignment="center" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"

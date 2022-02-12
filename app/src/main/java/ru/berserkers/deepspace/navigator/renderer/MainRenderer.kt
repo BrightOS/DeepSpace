@@ -243,5 +243,4 @@ internal class UserViewControl : DeviceStates {
         screenWidth = width
         screenHeight = height
     }
-
 }

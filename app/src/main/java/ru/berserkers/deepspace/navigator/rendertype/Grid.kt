@@ -10,8 +10,7 @@ import java.util.*
 
 internal class Grid(
     private val numRaSources: Int,
-    private val numDecSources: Int,
-) {
+    private val numDecSources: Int, ) {
 
     private enum class Type {
         RA, DEC

@@ -209,6 +209,5 @@ class SocialMediaRepositoryImpl @Inject constructor(
             commentId = comment.id
         )
     }
-
     override suspend fun getCurrentUser(): UserModel? = firebaseRepository.getCurrentUser()
 }

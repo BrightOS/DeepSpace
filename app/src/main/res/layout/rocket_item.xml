@@ -97,7 +97,6 @@
             android:textSize="16sp"
             tools:text="Reused? : No, not yet" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,7 +169,6 @@
             android:textSize="16sp"
             tools:text="Reference system : geocentric" />
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -207,7 +205,5 @@
             android:textSize="16sp"
             tools:text="Recovered?: No" />
 
-
     </androidx.appcompat.widget.LinearLayoutCompat>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

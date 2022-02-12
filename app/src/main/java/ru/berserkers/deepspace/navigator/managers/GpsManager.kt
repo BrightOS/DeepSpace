@@ -10,8 +10,8 @@ import java.io.IOException
 import java.util.*
 
 
-class GpsManager(private val context: Context, private val locationManager: LocationManager?) :
-    AbstractManager, LocationListener {
+class GpsManager(private val context: Context, private val locationManager: LocationManager?) : AbstractManager, LocationListener {
+
     override var pointing: VectorPointing? = null
 
     override fun start() {
@@ -75,7 +75,6 @@ class GpsManager(private val context: Context, private val locationManager: Loca
         pointing!!.location = location
     }
 
-
     override fun stop() {
         if (locationManager == null) return
         locationManager.removeUpdates(this)
@@ -95,7 +94,6 @@ class GpsManager(private val context: Context, private val locationManager: Loca
 
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
     }
-
 
     private fun showLocationToUser(location: LatLong) {
         val geoCoder = Geocoder(context)

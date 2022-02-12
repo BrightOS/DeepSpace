@@ -8,7 +8,6 @@ import ru.berserkers.deepspace.navigator.thread.RendererExecutor.RenderThread
 import ru.berserkers.deepspace.navigator.thread.RendererTypeExecutorHelper.AbstractRenderType
 import java.util.concurrent.locks.ReentrantLock
 
-
 abstract class AbstractGlLayer(protected val resources: Resources) {
     private val locker = ReentrantLock()
     private var renderer: RendererExecutor? = null
