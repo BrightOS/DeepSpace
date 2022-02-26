@@ -131,12 +131,12 @@ object MainModule {
     fun getSpaceXApi(@Named("SPACEX") retrofit: Retrofit): SpaceXApi {
         return retrofit.create(SpaceXApi::class.java)
     }
-
-    @Provides
-    @Singleton
-    fun getSpaceXNewApi(@Named("SPACEX_NEW") retrofit: Retrofit): SpaceXApi {
-        return retrofit.create(SpaceXApi::class.java)
-    }
+//
+//    @Provides
+//    @Singleton
+//    fun getSpaceXNewApi(@Named("SPACEX_NEW") retrofit: Retrofit): SpaceXApi {
+//        return retrofit.create(SpaceXApi::class.java)
+//    }
 
     @Provides
     @Singleton

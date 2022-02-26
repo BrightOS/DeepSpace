@@ -1,5 +1,5 @@
-package ru.berserkers.deepspace.data.repository
-
-class SpaceXNewRepositoryImpl {
-
-}
+//package ru.berserkers.deepspace.data.repository
+//
+//class SpaceXNewRepositoryImpl {
+//
+//}
