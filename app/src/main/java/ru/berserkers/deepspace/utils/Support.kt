@@ -1,6 +1,5 @@
 package ru.berserkers.deepspace.utils
 
-import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -17,7 +16,6 @@ import com.bumptech.glide.util.Preconditions
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.storage.StorageReference
-import com.yodo1.mas.Yodo1Mas
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import java.text.SimpleDateFormat
@@ -162,12 +160,3 @@ fun getDayOfMonthSuffix(n: Int): String {
 
 fun String.addSubstringAtIndex(string: String, index: Int) =
     StringBuilder(this).apply { insert(index, string) }.toString()
-
-fun showBanner(activity: Activity) {
-    val align = Yodo1Mas.BannerBottom or Yodo1Mas.BannerHorizontalCenter
-    Yodo1Mas.getInstance().showBannerAd(activity, align)
-}
-
-fun dismissBanner() {
-    Yodo1Mas.getInstance().dismissBannerAd()
-}

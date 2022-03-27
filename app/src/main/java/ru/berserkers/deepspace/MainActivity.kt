@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -22,10 +21,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.microsoft.windowsazure.messaging.notificationhubs.NotificationHub
-import com.yodo1.mas.Yodo1Mas
-import com.yodo1.mas.error.Yodo1MasError
-import com.yodo1.mas.event.Yodo1MasAdEvent
-import com.yodo1.mas.helper.model.Yodo1MasAdBuildConfig
 import dagger.hilt.android.AndroidEntryPoint
 import ru.berserkers.deepspace.data.fb_general.MFirebaseUser
 import ru.berserkers.deepspace.databinding.ActivityMainBinding
@@ -33,7 +28,6 @@ import ru.berserkers.deepspace.databinding.NavHeaderMainBinding
 import ru.berserkers.deepspace.utils.AzureNotificationListener
 import ru.berserkers.deepspace.utils.Data
 import ru.berserkers.deepspace.utils.DimensionsUtil
-import ru.berserkers.deepspace.utils.showBanner
 import java.io.IOException
 
 @AndroidEntryPoint
@@ -49,24 +43,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        val config = Yodo1MasAdBuildConfig.Builder().enableUserPrivacyDialog(true).build()
-        Yodo1Mas.getInstance().setAdBuildConfig(config)
-        Yodo1Mas.getInstance().init(this, "ErxwlzR9KT", object : Yodo1Mas.InitListener {
-            override fun onMasInitSuccessful() {
-                val bannerListener: Yodo1Mas.BannerListener = object : Yodo1Mas.BannerListener() {
-                    override fun onAdOpened(event: Yodo1MasAdEvent) {}
-                    override fun onAdError(event: Yodo1MasAdEvent, error: Yodo1MasError) {
-                        Log.d("YODO", error.message)
-                    }
-                    override fun onAdClosed(event: Yodo1MasAdEvent) {}
-                }
-                Yodo1Mas.getInstance().setBannerListener(bannerListener)
-            }
-
-            override fun onMasInitFailed(error: Yodo1MasError) {
-                Log.d("YODO", error.message)
-            }
-        })
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -83,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
         interactionResult =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                println("In")
                 if (it.resultCode == Activity.RESULT_OK) {
                     setImage(it.data)
                 }
