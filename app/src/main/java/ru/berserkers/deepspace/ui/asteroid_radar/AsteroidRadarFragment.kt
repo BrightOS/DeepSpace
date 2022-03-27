@@ -1,6 +1,5 @@
 package ru.berserkers.deepspace.ui.asteroid_radar
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +20,6 @@ import ru.berserkers.deepspace.databinding.FragmentAsteroidRadarBinding
 import ru.berserkers.deepspace.utils.DimensionsUtil
 import ru.berserkers.deepspace.utils.getColorFromAttributes
 import ru.berserkers.deepspace.MainActivity
-import ru.berserkers.deepspace.utils.dismissBanner
-import ru.berserkers.deepspace.utils.showBanner
 
 /*
  * @author Denis Shaikhlbarin
@@ -52,7 +49,6 @@ class AsteroidRadarFragment : Fragment() {
         uploadData()
         setupRecycler()
         observeData()
-        showBanner(activity as Activity)
     }
 
     private fun observeData() {
@@ -129,10 +125,5 @@ class AsteroidRadarFragment : Fragment() {
     override fun onPause() {
         (activity as MainActivity).stopLoadingAnimation()
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        dismissBanner()
     }
 }

@@ -1,6 +1,5 @@
 package ru.berserkers.deepspace.ui.upcoming_events
 
-import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,13 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.yandex.metrica.impl.ob._B
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.berserkers.deepspace.databinding.FragmentUpcomingEventsBinding
 import ru.berserkers.deepspace.utils.DimensionsUtil
-import ru.berserkers.deepspace.utils.dismissBanner
-import ru.berserkers.deepspace.utils.showBanner
 
 /*
  * @author Danil Khairulin
@@ -44,7 +40,6 @@ class UpcomingEventsFragment : Fragment() {
         binding.spaceLoading.startLoadingAnimation()
         initView()
         observeData()
-        showBanner(activity as Activity)
     }
 
     private fun observeData() {
@@ -77,11 +72,6 @@ class UpcomingEventsFragment : Fragment() {
                 bottom = 0
             )
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        dismissBanner()
     }
 
     companion object {
