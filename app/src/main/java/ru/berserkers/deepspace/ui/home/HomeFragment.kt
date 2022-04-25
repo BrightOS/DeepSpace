@@ -53,6 +53,7 @@ class HomeFragment : Fragment() {
     ): View {
         viewModel.getViewModelScope().launch(Dispatchers.IO) {
             viewModel.loadImageOfTheDay()
+
             viewModel.loadArticles()
         }
         return ComposeView(requireContext()).apply {

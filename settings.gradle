@@ -1,2 +1,4 @@
 rootProject.name = "NASA_Bootcamp"
 include ':app'
+include ':math-module'
+include ':math-lib'
