@@ -130,6 +130,8 @@ class RegFragment : Fragment() {
                             )) {
                                 is Data.Ok -> successRegister()
                                 is Data.Error -> (activity as MainActivity).showError(data.message)
+                                Data.Loading -> {}
+                                is Data.Local -> {}
                             }
                         }
                     } else {
