@@ -1,6 +1,6 @@
 package ru.berserkers.deepspace.maths.coords
 
-import ru.berserkers.deepspace.maths.matrix.cosineSimilarity
+import com.example.math_module.geometry.cosineSimilarity
 import kotlin.math.PI
 import kotlin.math.acos
 

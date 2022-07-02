@@ -2,21 +2,17 @@ package ru.berserkers.deepspace.navigator.renderer
 
 import android.content.res.Resources
 import android.opengl.GLSurfaceView
+import com.example.math_module.geometry.Vector3D
+import com.example.math_module.geometry.mult
 import ru.berserkers.deepspace.maths.coords.GeocentricCoordinates
-import ru.berserkers.deepspace.maths.matrix.Vector3D
-import ru.berserkers.deepspace.maths.matrix.mult
 import ru.berserkers.deepspace.navigator.maths.Matrix4Dimension
 import ru.berserkers.deepspace.navigator.maths.Matrix4Dimension.Companion.createPerspectiveProjection
 import ru.berserkers.deepspace.navigator.maths.Matrix4Dimension.Companion.createScaling
 import ru.berserkers.deepspace.navigator.maths.Matrix4Dimension.Companion.createTranslation
 import ru.berserkers.deepspace.navigator.maths.Matrix4Dimension.Companion.createView
-
 import ru.berserkers.deepspace.navigator.renderer.Renderer.OnUpdateListener
-import java.util.*
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
-import kotlin.collections.HashMap
-import kotlin.collections.HashSet
 import kotlin.math.sqrt
 
 open class MainRenderer(res: Resources?) : GLSurfaceView.Renderer {

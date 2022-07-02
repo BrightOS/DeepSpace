@@ -24,15 +24,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object MainModule {
 
-    private fun checkInternetConnection(): Boolean {
-        return try {
-            val inAddress: InetAddress = InetAddress.getByName("http://google.com")
-            !inAddress.equals("")
-        } catch (e: java.lang.Exception) {
-            false
-        }
-    }
-
     @Provides
     @Singleton
     @Named("NASA")
@@ -193,5 +184,14 @@ object MainModule {
     @Singleton
     fun getUpcomingRepository(upcomingEventsApi: UpcomingEventsApi): UpcomingRepository {
         return UpcomingRepositoryImpl(upcomingEventsApi)
+    }
+
+    private fun checkInternetConnection(): Boolean {
+        return try {
+            val inAddress: InetAddress = InetAddress.getByName("http://google.com")
+            !inAddress.equals("")
+        } catch (e: java.lang.Exception) {
+            false
+        }
     }
 }

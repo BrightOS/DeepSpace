@@ -31,7 +31,6 @@ class UpcomingRecyclerAdapter internal constructor(
 ) :
     RecyclerView.Adapter<UpcomingRecyclerHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         UpcomingRecyclerHolder(
             UpcomingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)

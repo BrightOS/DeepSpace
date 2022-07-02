@@ -1,6 +1,6 @@
 package ru.berserkers.deepspace.navigator.maths
 
-import ru.berserkers.deepspace.maths.matrix.Vector3D
+import com.example.math_module.geometry.Vector3D
 import kotlin.math.PI
 import kotlin.math.ceil
 import kotlin.math.floor

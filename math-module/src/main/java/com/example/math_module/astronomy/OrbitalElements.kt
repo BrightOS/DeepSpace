@@ -1,4 +1,4 @@
-package ru.berserkers.deepspace.maths.astronomy
+package com.example.math_module.astronomy
 
 import ru.berserkers.deepspace.navigator.maths.mod
 import kotlin.math.*
@@ -7,7 +7,7 @@ class OrbitalElements(
     val eccentricity: Double,
     val inclination: Double,
     val ascnode: Double,
-    internal val longitude: Double,
+    val longitude: Double,
     val perihelion: Double,
     private val meanLongitude: Double,
     val trueAnomaly2: Double? = null,

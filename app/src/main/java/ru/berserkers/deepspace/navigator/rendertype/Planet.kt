@@ -1,10 +1,10 @@
 package ru.berserkers.deepspace.navigator.rendertype
 
 import android.content.res.Resources
+import com.example.math_module.TimeMachine
+import com.example.math_module.astronomy.OrbitalElements
 import ru.berserkers.deepspace.R
-import ru.berserkers.deepspace.maths.astronomy.OrbitalElements
-import ru.berserkers.deepspace.maths.astronomy.RaDec
-import ru.berserkers.deepspace.maths.astronomy.TimeMachine
+import ru.berserkers.deepspace.maths.RaDec
 import ru.berserkers.deepspace.maths.coords.GeocentricCoordinates
 import ru.berserkers.deepspace.maths.coords.HeliocentricCoordinates
 import ru.berserkers.deepspace.navigator.maths.DEGREES_TO_RADIANS

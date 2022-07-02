@@ -19,6 +19,5 @@ class App: Application(){
         sensorManager = ContextCompat.getSystemService(this, SensorManager::class.java)
 
         model = VectorPointing()
-
      }
 }

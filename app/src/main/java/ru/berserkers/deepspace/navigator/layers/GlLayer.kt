@@ -8,8 +8,6 @@ import ru.berserkers.deepspace.navigator.rendertype.LineRun
 import ru.berserkers.deepspace.navigator.rendertype.Planet
 import java.util.*
 
-
-
 class GlLayer(resources: Resources?, private val pointing: VectorPointing, val type: TypeLayer) :
     AbstractGlLayer(resources!!) {
 

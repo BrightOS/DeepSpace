@@ -1,4 +1,4 @@
-package ru.berserkers.deepspace.maths.astronomy
+package com.example.math_module
 
 import java.util.*
 import kotlin.math.floor

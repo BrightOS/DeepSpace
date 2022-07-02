@@ -1,7 +1,7 @@
 package ru.berserkers.deepspace.maths.coords
 
-import ru.berserkers.deepspace.maths.astronomy.OrbitalElements
-import ru.berserkers.deepspace.maths.matrix.Vector3D
+import com.example.math_module.astronomy.OrbitalElements
+import com.example.math_module.geometry.Vector3D
 import ru.berserkers.deepspace.navigator.rendertype.Planet
 import ru.berserkers.deepspace.utils.OBLIQUITY
 import java.util.*

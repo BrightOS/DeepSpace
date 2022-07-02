@@ -1,6 +1,11 @@
 package ru.berserkers.deepspace.navigator.renderer
 
 import android.graphics.Color
+import com.example.math_module.geometry.Vector3D
+import com.example.math_module.geometry.difference
+import com.example.math_module.geometry.mult
+import com.example.math_module.geometry.normalized
+import com.example.math_module.geometry.sum
 import ru.berserkers.deepspace.R
 import ru.berserkers.deepspace.maths.matrix.*
 import ru.berserkers.deepspace.navigator.rendertype.LineRun

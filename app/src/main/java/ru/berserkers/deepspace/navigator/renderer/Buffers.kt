@@ -1,6 +1,6 @@
 package ru.berserkers.deepspace.navigator.renderer
 
-import ru.berserkers.deepspace.maths.matrix.Vector3D
+import com.example.math_module.geometry.Vector3D
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.IntBuffer

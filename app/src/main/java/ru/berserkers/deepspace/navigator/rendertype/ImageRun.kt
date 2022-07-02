@@ -4,12 +4,12 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import ru.berserkers.deepspace.maths.astronomy.RaDec
+import com.example.math_module.geometry.Vector3D
+import com.example.math_module.geometry.mirror
+import com.example.math_module.geometry.mult
+import com.example.math_module.geometry.normalized
+import ru.berserkers.deepspace.maths.RaDec
 import ru.berserkers.deepspace.maths.coords.GeocentricCoordinates
-import ru.berserkers.deepspace.maths.matrix.Vector3D
-import ru.berserkers.deepspace.maths.matrix.mult
-import ru.berserkers.deepspace.maths.matrix.mirror
-import ru.berserkers.deepspace.maths.matrix.normalized
 
 open class ImageRun(
     coords: GeocentricCoordinates, protected val resources: Resources?, id: Int, upVec: Vector3D,

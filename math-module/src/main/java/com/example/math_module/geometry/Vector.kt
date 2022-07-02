@@ -1,6 +1,6 @@
-package ru.berserkers.deepspace.maths.matrix
+package com.example.math_module.geometry
 
-import ru.berserkers.deepspace.navigator.maths.DEGREES_TO_RADIANS
+import com.example.math_module.DEGREES_TO_RADIANS
 import ru.berserkers.deepspace.navigator.maths.Matrix3Dimension
 import kotlin.math.cos
 import kotlin.math.sin

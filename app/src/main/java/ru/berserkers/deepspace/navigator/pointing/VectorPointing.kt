@@ -1,13 +1,13 @@
 package ru.berserkers.deepspace.navigator.pointing
 
 import android.hardware.SensorManager
-import ru.berserkers.deepspace.maths.astronomy.getZenith
+import com.example.math_module.geometry.Vector3D
+import com.example.math_module.geometry.rotationMatrix
+import com.example.math_module.geometry.scalarTimes
+import com.example.math_module.geometry.scaleVector
 import ru.berserkers.deepspace.maths.coords.GeocentricCoordinates.Companion.getInstance
 import ru.berserkers.deepspace.maths.coords.LatLong
-import ru.berserkers.deepspace.maths.matrix.Vector3D
-import ru.berserkers.deepspace.maths.matrix.rotationMatrix
-import ru.berserkers.deepspace.maths.matrix.scalarTimes
-import ru.berserkers.deepspace.maths.matrix.scaleVector
+import ru.berserkers.deepspace.maths.getZenith
 import ru.berserkers.deepspace.navigator.pointing.AbstractPointing.Pointing
 import ru.berserkers.deepspace.navigator.maths.Matrix3Dimension
 import ru.berserkers.deepspace.navigator.maths.Matrix3Dimension.Companion.idMatrix

@@ -1,5 +1,6 @@
-package ru.berserkers.deepspace.maths.astronomy
+package ru.berserkers.deepspace.maths
 
+import com.example.math_module.TimeMachine
 import ru.berserkers.deepspace.maths.coords.HeliocentricCoordinates
 import ru.berserkers.deepspace.maths.coords.LatLong
 import ru.berserkers.deepspace.navigator.maths.RADIANS_TO_DEGREES

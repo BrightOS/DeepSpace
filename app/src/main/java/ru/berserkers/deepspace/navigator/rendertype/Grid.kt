@@ -1,7 +1,7 @@
 package ru.berserkers.deepspace.navigator.rendertype
 
 import android.graphics.Color
-import ru.berserkers.deepspace.maths.astronomy.RaDec
+import com.example.math_module.astronomy.RaDec
 import ru.berserkers.deepspace.maths.coords.GeocentricCoordinates
 import ru.berserkers.deepspace.utils.DEGREE_180
 import ru.berserkers.deepspace.utils.DEGREE_360

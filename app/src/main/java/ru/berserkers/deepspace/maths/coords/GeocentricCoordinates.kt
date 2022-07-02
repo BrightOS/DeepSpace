@@ -1,7 +1,7 @@
  package ru.berserkers.deepspace.maths.coords
 
-import ru.berserkers.deepspace.maths.astronomy.RaDec
-import ru.berserkers.deepspace.maths.matrix.Vector3D
+import com.example.math_module.geometry.Vector3D
+import ru.berserkers.deepspace.maths.RaDec
 import ru.berserkers.deepspace.navigator.maths.DEGREES_TO_RADIANS
 import ru.berserkers.deepspace.navigator.maths.RADIANS_TO_DEGREES
 import kotlin.math.asin
